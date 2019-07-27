@@ -9,3 +9,18 @@ various events and campaign information and so on.
 
 This project also aims to extract relevant data from ICON chain and displayed in a user friendly interface. 
 We'll initially focus on the ICONSENSUS campaign, starting off with P-Rep election data and tools.
+
+
+## Installation
+
+pip install -r requirements.txt
+
+python makemigrations
+
+python migrate
+
+start postgresql service
+
+python manage.py runserver
+
+https://localhost:8000
