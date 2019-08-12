@@ -10,6 +10,8 @@ def developers(request, template='developers/developers.html', extra_context=Non
         request.session['nightmode'] = False
     if 'navbar' not in request.session:
         request.session['navbar'] = True
+    if 'fromAddress' not in request.session:
+        request.session['fromAddress'] = 'none'
 
     video_tutorials = VideoTutorial.objects.all().order_by('-video_tutorial_date')
     for url in video_tutorials:
@@ -25,6 +27,7 @@ def developers(request, template='developers/developers.html', extra_context=Non
         'video_presentations': video_presentations,
         'nightmode': request.session['nightmode'],
         'navbar': request.session['navbar'],
+        'fromAddress': request.session['fromAddress'],
         'section': 'DEVELOPERS',
     }
     if extra_context is not None:

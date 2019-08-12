@@ -15,6 +15,8 @@ def index(request):
         request.session['nightmode'] = False
     if 'navbar' not in request.session:
         request.session['navbar'] = True
+    if 'fromAddress' not in request.session:
+        request.session['fromAddress'] = 'none'
 
     # ICON SDK test
     #icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io/api/v3"))
@@ -44,6 +46,7 @@ def index(request):
     context = {
         'nightmode': request.session['nightmode'],
         'navbar': request.session['navbar'],
+        'fromAddress': request.session['fromAddress'],
         'section': 'DASHBOARD',
         'ac3data': ac3data,
     }

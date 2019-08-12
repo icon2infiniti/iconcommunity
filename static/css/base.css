@@ -3038,7 +3038,7 @@ input[type="button"].btn-block {
 
 .nav-link {
   display: block;
-  padding: 0.5rem 1rem; }
+  padding: 0.3rem 1rem; }
   .nav-link:hover, .nav-link:focus {
     text-decoration: none; }
   .nav-link.disabled {
@@ -9610,7 +9610,7 @@ fieldset[disabled]
     -webkit-transform: translate3d(0, -2px, 0) !important;
     transform: translate3d(0, -2px, 0) !important; }
   .dropdown-menu.dropdown-navbar {
-    left: -80px; }
+    left: -116px; }
     .dropdown-menu.dropdown-navbar:before, .dropdown-menu.dropdown-navbar:after {
       left: auto;
       right: 17px; }
@@ -13138,7 +13138,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   border-top: 4px dashed;
   border-right: 4px solid transparent;
   border-left: 4px solid transparent;
-  margin-top: -5px;
+  /*margin-top: -5px;*/
   position: absolute;
   top: 30px;
   margin-left: 5px; }
@@ -14846,3 +14846,4 @@ code {
 #moon {
   cursor: pointer;
 }
+

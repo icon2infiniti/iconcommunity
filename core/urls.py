@@ -14,6 +14,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('toggle_nightmode/', views.toggle_nightmode, name='toggle_nightmode'),
     path('toggle_navbar/', views.toggle_navbar, name='toggle_navbar'),
+    path('set_wallet/<str:fromAddress>/', views.set_wallet, name='set_wallet'),
 ]
 
 if settings.DEBUG:

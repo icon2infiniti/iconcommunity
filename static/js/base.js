@@ -438,3 +438,19 @@ function set_navbar(mode){
     sidebar_mini_active = true;
   }
 }
+
+function set_wallet(fromAddress){
+  $.ajax({
+        url : '/set_wallet/'+fromAddress+'/',
+        type: "POST",
+        data : {csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value},
+        dataType : "json",
+        success: function(data){
+          //set_navbar(data.navbar);
+          //return data.fromAddress;
+        },
+        error: function(message) {
+          //console.log(message.responseText)
+        }
+  });
+}
