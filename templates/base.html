@@ -17,23 +17,6 @@
   <!-- CSS -->
   <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet"/>
   <link href="{% static 'css/base.css' %}" rel="stylesheet"/>
-  <style type="text/css">
-    @media (max-width: 768px) {
-      .level1group {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-      }
-
-      .nav-item.level1 {
-        list-style: none;
-        width: calc(96% / 3);
-        display: inline-block;
-        text-align: center;
-      }
-    }
-  </style>
   {% block extra_head %}{% endblock %}
 
 </head>
@@ -221,15 +204,15 @@
 
           <ul class="navbar-nav">
 
-              <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"{% else %}style="height: 40px;"{% endif %}>
-                <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.5em;">
+              <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"{% else %}style="height:47px;"{% endif %}>
+                <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.6em;">
                   <i class="tim-icons icon-single-02"></i> <span class="nav-lang">Login</span>
                 </a>
               </li>
 
-              <li id="loggedin" class="dropdown nav-item" {% if fromAddress == "none" %}style="display:none;"{% else %}style="height:40px;"{% endif %}>
-                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="margin-top:0.4em;">
-                  <div class="photo">
+              <li id="loggedin" class="dropdown nav-item" {% if fromAddress == "none" %}style="display:none;"{% endif %}>
+                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="margin-top:0.5em;">
+                  <div class="photo" style="margin-right:5px;">
                     <!--<img src="{% static 'img/mike.jpg' %}">-->
                     <img id="avatar" src="" />
                   </div>
@@ -238,16 +221,16 @@
                 </a>
                 <ul class="dropdown-menu dropdown-navbar mr-auto">
                   <li class="nav-link">
-                    <a id="wallet" href="https://tracker.icon.foundation/address/{{ fromAddress }}" target="_blank" class="nav-item dropdown-item">{{ fromAddress|truncatechars:20 }}</a>
+                    <a id="wallet" href="https://tracker.icon.foundation/address/{{ fromAddress }}" target="_blank" class="nav-item dropdown-item">{{ fromAddress|truncatechars:18 }}</a>
                   </li>
                   <li class="nav-link">
-                    <a href="javascript:void(0)" class="nav-item dropdown-item">P-Rep Management</a>
+                    <a href="{% url 'management' %}" class="nav-item dropdown-item">P-Rep Management</a>
                   </li>
                   <li class="nav-link">
-                    <a href="javascript:void(0)" class="nav-item dropdown-item">Governance Variable</a>
+                    <a href="{% url 'governance' %}" class="nav-item dropdown-item">Governance Variable</a>
                   </li>
                   <li class="nav-link">
-                    <a href="javascript:void(0)" class="nav-item dropdown-item">Network Proposal</a>
+                    <a href="{% url 'proposal' %}" class="nav-item dropdown-item">Network Proposal</a>
                   </li>
                   <li class="dropdown-divider"></li>
                   <li class="nav-link">
@@ -298,6 +281,7 @@
 <script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.min.js"></script>
 {% block extra_js %}{% endblock %}
 
+<!-- Init Scripts -->
 <script>
     $(document).ready(function () {
         $().ready(function () {
@@ -376,9 +360,8 @@
 
     function login(fromAddress){
         $('#wallet').attr("href", 'https://tracker.icon.foundation/address/'+fromAddress);
-        $('#wallet').text(fromAddress.substring(0,20)+'...');
+        $('#wallet').text(fromAddress.substring(0,18)+'...');
         set_wallet(fromAddress);
-        $('#loggedin').css({"height": "40px"});
         $('#loggedin').show();
         $('#prelogin').hide();
         build_identicon(fromAddress);
@@ -387,8 +370,8 @@
     function logout() {
         set_wallet('none');
         $('#loggedin').hide();
-        $('#prelogin').css({"height": "40px"});
         $('#prelogin').show();
+        $('#prelogin').css({"height":"47px"});
     }
 
     function build_identicon(hash){

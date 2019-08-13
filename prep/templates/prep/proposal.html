@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet"/>
+  <style type="text/css">
+    .white-content .proposaltype {
+      color: rgba(0, 0, 0, 0.9);
+    }
+
+    .proposaltype {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+{% endblock %}
+{% block title %}NETWORK PROPOSAL{% endblock %}
+{% block section %}NETWORK PROPOSAL{% endblock %}
+{% block content %}
+
+  <!-- Sort -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Proposal Filter</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div class="row">
+                <div class="col-lg-5 col-md-6 col-sm-3">
+                  <label class="mx-1">Type</label>
+                  <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
+                    <option value="1" selected>All</option>
+                    <option value="2">Text Proposal</option>
+                    <option value="3">Step Price Proposal</option>
+                    <option value="4">P-Rep Disqualification Proposal</option>
+                    <option value="5">Malicious SCORE Proposal</option>
+                  </select>
+                </div>
+                <div class="col-lg-5 col-md-6 col-sm-3">
+                  <label class="mx-1">Status</label>
+                  <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
+                    <option value="1" selected>All</option>
+                    <option value="2">Approved</option>
+                    <option value="3">Pending</option>
+                    <option value="4">Rejected</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-7">
+              <div class="info-icon icon-primary mb-3">
+                <i class="tim-icons icon-paper"></i> <span>Text-Proposal</span>
+              </div>
+              <p><a href="#">Disqualify P-Rep A; P-Rep A does not maintain node</a></p>
+              <p>Proposed by<span> Banana</span></p>
+              <p>Quorum 40%, Disagree 20%</p>
+              <p>Token vote agreed 3%, Disagreed 1%</p>
+            </div>
+            <div class="col-5">
+              <div>
+                <canvas id="mychart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-7">
+              <div class="info-icon icon-primary mb-3">
+                <i class="tim-icons icon-paper"></i> <span>Text-Proposal</span>
+              </div>
+              <p><a href="#">Disqualify P-Rep A; P-Rep A does not maintain node</a></p>
+              <p>Proposed by<span> Banana</span></p>
+              <p>Quorum 40%, Disagree 20%</p>
+              <p>Token vote agreed 3%, Disagreed 1%</p>
+            </div>
+            <div class="col-5">
+              <div>
+                <canvas id="mychart2"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+{% endblock %}
+{% block extra_js %}
+  <script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+
+
+  <script>
+      // Label formatter function
+      const formatter = (value, ctx) => {
+          const otherDatasetIndex = ctx.datasetIndex === 0 ? 1 : 0;
+          const total = ctx.chart.data.datasets[otherDatasetIndex].data[ctx.dataIndex] + value;
+          return `${(value / total * 100).toFixed(0)}%`;
+      };
+
+      const data = [
+          {
+              // stack: 'test',
+              label: "Disagree",
+              backgroundColor: "#ff0000",
+              data: [6310, 5742],
+              // Change options only for labels of THIS DATASET
+              datalabels: {
+                  color: "white",
+                  formatter: formatter
+              }
+          },
+          {
+              // stack: 'test',
+              label: "Quorum",
+              backgroundColor: "#283fba",
+              data: [11542, 12400],
+              // Change options only for labels of THIS DATASET
+              datalabels: {
+                  color: "white",
+                  formatter: formatter
+              }
+          },
+          {
+              // stack: 'test',
+              label: "Agree",
+              backgroundColor: "#1aaaba",
+              data: [11542, 12400],
+              // Change options only for labels of THIS DATASET
+              datalabels: {
+                  color: "white",
+                  formatter: formatter
+              }
+          }
+      ];
+
+      const options = {
+          maintainAspectRatio: false,
+          spanGaps: false,
+          responsive: true,
+          legend: {
+              display: false,
+              position: "bottom",
+              labels: {
+                  fontColor: "#000",
+                  boxWidth: 14,
+                  fontFamily: "Monserrat"
+              }
+          },
+          tooltips: {
+              mode: "label",
+              callbacks: {
+                  label: function (tooltipItem, data) {
+                      const type = data.datasets[tooltipItem.datasetIndex].label;
+                      const value =
+                          data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                      let total = 0;
+                      for (let i = 0; i < data.datasets.length; i++)
+                          total += data.datasets[i].data[tooltipItem.index];
+                      if (tooltipItem.datasetIndex !== data.datasets.length - 1) {
+                          return (
+                              type + " : " + value.toFixed(0).replace(/(\d)(?=(\d{3})+\.)/g, "1,")
+                          );
+                      } else {
+                          return [
+                              type +
+                              " : " +
+                              value.toFixed(0).replace(/(\d)(?=(\d{3})+\.)/g, "1,"),
+                              "Overall : " + total
+                          ];
+                      }
+                  }
+              }
+          },
+          plugins: {
+              // Change options for ALL labels of THIS CHART
+              datalabels: {
+                  color: "#black",
+                  align: "center"
+              }
+          },
+          scales: {
+
+              xAxes: [
+                  {
+                      stacked: true,
+                      gridLines: { display: false },
+                      display: false,
+                      ticks: {fontColor: "#000"}
+                  },
+
+                  {
+                      type: 'category',
+                      offset: true,
+                      position: 'top',
+                      ticks: {
+                          fontColor: "#000"
+                      },
+                      gridLines: {display: false},
+                  }
+
+              ],
+              yAxes: [
+                  {
+                      stacked: true,
+                      gridLines: { display: false },
+                      display: false,
+                      ticks: {fontColor: "#fff"}
+                  },
+              ]
+          }
+      };
+
+      const ctx = document.getElementById("mychart").getContext("2d");
+      const ctx2 = document.getElementById("mychart2").getContext("2d");
+
+      new Chart(ctx, {
+          type: "bar",
+          data: {
+              labels: ["Token", "Quorum"],
+              datasets: data
+          },
+          options: options
+      });
+
+      new Chart(ctx2, {
+          type: "bar",
+          data: {
+              labels: ["Token", "Quorum"],
+              datasets: data
+          },
+          options: options
+      });
+
+
+
+  </script>
+{% endblock %}

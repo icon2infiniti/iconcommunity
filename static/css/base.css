@@ -9613,7 +9613,7 @@ fieldset[disabled]
     left: -116px; }
     .dropdown-menu.dropdown-navbar:before, .dropdown-menu.dropdown-navbar:after {
       left: auto;
-      right: 17px; }
+      right: 14px; }
 
 .btn {
   cursor: pointer; }
@@ -14846,4 +14846,33 @@ code {
 #moon {
   cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  .level1group {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .nav-item.level1 {
+    list-style: none;
+    width: calc(50% / 3);
+    display: inline-block;
+    text-align: left;
+    margin-left: 8px;
+    margin-top: 10px;
+  }
+
+  #prelogin, #loggedin {
+    margin-left: 5px;
+  }
+}
+.dropdown-toggle .caret {
+  color: #ffffff;
+}
+.white-content .dropdown-toggle .caret {
+  color: #000000;
+}
+
 

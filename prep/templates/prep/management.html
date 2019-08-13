@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+
+{% endblock %}
+{% block title %}P-REP MANAGEMENT{% endblock %}
+{% block section %}P-REP MANAGEMENT{% endblock %}
+{% block content %}
+
+  <!--
+  if getPRep({{ fromAddress }}) = error? Show register button else
+  <br><br><br><br>
+  -->
+<div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">P-Rep Information</h2>
+      </div>
+      <div class="card-body">
+        <form action="#">
+          <!-- name, email -->
+          <div class="row">
+            <div class="col-sm-6">
+              <label>Name*</label>
+              <div class="form-group">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label>Email*</label>
+              <div class="form-group">
+                <input type="email" class="form-control">
+              </div>
+            </div>
+          </div>
+          <!-- country, city -->
+          <div class="row">
+            <div class="col-sm-6">
+              <label>Country*</label>
+              <div class="form-group">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label>City*</label>
+              <div class="form-group">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+          <!-- website -->
+          <div class="row">
+            <div class="col-12">
+              <label>Website*</label>
+              <div class="form-group">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+          <!-- detail -->
+          <div class="row">
+            <div class="col-12">
+              <label>Off-Chain JSON*</label>
+              <div class="form-group">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <!-- p2p, key -->
+          <div class="row">
+            <div class="col-sm-6">
+              <label>P2P Endpoint*</label>
+              <div class="form-group">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label>Public Key*</label>
+              <div class="form-group">
+                <input type="text" class="form-control">
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="card-footer text-center">
+        <button type="submit" class="btn btn-fill btn-primary">Update</button>
+        <button type="submit" class="btn btn-fill btn-danger">Unregister</button>
+      </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+  <style type="text/css">
+    table.tablesorter thead tr .header {
+    background-image: url({% static 'prep/img/bg.gif' %});
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer; }
+
+    table.tablesorter thead tr .headerSortUp {
+      background-image: url({% static 'prep/img/asc.gif' %});
+    }
+
+    table.tablesorter thead tr .headerSortDown {
+      background-image: url({% static 'prep/img/desc.gif' %});
+    }
+
+    input:focus {
+      background-color: transparent!important;
+    }
+    .form-control {
+      border: 1px solid rgba(255,255,255, 0.5);
+    }
+
+  </style>
+{% endblock %}
+{% block title %}GOVERNANCE VARIABLE{% endblock %}
+{% block section %}GOVERNANCE VARIABLE{% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+
+      <div class="card-header">
+        <h4 class="card-title">Update i_rep at { blockheight }</h4>
+      </div>
+
+      <div class="card-body">
+        <div class="form-inline">
+          <input class="form-control" type="text" size="32">
+          <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12 mb-5">
+    <div class="card ">
+      <div class="card-header">
+        <h2 class="card-title">P-Rep Ranking</h2>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="prep-table">
+            <thead class=" text-primary">
+              <tr>
+                <th class="text-center">#</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">i_rep</th>
+                <th class="text-center">i_rep Updated</th>
+                <th class="text-center">Stake</th>
+                <th class="text-center">Delegated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="text-center">1</td>
+                <td class="text-center">Banana node</td>
+                <td class="text-center">50,000</td>
+                <td class="text-center">4,608</td>
+                <td class="text-center">10,000</td>
+                <td class="text-center">1,000,000,000,000</td>
+              </tr>
+              <tr>
+                <td class="text-center">2</td>
+                <td class="text-center">ABC node</td>
+                <td class="text-center">50,000</td>
+                <td class="text-center">4,352</td>
+                <td class="text-center">12,000</td>
+                <td class="text-center">12,000,000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/plugins/jquery.tablesorter.js' %}"></script>
+  <script>
+    $(document).ready(function() {
+      $.tablesorter.addParser({
+        id: "fancyNumber",
+        is: function(s) {
+          return /^[0-9]?[0-9,\.]*$/.test(s);
+        },
+        format: function(s) {
+          return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
+        },
+        type: "numeric"
+      });
+      $("#prep-table").tablesorter({
+        headers: {
+            2 : { sorter: 'fancyNumber' },
+            3 : { sorter: 'fancyNumber' },
+            4 : { sorter: 'fancyNumber' },
+            5 : { sorter: 'fancyNumber' },
+        }
+      });
+    });
+  </script>
+{% endblock %}

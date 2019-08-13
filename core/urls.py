@@ -7,6 +7,7 @@ from . import views
 urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('', include('dashboard.urls')),
+    path('prep/', include('prep.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('iconsensus/', include('iconsensus.urls')),
     path('resources/', include('resources.urls')),
