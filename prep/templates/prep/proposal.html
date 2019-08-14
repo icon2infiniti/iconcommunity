@@ -29,21 +29,21 @@
               <div class="row">
                 <div class="col-lg-5 col-md-6 col-sm-3">
                   <label class="mx-1">Type</label>
-                  <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
-                    <option value="1" selected>All</option>
-                    <option value="2">Text Proposal</option>
-                    <option value="3">Step Price Proposal</option>
+                  <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary" onchange="filterchange();">
+                    <option value="*" selected>All</option>
+                    <option value=".textproposal">Text Proposal</option>
+                    <option value=".steppriceproposal">Step Price Proposal</option>
                     <option value="4">P-Rep Disqualification Proposal</option>
                     <option value="5">Malicious SCORE Proposal</option>
                   </select>
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-3">
                   <label class="mx-1">Status</label>
-                  <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
-                    <option value="1" selected>All</option>
-                    <option value="2">Approved</option>
-                    <option value="3">Pending</option>
-                    <option value="4">Rejected</option>
+                  <select id="status" class="selectpicker" data-size="7" data-style="btn btn-primary" onchange="filterchange();">
+                    <option value="*" selected>All</option>
+                    <option value=".voting">Voting</option>
+                    <option value=".accepted">Accepted</option>
+                    <option value=".rejected">Rejected</option>
                   </select>
                 </div>
               </div>
@@ -54,57 +54,73 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row grid">
 
-
-    <div class="col-md-6">
+    <div class="grid-item col-md-6 textproposal" data-category="textproposal">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-7">
               <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span>Text-Proposal</span>
+                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Text Proposal</span>
               </div>
-              <p><a href="#">Disqualify P-Rep A; P-Rep A does not maintain node</a></p>
+              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
               <p>Proposed by<span> Banana</span></p>
               <p>Quorum 40%, Disagree 20%</p>
               <p>Token vote agreed 3%, Disagreed 1%</p>
             </div>
+
             <div class="col-5">
-              <div>
-                <canvas id="mychart"></canvas>
-              </div>
+              <div><canvas id="mychart"></canvas></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-
-    <div class="col-md-6">
+    <div class="grid-item col-md-6 textproposal voting" data-category="textproposal">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-7">
               <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span>Text-Proposal</span>
+                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Text Proposal (voting)</span>
               </div>
-              <p><a href="#">Disqualify P-Rep A; P-Rep A does not maintain node</a></p>
+              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
               <p>Proposed by<span> Banana</span></p>
               <p>Quorum 40%, Disagree 20%</p>
               <p>Token vote agreed 3%, Disagreed 1%</p>
             </div>
+
             <div class="col-5">
-              <div>
-                <canvas id="mychart2"></canvas>
-              </div>
+              <div><canvas id="mychart2"></canvas></div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="grid-item col-md-6 steppriceproposal" data-category="steppriceproposal">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-7">
+              <div class="info-icon icon-primary mb-3">
+                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Step Price Proposal (accepted)</span>
+              </div>
+              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
+              <p>Proposed by<span> Banana</span></p>
+              <p>Quorum 40%, Disagree 20%</p>
+              <p>Token vote agreed 3%, Disagreed 1%</p>
+            </div>
 
+            <div class="col-5">
+              <div><canvas id="mychart3"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </div>
 
@@ -112,12 +128,12 @@
 {% endblock %}
 {% block extra_js %}
   <script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+  <script src="{% static 'js/plugins/isotope.pkgd.min.js' %}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
 
-
-
+  <!-- CHART -->
   <script>
       // Label formatter function
       const formatter = (value, ctx) => {
@@ -241,6 +257,7 @@
 
       const ctx = document.getElementById("mychart").getContext("2d");
       const ctx2 = document.getElementById("mychart2").getContext("2d");
+      const ctx3 = document.getElementById("mychart3").getContext("2d");
 
       new Chart(ctx, {
           type: "bar",
@@ -260,7 +277,29 @@
           options: options
       });
 
+      new Chart(ctx3, {
+          type: "bar",
+          data: {
+              labels: ["Token", "Quorum"],
+              datasets: data
+          },
+          options: options
+      });
+  </script>
 
+  <!-- FILTERS -->
+  <script>
+    var filterVal = '';
+    var $grid = $('.grid').isotope({
+      itemSelector: '.grid-item',
+      layoutMode: 'fitRows'
+    });
 
+    function filterchange(){
+        var type = $('#type').val();
+        var status = $('#status').val();
+        var filterVal = type+status;
+        $grid.isotope({filter: filterVal});
+    }
   </script>
 {% endblock %}
