@@ -1,8 +1,7 @@
 from django.shortcuts import render
 
 # icon sdk test
-#from iconsdk.icon_service import IconService
-#from iconsdk.providers.http_provider import HTTPProvider
+from . import jsonrpc
 
 # coinmarketcap test
 from requests import Request, Session
@@ -19,8 +18,9 @@ def index(request):
         request.session['fromAddress'] = 'none'
 
     # ICON SDK test
-    #icon_service = IconService(HTTPProvider("https://bicon.net.solidwallet.io/api/v3"))
-    #latestblock = icon_service.get_block("latest")
+    latest_block = jsonrpc.JsonRPCCalls().getLatestBlock()
+    print(latest_block)
+
 
     # COINMARKETCAP (conversion for multiple currencies requires paid account, pay and refactor this later)
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
