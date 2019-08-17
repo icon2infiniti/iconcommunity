@@ -5,7 +5,7 @@ from iconsdk.providers.http_provider import HTTPProvider
 class PrepRPCCalls():
     #https://bicon.net.solidwallet.io/api/v3
     #https://devorg.icon.foundation/api/v3
-    def __init__(self, api_endpoint="http://20.20.7.156:9000/api/v3"):
+    def __init__(self, api_endpoint="https://devorg.icon.foundation/api/v3"):
         self._api_endpoint = api_endpoint
 
     def getPReps(self):
