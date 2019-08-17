@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from . import preprpc
 
+
 def registration(request, template='prep/registration.html', extra_context=None):
     if 'nightmode' not in request.session:
         request.session['nightmode'] = False
