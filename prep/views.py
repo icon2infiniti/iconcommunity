@@ -29,7 +29,9 @@ def management(request, template='prep/management.html', extra_context=None):
     if 'fromAddress' not in request.session:
         request.session['fromAddress'] = 'none'
 
-    latest_block = preprpc.PrepRPCCalls().getPReps()
+    params = {}
+
+    latest_block = preprpc.PrepRPCCalls().json_rpc_call("getLastBlock", params)
 
     context = {
         'nightmode': request.session['nightmode'],
