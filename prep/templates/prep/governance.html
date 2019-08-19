@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static i18n %}
 {% block extra_head %}
+  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet">
   <style type="text/css">
     table.tablesorter thead tr .header {
     background-image: url({% static 'prep/img/bg.gif' %});
@@ -15,14 +16,6 @@
     table.tablesorter thead tr .headerSortDown {
       background-image: url({% static 'prep/img/desc.gif' %});
     }
-
-    input:focus {
-      background-color: transparent!important;
-    }
-    .form-control {
-      border: 1px solid rgba(255,255,255, 0.5);
-    }
-
   </style>
 {% endblock %}
 {% block title %}GOVERNANCE VARIABLE{% endblock %}

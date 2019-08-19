@@ -407,3 +407,11 @@ select.selectpicker {
 .bootstrap-select .dropdown-menu.dropdown-black li>a {
   color: rgba(255, 255, 255, 0.7);
 }
+
+
+input:focus {
+  background-color: transparent!important;
+}
+.form-control {
+  border: 1px solid rgba(255,255,255, 0.5);
+}

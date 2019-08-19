@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from . import preprpc
+from iconsdk.exception import JSONRPCException
 
 
-def registration(request, template='prep/registration.html', extra_context=None):
+def init_mode(request):
     if 'nightmode' not in request.session:
         request.session['nightmode'] = False
     if 'navbar' not in request.session:
@@ -16,68 +17,61 @@ def registration(request, template='prep/registration.html', extra_context=None)
         'fromAddress': request.session['fromAddress'],
         'section': 'PREP',
     }
-    if extra_context is not None:
-        context.update(extra_context)
+    return context
+
+
+def registration(request, template='prep/registration.html'):
+    context = init_mode(request)
     return render(request, template, context)
 
 
-def management(request, template='prep/management.html', extra_context=None):
-    if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
-    if 'navbar' not in request.session:
-        request.session['navbar'] = True
-    if 'fromAddress' not in request.session:
-        request.session['fromAddress'] = 'none'
-
-    params = {}
-
-    latest_block = preprpc.PrepRPCCalls().json_rpc_call("getLastBlock", params)
-
-    context = {
-        'nightmode': request.session['nightmode'],
-        'navbar': request.session['navbar'],
-        'fromAddress': request.session['fromAddress'],
-        'section': 'PREP',
-        'latest_block': latest_block,
+def get_prep(request):
+    params = {
+        'address': request.session['fromAddress']
+        #'address': 'hxb2ed93806e9585a7a8b722f7031323925914de91'
     }
-    if extra_context is not None:
-        context.update(extra_context)
+    response = None
+    try:
+        response = preprpc.PrepRPCCalls().json_rpc_call("getPRep", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+    finally:
+        return response
+
+
+def get_preps(request):
+    params = {
+        'startRanking': "0x1",
+        'endRanking': "0x8",
+        'blockHeight': "0x1234"
+    }
+    response = preprpc.PrepRPCCalls().json_rpc_call("getPReps", params)
+    return response
+
+
+def management(request, template='prep/management.html'):
+    context = init_mode(request)
+
+    #latest_block = preprpc.PrepRPCCalls().json_rpc_call("getLastBlock", params)
+    #latest_block = preprpc.PrepRPCCalls("cx8e50eb4188681401aee7bd29178ed451f558697c").json_rpc_call("showGameRoomList", params)
+
+    getPRep = get_prep(request)
+    context.update({
+        'getPRep': getPRep
+    })
+
+    #context.update({
+    #    'latest_block': latest_block,
+    #})
+
     return render(request, template, context)
 
 
-def governance(request, template='prep/governance.html', extra_context=None):
-    if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
-    if 'navbar' not in request.session:
-        request.session['navbar'] = True
-    if 'fromAddress' not in request.session:
-        request.session['fromAddress'] = 'none'
-
-    context = {
-        'nightmode': request.session['nightmode'],
-        'navbar': request.session['navbar'],
-        'fromAddress': request.session['fromAddress'],
-        'section': 'PREP',
-    }
-    if extra_context is not None:
-        context.update(extra_context)
+def governance(request, template='prep/governance.html'):
+    context = init_mode(request)
     return render(request, template, context)
 
 
-def proposal(request, template='prep/proposal.html', extra_context=None):
-    if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
-    if 'navbar' not in request.session:
-        request.session['navbar'] = True
-    if 'fromAddress' not in request.session:
-        request.session['fromAddress'] = 'none'
-
-    context = {
-        'nightmode': request.session['nightmode'],
-        'navbar': request.session['navbar'],
-        'fromAddress': request.session['fromAddress'],
-        'section': 'PREP',
-    }
-    if extra_context is not None:
-        context.update(extra_context)
+def proposal(request, template='prep/proposal.html'):
+    context = init_mode(request)
     return render(request, template, context)
