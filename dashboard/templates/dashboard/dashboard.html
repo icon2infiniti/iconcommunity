@@ -7,6 +7,7 @@
 {% block title %}Dashboard{% endblock %}
 {% block section %}Dashboard{% endblock %}
 {% block content %}
+
   {% load el_pagination_tags %}
   <!-- Ranking -->
 
@@ -20,42 +21,33 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table class="table ranking">
+            <table class="table ranking" style="margin-bottom:0px!important;">
               <thead class="text-primary">
               <tr>
-                <th>#</th>
-                <th>Name</th>
-                <th>Country</th>
-                <th>Grade</th>
-                <th>i_rep</th>
-                <th>Stake</th>
-                <th>Delegated</th>
-                <th>Validated Blocks</th>
-                <th>Total Blocks</th>
+                <th width="8%">#</th>
+                <th width="10%">Name</th>
+                <th width="10%">Country</th>
+                <th width="10%">Grade</th>
+                <th width="10%">i_rep</th>
+                <th width="10%">Stake</th>
+                <th width="10%">Delegated</th>
+                <th width="17%">Validated Blocks</th>
+                <th width="15%">Total Blocks</th>
               </tr>
               </thead>
 
               <tbody>
 
-              {% for prep in prep_all %}
-                <tr>
-                  <td>{{ forloop.counter }}</td>
-                  <td>{{ prep.name }}</td>
-                  <td>{{ prep.country }}</td>
-                  <td id="grade">{{ prep.grade }}</td>
-                  <td id="irep">{{ prep.irep }}</td>
-                  <td id="stake">{{ prep.stake }}</td>
-                  <td id="delegated">{{ prep.delegated }}</td>
-                  <td id="validatedBlocks">{{ prep.validatedBlocks }}</td>
-                  <td id="totalBlocks">{{ prep.totalBlocks }}</td>
-                </tr>
-              {% endfor %}
-
-
+              {% paginate prep_all %}
+              {% include page_template %}
 
               </tbody>
 
             </table>
+            <div class="text-center">
+            {% show_more "Show More..."%}
+            </div>
+
           </div>
         </div>
       </div>
@@ -508,7 +500,9 @@
 
 
   <script>
-    $.endlessPaginate();
+        $.endlessPaginate({
+            contentSelector: '.endless_content_wrapper'
+        });
   </script>
 
 {% endblock %}

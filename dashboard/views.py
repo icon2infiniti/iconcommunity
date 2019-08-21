@@ -43,7 +43,10 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
 
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
 
+    i = 1
     for prep in preps['preps']:
+        prep['index'] = i
+        i += 1
         prep['grade'] = PREP_GRADE[int(prep['grade'], 16)]
         irep = int(int(prep['irep'], 16)/1000000000000000000)
         prep['irep'] = '{:,}'.format(irep)
