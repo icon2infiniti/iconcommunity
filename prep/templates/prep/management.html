@@ -7,8 +7,6 @@
 {% block title %}P-REP MANAGEMENT{% endblock %}
 {% block section %}P-REP MANAGEMENT{% endblock %}
 {% block content %}
-
-
   {% if getPRep == None %}
     <h3>You're not currently registered as a P-Rep. To register, fill the information below. Note that on-chain registration costs 2,000 ICX which will be burned.</h3>
     <div class="row">
@@ -183,7 +181,7 @@
 
       function getPRep(){
         let params = {
-            //'address': request.session['fromAddress']
+            //'address': {{ fromAddress }}
             'address': 'hxb2ed93806e9585a7a8b722f7031323925914de91'
         };
         let response = json_rpc_call("getPRep", params);
@@ -201,6 +199,7 @@
       }
 
       async function json_rpc_transaction_call(from_wallet, method_name, params){
+          // Need to sign or send to ICONex
           var txBuilder = new IconBuilder.CallTransactionBuilder();
           var txObj = txBuilder
               .from(from_wallet)
@@ -209,16 +208,6 @@
               .params(params)
               .build();
           return await icon_service.call(txObj).execute();
-
-          /*
-          var callBuilder = new IconBuilder.CallBuilder();
-          var callObj = callBuilder
-              .to(TO_CONTRACT)
-              .method(method_name)
-              .params(params)
-              .build();
-          return await icon_service.call(callObj).execute();
-          */
       }
 
   </script>

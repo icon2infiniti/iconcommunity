@@ -1,15 +1,18 @@
 from django.shortcuts import render
 
 # icon sdk test
-from . import jsonrpc
+from . import dashboardrpc
+from iconsdk.exception import JSONRPCException
 
 # coinmarketcap test
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
+from el_pagination.decorators import page_template
 
-def index(request):
+
+def init_mode(request):
     if 'nightmode' not in request.session:
         request.session['nightmode'] = False
     if 'navbar' not in request.session:
@@ -17,12 +20,41 @@ def index(request):
     if 'fromAddress' not in request.session:
         request.session['fromAddress'] = 'none'
 
-    # ICON SDK test
-    latest_block = jsonrpc.JsonRPCCalls().getLatestBlock()
-    print(latest_block)
+    context = {
+        'nightmode': request.session['nightmode'],
+        'navbar': request.session['navbar'],
+        'fromAddress': request.session['fromAddress'],
+        'section': 'DASHBOARD',
+    }
+    return context
 
 
-    # COINMARKETCAP (conversion for multiple currencies requires paid account, pay and refactor this later)
+@page_template('dashboard/prepranking.html')
+def index(request, template='dashboard/dashboard.html', extra_context=None):
+    context = init_mode(request)
+
+    # GetPReps
+    params = {}
+    preps = {}
+    try:
+        preps = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPReps", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+
+    PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
+
+    for prep in preps['preps']:
+        prep['grade'] = PREP_GRADE[int(prep['grade'], 16)]
+        irep = int(int(prep['irep'], 16)/1000000000000000000)
+        prep['irep'] = '{:,}'.format(irep)
+        prep['stake'] = int(prep['stake'], 16)
+        delegated = int(prep['delegated'], 16)/1000000000000000000
+        prep['delegated'] = delegated = '{:,}'.format(delegated)
+        prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
+        prep['totalBlocks'] = int(prep['totalBlocks'], 16)
+
+
+    # CMC (conversion for multiple currencies requires paid account, pay and refactor this later)
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
         'id': '2722', #AC3=2722, ICX=2099, USD=2781
@@ -43,28 +75,20 @@ def index(request):
     except (ConnectionError, Timeout, TooManyRedirects) as e:
         print(e)
 
-    context = {
-        'nightmode': request.session['nightmode'],
-        'navbar': request.session['navbar'],
-        'fromAddress': request.session['fromAddress'],
-        'section': 'DASHBOARD',
+    context.update({
         'ac3data': ac3data,
-    }
-
-    return render(request, 'dashboard/dashboard.html', context)
+        'preps': preps,
+    })
+    # END CMC
+    if extra_context is not None:
+        context.update(extra_context)
+    return render(request, template, context)
 
 
 def preplist(request, type):
-    if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
-    if 'navbar' not in request.session:
-        request.session['navbar'] = True
-
-    context = {
-        'nightmode': request.session['nightmode'],
-        'navbar': request.session['navbar'],
-        'section': 'P-REP LISTING',
-    }
-
+    context = init_mode(request)
+    context.update({
+        'section': 'P-REP LISTING'
+    })
     return render(request, 'dashboard/preplist.html', context)
 

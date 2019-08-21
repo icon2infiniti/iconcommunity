@@ -14,21 +14,6 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <!--
-          <div class="tools float-right">
-            <div class="dropdown">
-              <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
-                <i class="tim-icons icon-settings-gear-63"></i>
-              </button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#pablo">Action</a>
-                <a class="dropdown-item" href="#pablo">Another action</a>
-                <a class="dropdown-item" href="#pablo">Something else</a>
-                <a class="dropdown-item text-danger" href="#pablo">Remove Data</a>
-              </div>
-            </div>
-          </div>
-          -->
           <h2 class="card-title">P-Rep Rankings</h2>
         </div>
         <div class="card-body">
@@ -49,29 +34,7 @@
               </thead>
               <tbody>
 
-              <tr>
-                <td>1</td>
-                <td>Banana Node</td>
-                <td>KOR</td>
-                <td>Main P-Rep</td>
-                <td>50,000</td>
-                <td>10,000</td>
-                <td>100,000,000</td>
-                <td>9,000</td>
-                <td>10,000</td>
-              </tr>
-
-              <tr>
-                <td>2</td>
-                <td>ABC Node</td>
-                <td>USA</td>
-                <td>Main P-Rep</td>
-                <td>50,000</td>
-                <td>12,000</td>
-                <td>12,000,000</td>
-                <td>9,032</td>
-                <td>10,016</td>
-              </tr>
+              {% include "dashboard/prepranking.html" %}
 
               </tbody>
             </table>
@@ -156,7 +119,6 @@
         </div>
       </div>
     </div>
-
     <div class="col-lg-3 col-md-6">
       <div class="card card-stats">
         <div class="card-body">
@@ -224,6 +186,7 @@
         </div>
       </div>
     </div>
+
 
     <!-- P-Rep Locations -->
     <div class="col-lg-12">
@@ -503,6 +466,7 @@
   <script src="{% static 'dashboard/js/coininfo.js' %}"></script>
   <script src="{% static 'dashboard/js/jquery-jvectormap.js' %}"></script>
   <script src="{% static 'dashboard/js/demo.js' %}"></script>
+  <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
 
   <script>
     $(document).ready(function() {
@@ -521,7 +485,21 @@
         $('#ac3_market_cap').text(ac3_market_cap+" ICX");
         $('#ac3_volume').text(ac3_volume+" ICX");
         $('#ac3_change > span').text(ac3_change+" %");
+
+        function convertHexToDecimal()
+        {
+            $('#grade').text(parseInt($('#grade').text(), 16));
+            $('#irep').text((parseInt($('#irep').text(), 16)/1000000000000000000).toLocaleString());
+            $('#stake').text(parseInt($('#stake').text(), 16));
+            $('#delegated').text(parseInt($('#delegated').text(), 16));
+            $('#validatedBlocks').text(parseInt($('#validatedBlocks').text(), 16));
+            $('#totalBlocks').text(parseInt($('#totalBlocks').text(), 16));
+        }
+        //convertHexToDecimal();
     });
   </script>
+
+
+  <script>$.endlessPaginate({pageSelector: 'div#entries'});</script>
 
 {% endblock %}
