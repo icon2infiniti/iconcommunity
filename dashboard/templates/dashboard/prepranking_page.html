@@ -1,0 +1,18 @@
+{% load el_pagination_tags %}
+
+{% with preps.preps as preps_all %}
+  {% if request.is_ajax %}{% paginate preps_all %}{% endif %}
+  {% for prep in preps_all %}
+  <tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ prep.name }}</td>
+    <td>{{ prep.country }}</td>
+    <td id="grade">{{ prep.grade }}</td>
+    <td id="irep">{{ prep.irep }}</td>
+    <td id="stake">{{ prep.stake }}</td>
+    <td id="delegated">{{ prep.delegated }}</td>
+    <td id="validatedBlocks">{{ prep.validatedBlocks }}</td>
+    <td id="totalBlocks">{{ prep.totalBlocks }}</td>
+  </tr>
+  {% endfor %}
+{% endwith %}

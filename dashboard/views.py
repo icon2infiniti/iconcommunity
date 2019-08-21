@@ -29,7 +29,7 @@ def init_mode(request):
     return context
 
 
-@page_template('dashboard/prepranking.html')
+@page_template('dashboard/prepranking_page.html')
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
 
@@ -52,6 +52,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         prep['delegated'] = delegated = '{:,}'.format(delegated)
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
+
+    prep_all = preps['preps']
 
 
     # CMC (conversion for multiple currencies requires paid account, pay and refactor this later)
@@ -77,7 +79,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
 
     context.update({
         'ac3data': ac3data,
-        'preps': preps,
+        'prep_all': prep_all,
     })
     # END CMC
     if extra_context is not None:

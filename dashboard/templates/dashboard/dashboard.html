@@ -7,7 +7,9 @@
 {% block title %}Dashboard{% endblock %}
 {% block section %}Dashboard{% endblock %}
 {% block content %}
+  {% load el_pagination_tags %}
   <!-- Ranking -->
+
   <div class="row">
 
     <!-- Block Producer Ranking -->
@@ -32,11 +34,27 @@
                 <th>Total Blocks</th>
               </tr>
               </thead>
+
               <tbody>
 
-              {% include "dashboard/prepranking.html" %}
+              {% for prep in prep_all %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ prep.name }}</td>
+                  <td>{{ prep.country }}</td>
+                  <td id="grade">{{ prep.grade }}</td>
+                  <td id="irep">{{ prep.irep }}</td>
+                  <td id="stake">{{ prep.stake }}</td>
+                  <td id="delegated">{{ prep.delegated }}</td>
+                  <td id="validatedBlocks">{{ prep.validatedBlocks }}</td>
+                  <td id="totalBlocks">{{ prep.totalBlocks }}</td>
+                </tr>
+              {% endfor %}
+
+
 
               </tbody>
+
             </table>
           </div>
         </div>
@@ -485,21 +503,12 @@
         $('#ac3_market_cap').text(ac3_market_cap+" ICX");
         $('#ac3_volume').text(ac3_volume+" ICX");
         $('#ac3_change > span').text(ac3_change+" %");
-
-        function convertHexToDecimal()
-        {
-            $('#grade').text(parseInt($('#grade').text(), 16));
-            $('#irep').text((parseInt($('#irep').text(), 16)/1000000000000000000).toLocaleString());
-            $('#stake').text(parseInt($('#stake').text(), 16));
-            $('#delegated').text(parseInt($('#delegated').text(), 16));
-            $('#validatedBlocks').text(parseInt($('#validatedBlocks').text(), 16));
-            $('#totalBlocks').text(parseInt($('#totalBlocks').text(), 16));
-        }
-        //convertHexToDecimal();
     });
   </script>
 
 
-  <script>$.endlessPaginate({pageSelector: 'div#entries'});</script>
+  <script>
+    $.endlessPaginate();
+  </script>
 
 {% endblock %}
