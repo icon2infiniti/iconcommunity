@@ -32,12 +32,10 @@
 
       <div class="card-body">
         <div class="form-inline">
-          <input class="form-control" type="text" size="32" value="{{irep}}">
-          <button type="submit" class="btn btn-primary">Update</button>
+          <input id="irep" class="form-control" type="text" size="32" value="{{irep}}">
+          <button id="iRepUpdate" type="submit" class="btn btn-primary">Update</button>
         </div>
-
       </div>
-
     </div>
   </div>
 </div>
@@ -116,6 +114,13 @@
               .build();
           return await icon_service.call(txObj).execute();
       }
+
+      $('#iRepUpdate').click(function() {
+        aWallet = "";
+        params['irep'] = $('#irep').val();
+        json_rpc_transaction_call(aWallet, "setGovernanceVariables", params)
+      })
+
       $.tablesorter.addParser({
         id: "fancyNumber",
         is: function(s) {

@@ -74,8 +74,6 @@ def governance(request, template='prep/governance.html'):
     context["dataList"] = PReps['preps']
     context["irep"] = int(PRep['irep'], 0)
     context["irepUpdateBlockHeight"] = int(PRep['irepUpdateBlockHeight'], 0)
-    print(context["irep"])
-    print(context["irepUpdateBlockHeight"])
     return render(request, template, context)
 
 
