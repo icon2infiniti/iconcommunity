@@ -27,17 +27,15 @@
     <div class="card">
 
       <div class="card-header">
-        <h4 class="card-title">Update i_rep at { blockheight }</h4>
+        <h4 class="card-title">Update i_rep at {{ irepUpdateBlockHeight }}</h4>
       </div>
 
       <div class="card-body">
         <div class="form-inline">
-          <input class="form-control" type="text" size="32">
-          <button type="submit" class="btn btn-primary">Update</button>
+          <input id="irep" class="form-control" type="text" size="32" value="{{irep}}">
+          <button id="iRepUpdate" type="submit" class="btn btn-primary">Update</button>
         </div>
-
       </div>
-
     </div>
   </div>
 </div>
@@ -62,22 +60,16 @@
               </tr>
             </thead>
             <tbody>
+            {% for item in dataList %}
               <tr>
-                <td class="text-center">1</td>
-                <td class="text-center">Banana node</td>
-                <td class="text-center">50,000</td>
-                <td class="text-center">4,608</td>
-                <td class="text-center">10,000</td>
-                <td class="text-center">1,000,000,000,000</td>
+                <td class="text-center">{{forloop.counter}}</td>
+                <td class="text-center">{{item.name}}</td>
+                <td class="text-center">{{item.irep}}</td>
+                <td class="text-center">{{item.irepUpdatBlockHeight}}</td>
+                <td class="text-center">{{item.stake}}</td>
+                <td class="text-center">{{item.delegated}}</td>
               </tr>
-              <tr>
-                <td class="text-center">2</td>
-                <td class="text-center">ABC node</td>
-                <td class="text-center">50,000</td>
-                <td class="text-center">4,352</td>
-                <td class="text-center">12,000</td>
-                <td class="text-center">12,000,000</td>
-              </tr>
+            {% endfor %}
             </tbody>
           </table>
         </div>
@@ -91,6 +83,44 @@
   <script src="{% static 'js/plugins/jquery.tablesorter.js' %}"></script>
   <script>
     $(document).ready(function() {
+      const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+      const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+      const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+      const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
+
+      const IconService = window['icon-sdk-js'];
+      const provider = new IconService.HttpProvider(TEMP_NET);
+      const icon_service = new IconService(provider);
+      const IconBuilder = IconService.IconBuilder;
+
+      async function json_rpc_call(method_name, params){
+          var callBuilder = new IconBuilder.CallBuilder();
+          var callObj = callBuilder
+              .to(TO_CONTRACT)
+              .method(method_name)
+              .params(params)
+              .build();
+          return await icon_service.call(callObj).execute();
+      }
+
+      async function json_rpc_transaction_call(from_wallet, method_name, params){
+          // Need to sign or send to ICONex
+          var txBuilder = new IconBuilder.CallTransactionBuilder();
+          var txObj = txBuilder
+              .from(from_wallet)
+              .to(TO_CONTRACT)
+              .method(method_name)
+              .params(params)
+              .build();
+          return await icon_service.call(txObj).execute();
+      }
+
+      $('#iRepUpdate').click(function() {
+        aWallet = "";
+        params['irep'] = $('#irep').val();
+        json_rpc_transaction_call(aWallet, "setGovernanceVariables", params)
+      })
+
       $.tablesorter.addParser({
         id: "fancyNumber",
         is: function(s) {
