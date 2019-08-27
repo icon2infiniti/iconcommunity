@@ -50,13 +50,27 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         prep['grade'] = PREP_GRADE[int(prep['grade'], 16)]
         irep = int(int(prep['irep'], 16)/1000000000000000000)
         prep['irep'] = '{:,}'.format(irep)
-        prep['stake'] = int(prep['stake'], 16)
+        prep['stake'] = int(prep['stake'], 16)/1000000000000000000
         delegated = int(prep['delegated'], 16)/1000000000000000000
         prep['delegated'] = delegated = '{:,}'.format(delegated)
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
 
+        # get Prep details, but too slow. Do more efficient way
+        #address = {
+        #    "address": prep['address']
+        #}
+
+        #try:
+        #    prep['detail'] = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", address)
+        #except JSONRPCException as e:
+        #    print(str(e.message))
+
+        #prep_json = prep['detail']['details']
+        #print(prep_json)
+
     prep_all = preps['preps']
+
 
 
     # CMC (conversion for multiple currencies requires paid account, pay and refactor this later)

@@ -8,7 +8,6 @@
 {% block section %}Dashboard{% endblock %}
 {% block content %}
 
-  {% load el_pagination_tags %}
   <!-- Ranking -->
 
   <div class="row">
@@ -25,12 +24,12 @@
               <thead class="text-primary">
               <tr>
                 <th width="8%">#</th>
-                <th width="10%">Name</th>
-                <th width="10%">Country</th>
-                <th width="10%">Grade</th>
-                <th width="10%">i_rep</th>
-                <th width="10%">Stake</th>
-                <th width="10%">Delegated</th>
+                <th width="32%">Name</th>
+                <th width="8%">Country</th>
+                <th width="8%">Grade</th>
+                <th width="8%">i_rep</th>
+                <th width="8%">Stake</th>
+                <th width="8%">Delegated</th>
                 <th width="17%">Validated Blocks</th>
                 <th width="15%">Total Blocks</th>
               </tr>
@@ -38,15 +37,23 @@
 
               <tbody>
 
-              {% paginate prep_all %}
-              {% include page_template %}
+                {% for prep in prep_all %}
+                <tr>
+                  <td width="8%">{{ prep.index }}</td>
+                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
+                  <td width="8%">{{ prep.country }}</td>
+                  <td width="8%" id="grade">{{ prep.grade }}</td>
+                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="8%" id="stake">{{ prep.stake }}</td>
+                  <td width="8%" id="delegated">{{ prep.delegated }}</td>
+                  <td width="10%" id="validatedBlocks">{{ prep.validatedBlocks }}</td>
+                  <td width="10%" id="totalBlocks">{{ prep.totalBlocks }}</td>
+                </tr>
+                {% endfor %}
 
               </tbody>
 
             </table>
-            <div class="text-center">
-            {% show_more "Show More..."%}
-            </div>
 
           </div>
         </div>
