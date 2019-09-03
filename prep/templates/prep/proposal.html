@@ -31,19 +31,21 @@
                   <label class="mx-1">Type</label>
                   <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary" onchange="filterchange();">
                     <option value="*" selected>All</option>
-                    <option value=".textproposal">Text Proposal</option>
-                    <option value=".steppriceproposal">Step Price Proposal</option>
-                    <option value="4">P-Rep Disqualification Proposal</option>
-                    <option value="5">Malicious SCORE Proposal</option>
+                    <option value="0">Text Proposal</option>
+                    <option value="1">Revision Update</option>
+                    <option value="2">Malicious SCORE Proposal</option>
+                    <option value="3">P-Rep Disqualification Proposal</option>
+                    <option value="4">Step Price Proposal</option>
                   </select>
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-3">
                   <label class="mx-1">Status</label>
                   <select id="status" class="selectpicker" data-size="7" data-style="btn btn-primary" onchange="filterchange();">
                     <option value="*" selected>All</option>
-                    <option value=".voting">Voting</option>
-                    <option value=".accepted">Accepted</option>
-                    <option value=".rejected">Rejected</option>
+                    <option value="0">Voting</option>
+                    <option value="1">Accepted</option>
+                    <option value="2">Rejected</option>
+                    <option value="3">Canceled</option>
                   </select>
                 </div>
               </div>
@@ -54,8 +56,7 @@
     </div>
   </div>
 
-  <div class="row grid">
-
+  <div class="row grid" id="proposalcards">
     <div class="grid-item col-md-6 textproposal" data-category="textproposal">
       <div class="card">
         <div class="card-body">
@@ -64,12 +65,11 @@
               <div class="info-icon icon-primary mb-3">
                 <i class="tim-icons icon-paper"></i> <span class="proposaltype">Text Proposal</span>
               </div>
-              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
-              <p>Proposed by<span> Banana</span></p>
-              <p>Quorum 40%, Disagree 20%</p>
-              <p>Token vote agreed 3%, Disagreed 1%</p>
+              <p><a href="#"><b>Sample</b></a></p>
+              <p>Proposed by<span> SampleName</span></p>
+              <p>Quorum Agree 11%, Disagree 22%</p>
+              <p>Token vote Agree 33%, Disagree 44%</p>
             </div>
-
             <div class="col-5">
               <div><canvas id="mychart"></canvas></div>
             </div>
@@ -78,50 +78,28 @@
       </div>
     </div>
 
-    <div class="grid-item col-md-6 textproposal voting" data-category="textproposal">
+    {% for item in itemList %}
+    <div class="grid-item col-md-6 textproposal" data-category="textproposal">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-7">
               <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Text Proposal (voting)</span>
+                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Text Proposal</span>
               </div>
-              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
-              <p>Proposed by<span> Banana</span></p>
-              <p>Quorum 40%, Disagree 20%</p>
-              <p>Token vote agreed 3%, Disagreed 1%</p>
+              <p><a href="#"><b>{{item.Title}}</b></a></p>
+              <p>Proposed by<span> {{item.name}}</span></p>
+              <p>Quorum Agree {{item.quorum.agree}}%, Disagree {{item.quorum.disagree}}%</p>
+              <p>Token vote Agree {{item.token.agree}}%, Disagree {{item.token.disagree}}%</p>
             </div>
-
             <div class="col-5">
-              <div><canvas id="mychart2"></canvas></div>
+              <div><canvas id="mychart"></canvas></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <div class="grid-item col-md-6 steppriceproposal" data-category="steppriceproposal">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-7">
-              <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Step Price Proposal (accepted)</span>
-              </div>
-              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
-              <p>Proposed by<span> Banana</span></p>
-              <p>Quorum 40%, Disagree 20%</p>
-              <p>Token vote agreed 3%, Disagreed 1%</p>
-            </div>
-
-            <div class="col-5">
-              <div><canvas id="mychart3"></canvas></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+    {% endfor %}
   </div>
 
 
@@ -137,12 +115,28 @@
   <script>
       // Label formatter function
       const formatter = (value, ctx) => {
-          const otherDatasetIndex = ctx.datasetIndex === 0 ? 1 : 0;
-          const total = ctx.chart.data.datasets[otherDatasetIndex].data[ctx.dataIndex] + value;
-          return `${(value / total * 100).toFixed(0)}%`;
+//          const otherDatasetIndex = ctx.datasetIndex === 0 ? 1 : 0;
+          let total = 0;
+          for (let i=0 ; i<ctx.chart.data.datasets.length ; i++) {
+//            if(ctx.datasetIndex !== i) {
+              total += ctx.chart.data.datasets[i].data[ctx.dataIndex];
+//            }
+          }
+          return `${((value / total) * 100).toFixed(0)}%`;
       };
 
       const data = [
+           {
+              // stack: 'test',
+              label: "Agree",
+              backgroundColor: "#1aaaba",
+              data: [11542, 12400],
+              // Change options only for labels of THIS DATASET
+              datalabels: {
+                  color: "white",
+                  formatter: formatter
+              }
+          },
           {
               // stack: 'test',
               label: "Disagree",
@@ -156,27 +150,18 @@
           },
           {
               // stack: 'test',
-              label: "Quorum",
-              backgroundColor: "#283fba",
-              data: [11542, 12400],
-              // Change options only for labels of THIS DATASET
-              datalabels: {
-                  color: "white",
-                  formatter: formatter
-              }
-          },
-          {
-              // stack: 'test',
-              label: "Agree",
-              backgroundColor: "#1aaaba",
-              data: [11542, 12400],
+              label: "Not Voted",
+              backgroundColor: "#cccccc",
+              data: [1542, 1400],
               // Change options only for labels of THIS DATASET
               datalabels: {
                   color: "white",
                   formatter: formatter
               }
           }
-      ];
+       ];
+
+       console.log(data);
 
       const options = {
           maintainAspectRatio: false,
@@ -256,8 +241,6 @@
       };
 
       const ctx = document.getElementById("mychart").getContext("2d");
-      const ctx2 = document.getElementById("mychart2").getContext("2d");
-      const ctx3 = document.getElementById("mychart3").getContext("2d");
 
       new Chart(ctx, {
           type: "bar",
@@ -268,23 +251,6 @@
           options: options
       });
 
-      new Chart(ctx2, {
-          type: "bar",
-          data: {
-              labels: ["Token", "Quorum"],
-              datasets: data
-          },
-          options: options
-      });
-
-      new Chart(ctx3, {
-          type: "bar",
-          data: {
-              labels: ["Token", "Quorum"],
-              datasets: data
-          },
-          options: options
-      });
   </script>
 
   <!-- FILTERS -->
@@ -301,5 +267,213 @@
         var filterVal = type+status;
         $grid.isotope({filter: filterVal});
     }
+
+      const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+      const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+      const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+      const DUMMY_NET = "http://localhost:8888"
+      const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
+
+      const IconService = window['icon-sdk-js'];
+      const provider = new IconService.HttpProvider(DUMMY_NET);
+      const icon_service = new IconService(provider);
+      const IconBuilder = IconService.IconBuilder;
+
+      async function json_rpc_call(method_name, params){
+          var callBuilder = new IconBuilder.CallBuilder();
+          var callObj = callBuilder
+              .to(TO_CONTRACT)
+              .method(method_name)
+              .params(params)
+              .build();
+          return await icon_service.call(callObj).execute();
+      }
+
+      async function json_rpc_transaction_call(from_wallet, method_name, params){
+          // Need to sign or send to ICONex
+          var txBuilder = new IconBuilder.CallTransactionBuilder();
+          var txObj = txBuilder
+              .from(from_wallet)
+              .to(TO_CONTRACT)
+              .method(method_name)
+              .params(params)
+              .build();
+          return await icon_service.call(txObj).execute();
+      }
+
+      
+  function getProposalType(i) {
+    switch (i) {
+      case 0:
+        return "Text Proposal";
+      case 1:
+        return "Revision Update";
+      case 2:
+        return "Malicious SCORE";
+      case 3:
+        return "P-Rep Disqualification";
+      case 4:
+        return "Step Price";
+      default:
+        return "No Type";
+    }
+  }
+
+  function getProposalStatus(i) {
+    switch (i) {
+      case 0:
+        return "Voting";
+      case 1:
+        return "Approved";
+      case 2:
+        return "Disapproved";
+      case 3:
+        return "Canceled";
+      default:
+        return "No Status";
+    }
+  }
+
+
+      function htmlToElement(html) {
+        var template = document.createElement('template');
+        html = html.trim(); // Never return a text node of whitespace as the result
+        template.innerHTML = html;
+        return template.content.firstChild;
+      }
+
+      function makecard(proposalType, Proposal, PRep, token, quorum, id) {
+        console.log(token);
+        console.log(quorum);
+        let quorumTotal = quorum.agree + quorum.disagree + quorum.notvoted;
+        let tokenTotal = token.agree + token.disagree + token.notvoted;
+        template = `
+    <div class="grid-item col-md-6 textproposal" data-category="textproposal">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-7">
+              <div class="info-icon icon-primary mb-3">
+                <i class="tim-icons icon-paper"></i> <span class="proposaltype">${proposalType}</span>
+              </div>
+              <p><a href="../proposaldetail/${Proposal.id}"><b>${Proposal.contents.description}</b></a></p>
+              <p>Proposed by <span><a href="https://tracker.icon.foundation/address/"+${Proposal.proposer}>${PRep.name}</a></span></p>
+              <p>Quorum Agree ${(quorum.agree/quorumTotal).toFixed(4)*100}%, Disagree ${(quorum.disagree/quorumTotal).toFixed(4)*100}%, Not Voted ${(quorum.notvoted/quorumTotal).toFixed(4)*100}%</p>
+              <p>Token vote Agree ${(token.agree/tokenTotal).toFixed(4)*100}%, Disagree ${(token.disagree/tokenTotal).toFixed(4)*100}%, Not Voted ${(token.notvoted/tokenTotal).toFixed(4)*100}%</p>
+            </div>
+            <div class="col-5">
+              <div><canvas id="mychart${id}"></canvas></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+`
+
+        $("#proposalcards")[0].appendChild(htmlToElement(template));
+
+      let voteData = [
+           {
+              // stack: 'test',
+              label: "Agree",
+              backgroundColor: "#1aaaba",
+              data: [token.agree, quorum.agree],
+              // Change options only for labels of THIS DATASET
+              datalabels: {
+                  color: "white",
+                  formatter: formatter
+              }
+          },
+          {
+              // stack: 'test',
+              label: "Disagree",
+              backgroundColor: "#ff0000",
+              data: [token.disagree, quorum.disagree],
+              // Change options only for labels of THIS DATASET
+              datalabels: {
+                  color: "white",
+                  formatter: formatter
+              }
+          },
+          {
+              // stack: 'test',
+              label: "Not Voted",
+              backgroundColor: "#cccccc",
+              data: [token.notvoted, quorum.notvoted],
+              // Change options only for labels of THIS DATASET
+              datalabels: {
+                  color: "white",
+                  formatter: formatter
+              }
+          }
+       ];
+
+       console.log("data ", voteData)
+
+
+      const ctx = document.getElementById("mychart"+id).getContext("2d");
+
+      new Chart(ctx, {
+          type: "bar",
+          data: {
+              labels: ["Token", "Quorum"],
+              datasets: voteData
+          },
+          options: options
+      });
+
+      }
+
+      async function reloadProposals() {
+        let type = $('#type').val();
+        let status = $('#status').val();
+
+        let params = {
+          type: "0x1",
+          status: "0x1"
+        }
+        let response = await json_rpc_call("getProposalList", params)
+        console.log("proposallist ", response);
+
+        let ProposalList = response.proposals;
+
+        for (let i=0 ; i<ProposalList.length ; i++) {
+          let aProposal = ProposalList[i];
+          let proposalResponse = await json_rpc_call("getProposal", {id:String(aProposal.id)});
+          let aPRepResponse = await json_rpc_call("getPRep", {address:proposalResponse.proposer});
+
+          console.log(proposalResponse);
+          console.log(aPRepResponse);
+//          makecard(title, name, quoruma, quorumd, tokena, tokend, id)
+          makecard(
+            getProposalType(parseInt(proposalResponse.contents.type)),
+            proposalResponse,
+            aPRepResponse,
+            {
+              "agree":parseInt(proposalResponse.voter.agree.amount),
+              "disagree":parseInt(proposalResponse.voter.disagree.amount),
+              "notvoted":parseInt(proposalResponse.voter.noVote.amount)
+            },
+            {
+              "agree":proposalResponse.voter.agree.address.length,
+              "disagree":proposalResponse.voter.disagree.address.length,
+              "notvoted":proposalResponse.voter.noVote.address.length
+            },
+            i
+          );
+        }
+      }
+
+
+    $(document).ready(function() {
+      reloadProposals();
+      $('#type').change(function() {
+        reloadProposals();
+      });
+      $('#status').change(function() {
+        reloadProposals();
+      });
+    });
+
   </script>
 {% endblock %}

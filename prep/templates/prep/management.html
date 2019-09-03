@@ -159,10 +159,11 @@
       const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
       const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
       const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+      const DUMMY_NET = "http://localhost:8888";
       const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
       const IconService = window['icon-sdk-js'];
-      const provider = new IconService.HttpProvider(TEMP_NET);
+      const provider = new IconService.HttpProvider(DUMMY_NET);
       const icon_service = new IconService(provider);
       const IconBuilder = IconService.IconBuilder;
 

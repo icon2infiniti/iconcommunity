@@ -116,9 +116,8 @@
       }
 
       $('#iRepUpdate').click(function() {
-        aWallet = "";
         params['irep'] = $('#irep').val();
-        json_rpc_transaction_call(aWallet, "setGovernanceVariables", params)
+        json_rpc_transaction_call({{ fromAddress }}, "setGovernanceVariables", params)
       })
 
       $.tablesorter.addParser({

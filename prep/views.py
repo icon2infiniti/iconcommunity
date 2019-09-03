@@ -25,10 +25,11 @@ def registration(request, template='prep/registration.html'):
     return render(request, template, context)
 
 
-def get_prep(request):
+def get_prep(address):
     params = {
+        'address': address
         # 'address': request.session['fromAddress']
-        'address': 'hxb2ed93806e9585a7a8b722f7031323925914de91'
+        # 'address': 'hxb2ed93806e9585a7a8b722f7031323925914de91'
     }
     response = None
     try:
@@ -39,7 +40,7 @@ def get_prep(request):
         return response
 
 
-def get_preps(request):
+def get_preps():
     params = {
         'startRanking': "0x1",
         'endRanking': "0x8",
@@ -49,13 +50,52 @@ def get_preps(request):
     return response
 
 
+def get_proposal(proposal_id):
+    params = {
+        'id': proposal_id
+    }
+    response = None
+    try:
+        response = preprpc.PrepRPCCalls().json_rpc_call("getProposal", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+    finally:
+        return response
+
+
+def get_block(blockHeight):
+    params = {
+        'value': blockHeight
+    }
+    response = None
+    try:
+        response = preprpc.PrepRPCCalls().json_rpc_call("getBlock", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+    finally:
+        return response
+
+
+def get_transaction(txHash):
+    params = {
+        'tx_hash': txHash
+    }
+    response = None
+    try:
+        response = preprpc.PrepRPCCalls().json_rpc_call("getTransaction", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+    finally:
+        return response
+
+
 def management(request, template='prep/management.html'):
     context = init_mode(request)
 
     #latest_block = preprpc.PrepRPCCalls().json_rpc_call("getLastBlock", params)
     #latest_block = preprpc.PrepRPCCalls("cx8e50eb4188681401aee7bd29178ed451f558697c").json_rpc_call("showGameRoomList", params)
 
-    getPRep = get_prep(request)
+    getPRep = get_prep(request.session['fromAddress'])
     context.update({
         'getPRep': getPRep
     })
@@ -69,8 +109,8 @@ def management(request, template='prep/management.html'):
 
 def governance(request, template='prep/governance.html'):
     context = init_mode(request)
-    PReps = get_preps(request)
-    PRep = get_prep(request)
+    PReps = get_preps()
+    PRep = get_prep(request.session['fromAddress'])
     context["dataList"] = PReps['preps']
     context["irep"] = int(PRep['irep'], 0)
     context["irepUpdateBlockHeight"] = int(PRep['irepUpdateBlockHeight'], 0)
@@ -80,3 +120,17 @@ def governance(request, template='prep/governance.html'):
 def proposal(request, template='prep/proposal.html'):
     context = init_mode(request)
     return render(request, template, context)
+
+
+def proposaldetail(request, proposal_id):
+    context = init_mode(request)
+    aProposal = get_proposal(proposal_id)
+    context['aProposal'] = aProposal
+    aPRep = get_prep(aProposal['proposer'])
+    context['aPRep'] = aPRep
+    startBlock = get_block(aProposal['startBlockHeight'])
+    endBlock = get_block(aProposal['endBlockHeight'])
+    context['start'] = startBlock['time_stamp']
+    context['end'] = endBlock['time_stamp']
+
+    return render(request, 'prep/proposaldetail.html', context)
