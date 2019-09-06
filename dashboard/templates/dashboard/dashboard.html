@@ -3,10 +3,14 @@
 {% load humanize %}
 {% block extra_head %}
   <link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet"/>
+  <script>
+    var countries_alpha2 = {{ countries_alpha2|safe }};
+  </script>
 {% endblock %}
 {% block title %}Dashboard{% endblock %}
 {% block section %}Dashboard{% endblock %}
 {% block content %}
+{% load mathfilters %}
 
   <!-- Ranking -->
 
@@ -219,7 +223,25 @@
               <div class="table-responsive">
                 <table class="table">
                   <tbody>
-                  <tr>
+                  {% for k, v in countries_name_sorted.items %}
+                    <tr>
+                      <td>
+                        <div class="flag">
+                          {% with 'dashboard/img/flags/'|add:k|add:'.png' as flag_static %}
+                          <img src="{% static flag_static %}" alt="flag" width="23" height="23">
+                          {% endwith %}
+                        </div>
+                      </td>
+                      <td>{{ k }}</td>
+                      <td class="text-right">
+                        {{ v }}
+                      </td>
+                      <td class="text-right">
+                        {{ v|div:preps_count|mul:100|floatformat:"2" }}%
+                      </td>
+                    </tr>
+                  {% endfor %}
+                  <!--<tr>
                     <td>
                       <div class="flag">
                         <img src="{% static 'dashboard/img/US.png' %}" alt="flag">
@@ -233,76 +255,7 @@
                       53.23%
                     </td>
                   </tr>
-                  <tr>
-                    <td>
-                      <div class="flag">
-                        <img src="{% static 'dashboard/img/DE.png' %}" alt="flag">
-                      </div>
-                    </td>
-                    <td>Germany</td>
-                    <td class="text-right">
-                      1.300
-                    </td>
-                    <td class="text-right">
-                      20.43%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="flag">
-                        <img src="{% static 'dashboard/img/AU.png' %}" alt="flag">
-                      </div>
-                    </td>
-                    <td>Australia</td>
-                    <td class="text-right">
-                      760
-                    </td>
-                    <td class="text-right">
-                      10.35%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="flag">
-                        <img src="{% static 'dashboard/img/GB.png' %}" alt="flag">
-                      </div>
-                    </td>
-                    <td>United Kingdom</td>
-                    <td class="text-right">
-                      690
-                    </td>
-                    <td class="text-right">
-                      7.87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="flag">
-                        <img src="{% static 'dashboard/img/RO.png' %}" alt="flag">
-                      </div>
-                    </td>
-                    <td>Romania</td>
-                    <td class="text-right">
-                      600
-                    </td>
-                    <td class="text-right">
-                      5.94%
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div class="flag">
-                        <img src="{% static 'dashboard/img/BR.png' %}" alt="flag">
-                      </div>
-                    </td>
-                    <td>Brasil</td>
-                    <td class="text-right">
-                      550
-                    </td>
-                    <td class="text-right">
-                      4.34%
-                    </td>
-                  </tr>
+                  -->
                   </tbody>
                 </table>
               </div>
@@ -483,13 +436,16 @@
   <script src="{% static 'dashboard/js/chart.bundle.min.js' %}"></script>
   <script src="{% static 'dashboard/js/coininfo.js' %}"></script>
   <script src="{% static 'dashboard/js/jquery-jvectormap.js' %}"></script>
-  <script src="{% static 'dashboard/js/demo.js' %}"></script>
+  <!--<script src="{% static 'dashboard/js/demo.js' %}"></script>-->
+  <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
+
   <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
 
   <script>
     $(document).ready(function() {
+
         //demo.initDashboardPageCharts();
-        demo.initVectorMap();
+        mapobj.initVectorMap(countries_alpha2);
         var ac3_market_cap = parseFloat($('#ac3_market_cap').text()).toLocaleString();
         var ac3_volume = parseFloat($('#ac3_volume').text()).toLocaleString();
         var ac3_change = parseFloat($('#ac3_change > span').text());

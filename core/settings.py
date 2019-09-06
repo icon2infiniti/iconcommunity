@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'resources',
     'developers',
     'el_pagination',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
