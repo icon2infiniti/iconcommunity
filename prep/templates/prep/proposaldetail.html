@@ -107,6 +107,8 @@
       total:parseInt("{{aProposal.voter.agree.amount}}")+parseInt("{{aProposal.voter.disagree.amount}}")+parseInt("{{aProposal.voter.noVote.amount}}")
       };
 
+    
+
     $("#QuorumAgreeRate").append((Quorum.agree/Quorum.total).toFixed(4)*100+" %");
     $("#QuorumDisagreeRate").append((Quorum.disagree/Quorum.total).toFixed(4)*100+" %");
     $("#QuorumNoVoteRate").append((Quorum.noVote/Quorum.total).toFixed(4)*100+" %");
@@ -127,12 +129,22 @@
     $("#TokenAgree").append(Token.agree+" ICX");
     $("#TokenDisagree").append(Token.disagree+" ICX");
 
-    for(aVoter in Voter.agree.address) {
+    $('#voteAgree').click(function() {
+      json_rpc_transaction_call({{ fromAddress }}, "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x1'});
+    });
+    $('#voteDisagree').click(function() {
+      json_rpc_transaction_call({{ fromAddress }}, "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x0'});
+    });
 
+    let votedFlag = true;
+    for(aVoter in Voter.noVote.address) {
+      if(aVoter === {{ fromAddress }}) {
+        votedFlag = false;
+      }
     }
 
-    for(aVoter in Voter.disagree.address) {
-
+    if(voteFlag) {
+      $('#vote').attr('style','visibility:hidden');
     }
 
   })
@@ -229,6 +241,12 @@
     </tr>
   </table>
 </div>
+{% if getPRep %}
+<div id="vote">
+  <button id="voteAgree">Agree</button>
+  <button id="voteDisagree">Disagree</button>
+</div>
+{% endif %}
 <HR/>
 <div>
   <H4><b>Vote Status</b></H4><br/>

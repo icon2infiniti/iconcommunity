@@ -21,24 +21,25 @@
 {% block title %}GOVERNANCE VARIABLE{% endblock %}
 {% block section %}GOVERNANCE VARIABLE{% endblock %}
 {% block content %}
-
+{% if getPRep %}
 <div class="row">
   <div class="col-md-6">
     <div class="card">
 
       <div class="card-header">
-        <h4 class="card-title">Update i_rep at {{ irepUpdateBlockHeight }}</h4>
+        <h4 class="card-title" id="iRepUpdateBlockHeight">&nbsp;</h4>
       </div>
 
       <div class="card-body">
         <div class="form-inline">
-          <input id="irep" class="form-control" type="text" size="32" value="{{irep}}">
+          <input id="irep" class="form-control" type="text" size="32">
           <button id="iRepUpdate" type="submit" class="btn btn-primary">Update</button>
         </div>
       </div>
     </div>
   </div>
 </div>
+{% endif %}
 
 <div class="row">
   <div class="col-md-12 mb-5">
@@ -114,6 +115,9 @@
               .build();
           return await icon_service.call(txObj).execute();
       }
+
+      $('#irep').val(String(parseInt({{getPRep.irep}})));
+      $('#iRepUpdateBlockHeight').append("Update i_rep at "+parseInt({{getPRep.irepUpdateBlockHeight}}));
 
       $('#iRepUpdate').click(function() {
         params['irep'] = $('#irep').val();

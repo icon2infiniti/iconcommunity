@@ -52,6 +52,11 @@
             </div>
           </div>
         </div>
+        {% if getPRep %}
+        <div>
+          <button id="newProposal">New Proposal</button>
+        </div>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -472,6 +477,10 @@
       });
       $('#status').change(function() {
         reloadProposals();
+      });
+
+      $('#newProposal').click(function() {
+        window.location.assign("../newproposal");
       });
     });
 

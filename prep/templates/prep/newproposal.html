@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet"/>
+  <style type="text/css">
+    .white-content .proposaltype {
+      color: rgba(0, 0, 0, 0.9);
+    }
+
+    .proposaltype {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+{% endblock %}
+{% block title %}CREATE NETWORK PROPOSAL{% endblock %}
+{% block section %}CREATE NETWORK PROPOSAL{% endblock %}
+{% block content %}
+
+<div>
+  <div class="col-lg-5 col-md-6 col-sm-3">
+    <label class="mx-1">Type</label>
+    <select id="ProposalType" class="selectpicker" data-size="7" data-style="btn btn-primary" onchange="filterchange();">
+      <option value="0" selected>Text Proposal</option>
+      <option value="1">Revision Update</option>
+      <option value="2">Malicious SCORE Proposal</option>
+      <option value="3">P-Rep Disqualification Proposal</option>
+      <option value="4">Step Price Proposal</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title" id="ProposalType"></h2>
+      </div>
+      <div class="card-body">
+        <!-- name, email -->
+        <div id="Proposal0" class="row">
+          <div class="col-sm-6">
+            <label>Text Message</label>
+            <div class="form-group">
+              <textarea id="content" style="height:400px;width:400px;resize:none;"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- country, city -->
+        <div id="Proposal1" class="row">
+          <div class="col-sm-6">
+            <label>Revision Code</label>
+            <div class="form-group">
+              <input id="revision_code" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>ICON-SERVICE version</label>
+            <div class="form-group">
+              <input id="icon-service_version" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!-- website, detail -->
+        <div id="Proposal2" class="row">
+          <div class="col-sm-6">
+            <label>Address Of SCORE</label>
+            <div class="form-group">
+              <input id="address_of_score" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>Freeze/Unfreeze</label>
+            <div class="form-group">
+              <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary">
+                <option value="0" selected>freeze</option>
+                <option value="1">unfreeze</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- website, detail -->
+        <div id="Proposal3" class="row">
+          <div class="col-sm-6">
+            <label>address of PRep</label>
+            <div class="form-group">
+              <input id="address_of_prep" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!-- website, detail -->
+        <div id="Proposal4" class="row">
+          <div class="col-sm-6">
+            <label>value</label>
+            <div class="form-group">
+              <input id="step_price_in_loop" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="card-footer text-center">
+        <button onclick="registerPRep()" class="btn btn-fill btn-primary">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+  <script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+  <script src="{% static 'js/plugins/isotope.pkgd.min.js' %}"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
+  <!-- CHART -->
+  <script>
+    const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+    const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+    const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+    const DUMMY_NET = "http://localhost:8888"
+    const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
+
+    const IconService = window['icon-sdk-js'];
+    const provider = new IconService.HttpProvider(DUMMY_NET);
+    const icon_service = new IconService(provider);
+    const IconBuilder = IconService.IconBuilder;
+
+    async function json_rpc_call(method_name, params){
+        var callBuilder = new IconBuilder.CallBuilder();
+        var callObj = callBuilder
+            .to(TO_CONTRACT)
+            .method(method_name)
+            .params(params)
+            .build();
+        return await icon_service.call(callObj).execute();
+    }
+
+    async function json_rpc_transaction_call(from_wallet, method_name, params){
+        // Need to sign or send to ICONex
+        var txBuilder = new IconBuilder.CallTransactionBuilder();
+        var txObj = txBuilder
+            .from(from_wallet)
+            .to(TO_CONTRACT)
+            .method(method_name)
+            .params(params)
+            .build();
+        return await icon_service.call(txObj).execute();
+    }
+
+      
+  function getProposalType(i) {
+    switch (i) {
+      case 0:
+        return "Text Proposal";
+      case 1:
+        return "Revision Update";
+      case 2:
+        return "Malicious SCORE";
+      case 3:
+        return "P-Rep Disqualification";
+      case 4:
+        return "Step Price";
+      default:
+        return "No Type";
+    }
+  }
+
+  function getProposalStatus(i) {
+    switch (i) {
+      case 0:
+        return "Voting";
+      case 1:
+        return "Approved";
+      case 2:
+        return "Disapproved";
+      case 3:
+        return "Canceled";
+      default:
+        return "No Status";
+    }
+  }
+
+  function filterchange(){
+    var ProposalType = $('#ProposalType').val();
+    $('#Proposal0').attr('style', 'visibility:hidden');
+    $('#Proposal1').attr('style', 'visibility:hidden');
+    $('#Proposal2').attr('style', 'visibility:hidden');
+    $('#Proposal3').attr('style', 'visibility:hidden');
+    $('#Proposal4').attr('style', 'visibility:hidden');
+
+    $('#Proposal'+ProposalType).attr('style', 'visibility:block');
+  }
+
+
+  $(document).ready(function() {
+    reloadProposals();
+    $('#type').change(function() {
+      reloadProposals();
+    });
+    $('#status').change(function() {
+      reloadProposals();
+    });
+  });
+</script>
+{% endblock %}
