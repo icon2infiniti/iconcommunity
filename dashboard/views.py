@@ -43,11 +43,21 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
 
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
 
+    MAIN_PREPS = 0
+    SUB_PREPS = 0
+    PREPS = 0
+
     i = 1
     for prep in preps['preps']:
         prep['index'] = i
         i += 1
-        prep['grade'] = PREP_GRADE[int(prep['grade'], 16)]
+        prep_grade = int(prep['grade'], 16)
+        prep['grade'] = PREP_GRADE[prep_grade]
+        if prep_grade == 0:
+            MAIN_PREPS += 1
+        elif prep_grade == 1:
+            SUB_PREPS += 1
+
         irep = int(int(prep['irep'], 16)/1000000000000000000)
         prep['irep'] = '{:,}'.format(irep)
         prep['stake'] = int(prep['stake'], 16)/1000000000000000000
@@ -55,6 +65,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         prep['delegated'] = delegated = '{:,}'.format(delegated)
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
+
+        PREPS += 1
 
         # get Prep details, but too slow. Do more efficient way
         #address = {
@@ -97,6 +109,9 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     context.update({
         'ac3data': ac3data,
         'prep_all': prep_all,
+        'main_preps_count': MAIN_PREPS,
+        'sub_preps_count': SUB_PREPS,
+        'preps_count': PREPS,
     })
     # END CMC
     if extra_context is not None:

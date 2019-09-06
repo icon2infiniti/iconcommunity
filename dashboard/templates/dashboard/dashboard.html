@@ -73,7 +73,7 @@
             <div class="col-7">
               <div class="numbers">
                 <p class="card-category">Main P-Reps</p>
-                <h3 class="card-title">22</h3>
+                <h3 class="card-title">{{ main_preps_count }}</h3>
               </div>
             </div>
           </div>
@@ -98,7 +98,7 @@
             <div class="col-7">
               <div class="numbers">
                 <p class="card-category">Sub P-Reps</p>
-                <h3 class="card-title">78</h3>
+                <h3 class="card-title">{{ sub_preps_count }}</h3>
               </div>
             </div>
           </div>
@@ -123,7 +123,7 @@
             <div class="col-7">
               <div class="numbers">
                 <p class="card-category">Joined P-Reps</p>
-                <h3 class="card-title">158</h3>
+                <h3 class="card-title">{{ preps_count }}</h3>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@
             <div class="col-7">
               <div class="numbers">
                 <p class="card-category">Pre-Registered</p>
-                <h3 class="card-title">65</h3>
+                <h3 class="card-title">77</h3>
               </div>
             </div>
           </div>
@@ -164,6 +164,7 @@
 
 
     <!-- Bar/Curve charts -->
+    <!--
     <div class="col-lg-4">
       <div class="card card-chart">
         <div class="card-header">
@@ -203,7 +204,7 @@
         </div>
       </div>
     </div>
-
+    -->
 
     <!-- P-Rep Locations -->
     <div class="col-lg-12">
@@ -487,7 +488,7 @@
 
   <script>
     $(document).ready(function() {
-        demo.initDashboardPageCharts();
+        //demo.initDashboardPageCharts();
         demo.initVectorMap();
         var ac3_market_cap = parseFloat($('#ac3_market_cap').text()).toLocaleString();
         var ac3_volume = parseFloat($('#ac3_volume').text()).toLocaleString();
