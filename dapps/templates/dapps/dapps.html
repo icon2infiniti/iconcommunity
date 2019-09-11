@@ -21,9 +21,9 @@
       <div class="col-md-4 mt-5 mb-3">
         <a href="{{ tx_challenge.tx_challenge_link }}" target="_blank">
           {% if nightmode == True %}
-            <img id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo_w.url }}">
+            <img class="dapplogo" id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo_w.url }}">
           {% else %}
-            <img id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo.url }}">
+            <img class="dapplogo" id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo.url }}">
           {% endif %}
           <h4><a href="{{ tx_challenge.tx_challenge_link }}" target="_blank">{{ tx_challenge.tx_challenge_title }}</a></h4>
           <h6>{{ tx_challenge.tx_challenge_category }}</h6>
