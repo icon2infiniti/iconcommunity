@@ -33,7 +33,8 @@ def get_prep(address):
     }
     response = None
     try:
-        response = preprpc.PrepRPCCalls().json_rpc_call("getPRep", params)
+        response = preprpc.PrepRPCCalls(
+            "cx0000000000000000000000000000000000000000").json_rpc_call("getPRep", params)
     except JSONRPCException as e:
         print(str(e.message))
     finally:
@@ -46,7 +47,8 @@ def get_preps():
         'endRanking': "0x8",
         'blockHeight': "0x1234"
     }
-    response = preprpc.PrepRPCCalls().json_rpc_call("getPReps", params)
+    response = preprpc.PrepRPCCalls(
+        "cx0000000000000000000000000000000000000000").json_rpc_call("getPReps", params)
     return response
 
 
@@ -56,7 +58,8 @@ def get_proposal(proposal_id):
     }
     response = None
     try:
-        response = preprpc.PrepRPCCalls().json_rpc_call("getProposal", params)
+        response = preprpc.PrepRPCCalls(
+            "cx0000000000000000000000000000000000000001").json_rpc_call("getProposal", params)
     except JSONRPCException as e:
         print(str(e.message))
     finally:
@@ -69,7 +72,8 @@ def get_block(blockHeight):
     }
     response = None
     try:
-        response = preprpc.PrepRPCCalls().json_rpc_call("getBlock", params)
+        response = preprpc.PrepRPCCalls(
+            "cx0000000000000000000000000000000000000000").json_rpc_call("getBlock", params)
     except JSONRPCException as e:
         print(str(e.message))
     finally:
@@ -82,7 +86,8 @@ def get_transaction(txHash):
     }
     response = None
     try:
-        response = preprpc.PrepRPCCalls().json_rpc_call("getTransaction", params)
+        response = preprpc.PrepRPCCalls(
+            "cx0000000000000000000000000000000000000000").json_rpc_call("getTransaction", params)
     except JSONRPCException as e:
         print(str(e.message))
     finally:
@@ -92,7 +97,7 @@ def get_transaction(txHash):
 def management(request, template='prep/management.html'):
     context = init_mode(request)
 
-    #latest_block = preprpc.PrepRPCCalls().json_rpc_call("getLastBlock", params)
+    #latest_block = preprpc.PrepRPCCalls("cx0000000000000000000000000000000000000000").json_rpc_call("getLastBlock", params)
     #latest_block = preprpc.PrepRPCCalls("cx8e50eb4188681401aee7bd29178ed451f558697c").json_rpc_call("showGameRoomList", params)
 
     getPRep = get_prep(request.session['fromAddress'])

@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 {% load static i18n %}
 {% block extra_head %}
-  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet"/>
-  <style type="text/css">
-    .white-content .proposaltype {
-      color: rgba(0, 0, 0, 0.9);
-    }
+<link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />
+<style type="text/css">
+  .white-content .proposaltype {
+    color: rgba(0, 0, 0, 0.9);
+  }
 
-    .proposaltype {
-      color: rgba(255, 255, 255, 0.8);
-    }
-  </style>
+  .proposaltype {
+    color: rgba(255, 255, 255, 0.8);
+  }
+</style>
 {% endblock %}
 {% block title %}PROPOSAL DETAIL{% endblock %}
 {% block section %}PROPOSAL DETAIL{% endblock %}
@@ -20,7 +20,7 @@
   const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
   const TEMP_NET = "https://devorg.icon.foundation/api/v3";
   const DUMMY_NET = "http://54.180.16.76/api/v3";
-  const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
+  const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
 
   const IconService = window['icon-sdk-js'];
   const provider = new IconService.HttpProvider(DUMMY_NET);
@@ -28,7 +28,7 @@
   const IconBuilder = IconService.IconBuilder;
   const IconConverter = IconService.IconConverter;
 
-  async function json_rpc_call(method_name, params){
+  async function json_rpc_call(method_name, params) {
     var callBuilder = new IconBuilder.CallBuilder();
     var callObj = callBuilder
       .to(TO_CONTRACT)
@@ -38,8 +38,8 @@
     return await icon_service.call(callObj).execute();
   }
 
-  async function json_rpc_transaction_call(from_wallet, method_name, params){
-          // Need to sign or send to ICONex
+  async function json_rpc_transaction_call(from_wallet, method_name, params) {
+    // Need to sign or send to ICONex
     var txBuilder = new IconBuilder.CallTransactionBuilder();
     var txObj = txBuilder
       .from(from_wallet)
@@ -66,7 +66,7 @@
       }
     }));
 
-//    return await icon_service.call(txObj).execute();
+    //    return await icon_service.call(txObj).execute();
   }
 
 
@@ -102,100 +102,107 @@
     }
   }
 
-  $(document).ready(function() {
-    $("#status").append("Status: "+getProposalStatus(parseInt({{aProposal.status}})));
-    $("#type").append("Type: "+getProposalType(parseInt({{aProposal.contents.type}})));
+  $(document).ready(function () {
+    $("#status").append("Status: " + getProposalStatus(parseInt({{aProposal.status}})));
+    $("#type").append("Type: " + getProposalType(parseInt({{aProposal.contents.type}})));
     var StartDate = new Date({{start}});
     var EndDate = new Date({{end}});
-    $("#start").append("Created: "+ StartDate);
-    $("#end").append("Expires: "+ EndDate);
+    $("#start").append("Created: " + StartDate);
+    $("#end").append("Expires: " + EndDate);
 
     aa = "{{aProposal.voter}}";
     bb = aa.replace(/&#39;/gi, "\"");
     Voter = JSON.parse(bb);
 
     Quorum = {
-      agree:Voter.agree.address.length,
-      disagree:Voter.disagree.address.length,
-      noVote:Voter.noVote.address.length,
-      total:Voter.agree.address.length+Voter.disagree.address.length+Voter.noVote.address.length
-      };
+      agree: Voter.agree.address.length,
+      disagree: Voter.disagree.address.length,
+      noVote: Voter.noVote.address.length,
+      total: Voter.agree.address.length + Voter.disagree.address.length + Voter.noVote.address.length
+    };
     Token = {
-      agree:parseInt("{{aProposal.voter.agree.amount}}"),
-      disagree:parseInt("{{aProposal.voter.disagree.amount}}"),
-      noVote:parseInt("{{aProposal.voter.noVote.amount}}"),
-      total:parseInt("{{aProposal.voter.agree.amount}}")+parseInt("{{aProposal.voter.disagree.amount}}")+parseInt("{{aProposal.voter.noVote.amount}}")
-      };
+      agree: parseInt("{{aProposal.voter.agree.amount}}"),
+      disagree: parseInt("{{aProposal.voter.disagree.amount}}"),
+      noVote: parseInt("{{aProposal.voter.noVote.amount}}"),
+      total: parseInt("{{aProposal.voter.agree.amount}}") + parseInt("{{aProposal.voter.disagree.amount}}") +
+        parseInt("{{aProposal.voter.noVote.amount}}")
+    };
 
-    
 
-    $("#QuorumAgreeRate").append((Quorum.agree/Quorum.total).toFixed(4)*100+" %");
-    $("#QuorumDisagreeRate").append((Quorum.disagree/Quorum.total).toFixed(4)*100+" %");
-    $("#QuorumNoVoteRate").append((Quorum.noVote/Quorum.total).toFixed(4)*100+" %");
-    $("#TotalQuorum").append(((Quorum.agree+Quorum.disagree)/Quorum.total).toFixed(4)*100+" % ("+(Quorum.agree+Quorum.disagree)+")");
-    $("#TotalQuorum2").append("("+(Quorum.agree+Quorum.disagree)+")");
-    $("#QuorumAgreeRate2").append((Quorum.agree/Quorum.total).toFixed(4)*100+" %");
-    $("#QuorumDisagreeRate2").append((Quorum.disagree/Quorum.total).toFixed(4)*100+" %");
+
+    $("#QuorumAgreeRate").append((Quorum.agree / Quorum.total).toFixed(4) * 100 + " %");
+    $("#QuorumDisagreeRate").append((Quorum.disagree / Quorum.total).toFixed(4) * 100 + " %");
+    $("#QuorumNoVoteRate").append((Quorum.noVote / Quorum.total).toFixed(4) * 100 + " %");
+    $("#TotalQuorum").append(((Quorum.agree + Quorum.disagree) / Quorum.total).toFixed(4) * 100 + " % (" + (Quorum
+      .agree + Quorum.disagree) + ")");
+    $("#TotalQuorum2").append("(" + (Quorum.agree + Quorum.disagree) + ")");
+    $("#QuorumAgreeRate2").append((Quorum.agree / Quorum.total).toFixed(4) * 100 + " %");
+    $("#QuorumDisagreeRate2").append((Quorum.disagree / Quorum.total).toFixed(4) * 100 + " %");
     $("#QuorumAgree").append(Quorum.agree);
     $("#QuorumDisagree").append(Quorum.disagree);
 
-    $("#TokenAgreeRate").append((Token.agree/Token.total).toFixed(4)*100+" %");
-    $("#TokenDisagreeRate").append((Token.disagree/Token.total).toFixed(4)*100+" %");
-    $("#TokenNoVoteRate").append((Token.noVote/Token.total).toFixed(4)*100+" %");
-    $("#TotalToken").append((Token.agree+Token.disagree)+" ICX");
-    $("#TotalToken2").append("("+(Token.agree+Token.disagree)+" ICX)");
-    $("#TokenAgreeRate2").append((Token.agree/Token.total).toFixed(4)*100+" %");
-    $("#TokenDisagreeRate2").append((Token.disagree/Token.total).toFixed(4)*100+" %");
-    $("#TokenAgree").append(Token.agree+" ICX");
-    $("#TokenDisagree").append(Token.disagree+" ICX");
+    $("#TokenAgreeRate").append((Token.agree / Token.total).toFixed(4) * 100 + " %");
+    $("#TokenDisagreeRate").append((Token.disagree / Token.total).toFixed(4) * 100 + " %");
+    $("#TokenNoVoteRate").append((Token.noVote / Token.total).toFixed(4) * 100 + " %");
+    $("#TotalToken").append((Token.agree + Token.disagree) + " ICX");
+    $("#TotalToken2").append("(" + (Token.agree + Token.disagree) + " ICX)");
+    $("#TokenAgreeRate2").append((Token.agree / Token.total).toFixed(4) * 100 + " %");
+    $("#TokenDisagreeRate2").append((Token.disagree / Token.total).toFixed(4) * 100 + " %");
+    $("#TokenAgree").append(Token.agree + " ICX");
+    $("#TokenDisagree").append(Token.disagree + " ICX");
 
-    $('#voteAgree').click(function() {
-      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x1'});
+    $('#voteAgree').click(function () {
+      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
+        'id': '{{aProposal.id}}',
+        'vote': '0x1'
+      });
     });
-    $('#voteDisagree').click(function() {
-      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x0'});
+    $('#voteDisagree').click(function () {
+      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
+        'id': '{{aProposal.id}}',
+        'vote': '0x0'
+      });
     });
 
     let votedFlag = true;
-    for(aVoter in Voter.noVote.address) {
-      if(aVoter === "{{ fromAddress }}") {
+    for (aVoter in Voter.noVote.address) {
+      if (aVoter === "{{ fromAddress }}") {
         votedFlag = false;
       }
     }
 
-    if(votedFlag) {
-//      $('#vote').attr('style','visibility:hidden');
+    if (votedFlag) {
+      //      $('#vote').attr('style','visibility:hidden');
     }
 
   })
-
 </script>
 
 {% endblock %}
 {% block content %}
 
 <div id="proposal">
-    <H4>Network Proposal Details</H4>
-    <H3><b>{{aProposal.contents.description}}</b></H3>
-    <H5 id="status"></H5>
-    <H5 id="type"></H5>
-    <H5>Proposer: <a href="{{aPRep.website}}">{{aPRep.name}}</a></H5>
-    <H5>Tx Hash: <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}">{{aProposal.id}}</a></H5>
-    <H5 id="start"></H5>
-    <H5 id="end"></H5>
+  <H4>Network Proposal Details</H4>
+  <H3><b>{{aProposal.contents.description}}</b></H3>
+  <H5 id="status"></H5>
+  <H5 id="type"></H5>
+  <H5>Proposer: <a href="{{aPRep.website}}">{{aPRep.name}}</a></H5>
+  <H5>Tx Hash: <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}">{{aProposal.id}}</a></H5>
+  <H5 id="start"></H5>
+  <H5 id="end"></H5>
 </div>
-<HR/>
+<HR />
 <div>
-    <H5><b>Description</b></H5>
-    <H4>{{aProposal.contents.description}}</H4>
+  <H5><b>Description</b></H5>
+  <H4>{{aProposal.contents.description}}</H4>
 </div>
-<HR/>
+<HR />
 <div>
   <H4><b>Votes</b></H4>
   <table>
     <tr>
       <td rowspan="2">
-        <h5>Quorum</h5><br/>
+        <h5>Quorum</h5><br />
         <table>
           <tr style="height:90px;">
             <td width=10 style="background-color:#ff0000" id="QuorumAgreeRate"></td>
@@ -209,18 +216,18 @@
         </table>
       </td>
       <td colspan="2">
-        <b>Total Quorum</b><br/>
+        <b>Total Quorum</b><br />
         <H5 id="TotalQuorum"></H5>
       </td>
     </tr>
     <tr>
       <td>
-        Agreed<br/>
+        Agreed<br />
         <h2 id="QuorumAgreeRate2"></h2>
         <h4 id="QuorumAgree"></h4>
       </td>
       <td>
-        Disagreed<br/>
+        Disagreed<br />
         <h2 id="QuorumDisagreeRate2"></h2>
         <h4 id="QuorumDisagree"></h4>
       </td>
@@ -229,7 +236,7 @@
   <table>
     <tr>
       <td rowspan="2">
-        <h5>Token</h5><br/>
+        <h5>Token</h5><br />
         <table>
           <tr style="height:90px;">
             <td width=10 style="background-color:#ff0000" id="TokenAgreeRate"></td>
@@ -243,18 +250,18 @@
         </table>
       </td>
       <td colspan="2">
-        <b>Total Token Votes</b><br/>
+        <b>Total Token Votes</b><br />
         <H5 id="TotalToken"></H5>
       </td>
     </tr>
     <tr>
       <td>
-        Agreed<br/>
+        Agreed<br />
         <h2 id="TokenAgreeRate2"></h2>
         <h4 id="TokenAgree"></h4>
       </td>
       <td>
-        Disagreed<br/>
+        Disagreed<br />
         <h2 id="TokenDisagreeRate2"></h2>
         <h4 id="TokenDisagree"></h4>
       </td>
@@ -267,11 +274,13 @@
   <button id="voteDisagree">Disagree</button>
 </div>
 {% endif %}
-<HR/>
+<HR />
 <div>
-  <H4><b>Vote Status</b></H4><br/>
-  <H3>Total Quorum</H3><h3 id="TotalQuorum2"></H3>
-  <H3>Total Token Votes</H3><h3 id="TotalToken2"></H3>
+  <H4><b>Vote Status</b></H4><br />
+  <H3>Total Quorum</H3>
+  <h3 id="TotalQuorum2"></H3>
+  <H3>Total Token Votes</H3>
+  <h3 id="TotalToken2"></H3>
   <table>
     <thead>
       <td>Voter</td>
@@ -280,12 +289,12 @@
       <td>Timestamp</td>
     </thead>
     <tbody id="voterList">
-    <tr>
-      <td>aa</td>
-      <td>bb</td>
-      <td>cc</td>
-      <td>dd</td>
-    </tr>
+      <tr>
+        <td>aa</td>
+        <td>bb</td>
+        <td>cc</td>
+        <td>dd</td>
+      </tr>
     </tbody>
   </table>
 </div>

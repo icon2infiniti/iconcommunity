@@ -1,215 +1,285 @@
 {% extends 'base.html' %}
 {% load static i18n %}
 {% block extra_head %}
-  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
+<link href="{% static 'prep/css/prep.css' %}" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.web.min.js"></script>
 {% endblock %}
 {% block title %}P-REP MANAGEMENT{% endblock %}
 {% block section %}P-REP MANAGEMENT{% endblock %}
 {% block content %}
-  {% if getPRep == None %}
-    <h3>You're not currently registered as a P-Rep. To register, fill the information below. Note that on-chain registration costs 2,000 ICX which will be burned.</h3>
-    <div class="row">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-title">P-Rep Registration</h2>
+{% if getPRep == None %}
+<h3>You're not currently registered as a P-Rep. To register, fill the information below. Note that on-chain registration
+  costs 2,000 ICX which will be burned.</h3>
+<div class="row">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">P-Rep Registration</h2>
+    </div>
+    <div class="card-body">
+      <!-- name, email -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Name*</label>
+          <div class="form-group">
+            <input id="name" type="text" class="form-control">
+          </div>
         </div>
-        <div class="card-body">
-          <!-- name, email -->
-          <div class="row">
-            <div class="col-sm-6">
-              <label>Name*</label>
-              <div class="form-group">
-                <input id="name" type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label>Email*</label>
-              <div class="form-group">
-                <input id="email" type="email" class="form-control">
-              </div>
-            </div>
+        <div class="col-sm-6">
+          <label>Email*</label>
+          <div class="form-group">
+            <input id="email" type="email" class="form-control">
           </div>
-          <!-- country, city -->
-          <div class="row">
-            <div class="col-sm-6">
-              <label>Country*</label>
-              <div class="form-group">
-                <input id="country" type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label>City*</label>
-              <div class="form-group">
-                <input id="city" type="text" class="form-control">
-              </div>
-            </div>
+        </div>
+      </div>
+      <!-- country, city -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Country*</label>
+          <div class="form-group">
+            <input id="country" type="text" class="form-control">
           </div>
-          <!-- website, detail -->
-          <div class="row">
-            <div class="col-sm-6">
-              <label>Website*</label>
-              <div class="form-group">
-                <input id="website" type="text" class="form-control">
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <label>Off-Chain JSON*</label>
-              <div class="form-group">
-                <input id="details" type="text" class="form-control">
-              </div>
-            </div>
+        </div>
+        <div class="col-sm-6">
+          <label>City*</label>
+          <div class="form-group">
+            <input id="city" type="text" class="form-control">
           </div>
+        </div>
+      </div>
+      <!-- website, detail -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Website*</label>
+          <div class="form-group">
+            <input id="website" type="text" class="form-control">
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label>Off-Chain JSON*</label>
+          <div class="form-group">
+            <input id="details" type="text" class="form-control">
+          </div>
+        </div>
+      </div>
 
-          <!-- p2p, key -->
-          <div class="row">
-            <div class="col-sm-6">
-              <label>P2P Endpoint*</label>
-              <div class="form-group">
-                <input id="p2pEndpoint" type="text" class="form-control">
-              </div>
-            </div>
+      <!-- p2p, key -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>P2P Endpoint*</label>
+          <div class="form-group">
+            <input id="p2pEndpoint" type="text" class="form-control">
           </div>
-        </div>
-        <div class="card-footer text-center">
-          <button onclick="registerPRep()" class="btn btn-fill btn-primary">Register</button>
         </div>
       </div>
     </div>
-  {% else %}
-    {{ getPRep }}
-    <div class="row">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-title">P-Rep Information</h2>
-        </div>
-        <div class="card-body">
-          <form action="#">
-
-            <!-- name, email -->
-            <div class="row">
-              <div class="col-sm-6">
-                <label>Name*</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ getPRep.name }}">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <label>Email*</label>
-                <div class="form-group">
-                  <input type="email" class="form-control" value="{{ getPRep.email }}">
-                </div>
-              </div>
-            </div>
-            <!-- country, city -->
-            <div class="row">
-              <div class="col-sm-6">
-                <label>Country*</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ getPRep.country }}">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <label>City*</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ getPRep.city }}">
-                </div>
-              </div>
-            </div>
-            <!-- website, detail -->
-            <div class="row">
-              <div class="col-sm-6">
-                <label>Website*</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ getPRep.website }}">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <label>Off-Chain JSON*</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ getPRep.details }}">
-                </div>
-              </div>
-            </div>
-
-            <!-- p2p, key -->
-            <div class="row">
-              <div class="col-sm-6">
-                <label>P2P Endpoint*</label>
-                <div class="form-group">
-                  <input type="text" class="form-control" value="{{ getPRep.p2pEndpoint }}">
-                </div>
-              </div>
-            </div>
-
-          </form>
-        </div>
-        <div class="card-footer text-center">
-          <button type="submit" class="btn btn-fill btn-primary">Update</button>
-          <button type="submit" class="btn btn-fill btn-danger">Unregister</button>
-        </div>
-      </div>
+    <div class="card-footer text-center">
+      <button onclick="registerPRep()" class="btn btn-fill btn-primary">Register</button>
     </div>
-  {% endif %}
+  </div>
+</div>
+{% else %}
+<div class="row">
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">P-Rep Information</h2>
+    </div>
+    <div class="card-body">
+      <form action="#">
+
+        <!-- name, email -->
+        <div class="row">
+          <div class="col-sm-6">
+            <label>Name*</label>
+            <div class="form-group">
+              <input type="text" class="form-control" value="{{ getPRep.name }}">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>Email*</label>
+            <div class="form-group">
+              <input type="email" class="form-control" value="{{ getPRep.email }}">
+            </div>
+          </div>
+        </div>
+        <!-- country, city -->
+        <div class="row">
+          <div class="col-sm-6">
+            <label>Country*</label>
+            <div class="form-group">
+              <input type="text" class="form-control" value="{{ getPRep.country }}">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>City*</label>
+            <div class="form-group">
+              <input type="text" class="form-control" value="{{ getPRep.city }}">
+            </div>
+          </div>
+        </div>
+        <!-- website, detail -->
+        <div class="row">
+          <div class="col-sm-6">
+            <label>Website*</label>
+            <div class="form-group">
+              <input type="text" class="form-control" value="{{ getPRep.website }}">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>Off-Chain JSON*</label>
+            <div class="form-group">
+              <input type="text" class="form-control" value="{{ getPRep.details }}">
+            </div>
+          </div>
+        </div>
+
+        <!-- p2p, key -->
+        <div class="row">
+          <div class="col-sm-6">
+            <label>P2P Endpoint*</label>
+            <div class="form-group">
+              <input type="text" class="form-control" value="{{ getPRep.p2pEndpoint }}">
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="card-footer text-center">
+      <button onclick="updatePRep()" class="btn btn-fill btn-primary">Update</button>
+      <button onclick="unresterPRep()" class="btn btn-fill btn-danger">Unregister</button>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 {% endblock %}
 
 {% block extra_js %}
-  <script>
-      const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
-      const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
-      const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-      const DUMMY_NET = "http://54.180.16.76/api/v3";
-      const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
+<script>
+  const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+  const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+  const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+  const DUMMY_NET = "http://54.180.16.76/api/v3";
+  const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
-      const IconService = window['icon-sdk-js'];
-      const provider = new IconService.HttpProvider(DUMMY_NET);
-      const icon_service = new IconService(provider);
-      const IconBuilder = IconService.IconBuilder;
+  const IconService = window['icon-sdk-js'];
+  const provider = new IconService.HttpProvider(DUMMY_NET);
+  const icon_service = new IconService(provider);
+  const IconBuilder = IconService.IconBuilder;
+  const IconConverter = IconService.IconConverter;
+  const IconAmount = IconService.IconAmount;
 
-      function registerPRep() {
-          let params = {};
-          params.name = $('#name').val();
-          params.email = $('#email').val();
-          params.country = $('#country').val();
-          params.city = $('#city').val();
-          params.website = $('#website').val();
-          params.details = $('#details').val();
-          params.p2pEndpoint = $('#p2pEndpoint').val();
-          let response = json_rpc_transaction_call("{{ fromAddress }}", "registerPRep", params);
-          console.log(response);
+  function registerPRep() {
+    let params = {};
+    params.name = $('#name').val();
+    params.email = $('#email').val();
+    params.country = $('#country').val();
+    params.city = $('#city').val();
+    params.website = $('#website').val();
+    params.details = $('#details').val();
+    params.p2pEndpoint = $('#p2pEndpoint').val();
+    let response = register_PRep_transaction_call("{{ fromAddress }}", "registerPRep", params);
+    console.log(response);
+  }
+
+  function updatePRep() {
+    let params = {};
+    params.name = $('#name').val();
+    params.email = $('#email').val();
+    params.country = $('#country').val();
+    params.city = $('#city').val();
+    params.website = $('#website').val();
+    params.details = $('#details').val();
+    params.p2pEndpoint = $('#p2pEndpoint').val();
+    let response = json_rpc_transaction_call("{{ fromAddress }}", "setPRep", params);
+    console.log(response);
+  }
+
+  function unregisterPRep() {
+    let params = {};
+    let response = json_rpc_transaction_call("{{ fromAddress }}", "unregisterPRep", params);
+    console.log(response);
+  }
+
+  function getPRep() {
+    let params = {
+      'address': {{ fromAddress }}
+    };
+    let response = json_rpc_call("getPRep", params);
+    console.log(response);
+  }
+
+  async function json_rpc_call(method_name, params) {
+    var callBuilder = new IconBuilder.CallBuilder();
+    var callObj = callBuilder
+      .to(TO_CONTRACT)
+      .method(method_name)
+      .params(params)
+      .build();
+    return await icon_service.call(callObj).execute();
+  }
+
+  async function json_rpc_transaction_call(from_wallet, method_name, params) {
+    // Need to sign or send to ICONex
+    let timestamp = new Date();
+    var txBuilder = new IconBuilder.CallTransactionBuilder();
+    var txObj = txBuilder
+      .from(from_wallet)
+      .to(TO_CONTRACT)
+      .nid(IconConverter.toBigNumber("3"))
+      .version(IconConverter.toBigNumber("3"))
+      .stepLimit(IconConverter.toBigNumber("10000000"))
+      .timestamp(timestamp * 1000)
+      .method(method_name)
+      .params(params)
+      .build();
+
+    const scoreData = JSON.stringify({
+      "jsonrpc": "2.0",
+      "method": "icx_sendTransaction",
+      "params": IconConverter.toRawTransaction(txObj),
+      "id": 44
+    });
+
+    const parsed = JSON.parse(scoreData);
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+      detail: {
+        type: 'REQUEST_JSON-RPC',
+        payload: parsed
       }
+    }));
+  }
 
-      function getPRep(){
-        let params = {
-            //'address': {{ fromAddress }}
-            'address': 'hxb2ed93806e9585a7a8b722f7031323925914de91'
-        };
-        let response = json_rpc_call("getPRep", params);
-        console.log(response);
+  async function register_PRep_transaction_call(from_wallet, method_name, params) {
+    // Need to sign or send to ICONex
+    let timestamp = new Date();
+    var txBuilder = new IconBuilder.CallTransactionBuilder();
+    var txObj = txBuilder
+      .from(from_wallet)
+      .to(TO_CONTRACT)
+      .nid(IconConverter.toBigNumber("3"))
+      .version(IconConverter.toBigNumber("3"))
+      .stepLimit(IconConverter.toBigNumber("10000000"))
+      .value(IconAmount.of(2000, IconAmount.Unit.ICX).toLoop())
+      .timestamp(timestamp * 1000)
+      .method(method_name)
+      .params(params)
+      .build();
+
+    const scoreData = JSON.stringify({
+      "jsonrpc": "2.0",
+      "method": "icx_sendTransaction",
+      "params": IconConverter.toRawTransaction(txObj),
+      "id": 44
+    });
+
+    const parsed = JSON.parse(scoreData);
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+      detail: {
+        type: 'REQUEST_JSON-RPC',
+        payload: parsed
       }
-
-      async function json_rpc_call(method_name, params){
-          var callBuilder = new IconBuilder.CallBuilder();
-          var callObj = callBuilder
-              .to(TO_CONTRACT)
-              .method(method_name)
-              .params(params)
-              .build();
-          return await icon_service.call(callObj).execute();
-      }
-
-      async function json_rpc_transaction_call(from_wallet, method_name, params){
-          // Need to sign or send to ICONex
-          var txBuilder = new IconBuilder.CallTransactionBuilder();
-          var txObj = txBuilder
-              .from(from_wallet)
-              .to(TO_CONTRACT)
-              .method(method_name)
-              .params(params)
-              .build();
-          return await icon_service.call(txObj).execute();
-      }
-
-  </script>
+    }));
+  }
+</script>
 {% endblock %}

@@ -77,11 +77,13 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
         ac3data = data["data"]["2722"]
+        context.update({
+            'ac3data': ac3data
+        })
     except (ConnectionError, Timeout, TooManyRedirects) as e:
         print(e)
 
     context.update({
-        'ac3data': ac3data,
         'prep_all': prep_all,
     })
     # END CMC

@@ -10,7 +10,7 @@ class PrepRPCCalls:
     TEMP_NET = "https://devorg.icon.foundation/api/v3"
     DUMMY_NET = "http://54.180.16.76/api/v3"
 
-    def __init__(self, to_contract="cx0000000000000000000000000000000000000000"):
+    def __init__(self, to_contract="cx0000000000000000000000000000000000000001"):
         self._to_contract = to_contract
 
     def json_rpc_call(self, method_name, params):
