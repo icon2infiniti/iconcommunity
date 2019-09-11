@@ -8,7 +8,7 @@ class PrepRPCCalls:
     MAIN_NET = "https://ctz.solidwallet.io/api/v3"
     TEST_NET = "https://bicon.net.solidwallet.io/api/v3"
     TEMP_NET = "https://devorg.icon.foundation/api/v3"
-    DUMMY_NET = "http://localhost:8888"
+    DUMMY_NET = "http://54.180.16.76/api/v3"
 
     def __init__(self, to_contract="cx0000000000000000000000000000000000000000"):
         self._to_contract = to_contract

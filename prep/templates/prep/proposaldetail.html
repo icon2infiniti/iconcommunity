@@ -19,13 +19,14 @@
   const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
   const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
   const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-  const DUMMY_NET = "http://localhost:8888";
+  const DUMMY_NET = "http://54.180.16.76/api/v3";
   const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
   const IconService = window['icon-sdk-js'];
   const provider = new IconService.HttpProvider(DUMMY_NET);
   const icon_service = new IconService(provider);
   const IconBuilder = IconService.IconBuilder;
+  const IconConverter = IconService.IconConverter;
 
   async function json_rpc_call(method_name, params){
     var callBuilder = new IconBuilder.CallBuilder();
@@ -43,10 +44,29 @@
     var txObj = txBuilder
       .from(from_wallet)
       .to(TO_CONTRACT)
+      .nid(IconConverter.toBigNumber("3"))
+      .version(IconConverter.toBigNumber("3"))
+      .stepLimit(IconConverter.toBigNumber("10000000"))
       .method(method_name)
       .params(params)
       .build();
-    return await icon_service.call(txObj).execute();
+
+    const scoreData = JSON.stringify({
+      "jsonrpc": "2.0",
+      "method": "icx_sendTransaction",
+      "params": IconConverter.toRawTransaction(txObj),
+      "id": 44
+    });
+
+    const parsed = JSON.parse(scoreData);
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+      detail: {
+        type: 'REQUEST_JSON-RPC',
+        payload: parsed
+      }
+    }));
+
+//    return await icon_service.call(txObj).execute();
   }
 
 
@@ -130,21 +150,21 @@
     $("#TokenDisagree").append(Token.disagree+" ICX");
 
     $('#voteAgree').click(function() {
-      json_rpc_transaction_call({{ fromAddress }}, "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x1'});
+      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x1'});
     });
     $('#voteDisagree').click(function() {
-      json_rpc_transaction_call({{ fromAddress }}, "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x0'});
+      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {'id':'{{aProposal.id}}', 'vote':'0x0'});
     });
 
     let votedFlag = true;
     for(aVoter in Voter.noVote.address) {
-      if(aVoter === {{ fromAddress }}) {
+      if(aVoter === "{{ fromAddress }}") {
         votedFlag = false;
       }
     }
 
-    if(voteFlag) {
-      $('#vote').attr('style','visibility:hidden');
+    if(votedFlag) {
+//      $('#vote').attr('style','visibility:hidden');
     }
 
   })

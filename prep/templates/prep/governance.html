@@ -87,12 +87,14 @@
       const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
       const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
       const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+      const DUMMY_NET = "http://54.180.16.76/api/v3";
       const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
       const IconService = window['icon-sdk-js'];
-      const provider = new IconService.HttpProvider(TEMP_NET);
+      const provider = new IconService.HttpProvider(DUMMY_NET);
       const icon_service = new IconService(provider);
       const IconBuilder = IconService.IconBuilder;
+      const IconConverter = IconService.IconConverter;
 
       async function json_rpc_call(method_name, params){
           var callBuilder = new IconBuilder.CallBuilder();
@@ -110,18 +112,36 @@
           var txObj = txBuilder
               .from(from_wallet)
               .to(TO_CONTRACT)
+              .nid(IconConverter.toBigNumber("3"))
+              .version(IconConverter.toBigNumber("3"))
+              .stepLimit(IconConverter.toBigNumber("10000000"))
               .method(method_name)
               .params(params)
               .build();
-          return await icon_service.call(txObj).execute();
+          
+          const scoreData = JSON.stringify({
+            "jsonrpc": "2.0",
+            "method": "icx_sendTransaction",
+            "params": IconConverter.toRawTransaction(txObj),
+            "id": 44
+          });
+
+          const parsed = JSON.parse(scoreData);
+          window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+            detail: {
+              type: 'REQUEST_JSON-RPC',
+              payload: parsed
+            }
+          }));
+
+//          return await icon_service.call(txObj).execute();
       }
 
       $('#irep').val(String(parseInt({{getPRep.irep}})));
       $('#iRepUpdateBlockHeight').append("Update i_rep at "+parseInt({{getPRep.irepUpdateBlockHeight}}));
 
       $('#iRepUpdate').click(function() {
-        params['irep'] = $('#irep').val();
-        json_rpc_transaction_call({{ fromAddress }}, "setGovernanceVariables", params)
+        json_rpc_transaction_call("{{ fromAddress }}", "setGovernanceVariables", {"irep":$('#irep').val()})
       })
 
       $.tablesorter.addParser({

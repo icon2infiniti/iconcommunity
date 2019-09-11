@@ -346,6 +346,10 @@
             case "RESPONSE_ADDRESS":
                 login(payload);
                 break;
+            case "RESPONSE_JSON-RPC":
+                console.log("type", type);
+                console.log("payload", payload);
+                break;
             default:
         }
     }
