@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from .models import TXChallenge, OfficialDapps
-from el_pagination.decorators import page_template
 
 
-@page_template('dapps/tx_challenge_page.html', key='tx_challenge_page')
 def dapps(request, template='dapps/dapps.html', extra_context=None):
     if 'nightmode' not in request.session:
         request.session['nightmode'] = True
