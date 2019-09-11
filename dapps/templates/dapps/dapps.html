@@ -18,7 +18,7 @@
     <div class="row">
       {% for tx_challenge in tx_challenges %}
       <script>tx_logo_list[{{ tx_challenge.id }}] = ["{{ tx_challenge.tx_challenge_logo_w.url }}", "{{ tx_challenge.tx_challenge_logo.url }}"];</script>
-      <div class="col-md-4 mb-3">
+      <div class="col-md-4 mt-5 mb-3">
         <a href="{{ tx_challenge.tx_challenge_link }}" target="_blank">
           {% if nightmode == True %}
             <img id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo_w.url }}">
@@ -42,7 +42,7 @@
     <div class="row">
       {% for official_dapp in official_dapps %}
       <script>dapp_logo_list[{{ official_dapp.id }}] = ["{{ official_dapp.official_dapp_logo_w.url }}", "{{ official_dapp.official_dapp_logo.url }}"];</script>
-      <div class="col-md-4 mb-3">
+      <div class="col-md-4 mt-5 mb-3">
         <a href="{{ official_dapp.official_dapps_link }}" target="_blank">
           {% if nightmode == True %}
             <img class="dapplogo" id="{{ official_dapp.id }}" src="{{ official_dapp.official_dapp_logo_w.url }}">
