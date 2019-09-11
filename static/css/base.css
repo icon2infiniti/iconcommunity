@@ -14876,3 +14876,10 @@ code {
 }
 
 
+.tim-icons.icon-single-02 {
+  color: #fff!important;
+}
+
+.white-content .tim-icons.icon-single-02 {
+  color: #333!important;
+}

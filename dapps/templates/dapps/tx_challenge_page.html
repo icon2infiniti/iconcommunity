@@ -1,0 +1,22 @@
+{% load el_pagination_tags %}
+<div class="card-body">
+  <div class="row">
+    {% paginate 6 tx_challenges using "tx_challenge_page" %}
+    {% for tx_challenge in tx_challenges %}
+    <div class="col-md-4 mb-3">
+      <a href="{{ tx_challenge.tx_challenge_link }}">
+        <img class="logo" src="{{ tx_challenge.tx_challenge_logo.url }}">
+        <h4><a href="{{ tx_challenge.tx_challenge_link }}">{{ tx_challenge.tx_challenge_title }}</a></h4>
+        <h6>{{ tx_challenge.tx_challenge_category }}</h6>
+
+      </a>
+      <span class="desc">{{ tx_challenge.tx_challenge_description }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="text-center">
+    <div class="pagination">
+      {% show_pages %}
+    </div>
+  </div>
+</div>

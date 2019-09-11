@@ -119,6 +119,16 @@
           </a>
         </li>
 
+        <!-- Dapps -->
+        <li {% if section == 'DAPPS' %}class="active"{% endif %}>
+          <a href="/dapps/">
+            <i class="tim-icons">
+              <img src="{% static 'logo/dapps.png' %}" width="24" height="24" style="margin-top: -10px; margin-left: -6px;">
+            </i>
+            <p>DApps</p>
+          </a>
+        </li>
+
         <!-- Forum -->
         <li>
           <a href="https://forum.icon.community/" target="_blank">
@@ -205,7 +215,7 @@
           <ul class="navbar-nav">
 
               <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"{% else %}style="height:47px;"{% endif %}>
-                <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.6em;">
+                <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.7em;">
                   <i class="tim-icons icon-single-02"></i> <span class="nav-lang">Login</span>
                 </a>
               </li>
@@ -276,6 +286,7 @@
 <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
 <script src="{% static 'js/plugins/identicon.js' %}"></script>
+{% block pre_extra_js %}{% endblock %}
 <script src="{% static 'js/base.js' %}"></script>
 <!-- ICON SDK for Javascript -->
 <script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.min.js"></script>

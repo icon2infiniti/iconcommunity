@@ -9,7 +9,6 @@ from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
-from el_pagination.decorators import page_template
 
 from collections import OrderedDict
 from operator import itemgetter
@@ -17,7 +16,7 @@ from operator import itemgetter
 
 def init_mode(request):
     if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
+        request.session['nightmode'] = True
     if 'navbar' not in request.session:
         request.session['navbar'] = True
     if 'fromAddress' not in request.session:
@@ -32,9 +31,48 @@ def init_mode(request):
     return context
 
 
-@page_template('dashboard/prepranking_page.html')
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
+
+    # CMC data, consider upgrading to pro or use oracle, need to refactor this
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+    parameters = {
+        'id': '2099'
+    }
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
+    }
+
+    session = Session()
+    session.headers.update(headers)
+
+    try:
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+        icx_price = data["data"]["2099"]["quote"]["USD"]["price"]
+    except (ConnectionError, Timeout, TooManyRedirects) as e:
+        print(e)
+
+    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
+    parameters = {
+        'id': '2722', #AC3=2722, ICX=2099, USD=2781
+        'convert': 'ICX'
+    }
+    headers = {
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
+    }
+
+    session = Session()
+    session.headers.update(headers)
+
+    try:
+        response = session.get(url, params=parameters)
+        data = json.loads(response.text)
+        ac3data = data["data"]["2722"]
+    except (ConnectionError, Timeout, TooManyRedirects) as e:
+        print(e)
 
     # GetPReps
     params = {}
@@ -43,6 +81,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         preps = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPReps", params)
     except JSONRPCException as e:
         print(str(e.message))
+
+    TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/1000000000000000000
 
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
 
@@ -67,7 +107,13 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         prep['irep'] = '{:,}'.format(irep)
         prep['stake'] = int(prep['stake'], 16)/1000000000000000000
         delegated = int(prep['delegated'], 16)/1000000000000000000
-        prep['delegated'] = delegated = '{:,}'.format(delegated)
+        prep['delegated'] = delegated #= '{:,}'.format(delegated)
+
+        delegation_rate = delegated / TOTAL_DELEGATED * 100
+        prep['delegate_percent'] = delegation_rate
+        prep['reward'] = prep_reward(irep, delegation_rate)
+        prep['reward_usd'] = int(prep['reward'])*icx_price
+
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
 
@@ -96,34 +142,11 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     for k, v in countries.items():
         countries_alpha2[convert_alpha_3_to_2(k)] = v
         countries_name[convert_alpha_3_to_name(k)] = v
-    #print(countries_alpha2)
 
     countries_name_sorted = OrderedDict(sorted(countries_name.items(), key=itemgetter(1), reverse=True))
 
     prep_all = preps['preps']
 
-
-
-    # CMC (conversion for multiple currencies requires paid account, pay and refactor this later)
-    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
-    parameters = {
-        'id': '2722', #AC3=2722, ICX=2099, USD=2781
-        'convert': 'ICX'
-    }
-    headers = {
-        'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
-    }
-
-    session = Session()
-    session.headers.update(headers)
-
-    try:
-        response = session.get(url, params=parameters)
-        data = json.loads(response.text)
-        ac3data = data["data"]["2722"]
-    except (ConnectionError, Timeout, TooManyRedirects) as e:
-        print(e)
 
     context.update({
         'ac3data': ac3data,
@@ -135,6 +158,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'countries_name_sorted': countries_name_sorted,
     })
     # END CMC
+
     if extra_context is not None:
         context.update(extra_context)
     return render(request, template, context)
@@ -146,6 +170,12 @@ def preplist(request, type):
         'section': 'P-REP LISTING'
     })
     return render(request, 'dashboard/preplist.html', context)
+
+
+def prep_reward(i_rep, delegation_rate):
+    print("irep: " + str(i_rep))
+    print("delegation: " + str(delegation_rate))
+    return i_rep * 0.5 * 100 * (delegation_rate/100)
 
 
 def convert_alpha_3_to_2(code):
