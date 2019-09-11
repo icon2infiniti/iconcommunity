@@ -45,9 +45,9 @@
       <div class="col-md-4 mb-3">
         <a href="{{ official_dapp.official_dapps_link }}" target="_blank">
           {% if nightmode == True %}
-            <img id="{{ official_dapp.id }}" src="{{ official_dapp.official_dapp_logo_w.url }}">
+            <img class="dapplogo" id="{{ official_dapp.id }}" src="{{ official_dapp.official_dapp_logo_w.url }}">
           {% else %}
-            <img id="{{ official_dapp.id }}" src="{{ official_dapp.official_dapp_logo.url }}">
+            <img class="dapplogo" id="{{ official_dapp.id }}" src="{{ official_dapp.official_dapp_logo.url }}">
           {% endif %}
           <h4><a href="{{ official_dapp.official_dapp_link }}" target="_blank">{{ official_dapp.official_dapp_title }}</a></h4>
           <h6>{{ official_dapp.official_dapp_category }}</h6>

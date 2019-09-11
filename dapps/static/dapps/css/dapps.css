@@ -91,3 +91,8 @@ li.active span {
 .white-content .desc {
     color: #525F7F!important;
 }
+
+.dapplogo {
+    width: 200px;
+    height: 54px;
+}
