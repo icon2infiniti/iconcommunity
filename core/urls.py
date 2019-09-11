@@ -12,6 +12,7 @@ urlpatterns = [
     path('iconsensus/', include('iconsensus.urls')),
     path('resources/', include('resources.urls')),
     path('developers/', include('developers.urls')),
+    path('dapps/', include('dapps.urls')),
     path('admin/', admin.site.urls),
     path('toggle_nightmode/', views.toggle_nightmode, name='toggle_nightmode'),
     path('toggle_navbar/', views.toggle_navbar, name='toggle_navbar'),

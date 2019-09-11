@@ -1,0 +1,98 @@
+h3.mt-5 {
+  margin-top: 0!important;
+}
+
+h4 {
+    margin-top: 1rem!important;
+    margin-bottom: 0!important;
+}
+
+.white-content h6 {
+    font-size: 10px!important;
+    color: #666!important;
+}
+
+h6 {
+    font-size: 10px!important;
+}
+
+.card-body {
+  padding: 0!important;
+}
+
+.collapsing {
+  transition: none !important;
+}
+
+.sidebar .nav li.active > a[data-toggle="collapse"]:before {
+  left: -5px !important;
+}
+
+.sidebar .nav li.active > a:not([data-toggle="collapse"]):before, .off-canvas-sidebar .nav li.active > a:not([data-toggle="collapse"]):before {
+  top: 22px !important;
+}
+
+li.active span {
+  color: #FFFFFF !important;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.white-content .pagination a, .pagination span.endless_page_current, .pagination span.endless_separator {
+  color: black!important;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+}
+
+.pagination a {
+  color: white!important;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #666;
+}
+
+.pagination span.endless_page_current {
+  background-color: #1aaaba;
+  color: white!important;
+  border: 1px solid #1aaaba!important;
+}
+
+.white-content .pagination a:hover:not(.active) {
+  background-color: #ddd!important;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #666;
+}
+
+.pagination a:first-child {
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.pagination a:last-child {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.logo {
+    height: 61px;
+}
+
+.desc {
+    color: #999!important;
+}
+
+.white-content .desc {
+    color: #525F7F!important;
+}
+
+.dapplogo {
+    width: 200px;
+    height: 54px;
+}

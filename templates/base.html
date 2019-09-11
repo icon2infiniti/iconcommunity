@@ -41,8 +41,25 @@
           <a href="javascript:void(0)" class="simple-text logo-mini">
             <img src="{% static 'logo/ic.png' %}" width="26" height="26" style="margin-top: 0px; margin-left: 3px;">
           </a>
-          <a href="javascript:void(0)" class="simple-text logo-normal">
-            icon.community
+        </li>
+
+        <!-- Dapps -->
+        <li {% if section == 'DAPPS' %}class="active"{% endif %}>
+          <a href="/dapps/">
+            <i class="tim-icons">
+              <img src="{% static 'logo/dapps.png' %}" width="24" height="24" style="margin-top: -10px; margin-left: -6px;">
+            </i>
+            <p>DApps</p>
+          </a>
+        </li>
+
+        <!-- Forum -->
+        <li>
+          <a href="https://forum.icon.community/" target="_blank">
+            <i class="tim-icons">
+              <img src="{% static 'logo/forum.png' %}" width="24" height="24" style="margin-top: -10px; margin-left: -4px;">
+            </i>
+            <p>Forum</p>
           </a>
         </div>
 
@@ -210,8 +227,7 @@
 
             <ul class="navbar-nav">
 
-              <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"
-                {% else %}style="height:47px;" {% endif %}>
+              <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"{% else %}style="height:47px;"{% endif %}>
                 <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.6em;">
                   <i class="tim-icons icon-single-02"></i> <span class="nav-lang">Login</span>
                 </a>
