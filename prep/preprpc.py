@@ -7,13 +7,14 @@ class PrepRPCCalls:
 
     MAIN_NET = "https://ctz.solidwallet.io/api/v3"
     TEST_NET = "https://bicon.net.solidwallet.io/api/v3"
+    TEST_NET_3 = "https://zicon.net.solidwallet.io/api/v3/"
     TEMP_NET = "https://devorg.icon.foundation/api/v3"
 
     def __init__(self, to_contract="cx0000000000000000000000000000000000000000"):
         self._to_contract = to_contract
 
     def json_rpc_call(self, method_name, params):
-        icon_service = IconService(HTTPProvider(PrepRPCCalls.TEMP_NET))
+        icon_service = IconService(HTTPProvider(PrepRPCCalls.TEST_NET_3))
         call_builder = CallBuilder() \
             .to(self._to_contract) \
             .method(method_name) \
