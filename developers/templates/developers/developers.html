@@ -46,6 +46,25 @@
       {% include "developers/video_presentation_page.html" %}
   </div>
 
+  <!-- Tools -->
+  <h3 class="title mt-5">Tools</h3>
+  <!--<h3 class="mt-5">Reward Calculator</h3>-->
+
+
+
+  <h3 class="mt-5">SCORE</h3>
+
+  <div class="row-flex">
+    {% for score in scores %}
+    <a target="_blank" href="{{ score.score_link }}" class="sblock">
+      <img src="{{ score.score_logo.url }}">
+      <div class="title">{{ score.score_title }}</div>
+      <div class="description">{{ score.score_description }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+
 
 {% endblock %}
 
