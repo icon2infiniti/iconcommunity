@@ -5,4 +5,4 @@ migrations/
 .DS_Store
 staticall/
 .vscode/
-dummy_server/
+dummy_server/node_modules/

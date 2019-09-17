@@ -122,8 +122,8 @@
 <!-- CHART -->
 <script>
   // Label formatter function
-  const formatter = (value, ctx) => {
-    const otherDatasetIndex = ctx.datasetIndex === 0 ? 1 : 0;
+  const testformatter = (value, ctx) => {
+//    const otherDatasetIndex = ctx.datasetIndex === 0 ? 1 : 0;
     let total = 0;
     for (let i = 0; i < ctx.chart.data.datasets.length; i++) {
       if(ctx.datasetIndex !== i) {
@@ -141,7 +141,7 @@
       // Change options only for labels of THIS DATASET
       datalabels: {
         color: "white",
-        formatter: formatter
+        formatter: testformatter
       }
     },
     {
@@ -152,7 +152,7 @@
       // Change options only for labels of THIS DATASET
       datalabels: {
         color: "white",
-        formatter: formatter
+        formatter: testformatter
       }
     },
     {
@@ -163,14 +163,14 @@
       // Change options only for labels of THIS DATASET
       datalabels: {
         color: "white",
-        formatter: formatter
+        formatter: testformatter
       }
     }
   ];
 
   console.log(data);
 
-  const options = {
+  const testoptions = {
     maintainAspectRatio: false,
     spanGaps: false,
     responsive: true,
@@ -216,7 +216,6 @@
       }
     },
     scales: {
-
       xAxes: [{
           stacked: true,
           gridLines: {
@@ -227,7 +226,6 @@
             fontColor: "#000"
           }
         },
-
         {
           type: 'category',
           offset: true,
@@ -239,7 +237,6 @@
             display: false
           },
         }
-
       ],
       yAxes: [{
         stacked: true,
@@ -250,11 +247,13 @@
         ticks: {
           fontColor: "#fff"
         }
-      }, ]
+      }]
     }
   };
 
-  const ctx = document.getElementById("mychart").getContext("2d");
+  let ctx = document.getElementById("mychart").getContext("2d");
+
+  console.log("data", data);
 
   new Chart(ctx, {
     type: "bar",
@@ -262,8 +261,10 @@
       labels: ["Token", "Quorum"],
       datasets: data
     },
-    options: options
+    options: testoptions
   });
+
+  console.log("test chart", ctx);
 </script>
 
 <!-- FILTERS -->
@@ -286,11 +287,12 @@
   const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
   const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
   const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-  const DUMMY_NET = "http://54.180.16.76/api/v3";
+  const DEV_NET = "http://54.180.16.76/api/v3";
+  const DUMMY_NET = "http://localhost:8888";
   const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
 
   const IconService = window['icon-sdk-js'];
-  const provider = new IconService.HttpProvider(DUMMY_NET);
+  const provider = new IconService.HttpProvider({{USE_NET_NAME}});
   const icon_service = new IconService(provider);
   const IconBuilder = IconService.IconBuilder;
 
@@ -357,9 +359,98 @@
     return template.content.firstChild;
   }
 
+  const formatter = (value, ctx) => {
+    let total = 0;
+    for (let i = 0; i < ctx.chart.data.datasets.length; i++) {
+      total += ctx.chart.data.datasets[i].data[ctx.dataIndex];
+    }
+    return `${((value / total) * 100).toFixed(0)}%`;
+  };
+
+
+  const options = {
+    maintainAspectRatio: false,
+    spanGaps: false,
+    responsive: true,
+    legend: {
+      display: false,
+      position: "bottom",
+      labels: {
+        fontColor: "#000",
+        boxWidth: 14,
+        fontFamily: "Monserrat"
+      }
+    },
+    tooltips: {
+      mode: "label",
+      callbacks: {
+        label: function (tooltipItem, data) {
+          const type = data.datasets[tooltipItem.datasetIndex].label;
+          const value =
+            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+          let total = 0;
+          for (let i = 0; i < data.datasets.length; i++)
+            total += data.datasets[i].data[tooltipItem.index];
+          if (tooltipItem.datasetIndex !== data.datasets.length-1) {
+            return (
+              type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            );
+          } else {
+            return [
+              type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","), "Overall : " + total.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            ];
+          }
+        }
+      }
+    },
+    plugins: {
+      // Change options for ALL labels of THIS CHART
+      datalabels: {
+        color: "#black",
+        align: "center"
+      }
+    },
+    scales: {
+      xAxes: [{
+          stacked: true,
+          gridLines: {
+            display: false
+          },
+          display: false,
+          ticks: {
+            fontColor: "#000"
+          }
+        },
+        {
+          type: 'category',
+          offset: true,
+          position: 'top',
+          ticks: {
+            fontColor: "#000"
+          },
+          gridLines: {
+            display: false
+          },
+        }
+      ],
+      yAxes: [{
+        stacked: true,
+        gridLines: {
+          display: false
+        },
+        display: false,
+        ticks: {
+          fontColor: "#fff"
+        }
+      }, ]
+    }
+  };
+
+
   function makecard(proposalType, Proposal, PRep, token, quorum, id) {
     console.log(token);
     console.log(quorum);
+    console.log(id);
     let quorumTotal = quorum.agree + quorum.disagree + quorum.notvoted;
     let tokenTotal = token.agree + token.disagree + token.notvoted;
     template = `
@@ -377,7 +468,7 @@
               <p>Token vote Agree ${(token.agree/tokenTotal).toFixed(4)*100}%, Disagree ${(token.disagree/tokenTotal).toFixed(4)*100}%, Not Voted ${(token.notvoted/tokenTotal).toFixed(4)*100}%</p>
             </div>
             <div class="col-5">
-              <div><canvas id="mychart${id}"></canvas></div>
+              <div><canvas id="mychart${String(id)}"></canvas></div>
             </div>
           </div>
         </div>
@@ -425,8 +516,9 @@
     console.log("data ", voteData)
 
 
-    const ctx = document.getElementById("mychart" + id).getContext("2d");
+    let ctx = document.getElementById("mychart" + id).getContext("2d");
 
+    console.log("voteData", voteData);
     new Chart(ctx, {
       type: "bar",
       data: {
@@ -436,6 +528,7 @@
       options: options
     });
 
+    console.log("mychart", ctx);
   }
 
   async function reloadProposals() {
@@ -450,33 +543,34 @@
     console.log("proposallist ", response);
 
     let ProposalList = response.proposals;
+    console.log("proposallist2 ", ProposalList);
 
     for (let i = 0; i < ProposalList.length; i++) {
       let aProposal = ProposalList[i];
-      let proposalResponse = await json_rpc_call("getProposal", {
-        id: String(aProposal.id)
-      });
+      //let proposalResponse = await json_rpc_call("getProposal", {
+      //  id: String(aProposal.id)
+      //});
       //      let aPRepResponse = await json_rpc_call("getPRep", {
       //        address: proposalResponse.proposer
       //      });
 
-      console.log(proposalResponse);
+      //console.log("ProposalResponse:",proposalResponse);
       //      console.log(aPRepResponse);
       let aPRepResponse = {};
       //          makecard(title, name, quoruma, quorumd, tokena, tokend, id)
       makecard(
-        getProposalType(parseInt(proposalResponse.contents.type)),
-        proposalResponse,
+        getProposalType(parseInt(aProposal.contents.type)),
+        aProposal,
         aPRepResponse, {
-          "agree": parseInt(proposalResponse.voter.agree.amount),
-          "disagree": parseInt(proposalResponse.voter.disagree.amount),
-          "notvoted": parseInt(proposalResponse.voter.noVote.amount)
+          "agree": parseInt(aProposal.vote.agree.amount),
+          "disagree": parseInt(aProposal.vote.disagree.amount),
+          "notvoted": parseInt(aProposal.vote.noVote.amount)
         }, {
-          "agree": proposalResponse.voter.agree.address.length,
-          "disagree": proposalResponse.voter.disagree.address.length,
-          "notvoted": proposalResponse.voter.noVote.address.length
+          "agree": parseInt(aProposal.vote.agree.count),
+          "disagree": parseInt(aProposal.vote.disagree.count),
+          "notvoted": parseInt(aProposal.vote.noVote.count)
         },
-        i
+        String(i)
       );
     }
   }

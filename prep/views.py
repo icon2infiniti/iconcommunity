@@ -104,6 +104,7 @@ def management(request, template='prep/management.html'):
     context.update({
         'getPRep': getPRep
     })
+    context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
     # context.update({
     #    'latest_block': latest_block,
@@ -121,6 +122,7 @@ def governance(request, template='prep/governance.html'):
     context.update({
         'getPRep': getPRep
     })
+    context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
     return render(request, template, context)
 
@@ -132,6 +134,7 @@ def proposal(request, template='prep/proposal.html'):
     context.update({
         'getPRep': getPRep
     })
+    context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
     return render(request, template, context)
 
@@ -143,14 +146,19 @@ def newproposal(request, template='prep/newproposal.html'):
     context.update({
         'getPRep': getPRep
     })
+    context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
     return render(request, template, context)
 
 
 def proposaldetail(request, proposal_id):
+    print("request", request)
     context = init_mode(request)
+    print("proposal_id", proposal_id)
     aProposal = get_proposal(proposal_id)
+    print("aProposal", aProposal)
     context['aProposal'] = aProposal
+    print(aProposal)
     aPRep = get_prep(aProposal['proposer'])
     context['aPRep'] = aPRep
     startBlock = get_block(aProposal['startBlockHeight'])
@@ -162,5 +170,6 @@ def proposaldetail(request, proposal_id):
     context.update({
         'getPRep': getPRep
     })
+    context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
     return render(request, 'prep/proposaldetail.html', context)
