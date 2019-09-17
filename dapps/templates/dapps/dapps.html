@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+  <link href="{% static 'dapps/css/dapps.css' %}" rel="stylesheet"/>
+  <script>
+    var tx_logo_list = {};
+    var dapp_logo_list = {};
+  </script>
+{% endblock %}
+{% block title %}DAPPS{% endblock %}
+{% block section %}DAPPS{% endblock %}
+
+{% block content %}
+
+  <!-- TX Challenge -->
+  <h3 class="title mt-5">ICON's Got Talent Winners</h3>
+  <div class="card-body">
+    <div class="row">
+      {% for tx_challenge in tx_challenges %}
+      <script>tx_logo_list[{{ tx_challenge.id }}] = ["{{ tx_challenge.tx_challenge_logo_w.url }}", "{{ tx_challenge.tx_challenge_logo.url }}"];</script>
+      <div class="col-md-4 mt-5 mb-3">
+        <a href="{{ tx_challenge.tx_challenge_link }}" target="_blank">
+          {% if nightmode == True %}
+            <img id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo_w.url }}">
+          {% else %}
+            <img id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo.url }}">
+          {% endif %}
+          <h4><a href="{{ tx_challenge.tx_challenge_link }}" target="_blank">{{ tx_challenge.tx_challenge_title }}</a></h4>
+          <h6>{{ tx_challenge.tx_challenge_category }}</h6>
+        </a>
+        <span class="desc">{{ tx_challenge.tx_challenge_description }}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <br><br>
+
+  <!-- Official Dapp Partners -->
+  <h3 class="title mt-5">Official DApp Partners</h3>
+  <div class="card-body">
+    <div class="row">
+      {% for official_dapp in official_dapps %}
+      <script>dapp_logo_list[{{ official_dapp.id }}] = ["{{ official_dapp.official_dapp_logo_w.url }}", "{{ official_dapp.official_dapp_logo.url }}"];</script>
+      <div class="col-md-4 mt-5 mb-3">
+        <a href="{{ official_dapp.official_dapps_link }}" target="_blank">
+          {% if nightmode == True %}
+            <img class="dapplogo" id="{{ official_dapp.id }}" src="{{ official_dapp.official_dapp_logo_w.url }}">
+          {% else %}
+            <img class="dapplogo" id="{{ official_dapp.id }}" src="{{ official_dapp.official_dapp_logo.url }}">
+          {% endif %}
+          <h4><a href="{{ official_dapp.official_dapp_link }}" target="_blank">{{ official_dapp.official_dapp_title }}</a></h4>
+          <h6>{{ official_dapp.official_dapp_category }}</h6>
+        </a>
+        <span class="desc">{{ official_dapp.official_dapp_description }}</span>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block pre_extra_js %}
+  <script>
+  function morning_image(){
+    for(var key in tx_logo_list){
+        $('#tx'+key).attr("src", tx_logo_list[key][1])
+    }
+    for(var key in dapp_logo_list){
+        $('#'+key).attr("src", dapp_logo_list[key][1])
+    }
+  }
+
+  function night_image(){
+    for(var key in tx_logo_list){
+        $('#tx'+key).attr("src", tx_logo_list[key][0])
+    }
+    for(var key in dapp_logo_list){
+        $('#'+key).attr("src", dapp_logo_list[key][0])
+    }
+  }
+  </script>
+{% endblock %}

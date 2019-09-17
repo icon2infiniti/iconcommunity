@@ -402,15 +402,21 @@ function toggle_nightmode(){
   });
 }
 
+
+
 function set_nightmode(mode){
   if(mode){
     $('#moon').find('i').removeClass('far fa-moon');
     $('#moon').find('i').addClass('fas fa-moon');
     $('body').removeClass('white-content');
+    night_image();
+    //alert("nightmode");
   }else{
     $('#moon').find('i').removeClass('fas fa-moon');
     $('#moon').find('i').addClass('far fa-moon');
     $('body').addClass('white-content');
+    //alert("nightmode");
+    morning_image();
   }
 }
 

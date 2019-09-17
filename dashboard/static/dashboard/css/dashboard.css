@@ -124,3 +124,11 @@ li{ list-style:none; }
     font-weight: bold;
     color: green!important;
 }
+
+.white-content .subtext {
+    color: #cccccc;
+}
+
+.subtext {
+    color: #666666;
+}
