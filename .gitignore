@@ -6,3 +6,4 @@ migrations/
 staticall/
 .vscode/
 dummy_server/node_modules/
+media/

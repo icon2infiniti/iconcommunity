@@ -46,6 +46,33 @@
       {% include "developers/video_presentation_page.html" %}
   </div>
 
+  <!-- Tools -->
+  <h3 class="title mt-5">Tools</h3>
+  <h3 class="mt-5">Reward Calculator</h3>
+  <div class="row-flex">
+    {% for reward_calculator in reward_calculators %}
+    <a target="_blank" href="{{ reward_calculator.rc_link }}" class="sblock">
+      <img src="{{ reward_calculator.rc_logo.url }}">
+      <div class="title">{{ reward_calculator.rc_title }}</div>
+      <div class="description">{{ reward_calculator.rc_description }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+
+  <h3 class="mt-5">SCORE</h3>
+
+  <div class="row-flex">
+    {% for score in scores %}
+    <a target="_blank" href="{{ score.score_link }}" class="sblock">
+      <img src="{{ score.score_logo.url }}">
+      <div class="title">{{ score.score_title }}</div>
+      <div class="description">{{ score.score_description }}</div>
+    </a>
+    {% endfor %}
+  </div>
+
+
 
 {% endblock %}
 

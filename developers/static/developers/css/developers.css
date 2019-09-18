@@ -71,3 +71,60 @@ li.active span {
   width: 100%;
   object-fit: contain;
 }
+
+/* Tools styling */
+
+.row-flex {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0px -6px 32px;
+}
+
+.row-flex > * {
+    margin: 0px 6px 12px;
+}
+
+.sblock {
+    display: block;
+    color: inherit;
+    cursor: pointer;
+    line-height: 1.25;
+    width: calc(25% - 12px);
+    min-width: 200px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(204, 204, 204);
+    border-image: initial;
+    padding: 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.1s ease 0s;
+}
+
+@media (max-width: 441px){
+    .sblock {
+        width: calc(100% - 12px);
+    }
+}
+
+.sblock img {
+    float: left;
+    margin-right: 12px;
+    max-width: 50px;
+    border-radius: 3px;
+}
+img {
+    vertical-align: middle;
+    border-style: none;
+}
+
+.sblock .title {
+    color: rgba(26, 170, 186, 1);
+    font-size: 15px;
+    margin-bottom: 2px;
+}
+
+.sblock .description {
+    font-size: 12px;
+}
+
