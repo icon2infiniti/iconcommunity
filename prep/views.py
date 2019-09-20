@@ -27,9 +27,7 @@ def registration(request, template='prep/registration.html'):
 
 def get_prep(address):
     params = {
-        'address': request.session['fromAddress']
-        #': 'hxb2ed93806e9585a7a8b722f7031323925914de91'
-
+        'address': address
     }
     response = None
     try:

@@ -180,15 +180,15 @@ function icx_call(args, opt, callback) {
                 "endBlockHeight" : "0x65",
                 "vote": {
                     "agree": {
-                        "count": "0x112",
+                        "count": "0x112412349f",
                         "amount": "0x123134123a"
                     },
                     "disagree": {
-                        "count": "0x1f984",
+                        "count": "0x1f98441234",
                         "amount": "0x1312341234"
                     },
                     "noVote": {
-                        "count": "0x13432",
+                        "count": "0x1343234123a",
                         "amount": "0x2312341234a"
                     }
                 },
@@ -324,7 +324,7 @@ function icx_call(args, opt, callback) {
       break;
 
     case "getPRep":
-      aRandom = getRandomInt(0, 4);
+      let aRandom = getRandomInt(0, 4);
       switch (aRandom) {
         case 0:
           return_json_str = `{

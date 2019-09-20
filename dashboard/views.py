@@ -37,16 +37,17 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     # CMC data, consider upgrading to pro or use oracle, need to refactor this
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
+        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
         'id': '2099'
     }
     headers = {
-        'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
+        'Accepts': 'application/json'
     }
 
     session = Session()
     session.headers.update(headers)
 
+    icx_price = 0.215
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
@@ -56,12 +57,12 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
 
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
-        'id': '2722', #AC3=2722, ICX=2099, USD=2781
+        'id': '2722',  # AC3=2722, ICX=2099, USD=2781
+        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
         'convert': 'ICX'
     }
     headers = {
         'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
     }
 
     session = Session()
@@ -107,7 +108,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         prep['irep'] = '{:,}'.format(irep)
         prep['stake'] = int(prep['stake'], 16)/1000000000000000000
         delegated = int(prep['delegated'], 16)/1000000000000000000
-        prep['delegated'] = delegated #= '{:,}'.format(delegated)
+        prep['delegated'] = delegated  # = '{:,}'.format(delegated)
 
         delegation_rate = delegated / TOTAL_DELEGATED * 100
         prep['delegate_percent'] = delegation_rate
@@ -125,17 +126,17 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
             countries[prep['country']] += 1
 
         # get Prep details, but too slow. Do more efficient way
-        #address = {
+        # address = {
         #    "address": prep['address']
-        #}
+        # }
 
-        #try:
+        # try:
         #    prep['detail'] = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", address)
-        #except JSONRPCException as e:
+        # except JSONRPCException as e:
         #    print(str(e.message))
 
         #prep_json = prep['detail']['details']
-        #print(prep_json)
+        # print(prep_json)
 
     countries_alpha2 = {}
     countries_name = {}
@@ -143,7 +144,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         countries_alpha2[convert_alpha_3_to_2(k)] = v
         countries_name[convert_alpha_3_to_name(k)] = v
 
-    countries_name_sorted = OrderedDict(sorted(countries_name.items(), key=itemgetter(1), reverse=True))
+    countries_name_sorted = OrderedDict(
+        sorted(countries_name.items(), key=itemgetter(1), reverse=True))
 
     prep_all = preps['preps']
 

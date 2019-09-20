@@ -8,13 +8,13 @@ class PrepRPCCalls:
     MAIN_NET = "https://ctz.solidwallet.io/api/v3"
     TEST_NET = "https://bicon.net.solidwallet.io/api/v3"
     TEMP_NET = "https://devorg.icon.foundation/api/v3"
-    DEV_NET = "http://54.180.16.76/api/v3"
+    DEV_NET = "http://20.20.7.156:9000/api/v3"
     DUMMY_NET = "http://localhost:8888"
 
     USE_NET = DUMMY_NET
     USE_NET_NAME = "DUMMY_NET"
 
-    def __init__(self, to_contract="cx0000000000000000000000000000000000000001"):
+    def __init__(self, to_contract="cx0000000000000000000000000000000000000000"):
         self._to_contract = to_contract
 
     def json_rpc_call(self, method_name, params):
