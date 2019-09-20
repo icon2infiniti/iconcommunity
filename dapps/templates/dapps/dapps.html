@@ -5,6 +5,7 @@
   <script>
     var tx_logo_list = {};
     var dapp_logo_list = {};
+    var discover_logo_list = {};
   </script>
 {% endblock %}
 {% block title %}DAPPS{% endblock %}
@@ -13,7 +14,7 @@
 {% block content %}
 
   <!-- TX Challenge -->
-  <h3 class="title mt-5">ICON's Got Talent Winners</h3>
+  <h3 class="title mt-3">ICON's Got Talent Winners</h3>
   <div class="card-body">
     <div class="row">
       {% for tx_challenge in tx_challenges %}
@@ -21,9 +22,9 @@
       <div class="col-md-4 mt-5 mb-3">
         <a href="{{ tx_challenge.tx_challenge_link }}" target="_blank">
           {% if nightmode == True %}
-            <img id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo_w.url }}">
+            <img class="dapplogo" id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo_w.url }}">
           {% else %}
-            <img id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo.url }}">
+            <img class="dapplogo" id="tx{{ tx_challenge.id }}" src="{{ tx_challenge.tx_challenge_logo.url }}">
           {% endif %}
           <h4><a href="{{ tx_challenge.tx_challenge_link }}" target="_blank">{{ tx_challenge.tx_challenge_title }}</a></h4>
           <h6>{{ tx_challenge.tx_challenge_category }}</h6>
@@ -37,7 +38,7 @@
   <br><br>
 
   <!-- Official Dapp Partners -->
-  <h3 class="title mt-5">Official DApp Partners</h3>
+  <h3 class="title mt-3">Official DApp Partners</h3>
   <div class="card-body">
     <div class="row">
       {% for official_dapp in official_dapps %}
@@ -59,6 +60,31 @@
     </div>
   </div>
 
+  <br><br>
+
+  <!-- Discover -->
+  <h3 class="title mt-3">Discover More DApps</h3>
+  <div class="card-body">
+    <div class="row">
+      {% for discover_more_dapp in discover_more_dapps %}
+      <script>discover_logo_list[{{ discover_more_dapp.id }}] = ["{{ discover_more_dapp.discover_logo_w.url }}", "{{ discover_more_dapp.discover_logo.url }}"];</script>
+      <div class="col-md-4 mt-5 mb-3">
+        <a href="{{ discover_more_dapp.discover_link }}" target="_blank">
+          {% if nightmode == True %}
+            <img class="dapplogo" id="discover{{ discover_more_dapp.id }}" src="{{ discover_more_dapp.discover_logo_w.url }}">
+          {% else %}
+            <img class="dapplogo" id="discover{{ discover_more_dapp.id }}" src="{{ discover_more_dapp.discover_logo.url }}">
+          {% endif %}
+          <h4><a href="{{ discover_more_dapp.discover_link }}" target="_blank">{{ discover_more_dapp.discover_title }}</a></h4>
+          <h6>{{ discover_more_dapp.discover_category }}</h6>
+        </a>
+        <span class="desc">{{ discover_more_dapp.discover_description }}</span>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
 
 {% endblock %}
 
@@ -71,6 +97,10 @@
     for(var key in dapp_logo_list){
         $('#'+key).attr("src", dapp_logo_list[key][1])
     }
+    for(var key in discover_logo_list){
+        $('#discover'+key).attr("src", discover_logo_list[key][1])
+    }
+    console.log(discover_logo_list);
   }
 
   function night_image(){
@@ -79,6 +109,9 @@
     }
     for(var key in dapp_logo_list){
         $('#'+key).attr("src", dapp_logo_list[key][0])
+    }
+    for(var key in discover_logo_list){
+        $('#discover'+key).attr("src", discover_logo_list[key][0])
     }
   }
   </script>

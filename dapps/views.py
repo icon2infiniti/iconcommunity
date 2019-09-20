@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import TXChallenge, OfficialDapps
+from .models import TXChallenge, OfficialDapps, Discover
 
 
 def dapps(request, template='dapps/dapps.html', extra_context=None):
@@ -12,6 +12,7 @@ def dapps(request, template='dapps/dapps.html', extra_context=None):
 
     tx_challenges = TXChallenge.objects.filter(display=True).order_by('-id')
     official_dapps = OfficialDapps.objects.filter(display=True).order_by('-id')
+    discover_more_dapps = Discover.objects.filter(display=True).order_by('-id')
 
     context = {
         'nightmode': request.session['nightmode'],
@@ -20,6 +21,7 @@ def dapps(request, template='dapps/dapps.html', extra_context=None):
         'section': 'DAPPS',
         'tx_challenges': tx_challenges,
         'official_dapps': official_dapps,
+        'discover_more_dapps': discover_more_dapps,
     }
     if extra_context is not None:
         context.update(extra_context)
