@@ -37,17 +37,17 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     # CMC data, consider upgrading to pro or use oracle, need to refactor this
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
-        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
         'id': '2099'
     }
     headers = {
-        'Accepts': 'application/json'
+        'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
     }
 
     session = Session()
     session.headers.update(headers)
 
-    icx_price = 0.215
+    #icx_price = 0.215
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
@@ -58,11 +58,11 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
         'id': '2722',  # AC3=2722, ICX=2099, USD=2781
-        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
         'convert': 'ICX'
     }
     headers = {
         'Accepts': 'application/json',
+        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
     }
 
     session = Session()
@@ -150,6 +150,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     prep_all = preps['preps']
 
     context.update({
+        'ac3data': ac3data,
         'prep_all': prep_all,
         'main_preps_count': MAIN_PREPS,
         'sub_preps_count': SUB_PREPS,
