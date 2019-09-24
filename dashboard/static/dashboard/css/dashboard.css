@@ -87,8 +87,6 @@ p {
 li{ list-style:none; }
 
 
-
-
 .card-body .icx-group { text-align: center; font-size: 36px; font-weight: 700; color: rgba(255, 255, 255, 0.8)!important; height: 100px; line-height: 35px; border-bottom: 2px solid #1aaaba; }
 .white-content .card-body .icx-group {text-align: center; font-size: 36px; font-weight: 700; color: #262626!important; height: 100px; line-height: 35px; border-bottom: 2px solid #1aaaba;}
 .card-body .icx-group em{font-size: 28px; font-weight: 500; margin-left: 10px;}
@@ -131,4 +129,12 @@ li{ list-style:none; }
 
 .subtext {
     color: #666666;
+}
+
+.white-content .tim-icons.icon-single-02.incard {
+    color: #fff!important;
+}
+
+.tim-icons.icon-single-02.incard {
+    color: #fff!important;
 }

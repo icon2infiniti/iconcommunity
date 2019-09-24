@@ -7,7 +7,7 @@ from el_pagination.decorators import page_template
 @page_template('developers/video_tutorial_page.html', key='video_tutorial_page')
 def developers(request, template='developers/developers.html', extra_context=None):
     if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
+        request.session['nightmode'] = True
     if 'navbar' not in request.session:
         request.session['navbar'] = True
     if 'fromAddress' not in request.session:
