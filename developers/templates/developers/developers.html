@@ -95,7 +95,11 @@
       {% for reward_calculator in reward_calculators %}
       <script>minicard_list[{{ reward_calculator.id }}] = ["{{ reward_calculator.minicard_logo_w.url }}", "{{ reward_calculator.minicard_logo.url }}"];</script>
       <a target="_blank" href="{{ reward_calculator.minicard_link }}" class="sblock">
-        <img id="{{ reward_calculator.id }}" src="{{ reward_calculator.minicard_logo.url }}">
+        {% if nightmode == True %}
+          <img id="{{ reward_calculator.id }}" src="{{ reward_calculator.minicard_logo_w.url }}">
+        {% else %}
+          <img id="{{ reward_calculator.id }}" src="{{ reward_calculator.minicard_logo.url }}">
+        {% endif %}
         <div class="title">{{ reward_calculator.minicard_title }}</div>
         <div class="description">{{ reward_calculator.minicard_description }}</div>
       </a>
@@ -108,7 +112,11 @@
       {% for score in scores %}
       <script>minicard_list[{{ score.id }}] = ["{{ score.minicard_logo_w.url }}", "{{ score.minicard_logo.url }}"];</script>
       <a target="_blank" href="{{ score.minicard_link }}" class="sblock">
-        <img id="{{ score.id }}" src="{{ score.minicard_logo.url }}">
+        {% if nightmode == True %}
+          <img id="{{ score.id }}" src="{{ score.minicard_logo_w.url }}">
+        {% else %}
+          <img id="{{ score.id }}" src="{{ score.minicard_logo.url }}">
+        {% endif %}
         <div class="title">{{ score.minicard_title }}</div>
         <div class="description">{{ score.minicard_description }}</div>
       </a>
@@ -121,7 +129,11 @@
       {% for wallet in wallets %}
       <script>minicard_list[{{ wallet.id }}] = ["{{ wallet.minicard_logo_w.url }}", "{{ wallet.minicard_logo.url }}"];</script>
       <a target="_blank" href="{{ wallet.minicard_link }}" class="sblock">
-        <img id="{{ wallet.id }}" src="{{ wallet.minicard_logo.url }}">
+        {% if nightmode == True %}
+          <img id="{{ wallet.id }}" src="{{ wallet.minicard_logo_w.url }}">
+        {% else %}
+          <img id="{{ wallet.id }}" src="{{ wallet.minicard_logo.url }}">
+        {% endif %}
         <div class="title">{{ wallet.minicard_title }}</div>
         <div class="description">{{ wallet.minicard_description }}</div>
       </a>
@@ -134,7 +146,11 @@
       {% for db in dbs %}
       <script>minicard_list[{{ db.id }}] = ["{{ db.minicard_logo_w.url }}", "{{ db.minicard_logo.url }}"];</script>
       <a target="_blank" href="{{ db.minicard_link }}" class="sblock">
-        <img id="{{ db.id }}" src="{{ db.minicard_logo.url }}">
+        {% if nightmode == True %}
+          <img id="{{ db.id }}" src="{{ db.minicard_logo_w.url }}">
+        {% else %}
+          <img id="{{ db.id }}" src="{{ db.minicard_logo.url }}">
+        {% endif %}
         <div class="title">{{ db.minicard_title }}</div>
         <div class="description">{{ db.minicard_description }}</div>
       </a>
@@ -147,7 +163,11 @@
       {% for ide in ides %}
       <script>minicard_list[{{ ide.id }}] = ["{{ ide.minicard_logo_w.url }}", "{{ ide.minicard_logo.url }}"];</script>
       <a target="_blank" href="{{ ide.minicard_link }}" class="sblock">
-        <img id="{{ ide.id }}" src="{{ ide.minicard_logo.url }}">
+        {% if nightmode == True %}
+          <img id="{{ ide.id }}" src="{{ ide.minicard_logo_w.url }}">
+        {% else %}
+          <img id="{{ ide.id }}" src="{{ ide.minicard_logo.url }}">
+        {% endif %}
         <div class="title">{{ ide.minicard_title }}</div>
         <div class="description">{{ ide.minicard_description }}</div>
       </a>
