@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+<link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />
+<style type="text/css">
+  .white-content .proposaltype {
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  .proposaltype {
+    color: rgba(255, 255, 255, 0.8);
+  }
+</style>
+{% endblock %}
+{% block title %}CREATE NETWORK PROPOSAL{% endblock %}
+{% block section %}CREATE NETWORK PROPOSAL{% endblock %}
+{% block content %}
+
+<div>
+  <div class="col-lg-5 col-md-6 col-sm-3">
+    <label class="mx-1">Type</label>
+    <select id="ProposalType" class="selectpicker" data-size="7" data-style="btn btn-primary"
+      onchange="filterchange();">
+      <option value="0" selected>Text Proposal</option>
+      <option value="1">Revision Update</option>
+      <option value="2">Malicious SCORE Proposal</option>
+      <option value="3">P-Rep Disqualification Proposal</option>
+      <option value="4">Step Price Proposal</option>
+    </select>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title" id="ProposalType"></h2>
+      </div>
+      <div class="card-body">
+        <div id="ProposalDefault" class="row" style="visibility:block">
+          <div class="col-sm-12">
+            <label>Title*</label>
+            <div class="form-group">
+              <input id="title" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <label>Description*</label>
+            <div class="form-group">
+              <input id="description" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!-- TextProposal -->
+        <div id="Proposal0" class="row" style="visibility:block">
+          <div class="col-sm-12">
+            <label>Text Message</label>
+            <div class="form-group">
+              <textarea id="content" style="height:400px;width:400px;resize:none;"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- Revision Update Proposal -->
+        <div id="Proposal1" class="row" style="display:none">
+          <div class="col-sm-6">
+            <label>Revision Code</label>
+            <div class="form-group">
+              <input id="revision_code" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>ICON-SERVICE version</label>
+            <div class="form-group">
+              <input id="icon-service_version" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!-- Malicious SCORE Proposal -->
+        <div id="Proposal2" class="row" style="display:none">
+          <div class="col-sm-6">
+            <label>Address Of SCORE</label>
+            <div class="form-group">
+              <input id="address_of_score" type="text" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <label>Freeze/Unfreeze</label>
+            <div class="form-group">
+              <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary">
+                <option value="0" selected>freeze</option>
+                <option value="1">unfreeze</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <!-- Disqualification PRep -->
+        <div id="Proposal3" class="row" style="display:none">
+          <div class="col-sm-12">
+            <label>address of PRep</label>
+            <div class="form-group">
+              <input id="address_of_prep" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!-- Step Price -->
+        <div id="Proposal4" class="row" style="display:none">
+          <div class="col-sm-12">
+            <label>value</label>
+            <div class="form-group">
+              <input id="step_price_in_loop" type="text" class="form-control">
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <div class="card-footer text-center">
+        <button onclick="registerProposal()" class="btn btn-fill btn-primary">Register</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+<script src="{% static 'js/plugins/isotope.pkgd.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js">
+</script>
+
+<!-- CHART -->
+<script>
+  const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+  const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+  const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+  const DEV_NET = "http://20.20.7.156:9000/api/v3"
+  const DUMMY_NET = "http://localhost:8888"
+  const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
+
+  const IconService = window['icon-sdk-js'];
+  const provider = new IconService.HttpProvider({{ USE_NET_NAME }});
+  const icon_service = new IconService(provider);
+  const IconBuilder = IconService.IconBuilder;
+  const IconConverter = IconService.IconConverter;
+
+  async function json_rpc_call(method_name, params) {
+    var callBuilder = new IconBuilder.CallBuilder();
+    var callObj = callBuilder
+      .to(TO_CONTRACT)
+      .method(method_name)
+      .params(params)
+      .build();
+    return await icon_service.call(callObj).execute();
+  }
+
+  async function json_rpc_transaction_call(from_wallet, method_name, params) {
+    // Need to sign or send to ICONex
+    var txBuilder = new IconBuilder.CallTransactionBuilder();
+    var txObj = txBuilder
+      .from(from_wallet)
+      .to(TO_CONTRACT)
+      .method(method_name)
+      .params(params)
+      .build();
+    return await icon_service.call(txObj).execute();
+  }
+
+
+  function getProposalType(i) {
+    switch (i) {
+      case 0:
+        return "Text Proposal";
+      case 1:
+        return "Revision Update";
+      case 2:
+        return "Malicious SCORE";
+      case 3:
+        return "P-Rep Disqualification";
+      case 4:
+        return "Step Price";
+      default:
+        return "No Type";
+    }
+  }
+
+  function filterchange() {
+    var ProposalType = $('#ProposalType').val();
+    $('#Proposal0').attr('style', 'display:none');
+    $('#Proposal1').attr('style', 'display:none');
+    $('#Proposal2').attr('style', 'display:none');
+    $('#Proposal3').attr('style', 'display:none');
+    $('#Proposal4').attr('style', 'display:none');
+
+    $('#Proposal' + ProposalType).attr('style', 'visibility:block');
+  }
+
+  async function registerProposal() {
+    let from_wallet = "{{ fromAddress }}";
+    let method_name = "registerProposal";
+    let title = $('#title').val();
+    let description = $('#description').val();
+    let ProposalType = $('#ProposalType').val();
+
+    if(title === "") {
+      alert("title is empty");
+      return;
+    }
+
+    if(description === "") {
+      alert("description is empty");
+      return;
+    }
+
+    let params = {"title":title, "description":description, "type":"0x"+ProposalType.toString()};
+
+    switch(ProposalType) {
+      case "0":
+        params['value'] = $("#content").val();
+        if(params['value'] === "") {
+          alert("content is empty");
+          return;
+        }
+      break;
+      case "1":
+        params['code'] = $("#revision_code").val();
+        if(params['code'] === "") {
+          alert("revision_code is empty");
+          return;
+        }
+        params['name'] = $("#icon-service_version").val();
+        if(params['name'] === "") {
+          alert("icon-service_version is empty");
+          return;
+        }
+      break;
+      case "2":
+        params['address'] = $("#address_of_score").val();
+        if(params['address'] === "") {
+          alert("address_of_score is empty");
+          return;
+        }
+        params['type'] = "0x"+$("#type").val();
+      break;
+      case "3":
+        params['address'] = $("#address_of_prep").val();
+        if(params['address'] === "") {
+          alert("address_of_prep is empty");
+          return;
+        }
+      break;
+      case "4":
+        params['value'] = $("#step_price_in_loop").val();
+        if(params['value'] === "") {
+          alert("step_price_in_loop is empty");
+          return;
+        }
+      break;
+      default:
+        console.log("out of type")
+      break;
+    }
+
+    console.log(params);
+
+    // Need to sign or send to ICONex
+    let timestamp = new Date();
+    var txBuilder = new IconBuilder.CallTransactionBuilder();
+    var txObj = txBuilder
+      .from(from_wallet)
+      .to(TO_CONTRACT)
+      .nid(IconConverter.toBigNumber("3"))
+      .version(IconConverter.toBigNumber("3"))
+      .stepLimit(IconConverter.toBigNumber("10000000"))
+      .timestamp(timestamp * 1000)
+      .method(method_name)
+      .params(params)
+      .build();
+
+    const scoreData = JSON.stringify({
+      "jsonrpc": "2.0",
+      "method": "icx_sendTransaction",
+      "params": IconConverter.toRawTransaction(txObj),
+      "id": 44
+    });
+
+    const parsed = JSON.parse(scoreData);
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+      detail: {
+        type: 'REQUEST_JSON-RPC',
+        payload: parsed
+      }
+    }));
+  }
+
+
+  $(document).ready(function () {
+  });
+</script>
+{% endblock %}

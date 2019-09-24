@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <title>{% block title %}{% endblock %}</title>
@@ -11,111 +11,35 @@
   <link rel="icon" type="image/png" href="{% static 'favicon.ico' %}">
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
 
   <!-- CSS -->
-  <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet"/>
-  <link href="{% static 'css/base.css' %}" rel="stylesheet"/>
+  <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+  <link href="{% static 'css/base.css' %}" rel="stylesheet" />
   {% block extra_head %}{% endblock %}
 
 </head>
 
-<body class="{% if nightmode == True %} {% else %} white-content {% endif %} {% if navbar == True %} {% else %} sidebar-mini {% endif %}">
+<body
+  class="{% if nightmode == True %} {% else %} white-content {% endif %} {% if navbar == True %} {% else %} sidebar-mini {% endif %}">
 
-{% get_current_language as LANGUAGE_CODE %}
+  {% get_current_language as LANGUAGE_CODE %}
 
-<div class="wrapper">
-  <div class="navbar-minimize-fixed">
-    <button class="minimize-sidebar btn btn-link btn-just-icon">
-      <i class="tim-icons icon-align-center visible-on-sidebar-regular text-muted"></i>
-      <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
-    </button>
-  </div>
+  <div class="wrapper">
+    <div class="navbar-minimize-fixed">
+      <button class="minimize-sidebar btn btn-link btn-just-icon">
+        <i class="tim-icons icon-align-center visible-on-sidebar-regular text-muted"></i>
+        <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
+      </button>
+    </div>
 
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sidebar-wrapper">
-      <div class="logo">
-        <a href="javascript:void(0)" class="simple-text logo-mini">
-          <img src="{% static 'logo/ic.png' %}" width="26" height="26" style="margin-top: 0px; margin-left: 3px;">
-        </a>
-        <a href="javascript:void(0)" class="simple-text logo-normal">
-          icon.community
-        </a>
-      </div>
-
-      <ul class="nav">
-
-        <!-- Dashboard -->
-        <li {% if section == 'DASHBOARD' %}class="active"{% endif %}>
-          <a href="/dashboard/">
-            <i class="tim-icons">
-              <img src="{% static 'logo/pie.png' %}" width="22" height="22" style="margin-top: -10px; margin-left: -5px;">
-            </i>
-            <p>Dashboard</p>
-          </a>
-        </li>
-
-        <!-- ICONSENSUS -->
-        <li {% if section == 'ICONSENSUS' %}class="active"{% endif %}>
-          <a data-toggle="collapse" href="#iconsensusSub">
-            <i class="tim-icons">
-              <img src="{% static 'logo/iconsensus.png' %}" width="27" height="27" style="margin-top: -10px; margin-left: -5px;">
-            </i>
-            <p>ICONSENSUS <b class="caret"></b></p>
-          </a>
-          <div class="collapse {% if section == 'ICONSENSUS' %}show{% endif %}" id="iconsensusSub">
-            <ul class="nav">
-              <li {% if subsection == 'ABOUT' %}class="active"{% endif %}>
-                <a href="/iconsensus/about/">
-                  <span class="sidebar-mini-icon">A</span>
-                  <span class="sidebar-normal section">About</span>
-                </a>
-              </li>
-              <li {% if subsection == 'CANDIDATES' %}class="active"{% endif %}>
-                <a href="/iconsensus/candidates/">
-                  <span class="sidebar-mini-icon">P</span>
-                  <span class="sidebar-normal section">P-Rep Candidates</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <!-- Resources -->
-        <li {% if section == 'RESOURCES' %}class="active"{% endif %}>
-          <a data-toggle="collapse" href="#resourceSub">
-            <i class="tim-icons">
-              <img src="{% static 'logo/resources.png' %}" width="26" height="26" style="margin-top: -10px; margin-left: -6px;">
-            </i>
-            <p>Resources <b class="caret"></b></p>
-          </a>
-          <div class="collapse {% if section == 'RESOURCES' %}show{% endif %}" id="resourceSub">
-            <ul class="nav">
-              <li {% if subsection == 'COLLATERAL' %}class="active"{% endif %}>
-                <a href="/resources/collateral/">
-                  <span class="sidebar-mini-icon">C</span>
-                  <span class="sidebar-normal section">Collateral</span>
-                </a>
-              </li>
-              <li {% if subsection == 'PRESS' %}class="active"{% endif %}>
-                <a href="/resources/press/">
-                  <span class="sidebar-mini-icon">P</span>
-                  <span class="sidebar-normal section">Press</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-
-        <!-- Developers -->
-        <li {% if section == 'DEVELOPERS' %}class="active"{% endif %}>
-          <a href="/developers/">
-            <i class="tim-icons">
-              <img src="{% static 'logo/developers.png' %}" width="24" height="24" style="margin-top: -10px; margin-left: -6px;">
-            </i>
-            <p>Developers</p>
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-wrapper">
+        <div class="logo">
+          <a href="javascript:void(0)" class="simple-text logo-mini">
+            <img src="{% static 'logo/ic.png' %}" width="26" height="26" style="margin-top: 0px; margin-left: 3px;">
           </a>
         </li>
 
@@ -137,90 +61,180 @@
             </i>
             <p>Forum</p>
           </a>
-        </li>
-
-      </ul>
-
-    </div>
-  </div>
-
-  <div class="main-panel">
-    <!-- TOP NAV -->
-    <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
-      <div class="container-fluid">
-        <div class="navbar-wrapper">
-          <div class="navbar-minimize d-inline">
-            <button class="minimize-sidebar btn btn-link btn-just-icon" rel="tooltip" data-placement="right">
-              <i class="tim-icons icon-align-center visible-on-sidebar-regular"></i>
-              <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini"></i>
-            </button>
-          </div>
-          <div class="navbar-toggle d-inline">
-            <button type="button" class="navbar-toggler">
-              <span class="navbar-toggler-bar bar1"></span>
-              <span class="navbar-toggler-bar bar2"></span>
-              <span class="navbar-toggler-bar bar3"></span>
-            </button>
-          </div>
-          <a class="navbar-brand" href="javascript:void(0)">{% block section %}{% endblock %}</a>
         </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
+
+        <ul class="nav">
+
+          <!-- Dashboard -->
+          <li {% if section == 'DASHBOARD' %}class="active" {% endif %}>
+            <a href="/dashboard/">
+              <i class="tim-icons">
+                <img src="{% static 'logo/pie.png' %}" width="22" height="22"
+                  style="margin-top: -10px; margin-left: -5px;">
+              </i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+
+          <!-- ICONSENSUS -->
+          <li {% if section == 'ICONSENSUS' %}class="active" {% endif %}>
+            <a data-toggle="collapse" href="#iconsensusSub">
+              <i class="tim-icons">
+                <img src="{% static 'logo/iconsensus.png' %}" width="27" height="27"
+                  style="margin-top: -10px; margin-left: -5px;">
+              </i>
+              <p>ICONSENSUS <b class="caret"></b></p>
+            </a>
+            <div class="collapse {% if section == 'ICONSENSUS' %}show{% endif %}" id="iconsensusSub">
+              <ul class="nav">
+                <li {% if subsection == 'ABOUT' %}class="active" {% endif %}>
+                  <a href="/iconsensus/about/">
+                    <span class="sidebar-mini-icon">A</span>
+                    <span class="sidebar-normal section">About</span>
+                  </a>
+                </li>
+                <li {% if subsection == 'CANDIDATES' %}class="active" {% endif %}>
+                  <a href="/iconsensus/candidates/">
+                    <span class="sidebar-mini-icon">P</span>
+                    <span class="sidebar-normal section">P-Rep Candidates</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- Resources -->
+          <li {% if section == 'RESOURCES' %}class="active" {% endif %}>
+            <a data-toggle="collapse" href="#resourceSub">
+              <i class="tim-icons">
+                <img src="{% static 'logo/resources.png' %}" width="26" height="26"
+                  style="margin-top: -10px; margin-left: -6px;">
+              </i>
+              <p>Resources <b class="caret"></b></p>
+            </a>
+            <div class="collapse {% if section == 'RESOURCES' %}show{% endif %}" id="resourceSub">
+              <ul class="nav">
+                <li {% if subsection == 'COLLATERAL' %}class="active" {% endif %}>
+                  <a href="/resources/collateral/">
+                    <span class="sidebar-mini-icon">C</span>
+                    <span class="sidebar-normal section">Collateral</span>
+                  </a>
+                </li>
+                <li {% if subsection == 'PRESS' %}class="active" {% endif %}>
+                  <a href="/resources/press/">
+                    <span class="sidebar-mini-icon">P</span>
+                    <span class="sidebar-normal section">Press</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- Developers -->
+          <li {% if section == 'DEVELOPERS' %}class="active" {% endif %}>
+            <a href="/developers/">
+              <i class="tim-icons">
+                <img src="{% static 'logo/developers.png' %}" width="24" height="24"
+                  style="margin-top: -10px; margin-left: -6px;">
+              </i>
+              <p>Developers</p>
+            </a>
+          </li>
+
+          <!-- Forum -->
+          <li>
+            <a href="https://forum.icon.community/" target="_blank">
+              <i class="tim-icons">
+                <img src="{% static 'logo/forum.png' %}" width="24" height="24"
+                  style="margin-top: -10px; margin-left: -4px;">
+              </i>
+              <p>Forum</p>
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+    </div>
+
+    <div class="main-panel">
+      <!-- TOP NAV -->
+      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <div class="navbar-minimize d-inline">
+              <button class="minimize-sidebar btn btn-link btn-just-icon" rel="tooltip" data-placement="right">
+                <i class="tim-icons icon-align-center visible-on-sidebar-regular"></i>
+                <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini"></i>
+              </button>
+            </div>
+            <div class="navbar-toggle d-inline">
+              <button type="button" class="navbar-toggler">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="javascript:void(0)">{% block section %}{% endblock %}</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
             aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-bar navbar-kebab"></span>
-          <span class="navbar-toggler-bar navbar-kebab"></span>
-          <span class="navbar-toggler-bar navbar-kebab"></span>
-        </button>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
 
-        <div class="collapse navbar-collapse" id="navigation">
+          <div class="collapse navbar-collapse" id="navigation">
 
-          <ul class="navbar-nav ml-auto level1group">
+            <ul class="navbar-nav ml-auto level1group">
 
-            <!-- language redirect -->
-            <form id="language_form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
-              {% get_current_language as LANGUAGE_CODE %}
-              <input name="next" type="hidden" value="{{ redirect_to }}">
-              <input id="post_lang" name="language" value="{{ LANGUAGE_CODE }}" type="hidden">
-            </form>
+              <!-- language redirect -->
+              <form id="language_form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                {% get_current_language as LANGUAGE_CODE %}
+                <input name="next" type="hidden" value="{{ redirect_to }}">
+                <input id="post_lang" name="language" value="{{ LANGUAGE_CODE }}" type="hidden">
+              </form>
 
-            <li class="nav-item level1">
-              <a href="javascript:void(0)" class="nav-link">
-                <div class="d-none d-lg-block d-xl-block"></div>
-                <a class="nav-lang {% if LANGUAGE_CODE == 'en' %}active{% endif %}" href="javascript:void(0)"
+              <li class="nav-item level1">
+                <a href="javascript:void(0)" class="nav-link">
+                  <div class="d-none d-lg-block d-xl-block"></div>
+                  <a class="nav-lang {% if LANGUAGE_CODE == 'en' %}active{% endif %}" href="javascript:void(0)"
                     onclick="change_language('en');">EN</a>
-              </a>
-            </li>
-
-            <li class="separator d-lg-none"></li>
-
-            <li class="nav-item level1" style="margin-bottom:-5px;">
-              <a href="javascript:void(0)" class="nav-link" aria-expanded="false">
-                <div class="d-none d-lg-block d-xl-block"></div>
-                <a class="nav-lang {% if LANGUAGE_CODE == 'ko' %}active{% endif %}" href="javascript:void(0)"
-                    onclick="change_language('ko');">KR</a>
-              </a>
-            </li>
-
-            <li class="nav-item level1">
-              <a href="javascript:void(0)" class="nav-link" aria-expanded="false">
-                <div class="d-none d-lg-block d-xl-block"></div>
-
-                <a id="moon" onclick="toggle_nightmode();">
-                  <i class="{% if nightmode == True %} fas fa-moon {% else %} far fa-moon {% endif %}"></i>
                 </a>
+              </li>
 
-              </a>
-            </li>
-          </ul>
+              <li class="separator d-lg-none"></li>
 
-          <ul class="navbar-nav">
+              <li class="nav-item level1" style="margin-bottom:-5px;">
+                <a href="javascript:void(0)" class="nav-link" aria-expanded="false">
+                  <div class="d-none d-lg-block d-xl-block"></div>
+                  <a class="nav-lang {% if LANGUAGE_CODE == 'ko' %}active{% endif %}" href="javascript:void(0)"
+                    onclick="change_language('ko');">KR</a>
+                </a>
+              </li>
+
+              <li class="nav-item level1">
+                <a href="javascript:void(0)" class="nav-link" aria-expanded="false">
+                  <div class="d-none d-lg-block d-xl-block"></div>
+
+                  <a id="moon" onclick="toggle_nightmode();">
+                    <i class="{% if nightmode == True %} fas fa-moon {% else %} far fa-moon {% endif %}"></i>
+                  </a>
+
+                </a>
+              </li>
+            </ul>
+
+            <ul class="navbar-nav">
 
               <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"{% else %}style="height:47px;"{% endif %}>
-                <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.7em;">
+                <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.6em;">
                   <i class="tim-icons icon-single-02"></i> <span class="nav-lang">Login</span>
                 </a>
               </li>
 
-              <li id="loggedin" class="dropdown nav-item" {% if fromAddress == "none" %}style="display:none;"{% endif %}>
+              <li id="loggedin" class="dropdown nav-item" {% if fromAddress == "none" %}style="display:none;"
+                {% endif %}>
                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="margin-top:0.5em;">
                   <div class="photo" style="margin-right:5px;">
                     <!--<img src="{% static 'img/mike.jpg' %}">-->
@@ -231,7 +245,8 @@
                 </a>
                 <ul class="dropdown-menu dropdown-navbar mr-auto">
                   <li class="nav-link">
-                    <a id="wallet" href="https://tracker.icon.foundation/address/{{ fromAddress }}" target="_blank" class="nav-item dropdown-item">{{ fromAddress|truncatechars:18 }}</a>
+                    <a id="wallet" href="https://tracker.icon.foundation/address/{{ fromAddress }}" target="_blank"
+                      class="nav-item dropdown-item">{{ fromAddress|truncatechars:18 }}</a>
                   </li>
                   <li class="nav-link">
                     <a href="{% url 'management' %}" class="nav-item dropdown-item">P-Rep Management</a>
@@ -251,98 +266,97 @@
 
               <li class="separator d-lg-none"></li>
 
-          </ul>
+            </ul>
+
+          </div>
+
 
         </div>
+      </nav>
 
-
+      <!-- MAIN CONTENT BLOCK -->
+      <div class="content">
+        {% block content %}
+        {% endblock %}
       </div>
-    </nav>
 
-    <!-- MAIN CONTENT BLOCK -->
-    <div class="content">
-      {% block content %}
-      {% endblock %}
+      <!-- FOOTER -->
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="copyright">
+            ©
+            <script>
+              document.write(new Date().getFullYear())
+            </script>
+            icon.community
+          </div>
+        </div>
+      </footer>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="footer">
-      <div class="container-fluid">
-        <div class="copyright">
-          ©
-          <script>
-              document.write(new Date().getFullYear())
-          </script>
-          icon.community
-        </div>
-      </div>
-    </footer>
   </div>
+  <!--   Core JS Files   -->
+  <script src="{% static 'js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'js/core/popper.min.js' %}"></script>
+  <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+  <script src="{% static 'js/plugins/identicon.js' %}"></script>
+  <script src="{% static 'js/base.js' %}"></script>
+  <!-- ICON SDK for Javascript -->
+  <script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.min.js"></script>
+  {% block extra_js %}{% endblock %}
 
-</div>
-<!--   Core JS Files   -->
-<script src="{% static 'js/core/jquery.min.js' %}"></script>
-<script src="{% static 'js/core/popper.min.js' %}"></script>
-<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
-<script src="{% static 'js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
-<script src="{% static 'js/plugins/identicon.js' %}"></script>
-{% block pre_extra_js %}{% endblock %}
-<script src="{% static 'js/base.js' %}"></script>
-<!-- ICON SDK for Javascript -->
-<script src="https://cdn.jsdelivr.net/gh/icon-project/icon-sdk-js@latest/build/icon-sdk-js.min.js"></script>
-{% block extra_js %}{% endblock %}
-
-<!-- Init Scripts -->
-<script>
+  <!-- Init Scripts -->
+  <script>
     $(document).ready(function () {
-        $().ready(function () {
-            $sidebar = $('.sidebar');
-            $navbar = $('.navbar');
-            $main_panel = $('.main-panel');
-            $full_page = $('.full-page');
-            $sidebar_responsive = $('body > .navbar-collapse');
+      $().ready(function () {
+        $sidebar = $('.sidebar');
+        $navbar = $('.navbar');
+        $main_panel = $('.main-panel');
+        $full_page = $('.full-page');
+        $sidebar_responsive = $('body > .navbar-collapse');
+        sidebar_mini_active = false;
+        white_color = true;
+        window_width = $(window).width();
+
+        $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function () {
+          var $btn = $(this);
+
+          if (sidebar_mini_active == true) {
+            $('body').removeClass('sidebar-mini');
             sidebar_mini_active = false;
-            white_color = true;
-            window_width = $(window).width();
+            //blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
+          } else {
+            $('body').addClass('sidebar-mini');
+            sidebar_mini_active = true;
+            //blackDashboard.showSidebarMessage('Sidebar mini activated...');
+          }
 
-            $('.switch-sidebar-mini input').on("switchChange.bootstrapSwitch", function () {
-                var $btn = $(this);
+          // we simulate the window Resize so the charts will get updated in realtime.
+          var simulateWindowResize = setInterval(function () {
+            window.dispatchEvent(new Event('resize'));
+          }, 180);
 
-                if (sidebar_mini_active == true) {
-                    $('body').removeClass('sidebar-mini');
-                    sidebar_mini_active = false;
-                    //blackDashboard.showSidebarMessage('Sidebar mini deactivated...');
-                } else {
-                    $('body').addClass('sidebar-mini');
-                    sidebar_mini_active = true;
-                    //blackDashboard.showSidebarMessage('Sidebar mini activated...');
-                }
-
-                // we simulate the window Resize so the charts will get updated in realtime.
-                var simulateWindowResize = setInterval(function () {
-                    window.dispatchEvent(new Event('resize'));
-                }, 180);
-
-                // we stop the simulation of Window Resize after the animations are completed
-                setTimeout(function () {
-                    clearInterval(simulateWindowResize);
-                }, 1000);
-            });
+          // we stop the simulation of Window Resize after the animations are completed
+          setTimeout(function () {
+            clearInterval(simulateWindowResize);
+          }, 1000);
         });
+      });
 
-        var fromAddress = "{{ fromAddress }}";
-        if(fromAddress != 'none') build_identicon(fromAddress);
+      var fromAddress = "{{ fromAddress }}";
+      if (fromAddress != 'none') build_identicon(fromAddress);
 
     });
 
     function change_language(lang) {
-        post_lang.value = lang;
-        language_form.submit();
+      post_lang.value = lang;
+      language_form.submit();
     }
-</script>
+  </script>
 
-<!-- ICONex Connect -->
-<script>
+  <!-- ICONex Connect -->
+  <script>
     var iconService = window['icon-sdk-js'];
     var requestAddress = document.getElementById("request-address");
     var responseAddress = document.getElementById("response-address");
@@ -351,45 +365,52 @@
 
     // type and payload are in event.detail
     function eventHandler(event) {
-        var type = event.detail.type;
-        var payload = event.detail.payload;
-        switch (type) {
-            case "RESPONSE_ADDRESS":
-                login(payload);
-                break;
-            default:
-        }
+      var type = event.detail.type;
+      var payload = event.detail.payload;
+      switch (type) {
+        case "RESPONSE_ADDRESS":
+          login(payload);
+          break;
+        case "RESPONSE_JSON-RPC":
+          console.log("payload", payload);
+          break;
+        default:
+      }
     }
 
     function iconexlogin() {
-        window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
-            detail: {
-                type: 'REQUEST_ADDRESS'
-            }
-        }))
+      window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+        detail: {
+          type: 'REQUEST_ADDRESS'
+        }
+      }))
     }
 
-    function login(fromAddress){
-        $('#wallet').attr("href", 'https://tracker.icon.foundation/address/'+fromAddress);
-        $('#wallet').text(fromAddress.substring(0,18)+'...');
-        set_wallet(fromAddress);
-        $('#loggedin').show();
-        $('#prelogin').hide();
-        build_identicon(fromAddress);
+    function login(fromAddress) {
+      $('#wallet').attr("href", 'https://tracker.icon.foundation/address/' + fromAddress);
+      $('#wallet').text(fromAddress.substring(0, 18) + '...');
+      set_wallet(fromAddress);
+      $('#loggedin').show();
+      $('#prelogin').hide();
+      build_identicon(fromAddress);
     }
 
     function logout() {
-        set_wallet('none');
-        $('#loggedin').hide();
-        $('#prelogin').show();
-        $('#prelogin').css({"height":"47px"});
+      set_wallet('none');
+      $('#loggedin').hide();
+      $('#prelogin').show();
+      $('#prelogin').css({
+        "height": "47px"
+      });
     }
 
-    function build_identicon(hash){
-        var data = new Identicon(hash, {format: 'svg'}).toString();
-        $('#avatar').attr("src", "data:image/svg+xml;base64,"+data);
+    function build_identicon(hash) {
+      var data = new Identicon(hash, {
+        format: 'svg'
+      }).toString();
+      $('#avatar').attr("src", "data:image/svg+xml;base64," + data);
     }
-</script>
+  </script>
 
 
 </body>

@@ -1,40 +1,53 @@
 {% extends 'base.html' %}
 {% load static i18n %}
 {% block extra_head %}
-  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet">
-  <style type="text/css">
-    table.tablesorter thead tr .header {
+<link href="{% static 'prep/css/prep.css' %}" rel="stylesheet">
+<style type="text/css">
+  table.tablesorter thead tr .header {
     background-image: url({% static 'prep/img/bg.gif' %});
     background-repeat: no-repeat;
     background-position: center right;
-    cursor: pointer; }
+    cursor: pointer;
+  }
 
-    table.tablesorter thead tr .headerSortUp {
-      background-image: url({% static 'prep/img/asc.gif' %});
-    }
+  table.tablesorter thead tr .headerSortUp {
+    background-image: url({% static 'prep/img/asc.gif' %});
+  }
 
-    table.tablesorter thead tr .headerSortDown {
-      background-image: url({% static 'prep/img/desc.gif' %});
-    }
-  </style>
+  table.tablesorter thead tr .headerSortDown {
+    background-image: url({% static 'prep/img/desc.gif' %});
+  }
+</style>
 {% endblock %}
 {% block title %}GOVERNANCE VARIABLE{% endblock %}
 {% block section %}GOVERNANCE VARIABLE{% endblock %}
 {% block content %}
-
 <div class="row">
+{% if getPRep %}
   <div class="col-md-6">
     <div class="card">
 
       <div class="card-header">
-        <h4 class="card-title">Update i_rep at {{ irepUpdateBlockHeight }}</h4>
+        <h4 class="card-title" id="iRepUpdateBlockHeight">&nbsp;</h4>
       </div>
 
       <div class="card-body">
         <div class="form-inline">
-          <input id="irep" class="form-control" type="text" size="32" value="{{irep}}">
+          <input id="irep" class="form-control" type="text" size="32">
           <button id="iRepUpdate" type="submit" class="btn btn-primary">Update</button>
         </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Current irep</h4>
+      </div>
+      <div class="card-body">
+        <H2 id="currentIRep"></H2>
       </div>
     </div>
   </div>
@@ -55,21 +68,21 @@
                 <th class="text-center">Name</th>
                 <th class="text-center">i_rep</th>
                 <th class="text-center">i_rep Updated</th>
-                <th class="text-center">Stake</th>
-                <th class="text-center">Delegated</th>
+                <th class="text-center">Staked(ICX)</th>
+                <th class="text-center">Delegated(ICX)</th>
               </tr>
             </thead>
             <tbody>
-            {% for item in dataList %}
+              {% for item in dataList %}
               <tr>
                 <td class="text-center">{{forloop.counter}}</td>
                 <td class="text-center">{{item.name}}</td>
-                <td class="text-center">{{item.irep}}</td>
-                <td class="text-center">{{item.irepUpdatBlockHeight}}</td>
-                <td class="text-center">{{item.stake}}</td>
-                <td class="text-center">{{item.delegated}}</td>
+                <td class="text-center hex2dec">{{item.irep}}</td>
+                <td class="text-center hex2dec">{{item.irepUpdateBlockHeight}}</td>
+                <td class="text-center hex2dec loop2icx">{{item.stake}}</td>
+                <td class="text-center hex2dec loop2icx">{{item.delegated}}</td>
               </tr>
-            {% endfor %}
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -80,65 +93,118 @@
 {% endblock %}
 
 {% block extra_js %}
-  <script src="{% static 'js/plugins/jquery.tablesorter.js' %}"></script>
-  <script>
-    $(document).ready(function() {
-      const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
-      const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
-      const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-      const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
+<script src="{% static 'js/plugins/jquery.tablesorter.js' %}"></script>
+<script>
+  $(document).ready(function () {
+    const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+    const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+    const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+    const DEV_NET = "http://20.20.7.156:9000/api/v3";
+    const DUMMY_NET = "http://localhost:8888";
+    const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
-      const IconService = window['icon-sdk-js'];
-      const provider = new IconService.HttpProvider(TEMP_NET);
-      const icon_service = new IconService(provider);
-      const IconBuilder = IconService.IconBuilder;
+    const IconService = window['icon-sdk-js'];
+    const provider = new IconService.HttpProvider({{ USE_NET_NAME }});
+    const icon_service = new IconService(provider);
+    const IconBuilder = IconService.IconBuilder;
+    const IconConverter = IconService.IconConverter;
 
-      async function json_rpc_call(method_name, params){
-          var callBuilder = new IconBuilder.CallBuilder();
-          var callObj = callBuilder
-              .to(TO_CONTRACT)
-              .method(method_name)
-              .params(params)
-              .build();
-          return await icon_service.call(callObj).execute();
-      }
+    async function json_rpc_call(method_name, params) {
+      var callBuilder = new IconBuilder.CallBuilder();
+      var callObj = callBuilder
+        .to(TO_CONTRACT)
+        .method(method_name)
+        .params(params)
+        .build();
+      return await icon_service.call(callObj).execute();
+    }
 
-      async function json_rpc_transaction_call(from_wallet, method_name, params){
-          // Need to sign or send to ICONex
-          var txBuilder = new IconBuilder.CallTransactionBuilder();
-          var txObj = txBuilder
-              .from(from_wallet)
-              .to(TO_CONTRACT)
-              .method(method_name)
-              .params(params)
-              .build();
-          return await icon_service.call(txObj).execute();
-      }
+    async function json_rpc_transaction_call(from_wallet, method_name, params) {
+      // Need to sign or send to ICONex
+      let timestamp = new Date();
+      var txBuilder = new IconBuilder.CallTransactionBuilder();
+      var txObj = txBuilder
+        .from(from_wallet)
+        .to(TO_CONTRACT)
+        .nid(IconConverter.toBigNumber("3"))
+        .version(IconConverter.toBigNumber("3"))
+        .stepLimit(IconConverter.toBigNumber("10000000"))
+        .timestamp(timestamp * 1000)
+        .method(method_name)
+        .params(params)
+        .build();
 
-      $('#iRepUpdate').click(function() {
-        aWallet = "";
-        params['irep'] = $('#irep').val();
-        json_rpc_transaction_call(aWallet, "setGovernanceVariables", params)
-      })
-
-      $.tablesorter.addParser({
-        id: "fancyNumber",
-        is: function(s) {
-          return /^[0-9]?[0-9,\.]*$/.test(s);
-        },
-        format: function(s) {
-          return jQuery.tablesorter.formatFloat( s.replace(/,/g,'') );
-        },
-        type: "numeric"
+      const scoreData = JSON.stringify({
+        "jsonrpc": "2.0",
+        "method": "icx_sendTransaction",
+        "params": IconConverter.toRawTransaction(txObj),
+        "id": 44
       });
-      $("#prep-table").tablesorter({
-        headers: {
-            2 : { sorter: 'fancyNumber' },
-            3 : { sorter: 'fancyNumber' },
-            4 : { sorter: 'fancyNumber' },
-            5 : { sorter: 'fancyNumber' },
+
+      const parsed = JSON.parse(scoreData);
+      window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+        detail: {
+          type: 'REQUEST_JSON-RPC',
+          payload: parsed
         }
+      }));
+
+      //return await icon_service.call(txObj).execute();
+    }
+
+    $('.hex2dec').each(function(index, item){
+      if(item.classList.contains('loop2icx')){
+        item.innerHTML = parseInt(item.innerHTML)/(10**18);
+      } else {
+        item.innerHTML = parseInt(item.innerHTML);
+      }
+    });
+
+    $('#irep').val(String(parseInt({{ getPRep.irep }})));
+
+    let result = json_rpc_call("getBlockByHeight", {"height":"{{ getPRep.irepUpdateBlockHeight }}"})
+    .then(function(result){
+      let date = new Date(result.time_stamp)
+      $('#iRepUpdateBlockHeight').append("Update i_rep at " + parseInt({{ getPRep.irepUpdateBlockHeight }}) + "(" + date.toString() + ")");
+    });
+
+    result = json_rpc_call("getIISSInfo", {})
+    .then(function(res){
+      $('#currentIRep').append(parseInt(res.variable.irep));
+    });
+
+    $('#iRepUpdate').click(function () {
+      json_rpc_transaction_call("{{ fromAddress }}", "setGovernanceVariables", {
+        "irep": $('#irep').val()
       });
     });
-  </script>
+
+    $.tablesorter.addParser({
+      id: "fancyNumber",
+      is: function (s) {
+        return /^[0-9]?[0-9,\.]*$/.test(s);
+      },
+      format: function (s) {
+        return jQuery.tablesorter.formatFloat(s.replace(/,/g, ''));
+      },
+      type: "numeric"
+    });
+    $("#prep-table").tablesorter({
+      headers: {
+        2: {
+          sorter: 'fancyNumber'
+        },
+        3: {
+          sorter: 'fancyNumber'
+        },
+        4: {
+          sorter: 'fancyNumber'
+        },
+        5: {
+          sorter: 'fancyNumber'
+        },
+      }
+    });
+  });
+</script>
 {% endblock %}

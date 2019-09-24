@@ -1,0 +1,573 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+<link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />
+<style type="text/css">
+  .white-content .proposaltype {
+    color: rgba(0, 0, 0, 0.9);
+  }
+
+  .proposaltype {
+    color: rgba(255, 255, 255, 0.8);
+  }
+</style>
+{% endblock %}
+{% block title %}PROPOSAL DETAIL{% endblock %}
+{% block section %}PROPOSAL DETAIL{% endblock %}
+{% block extra_js %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@0.7.1/src/index.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+
+<script>
+  const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+  const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+  const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+  const DEV_NET = "http://20.20.7.156:9000/api/v3";
+  const DUMMY_NET = "http://localhost:8888";
+  const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
+
+  const IconService = window['icon-sdk-js'];
+  const provider = new IconService.HttpProvider({{USE_NET_NAME}});
+  const icon_service = new IconService(provider);
+  const IconBuilder = IconService.IconBuilder;
+  const IconConverter = IconService.IconConverter;
+
+  async function json_rpc_call(method_name, params) {
+    var callBuilder = new IconBuilder.CallBuilder();
+    var callObj = callBuilder
+      .to(TO_CONTRACT)
+      .method(method_name)
+      .params(params)
+      .build();
+    return await icon_service.call(callObj).execute();
+  }
+
+  async function json_rpc_transaction_call(from_wallet, method_name, params) {
+    // Need to sign or send to ICONex
+    var txBuilder = new IconBuilder.CallTransactionBuilder();
+    var txObj = txBuilder
+      .from(from_wallet)
+      .to(TO_CONTRACT)
+      .nid(IconConverter.toBigNumber("3"))
+      .version(IconConverter.toBigNumber("3"))
+      .stepLimit(IconConverter.toBigNumber("10000000"))
+      .method(method_name)
+      .params(params)
+      .build();
+
+    const scoreData = JSON.stringify({
+      "jsonrpc": "2.0",
+      "method": "icx_sendTransaction",
+      "params": IconConverter.toRawTransaction(txObj),
+      "id": 44
+    });
+
+    const parsed = JSON.parse(scoreData);
+    window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+      detail: {
+        type: 'REQUEST_JSON-RPC',
+        payload: parsed
+      }
+    }));
+    //return await icon_service.call(txObj).execute();
+  }
+
+
+  function getProposalType(i) {
+    switch (i) {
+      case 0:
+        return "Text Proposal";
+      case 1:
+        return "Revision Update";
+      case 2:
+        return "Malicious SCORE";
+      case 3:
+        return "P-Rep Disqualification";
+      case 4:
+        return "Step Price";
+      default:
+        return "No Type";
+    }
+  }
+
+  function getProposalStatus(i) {
+    switch (i) {
+      case 0:
+        return "Voting";
+      case 1:
+        return "Approved";
+      case 2:
+        return "Disapproved";
+      case 3:
+        return "Canceled";
+      default:
+        return "No Status";
+    }
+  }
+
+  $(document).ready(function () {
+    $("#status").append("Status: " + getProposalStatus(parseInt({{aProposal.status}})));
+    $("#type").append("Type: " + getProposalType(parseInt({{aProposal.contents.type}})));
+    var StartDate = new Date({{start}});
+    var EndDate = new Date({{end}});
+    $("#start").append("Created: " + StartDate);
+    $("#end").append("Expires: " + EndDate);
+
+    let aJson = $("#contentsValue")[0].innerHTML;
+    let value_json = JSON.parse(aJson.replace(/'/gi, "\""));
+    let replace_str = "";
+    for (var key in value_json) {
+      if (value_json.hasOwnProperty(key)) {
+        replace_str += key + " : " + value_json[key] + "\n";
+      }
+    }
+
+    $("#contentsValue")[0].innerHTML = replace_str;
+
+    console.log(replace_str);
+
+    proposal_vote_json_str = "{{aProposal.vote}}";
+    proposal_vote_json_str = proposal_vote_json_str.replace(/&#39;/gi, "\"");
+    Voter = JSON.parse(proposal_vote_json_str);
+
+    Quorum = {
+      agree: Voter.agree.list.length,
+      disagree: Voter.disagree.list.length,
+      noVote: Voter.noVote.list.length,
+      total: Voter.agree.list.length + Voter.disagree.list.length + Voter.noVote.list.length
+    };
+    Token = {
+      agree: parseInt("{{aProposal.vote.agree.amount}}"),
+      disagree: parseInt("{{aProposal.vote.disagree.amount}}"),
+      noVote: parseInt("{{aProposal.vote.noVote.amount}}"),
+      total: parseInt("{{aProposal.vote.agree.amount}}") + parseInt("{{aProposal.vote.disagree.amount}}") +
+        parseInt("{{aProposal.vote.noVote.amount}}")
+    };
+
+    const formatter = (value, ctx) => {
+      let total = 0;
+      for (let i = 0; i < ctx.chart.data.datasets.length; i++) {
+        total += ctx.chart.data.datasets[i].data[ctx.dataIndex];
+      }
+      return `${((value / total) * 100).toFixed(0)}%`;
+    };
+
+    const options = {
+      maintainAspectRatio: false,
+      spanGaps: false,
+      responsive: true,
+      legend: {
+        display: false
+      },
+      tooltips: {
+        mode: "label",
+        callbacks: {
+          label: function (tooltipItem, data) {
+            const type = data.datasets[tooltipItem.datasetIndex].label;
+            const value =
+              data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+            let total = 0;
+            for (let i = 0; i < data.datasets.length; i++) {
+              total += data.datasets[i].data[tooltipItem.index];
+            }
+
+            console.log("abc", type, value, tooltipItem.datasetIndex, data.datasets.length);
+            if (tooltipItem.datasetIndex === data.datasets.length-1) {
+              return [
+                type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","), "Overall : " + total.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              ];
+            } else {
+              return (
+                type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              );
+            }
+          }
+        }
+      },
+      plugins: {
+        stacked100: {enable:true, replaceTooltipLabel:false}
+      },
+      scales: {
+        xAxes: [{
+            stacked: true,
+            gridLines: {
+              display: false
+            },
+            display: false,
+            ticks: {
+              fontColor: "#000"
+            }
+          },
+          {
+            type: 'category',
+            offset: true,
+            position: 'top',
+            ticks: {
+              fontColor: "#000"
+            },
+            gridLines: {
+              display: false
+            }
+          }
+        ],
+        yAxes: [{
+          stacked: true,
+          gridLines: {
+            display: false
+          },
+          display: false,
+          ticks: {
+            fontColor: "#fff"
+          }
+        }]
+      }
+    };
+
+    function makeChart(parentDOM, title, vote) {
+      let aChart = document.createElement("canvas");
+      aChart.setAttribute('id', "mychart_"+title);
+      aChart.setAttribute('width', "100px");
+      aChart.setAttribute('height', "200px");
+
+      parentDOM.appendChild(aChart);
+
+      let voteData = [{
+        label: "Agree",
+        backgroundColor: "#1aaaba",
+        data: [vote.agree],
+        // Change options only for labels of THIS DATASET
+        datalabels: {
+          color: "white",
+          formatter: formatter
+        }
+      },
+      {
+        label: "Disagree",
+        backgroundColor: "#ff0000",
+        data: [vote.disagree],
+        // Change options only for labels of THIS DATASET
+        datalabels: {
+          color: "white",
+          formatter: formatter
+        }
+      },
+      {
+        label: "Not Voted",
+        backgroundColor: "#cccccc",
+        data: [vote.noVote],
+        // Change options only for labels of THIS DATASET
+        datalabels: {
+          color: "white",
+          formatter: formatter
+        }
+      }];
+
+      let ctx = document.getElementById("mychart_" + title).getContext("2d");
+
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: [title],
+          datasets: voteData
+        },
+        options: options
+      });
+    }
+
+    makeChart($('#Quorum')[0], "Quorum", Quorum);  
+    makeChart($('#Token')[0], "Token", Token);  
+
+    var quorumbar = new ProgressBar.Line(QuorumProgress, {
+      strokeWidth: 4,
+      easing: 'easeInOut',
+      duration: 1400,
+      color: '#1aaaba',
+      trailColor: '#eee',
+      trailWidth: 1,
+      svgStyle: {width: '100%', height: '100%'},
+      text: {
+        style: {
+          // Text color.
+          // Default: same as stroke color (options.color)
+          color: '#999',
+          position: 'absolute',
+          right: '0',
+          top: '30px',
+          padding: 0,
+          margin: 0,
+          transform: null
+        },
+        autoStyleContainer: false
+      },
+      from: {color: '#FFEA82'},
+      to: {color: '#ED6A5A'},
+      step: (state, bar) => {
+        bar.setText(Math.round(bar.value() * 100) + ' %');
+      }
+    });
+    quorumbar.animate((Quorum.agree + Quorum.disagree) / Quorum.total);
+
+    var tokenbar = new ProgressBar.Line(TokenProgress, {
+      strokeWidth: 4,
+      easing: 'easeInOut',
+      duration: 1400,
+      color: '#1aaaba',
+      trailColor: '#eee',
+      trailWidth: 1,
+      svgStyle: {width: '100%', height: '100%'},
+      text: {
+        style: {
+          // Text color.
+          // Default: same as stroke color (options.color)
+          color: '#999',
+          position: 'absolute',
+          right: '0',
+          top: '30px',
+          padding: 0,
+          margin: 0,
+          transform: null
+        },
+        autoStyleContainer: false
+      },
+      from: {color: '#FFEA82'},
+      to: {color: '#ED6A5A'},
+      step: (state, bar) => {
+        bar.setText(Math.round(bar.value() * 100) + ' %');
+      }
+    });
+    tokenbar.animate((Token.agree+Token.disagree)/Token.total);
+
+    $("#QuorumAgreeRate").append(((Quorum.agree / Quorum.total)*100).toFixed(0)  + " %");
+    $("#QuorumDisagreeRate").append(((Quorum.disagree / Quorum.total)*100).toFixed(0) + " %");
+    $("#QuorumNoVoteRate").append(((Quorum.noVote / Quorum.total)*100).toFixed(0) + " %");
+    $("#TotalQuorum").append((((Quorum.agree + Quorum.disagree) / Quorum.total)*100).toFixed(0)  + " % (" + (Quorum
+      .agree + Quorum.disagree) + ")");
+    $("#TotalQuorum2").append("(" + (Quorum.agree + Quorum.disagree) + ")");
+    $("#QuorumAgreeRate2").append(((Quorum.agree / Quorum.total)*100).toFixed(0) + " %");
+    $("#QuorumDisagreeRate2").append(((Quorum.disagree / Quorum.total)*100).toFixed(0) + " %");
+    $("#QuorumNoVoteRate2").append(((Quorum.noVote / Quorum.total)*100).toFixed(0) + " %");
+    $("#QuorumAgree").append(Quorum.agree);
+    $("#QuorumDisagree").append(Quorum.disagree);
+    $("#QuorumNoVote").append(Quorum.noVote);
+
+    $("#TokenAgreeRate").append(((Token.agree / Token.total)*100).toFixed(0) + " %");
+    $("#TokenDisagreeRate").append(((Token.disagree / Token.total)*100).toFixed(0) + " %");
+    $("#TokenNoVoteRate").append(((Token.noVote / Token.total)*100).toFixed(0) + " %");
+    $("#TotalToken").append((Token.agree + Token.disagree) + " ICX");
+    $("#TotalToken2").append("(" + (Token.agree + Token.disagree) + " ICX)");
+    $("#TokenAgreeRate2").append(((Token.agree / Token.total)*100).toFixed(0) + " %");
+    $("#TokenDisagreeRate2").append(((Token.disagree / Token.total)*100).toFixed(0) + " %");
+    $("#TokenNoVoteRate2").append(((Token.noVote / Token.total)*100).toFixed(0) + " %");
+    $("#TokenAgree").append(Token.agree + " ICX");
+    $("#TokenDisagree").append(Token.disagree + " ICX");
+    $("#TokenNoVote").append(Token.noVote + " ICX");
+
+    $('#voteAgree').click(function () {
+      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
+        'id': '{{aProposal.id}}',
+        'vote': '0x1'
+      });
+    });
+    $('#voteDisagree').click(function () {
+      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
+        'id': '{{aProposal.id}}',
+        'vote': '0x0'
+      });
+    });
+    $('#cancelProposal').click(function () {
+      json_rpc_transaction_call("{{ fromAddress }}", "cancelProposal", {
+        'id': '{{aProposal.id}}'
+      });
+    });
+
+    $('.votedToken').each(function(index, item){
+      if(item.innerHTML !== "") {
+        item.innerHTML = parseInt(item.innerHTML);
+      } else {
+        item.innerHTML = 0;
+      }
+    });
+
+    $('.timestamp').each(function(index, item){
+      console.log(item.innerHTML);
+      console.log(parseInt(item.innerHTML));
+      aDate = new Date(parseInt(item.innerHTML));
+      item.innerHTML = aDate;
+    });
+
+    let votedFlag = true;
+    for (aVoter in Voter.noVote.address) {
+      if (aVoter === "{{ fromAddress }}") {
+        votedFlag = false;
+      }
+    }
+
+    if (votedFlag) {
+      //$('#vote').attr('style','visibility:hidden');
+    }
+  });
+</script>
+
+{% endblock %}
+{% block content %}
+
+<div id="proposal">
+  <H4>Network Proposal Details</H4>
+  <H3><b>{{aProposal.contents.title}}</b></H3>
+  <H5 id="status"></H5>
+  <H5 id="type"></H5>
+  <H5>Proposer: <a href="{{aPRep.website}}">{{aPRep.name}}</a></H5>
+  <H5>Tx Hash: <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}">{{aProposal.id}}</a></H5>
+  <H5 id="start"></H5>
+  <H5 id="end"></H5>
+</div>
+<HR />
+<div>
+  <H5><b>Description</b></H5>
+  <H4>{{aProposal.contents.description}}</H4>
+</div>
+<HR />
+<div>
+  <H5><b>Value</b></H5>
+  <H4 id="contentsValue">{{aProposal.contents.value}}</H4>
+</div>
+{% if getPRep %}
+<div id="vote">
+  <button id="voteAgree">Agree</button>
+  <button id="voteDisagree">Disagree</button>
+</div>
+{% endif %}
+{% if aProposal.proposer == userAddress %}
+<div id="cancel">
+  <button id="cancelProposal">Cancel Proposal</button>
+</div>
+{% endif %}
+<HR />
+<div>
+  <H4><b>Votes</b></H4>
+  <table>
+  <tr>
+  <td>
+  <table>
+    <tr>
+      <td rowspan="3">
+        <div id="Quorum">
+        </div>
+      </td>
+      <td colspan="3">
+        <b>Total Quorum</b><br />
+        <H5 id="TotalQuorum"></H5>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:center">
+        Agreed<br />
+        <h2 id="QuorumAgreeRate2"></h2>
+        <h4 id="QuorumAgree"></h4>
+      </td>
+      <td style="text-align:center">
+        Disagreed<br />
+        <h2 id="QuorumDisagreeRate2"></h2>
+        <h4 id="QuorumDisagree"></h4>
+      </td>
+      <td style="text-align:center">
+        Not Voted<br />
+        <h2 id="QuorumNoVoteRate2"></h2>
+        <h4 id="QuorumNoVote"></h4>
+      </td>
+    </tr>
+  </table>
+  </td>
+  <td>
+  <table>
+    <tr>
+      <td rowspan="3">
+        <div id="Token"></div>
+      </td>
+      <td colspan="3">
+        <b>Total Token Votes</b><br />
+        <H5 id="TotalToken"></H5>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align:center">
+        Agreed<br />
+        <h2 id="TokenAgreeRate2"></h2>
+        <h4 id="TokenAgree"></h4>
+      </td>
+      <td style="text-align:center">
+        Disagreed<br />
+        <h2 id="TokenDisagreeRate2"></h2>
+        <h4 id="TokenDisagree"></h4>
+      </td>
+      <td style="text-align:center">
+        Not Voted<br />
+        <h2 id="TokenNoVoteRate2"></h2>
+        <h4 id="TokenNoVote"></h4>
+      </td>
+    </tr>
+  </table>
+  </td>
+  </tr>
+  </table>
+</div>
+<HR />
+<div>
+  <H4><b>Vote Status</b></H4><br />
+  <table>
+    <tr>
+      <td>
+  <H3 style="float:left">Total Quorum&nbsp;</H3>
+  <H3 id="TotalQuorum2" style="float:left"></H3>
+  <div id="QuorumProgress" style="margin:20px;height:8px;position:relative;"></div>
+      </td>
+      <td>
+  <H3 style="float:left">Total Token Votes&nbsp;</H3>
+  <H3 id="TotalToken2" style="float:left"></H3>
+  <div id="TokenProgress" style="margin:20px;height:8px;position:relative;"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+<br/>
+<HR />
+<div>
+  <table>
+    <thead>
+      <td>Voter</td>
+      <td>Answer</td>
+      <td>Tx Hash</td>
+      <td>Timestamp</td>
+      <td>Voted Token</td>
+    </thead>
+    <tbody id="voterList">
+    {% for aVoter in aProposal.vote.agree.list %}
+      <tr>
+        <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
+        <td>Agree</td>
+        <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
+        <td class="timestamp">{{aVoter.timestamp}}</td>
+        <td class="votedToken">{{aVoter.amount}}</td>
+      </tr>
+    {% endfor %}
+    {% for aVoter in aProposal.vote.disagree.list %}
+      <tr>
+        <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
+        <td>Disagree</td>
+        <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
+        <td class="timestamp">{{aVoter.timestamp}}</td>
+        <td class="votedToken"></td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
+{{aProposal}}
+{% endblock %}

@@ -1,305 +1,385 @@
 {% extends 'base.html' %}
 {% load static i18n %}
 {% block extra_head %}
-  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet"/>
-  <style type="text/css">
-    .white-content .proposaltype {
-      color: rgba(0, 0, 0, 0.9);
-    }
+<link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />
+<style type="text/css">
+  .white-content .proposaltype {
+    color: rgba(0, 0, 0, 0.9);
+  }
 
-    .proposaltype {
-      color: rgba(255, 255, 255, 0.8);
-    }
-  </style>
+  .proposaltype {
+    color: rgba(255, 255, 255, 0.8);
+  }
+</style>
 {% endblock %}
 {% block title %}NETWORK PROPOSAL{% endblock %}
 {% block section %}NETWORK PROPOSAL{% endblock %}
 {% block content %}
 
-  <!-- Sort -->
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-title">Proposal Filter</h2>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6 mb-4">
-              <div class="row">
-                <div class="col-lg-5 col-md-6 col-sm-3">
-                  <label class="mx-1">Type</label>
-                  <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary" onchange="filterchange();">
-                    <option value="*" selected>All</option>
-                    <option value=".textproposal">Text Proposal</option>
-                    <option value=".steppriceproposal">Step Price Proposal</option>
-                    <option value="4">P-Rep Disqualification Proposal</option>
-                    <option value="5">Malicious SCORE Proposal</option>
-                  </select>
-                </div>
-                <div class="col-lg-5 col-md-6 col-sm-3">
-                  <label class="mx-1">Status</label>
-                  <select id="status" class="selectpicker" data-size="7" data-style="btn btn-primary" onchange="filterchange();">
-                    <option value="*" selected>All</option>
-                    <option value=".voting">Voting</option>
-                    <option value=".accepted">Accepted</option>
-                    <option value=".rejected">Rejected</option>
-                  </select>
-                </div>
+<!-- Sort -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Proposal Filter</h2>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="row">
+              <div class="col-lg-5 col-md-6 col-sm-3">
+                <label class="mx-1">Type</label>
+                <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary"
+                  onchange="filterchange();">
+                  <option value="*" selected>All</option>
+                  <option value="0">Text Proposal</option>
+                  <option value="1">Revision Update</option>
+                  <option value="2">Malicious SCORE Proposal</option>
+                  <option value="3">P-Rep Disqualification Proposal</option>
+                  <option value="4">Step Price Proposal</option>
+                </select>
+              </div>
+              <div class="col-lg-5 col-md-6 col-sm-3">
+                <label class="mx-1">Status</label>
+                <select id="status" class="selectpicker" data-size="7" data-style="btn btn-primary"
+                  onchange="filterchange();">
+                  <option value="*" selected>All</option>
+                  <option value="0">Voting</option>
+                  <option value="1">Accepted</option>
+                  <option value="2">Rejected</option>
+                  <option value="3">Canceled</option>
+                </select>
               </div>
             </div>
           </div>
+          {% if getPRep %}
+          <div>
+            <a href="#" id="newProposal" class="btn btn-primary">New Proposal</a>
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="row grid">
+<div class="row grid" id="proposalcards">
+</div>
 
+
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+<script src="{% static 'js/plugins/isotope.pkgd.min.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@0.7.1/src/index.min.js"></script>
+
+<!-- FILTERS -->
+<script>
+  var filterVal = '';
+  var $grid = $('.grid').isotope({
+    itemSelector: '.grid-item',
+    layoutMode: 'fitRows'
+  });
+
+  function filterchange() {
+    var type = $('#type').val();
+    var status = $('#status').val();
+    var filterVal = type + status;
+    $grid.isotope({
+      filter: filterVal
+    });
+  }
+
+  const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
+  const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
+  const TEMP_NET = "https://devorg.icon.foundation/api/v3";
+  const DEV_NET = "http://20.20.7.156:9000/api/v3";
+  const DUMMY_NET = "http://localhost:8888";
+  const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
+
+  const IconService = window['icon-sdk-js'];
+  const provider = new IconService.HttpProvider({{USE_NET_NAME}});
+  const icon_service = new IconService(provider);
+  const IconBuilder = IconService.IconBuilder;
+
+  async function json_rpc_call(method_name, params) {
+    var callBuilder = new IconBuilder.CallBuilder();
+    var callObj = callBuilder
+      .to(TO_CONTRACT)
+      .method(method_name)
+      .params(params)
+      .build();
+    return await icon_service.call(callObj).execute();
+  }
+
+  async function json_rpc_transaction_call(from_wallet, method_name, params) {
+    // Need to sign or send to ICONex
+    var txBuilder = new IconBuilder.CallTransactionBuilder();
+    var txObj = txBuilder
+      .from(from_wallet)
+      .to(TO_CONTRACT)
+      .method(method_name)
+      .params(params)
+      .build();
+    return await icon_service.call(txObj).execute();
+  }
+
+
+  function getProposalType(i) {
+    switch (i) {
+      case 0:
+        return "Text Proposal";
+      case 1:
+        return "Revision Update";
+      case 2:
+        return "Malicious SCORE";
+      case 3:
+        return "P-Rep Disqualification";
+      case 4:
+        return "Step Price";
+      default:
+        return "No Type";
+    }
+  }
+
+  function getProposalStatus(i) {
+    switch (i) {
+      case 0:
+        return "Voting";
+      case 1:
+        return "Approved";
+      case 2:
+        return "Disapproved";
+      case 3:
+        return "Canceled";
+      default:
+        return "No Status";
+    }
+  }
+
+
+  function htmlToElement(html) {
+    var template = document.createElement('template');
+    html = html.trim(); // Never return a text node of whitespace as the result
+    template.innerHTML = html;
+    return template.content.firstChild;
+  }
+
+  const formatter = (value, ctx) => {
+    let total = 0;
+    for (let i = 0; i < ctx.chart.data.datasets.length; i++) {
+      total += ctx.chart.data.datasets[i].data[ctx.dataIndex];
+    }
+    return `${((value / total) * 100).toFixed(0)}%`;
+  };
+
+
+  const options = {
+    maintainAspectRatio: false,
+    spanGaps: false,
+    responsive: true,
+    legend: {
+      display: false
+    },
+    tooltips: {
+      mode: "label",
+      callbacks: {
+        label: function (tooltipItem, data) {
+          const type = data.datasets[tooltipItem.datasetIndex].label;
+          const value =
+            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+          let total = 0;
+          for (let i = 0; i < data.datasets.length; i++) {
+            total += data.datasets[i].data[tooltipItem.index];
+          }
+
+          console.log("abc", type, value, tooltipItem.datasetIndex, data.datasets.length);
+          if (tooltipItem.datasetIndex === data.datasets.length-1) {
+            return [
+              type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","), "Overall : " + total.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            ];
+          } else {
+            return (
+              type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+            );
+          }
+        }
+      }
+    },
+    plugins: {
+      stacked100: {enable:true, replaceTooltipLabel:false}
+    },
+    scales: {
+      xAxes: [{
+          stacked: true,
+          gridLines: {
+            display: false
+          },
+          display: false,
+          ticks: {
+            fontColor: "#000"
+          }
+        },
+        {
+          type: 'category',
+          offset: true,
+          position: 'top',
+          ticks: {
+            fontColor: "#000"
+          },
+          gridLines: {
+            display: false
+          }
+        }
+      ],
+      yAxes: [{
+        stacked: true,
+        gridLines: {
+          display: false
+        },
+        display: false,
+        ticks: {
+          fontColor: "#fff"
+        }
+      }]
+    }
+  };
+
+
+  function makecard(proposalType, proposalStatus, Proposal, PRep, token, quorum, id) {
+    console.log(token);
+    console.log(quorum);
+    console.log(id);
+    let quorumTotal = quorum.agree + quorum.disagree + quorum.notvoted;
+    let tokenTotal = token.agree + token.disagree + token.notvoted;
+    template = `
     <div class="grid-item col-md-6 textproposal" data-category="textproposal">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-7">
               <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Text Proposal</span>
+                <i class="tim-icons icon-paper"></i><span class="proposaltype">${proposalType}</span>&nbsp;&nbsp;<span class="proposalstatus" style="border-radius:20px;background-color:black;color:white;">&nbsp;${proposalStatus}&nbsp;</span>
               </div>
-              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
-              <p>Proposed by<span> Banana</span></p>
-              <p>Quorum 40%, Disagree 20%</p>
-              <p>Token vote agreed 3%, Disagreed 1%</p>
+              <p><a href="../proposaldetail/${Proposal.id}"><h4><b>${Proposal.contents.title}</b></h4></a></p>
+              <p><h5 style="text-overflow:ellipsis;"><i>${Proposal.contents.description}</i></h5></p>
+              <p>Proposed by <span><a href="https://tracker.icon.foundation/address/"+${Proposal.proposer}>${PRep.name}</a></span></p>
+              <p>Quorum Agree ${((quorum.agree/quorumTotal)*100).toFixed(2)}%, Disagree ${((quorum.disagree/quorumTotal)*100).toFixed(2)}%, Not Voted ${((quorum.notvoted/quorumTotal)*100).toFixed(2)}%</p>
+              <p>Token vote Agree ${((token.agree/tokenTotal)*100).toFixed(2)}%, Disagree ${((token.disagree/tokenTotal)*100).toFixed(2)}%, Not Voted ${((token.notvoted/tokenTotal)*100).toFixed(2)}%</p>
             </div>
-
             <div class="col-5">
-              <div><canvas id="mychart"></canvas></div>
+              <div><canvas id="mychart${String(id)}"></canvas></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+`
 
-    <div class="grid-item col-md-6 textproposal voting" data-category="textproposal">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-7">
-              <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Text Proposal (voting)</span>
-              </div>
-              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
-              <p>Proposed by<span> Banana</span></p>
-              <p>Quorum 40%, Disagree 20%</p>
-              <p>Token vote agreed 3%, Disagreed 1%</p>
-            </div>
+    $("#proposalcards")[0].appendChild(htmlToElement(template));
 
-            <div class="col-5">
-              <div><canvas id="mychart2"></canvas></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    let voteData = [{
+        label: "Agree",
+        backgroundColor: "#1aaaba",
+        data: [token.agree, quorum.agree],
+        // Change options only for labels of THIS DATASET
+        datalabels: {
+          color: "white",
+          formatter: formatter
+        }
+      },
+      {
+        label: "Disagree",
+        backgroundColor: "#ff0000",
+        data: [token.disagree, quorum.disagree],
+        // Change options only for labels of THIS DATASET
+        datalabels: {
+          color: "white",
+          formatter: formatter
+        }
+      },
+      {
+        label: "Not Voted",
+        backgroundColor: "#cccccc",
+        data: [token.notvoted, quorum.notvoted],
+        // Change options only for labels of THIS DATASET
+        datalabels: {
+          color: "white",
+          formatter: formatter
+        }
+      }
+    ];
 
-    <div class="grid-item col-md-6 steppriceproposal" data-category="steppriceproposal">
-      <div class="card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-7">
-              <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span class="proposaltype">Step Price Proposal (accepted)</span>
-              </div>
-              <p><a href="#"><b>Disqualify P-Rep A; P-Rep A does not maintain node</b></a></p>
-              <p>Proposed by<span> Banana</span></p>
-              <p>Quorum 40%, Disagree 20%</p>
-              <p>Token vote agreed 3%, Disagreed 1%</p>
-            </div>
+    let ctx = document.getElementById("mychart" + id).getContext("2d");
 
-            <div class="col-5">
-              <div><canvas id="mychart3"></canvas></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    var aChart = new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: ["Token", "Quorum"],
+        datasets: voteData
+      },
+      options: options
+    });
+  }
 
-  </div>
+  async function reloadProposals() {
+    let type = $('#type').val();
+    let status = $('#status').val();
+
+    let params = {}
+    if(type !== "*") {
+      params['type'] = "0x"+type
+    }
+    if(status !== "*") {
+      params['status'] = "0x"+status
+    }
+    let response = await json_rpc_call("getProposals", params);
+    let ProposalList = response.proposals;
+
+    let e = $("#proposalcards")[0];
+    var child = e.lastElementChild;  
+    while (child) { 
+      e.removeChild(child); 
+      child = e.lastElementChild; 
+    } 
+
+    for (let i = 0; i < ProposalList.length; i++) {
+      let aProposal = ProposalList[i];
+      let aPRepResponse = {};
+      makecard(
+        getProposalType(parseInt(aProposal.contents.type)),
+        getProposalStatus(parseInt(aProposal.status)),
+        aProposal,
+        aPRepResponse, {
+          "agree": parseInt(aProposal.vote.agree.amount),
+          "disagree": parseInt(aProposal.vote.disagree.amount),
+          "notvoted": parseInt(aProposal.vote.noVote.amount)
+        }, {
+          "agree": parseInt(aProposal.vote.agree.count),
+          "disagree": parseInt(aProposal.vote.disagree.count),
+          "notvoted": parseInt(aProposal.vote.noVote.count)
+        },
+        String(i)
+      );
+    }
+  }
 
 
-{% endblock %}
-{% block extra_js %}
-  <script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
-  <script src="{% static 'js/plugins/isotope.pkgd.min.js' %}"></script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
-
-  <!-- CHART -->
-  <script>
-      // Label formatter function
-      const formatter = (value, ctx) => {
-          const otherDatasetIndex = ctx.datasetIndex === 0 ? 1 : 0;
-          const total = ctx.chart.data.datasets[otherDatasetIndex].data[ctx.dataIndex] + value;
-          return `${(value / total * 100).toFixed(0)}%`;
-      };
-
-      const data = [
-          {
-              // stack: 'test',
-              label: "Disagree",
-              backgroundColor: "#ff0000",
-              data: [6310, 5742],
-              // Change options only for labels of THIS DATASET
-              datalabels: {
-                  color: "white",
-                  formatter: formatter
-              }
-          },
-          {
-              // stack: 'test',
-              label: "Quorum",
-              backgroundColor: "#283fba",
-              data: [11542, 12400],
-              // Change options only for labels of THIS DATASET
-              datalabels: {
-                  color: "white",
-                  formatter: formatter
-              }
-          },
-          {
-              // stack: 'test',
-              label: "Agree",
-              backgroundColor: "#1aaaba",
-              data: [11542, 12400],
-              // Change options only for labels of THIS DATASET
-              datalabels: {
-                  color: "white",
-                  formatter: formatter
-              }
-          }
-      ];
-
-      const options = {
-          maintainAspectRatio: false,
-          spanGaps: false,
-          responsive: true,
-          legend: {
-              display: false,
-              position: "bottom",
-              labels: {
-                  fontColor: "#000",
-                  boxWidth: 14,
-                  fontFamily: "Monserrat"
-              }
-          },
-          tooltips: {
-              mode: "label",
-              callbacks: {
-                  label: function (tooltipItem, data) {
-                      const type = data.datasets[tooltipItem.datasetIndex].label;
-                      const value =
-                          data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                      let total = 0;
-                      for (let i = 0; i < data.datasets.length; i++)
-                          total += data.datasets[i].data[tooltipItem.index];
-                      if (tooltipItem.datasetIndex !== data.datasets.length - 1) {
-                          return (
-                              type + " : " + value.toFixed(0).replace(/(\d)(?=(\d{3})+\.)/g, "1,")
-                          );
-                      } else {
-                          return [
-                              type +
-                              " : " +
-                              value.toFixed(0).replace(/(\d)(?=(\d{3})+\.)/g, "1,"),
-                              "Overall : " + total
-                          ];
-                      }
-                  }
-              }
-          },
-          plugins: {
-              // Change options for ALL labels of THIS CHART
-              datalabels: {
-                  color: "#black",
-                  align: "center"
-              }
-          },
-          scales: {
-
-              xAxes: [
-                  {
-                      stacked: true,
-                      gridLines: { display: false },
-                      display: false,
-                      ticks: {fontColor: "#000"}
-                  },
-
-                  {
-                      type: 'category',
-                      offset: true,
-                      position: 'top',
-                      ticks: {
-                          fontColor: "#000"
-                      },
-                      gridLines: {display: false},
-                  }
-
-              ],
-              yAxes: [
-                  {
-                      stacked: true,
-                      gridLines: { display: false },
-                      display: false,
-                      ticks: {fontColor: "#fff"}
-                  },
-              ]
-          }
-      };
-
-      const ctx = document.getElementById("mychart").getContext("2d");
-      const ctx2 = document.getElementById("mychart2").getContext("2d");
-      const ctx3 = document.getElementById("mychart3").getContext("2d");
-
-      new Chart(ctx, {
-          type: "bar",
-          data: {
-              labels: ["Token", "Quorum"],
-              datasets: data
-          },
-          options: options
-      });
-
-      new Chart(ctx2, {
-          type: "bar",
-          data: {
-              labels: ["Token", "Quorum"],
-              datasets: data
-          },
-          options: options
-      });
-
-      new Chart(ctx3, {
-          type: "bar",
-          data: {
-              labels: ["Token", "Quorum"],
-              datasets: data
-          },
-          options: options
-      });
-  </script>
-
-  <!-- FILTERS -->
-  <script>
-    var filterVal = '';
-    var $grid = $('.grid').isotope({
-      itemSelector: '.grid-item',
-      layoutMode: 'fitRows'
+  $(document).ready(function () {
+    reloadProposals();
+    $('#type').change(function () {
+      reloadProposals();
+    });
+    $('#status').change(function () {
+      reloadProposals();
     });
 
-    function filterchange(){
-        var type = $('#type').val();
-        var status = $('#status').val();
-        var filterVal = type+status;
-        $grid.isotope({filter: filterVal});
-    }
-  </script>
+    $('#newProposal').click(function () {
+      window.location.assign("../newproposal");
+    });
+  });
+</script>
 {% endblock %}
