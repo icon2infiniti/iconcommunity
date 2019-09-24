@@ -71,3 +71,51 @@ class SCORE(models.Model):
 
     def __str__(self):
         return self.score_title
+
+
+class Wallet(models.Model):
+    wallet_logo = models.ImageField(upload_to='wallet/')
+    wallet_logo_w = models.ImageField(upload_to='wallet/')
+    wallet_title = models.CharField(max_length=100, default='')
+    wallet_link = models.URLField(max_length=500, default='')
+    wallet_category = models.CharField(max_length=50, default='')
+    wallet_description = models.TextField(max_length=2000, default='')
+    wallet_date = models.DateField(_("Date"), default=datetime.date.today)
+    display = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.wallet_title
+
+
+class DB(models.Model):
+    db_logo = models.ImageField(upload_to='db/')
+    db_logo_w = models.ImageField(upload_to='db/')
+    db_title = models.CharField(max_length=100, default='')
+    db_link = models.URLField(max_length=500, default='')
+    db_category = models.CharField(max_length=50, default='')
+    db_description = models.TextField(max_length=2000, default='')
+    db_date = models.DateField(_("Date"), default=datetime.date.today)
+    display = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.db_title
+
+
+class IDE(models.Model):
+    ide_logo = models.ImageField(upload_to='ide/')
+    ide_logo_w = models.ImageField(upload_to='ide/')
+    ide_title = models.CharField(max_length=100, default='')
+    ide_link = models.URLField(max_length=500, default='')
+    ide_category = models.CharField(max_length=50, default='')
+    ide_description = models.TextField(max_length=2000, default='')
+    ide_date = models.DateField(_("Date"), default=datetime.date.today)
+    display = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.ide_title

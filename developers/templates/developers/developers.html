@@ -2,6 +2,13 @@
 {% load static %}
 {% block extra_head %}
   <link href="{% static 'developers/css/developers.css' %}" rel="stylesheet"/>
+  <script>
+    var rc_list = {};
+    var score_list = {};
+    var wallet_list = {};
+    var db_list = {};
+    var ide_list = {};
+  </script>
 {% endblock %}
 {% block title %}Developers{% endblock %}
 {% block section %}Developers{% endblock %}
@@ -11,16 +18,40 @@
   {% load el_pagination_tags %}
 
   <!-- Links -->
-  <h3 class="title mt-5">Links</h3>
+  <h3 class="title mt-5">Official Links</h3>
   <div class="card-body">
     <div class="row">
       <div class="col-sm-4 mb-5">
+        <a href="#" target="_blank">
+          {% if nightmode == True %}
+            <img id="github" src="{% static 'developers/img/github-512_w.png' %}" class="mainlink">
+          {% else %}
+            <img id="github" src="{% static 'developers/img/github-512.png' %}" class="mainlink">
+          {% endif %}
+        </a>
+        <br><br>
         <h3><p><a href="https://github.com/icon-project" target="_blank">ICON Project Github</a></p></h3>
       </div>
       <div class="col-sm-4 mb-5">
+        <a href="#" target="_blank">
+          {% if nightmode == True %}
+            <img id="developer" src="{% static 'developers/img/developers-512_w.png' %}" class="mainlink">
+          {% else %}
+            <img id="developer" src="{% static 'developers/img/developers-512.png' %}" class="mainlink">
+          {% endif %}
+        </a>
+        <br><br>
         <h3><p><a href="https://icondev.io" target="_blank">ICON Developer Portal</a></p></h3>
       </div>
       <div class="col-sm-4 mb-5">
+        <a href="#" target="_blank">
+          {% if nightmode == True %}
+            <img id="telegram" src="{% static 'developers/img/telegram-512_w.png' %}" class="mainlink">
+          {% else %}
+            <img id="telegram" src="{% static 'developers/img/telegram-512.png' %}" class="mainlink">
+          {% endif %}
+        </a>
+        <br><br>
         <h3><p><a href="https://t.me/icondev" target="_blank">ICON Dev Telegram</a></p></h3>
       </div>
     </div>
@@ -48,35 +79,122 @@
 
   <!-- Tools -->
   <h3 class="title mt-5">Tools</h3>
-  <h3 class="mt-5">Reward Calculator</h3>
-  <div class="row-flex">
-    {% for reward_calculator in reward_calculators %}
-    <a target="_blank" href="{{ reward_calculator.rc_link }}" class="sblock">
-      <img src="{{ reward_calculator.rc_logo.url }}">
-      <div class="title">{{ reward_calculator.rc_title }}</div>
-      <div class="description">{{ reward_calculator.rc_description }}</div>
-    </a>
-    {% endfor %}
-  </div>
 
+    <!-- Reward Calculator -->
+    <h3 class="mt-5">Reward Calculator</h3>
+    <div class="row-flex">
+      {% for reward_calculator in reward_calculators %}
+      <script>rc_list[{{ reward_calculator.id }}] = ["{{ reward_calculator.rc_logo_w.url }}", "{{ reward_calculator.rc_logo.url }}"];</script>
+      <a target="_blank" href="{{ reward_calculator.rc_link }}" class="sblock">
+        <img id="rc{{ reward_calculator.id }}" src="{{ reward_calculator.rc_logo.url }}">
+        <div class="title">{{ reward_calculator.rc_title }}</div>
+        <div class="description">{{ reward_calculator.rc_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
 
-  <h3 class="mt-5">SCORE</h3>
+    <!-- SCORE -->
+    <h3 class="mt-5">SCORE</h3>
+    <div class="row-flex">
+      {% for score in scores %}
+      <script>score_list[{{ score.id }}] = ["{{ score.score_logo_w.url }}", "{{ score.score_logo.url }}"];</script>
+      <a target="_blank" href="{{ score.score_link }}" class="sblock">
+        <img id="score{{ score.id }}" src="{{ score.score_logo.url }}">
+        <div class="title">{{ score.score_title }}</div>
+        <div class="description">{{ score.score_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
 
-  <div class="row-flex">
-    {% for score in scores %}
-    <a target="_blank" href="{{ score.score_link }}" class="sblock">
-      <img src="{{ score.score_logo.url }}">
-      <div class="title">{{ score.score_title }}</div>
-      <div class="description">{{ score.score_description }}</div>
-    </a>
-    {% endfor %}
-  </div>
+    <!-- Wallet -->
+    <h3 class="mt-5">Wallet</h3>
+    <div class="row-flex">
+      {% for wallet in wallets %}
+      <script>wallet_list[{{ wallet.id }}] = ["{{ wallet.wallet_logo_w.url }}", "{{ wallet.wallet_logo.url }}"];</script>
+      <a target="_blank" href="{{ wallet.wallet_link }}" class="sblock">
+        <img id="wallet{{ wallet.id }}" src="{{ wallet.wallet_logo.url }}">
+        <div class="title">{{ wallet.wallet_title }}</div>
+        <div class="description">{{ wallet.wallet_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
 
+    <!-- Database -->
+    <h3 class="mt-5">Database</h3>
+    <div class="row-flex">
+      {% for db in dbs %}
+      <script>db_list[{{ db.id }}] = ["{{ db.db_logo_w.url }}", "{{ db.db_logo.url }}"];</script>
+      <a target="_blank" href="{{ db.db_link }}" class="sblock">
+        <img id="db{{ db.id }}" src="{{ db.db_logo.url }}">
+        <div class="title">{{ db.db_title }}</div>
+        <div class="description">{{ db.db_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
 
+    <!-- IDE -->
+    <h3 class="mt-5">IDE</h3>
+    <div class="row-flex">
+      {% for ide in ides %}
+      <script>ide_list[{{ ide.id }}] = ["{{ ide.ide_logo_w.url }}", "{{ ide.ide_logo.url }}"];</script>
+      <a target="_blank" href="{{ ide.ide_link }}" class="sblock">
+        <img id="ide{{ ide.id }}" src="{{ ide.ide_logo.url }}">
+        <div class="title">{{ ide.ide_title }}</div>
+        <div class="description">{{ ide.ide_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
 
+{% endblock %}
+
+{% block pre_extra_js %}
+  <script>
+  function morning_image(){
+    for(var key in rc_list){
+        $('#rc'+key).attr("src", rc_list[key][1]);
+    }
+    for(var key in score_list){
+        $('#score'+key).attr("src", score_list[key][1]);
+    }
+    for(var key in wallet_list){
+        $('#wallet'+key).attr("src", wallet_list[key][1]);
+    }
+    for(var key in db_list){
+        $('#db'+key).attr("src", db_list[key][1]);
+    }
+    for(var key in ide_list){
+        $('#ide'+key).attr("src", ide_list[key][1]);
+    }
+    $('#github').attr("src", "{% static 'developers/img/github-512.png' %}");
+    $('#developer').attr("src", "{% static 'developers/img/developers-512.png' %}");
+    $('#telegram').attr("src", "{% static 'developers/img/telegram-512.png' %}");
+  }
+
+  function night_image(){
+    for(var key in rc_list){
+        $('#rc'+key).attr("src", rc_list[key][0]);
+    }
+    for(var key in score_list){
+        $('#score'+key).attr("src", score_list[key][0]);
+    }
+    for(var key in wallet_list){
+        $('#wallet'+key).attr("src", wallet_list[key][0]);
+    }
+    for(var key in db_list){
+        $('#db'+key).attr("src", db_list[key][0]);
+    }
+    for(var key in ide_list){
+        $('#ide'+key).attr("src", ide_list[key][0]);
+    }
+    $('#github').attr("src", "{% static 'developers/img/github-512_w.png' %}");
+    $('#developer').attr("src", "{% static 'developers/img/developers-512_w.png' %}");
+    $('#telegram').attr("src", "{% static 'developers/img/telegram-512_w.png' %}");
+  }
+  </script>
 {% endblock %}
 
 {% block extra_js %}
   <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
   <script>$.endlessPaginate();</script>
 {% endblock %}
+

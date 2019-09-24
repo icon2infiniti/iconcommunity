@@ -128,3 +128,11 @@ img {
     font-size: 12px;
 }
 
+a {
+    cursor: pointer!important;
+}
+
+.mainlink {
+    width: 64px;
+    height: 64px;
+}
