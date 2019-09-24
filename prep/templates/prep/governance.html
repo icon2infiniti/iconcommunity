@@ -22,8 +22,8 @@
 {% block title %}GOVERNANCE VARIABLE{% endblock %}
 {% block section %}GOVERNANCE VARIABLE{% endblock %}
 {% block content %}
-{% if getPRep %}
 <div class="row">
+{% if getPRep %}
   <div class="col-md-6">
     <div class="card">
 
@@ -39,8 +39,19 @@
       </div>
     </div>
   </div>
-</div>
 {% endif %}
+
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="card-title">Current irep</h4>
+      </div>
+      <div class="card-body">
+        <H2 id="currentIRep"></H2>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="col-md-12 mb-5">
@@ -57,8 +68,8 @@
                 <th class="text-center">Name</th>
                 <th class="text-center">i_rep</th>
                 <th class="text-center">i_rep Updated</th>
-                <th class="text-center">Stake</th>
-                <th class="text-center">Delegated</th>
+                <th class="text-center">Staked(ICX)</th>
+                <th class="text-center">Delegated(ICX)</th>
               </tr>
             </thead>
             <tbody>
@@ -66,10 +77,10 @@
               <tr>
                 <td class="text-center">{{forloop.counter}}</td>
                 <td class="text-center">{{item.name}}</td>
-                <td class="text-center">{{item.irep}}</td>
-                <td class="text-center">{{item.irepUpdatBlockHeight}}</td>
-                <td class="text-center">{{item.stake}}</td>
-                <td class="text-center">{{item.delegated}}</td>
+                <td class="text-center hex2dec">{{item.irep}}</td>
+                <td class="text-center hex2dec">{{item.irepUpdateBlockHeight}}</td>
+                <td class="text-center hex2dec loop2icx">{{item.stake}}</td>
+                <td class="text-center hex2dec loop2icx">{{item.delegated}}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -141,14 +152,32 @@
       //return await icon_service.call(txObj).execute();
     }
 
+    $('.hex2dec').each(function(index, item){
+      if(item.classList.contains('loop2icx')){
+        item.innerHTML = parseInt(item.innerHTML)/(10**18);
+      } else {
+        item.innerHTML = parseInt(item.innerHTML);
+      }
+    });
+
     $('#irep').val(String(parseInt({{ getPRep.irep }})));
-    $('#iRepUpdateBlockHeight').append("Update i_rep at " + parseInt({{ getPRep.irepUpdateBlockHeight }}));
+
+    let result = json_rpc_call("getBlockByHeight", {"height":"{{ getPRep.irepUpdateBlockHeight }}"})
+    .then(function(result){
+      let date = new Date(result.time_stamp)
+      $('#iRepUpdateBlockHeight').append("Update i_rep at " + parseInt({{ getPRep.irepUpdateBlockHeight }}) + "(" + date.toString() + ")");
+    });
+
+    result = json_rpc_call("getIISSInfo", {})
+    .then(function(res){
+      $('#currentIRep').append(parseInt(res.variable.irep));
+    });
 
     $('#iRepUpdate').click(function () {
       json_rpc_transaction_call("{{ fromAddress }}", "setGovernanceVariables", {
         "irep": $('#irep').val()
-      })
-    })
+      });
+    });
 
     $.tablesorter.addParser({
       id: "fancyNumber",

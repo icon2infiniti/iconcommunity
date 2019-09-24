@@ -52,13 +52,13 @@
               </div>
             </div>
           </div>
+          {% if getPRep %}
+          <div>
+            <a href="#" id="newProposal" class="btn btn-primary">New Proposal</a>
+          </div>
+          {% endif %}
         </div>
       </div>
-      {% if getPRep %}
-      <div>
-        <button id="newProposal">New Proposal</button>
-      </div>
-      {% endif %}
     </div>
   </div>
 </div>
@@ -249,7 +249,7 @@
   };
 
 
-  function makecard(proposalType, Proposal, PRep, token, quorum, id) {
+  function makecard(proposalType, proposalStatus, Proposal, PRep, token, quorum, id) {
     console.log(token);
     console.log(quorum);
     console.log(id);
@@ -262,9 +262,10 @@
           <div class="row">
             <div class="col-7">
               <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i> <span class="proposaltype">${proposalType}</span>
+                <i class="tim-icons icon-paper"></i><span class="proposaltype">${proposalType}</span>&nbsp;&nbsp;<span class="proposalstatus" style="border-radius:20px;background-color:black;color:white;">&nbsp;${proposalStatus}&nbsp;</span>
               </div>
-              <p><a href="../proposaldetail/${Proposal.id}"><b>${Proposal.contents.description}</b></a></p>
+              <p><a href="../proposaldetail/${Proposal.id}"><h4><b>${Proposal.contents.title}</b></h4></a></p>
+              <p><h5 style="text-overflow:ellipsis;"><i>${Proposal.contents.description}</i></h5></p>
               <p>Proposed by <span><a href="https://tracker.icon.foundation/address/"+${Proposal.proposer}>${PRep.name}</a></span></p>
               <p>Quorum Agree ${((quorum.agree/quorumTotal)*100).toFixed(2)}%, Disagree ${((quorum.disagree/quorumTotal)*100).toFixed(2)}%, Not Voted ${((quorum.notvoted/quorumTotal)*100).toFixed(2)}%</p>
               <p>Token vote Agree ${((token.agree/tokenTotal)*100).toFixed(2)}%, Disagree ${((token.disagree/tokenTotal)*100).toFixed(2)}%, Not Voted ${((token.notvoted/tokenTotal)*100).toFixed(2)}%</p>
@@ -328,7 +329,6 @@
     let type = $('#type').val();
     let status = $('#status').val();
 
-
     let params = {}
     if(type !== "*") {
       params['type'] = "0x"+type
@@ -339,18 +339,19 @@
     let response = await json_rpc_call("getProposals", params);
     let ProposalList = response.proposals;
 
-//    let e = $("#proposalcards")[0];
-//    var child = e.lastElementChild;  
-//    while (child) { 
-//      e.removeChild(child); 
-//      child = e.lastElementChild; 
-//    } 
+    let e = $("#proposalcards")[0];
+    var child = e.lastElementChild;  
+    while (child) { 
+      e.removeChild(child); 
+      child = e.lastElementChild; 
+    } 
 
     for (let i = 0; i < ProposalList.length; i++) {
       let aProposal = ProposalList[i];
       let aPRepResponse = {};
       makecard(
         getProposalType(parseInt(aProposal.contents.type)),
+        getProposalStatus(parseInt(aProposal.status)),
         aProposal,
         aPRepResponse, {
           "agree": parseInt(aProposal.vote.agree.amount),

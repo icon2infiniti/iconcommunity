@@ -116,6 +116,19 @@
     $("#start").append("Created: " + StartDate);
     $("#end").append("Expires: " + EndDate);
 
+    let aJson = $("#contentsValue")[0].innerHTML;
+    let value_json = JSON.parse(aJson.replace(/'/gi, "\""));
+    let replace_str = "";
+    for (var key in value_json) {
+      if (value_json.hasOwnProperty(key)) {
+        replace_str += key + " : " + value_json[key] + "\n";
+      }
+    }
+
+    $("#contentsValue")[0].innerHTML = replace_str;
+
+    console.log(replace_str);
+
     proposal_vote_json_str = "{{aProposal.vote}}";
     proposal_vote_json_str = proposal_vote_json_str.replace(/&#39;/gi, "\"");
     Voter = JSON.parse(proposal_vote_json_str);
@@ -370,6 +383,14 @@
       });
     });
 
+    $('.votedToken').each(function(index, item){
+      if(item.innerHTML !== "") {
+        item.innerHTML = parseInt(item.innerHTML);
+      } else {
+        item.innerHTML = 0;
+      }
+    });
+
     $('.timestamp').each(function(index, item){
       console.log(item.innerHTML);
       console.log(parseInt(item.innerHTML));
@@ -395,7 +416,7 @@
 
 <div id="proposal">
   <H4>Network Proposal Details</H4>
-  <H3><b>{{aProposal.contents.description}}</b></H3>
+  <H3><b>{{aProposal.contents.title}}</b></H3>
   <H5 id="status"></H5>
   <H5 id="type"></H5>
   <H5>Proposer: <a href="{{aPRep.website}}">{{aPRep.name}}</a></H5>
@@ -407,6 +428,11 @@
 <div>
   <H5><b>Description</b></H5>
   <H4>{{aProposal.contents.description}}</H4>
+</div>
+<HR />
+<div>
+  <H5><b>Value</b></H5>
+  <H4 id="contentsValue">{{aProposal.contents.value}}</H4>
 </div>
 {% if getPRep %}
 <div id="vote">
@@ -515,6 +541,7 @@
       <td>Answer</td>
       <td>Tx Hash</td>
       <td>Timestamp</td>
+      <td>Voted Token</td>
     </thead>
     <tbody id="voterList">
     {% for aVoter in aProposal.vote.agree.list %}
@@ -523,6 +550,7 @@
         <td>Agree</td>
         <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
         <td class="timestamp">{{aVoter.timestamp}}</td>
+        <td class="votedToken">{{aVoter.amount}}</td>
       </tr>
     {% endfor %}
     {% for aVoter in aProposal.vote.disagree.list %}
@@ -531,9 +559,15 @@
         <td>Disagree</td>
         <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
         <td class="timestamp">{{aVoter.timestamp}}</td>
+        <td class="votedToken"></td>
       </tr>
     {% endfor %}
     </tbody>
   </table>
 </div>
+<br/>
+<br/>
+<br/>
+<br/>
+{{aProposal}}
 {% endblock %}
