@@ -63,6 +63,17 @@
         <br><br>
         <h3><p><a href="https://www.slideshare.net/helloiconworld" target="_blank">ICON SlideShare</a></p></h3>
       </div>
+      <div class="col-sm-4 mb-5">
+        <a href="https://www.youtube.com/channel/UC8h4kVV7w94xmfCz6FbwHhg" target="_blank">
+          {% if nightmode == True %}
+            <img id="youtube" src="{% static 'developers/img/youtube_w.png' %}" class="mainlink">
+          {% else %}
+            <img id="youtube" src="{% static 'developers/img/youtube.png' %}" class="mainlink">
+          {% endif %}
+        </a>
+        <br><br>
+        <h3><p><a href="https://www.youtube.com/channel/UC8h4kVV7w94xmfCz6FbwHhg" target="_blank">ICON Developer YouTube</a></p></h3>
+      </div>
     </div>
   </div>
 
@@ -78,12 +89,6 @@
   <h3 class="mt-5 mb-0">Video Tutorial</h3>
   <div class="endless_page_template">
       {% include "developers/video_tutorial_page.html" %}
-  </div>
-
-  <h3 class="title mt-5">Presentations</h3>
-  <h3 class="mt-5">Video Presentation</h3>
-  <div class="endless_page_template">
-      {% include "developers/video_presentation_page.html" %}
   </div>
 
   <!-- Tools -->

@@ -18,18 +18,6 @@ class Tutorial(models.Model):
         return self.tutorial_title
 
 
-class VideoPresentation(models.Model):
-    video_presentation_title = models.CharField(max_length=2000, default='')
-    video_presentation_link = models.URLField(max_length=500, default='')
-    video_presentation_date = models.DateField(_("Date"), default=datetime.date.today)
-    video_presentation_display = models.BooleanField(default=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.video_presentation_title
-
-
 class MiniCard(models.Model):
     minicard_logo = models.ImageField(upload_to='minicard/')
     minicard_logo_w = models.ImageField(upload_to='minicard/')
