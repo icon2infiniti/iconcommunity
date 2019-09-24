@@ -12,8 +12,8 @@ class PrepRPCCalls:
     DEV_NET = "http://20.20.7.156:9000/api/v3"
     DUMMY_NET = "http://localhost:8888"
 
-    USE_NET = TEST_NET_3
-    USE_NET_NAME = "TEST_NET_3"
+    USE_NET = DUMMY_NET
+    USE_NET_NAME = "DUMMY_NET"
 
     def __init__(self, to_contract="cx0000000000000000000000000000000000000000"):
         self._to_contract = to_contract

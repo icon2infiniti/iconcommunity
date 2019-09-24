@@ -370,6 +370,13 @@
       });
     });
 
+    $('.timestamp').each(function(index, item){
+      console.log(item.innerHTML);
+      console.log(parseInt(item.innerHTML));
+      aDate = new Date(parseInt(item.innerHTML));
+      item.innerHTML = aDate;
+    });
+
     let votedFlag = true;
     for (aVoter in Voter.noVote.address) {
       if (aVoter === "{{ fromAddress }}") {
@@ -484,12 +491,24 @@
 <HR />
 <div>
   <H4><b>Vote Status</b></H4><br />
-  <H3>Total Quorum</H3>
-  <h3 id="TotalQuorum2"></H3>
+  <table>
+    <tr>
+      <td>
+  <H3 style="float:left">Total Quorum&nbsp;</H3>
+  <H3 id="TotalQuorum2" style="float:left"></H3>
   <div id="QuorumProgress" style="margin:20px;height:8px;position:relative;"></div>
-  <H3>Total Token Votes</H3>
-  <h3 id="TotalToken2"></H3>
+      </td>
+      <td>
+  <H3 style="float:left">Total Token Votes&nbsp;</H3>
+  <H3 id="TotalToken2" style="float:left"></H3>
   <div id="TokenProgress" style="margin:20px;height:8px;position:relative;"></div>
+      </td>
+    </tr>
+  </table>
+</div>
+<br/>
+<HR />
+<div>
   <table>
     <thead>
       <td>Voter</td>
@@ -498,14 +517,23 @@
       <td>Timestamp</td>
     </thead>
     <tbody id="voterList">
+    {% for aVoter in aProposal.vote.agree.list %}
       <tr>
-        <td>aa</td>
-        <td>bb</td>
-        <td>cc</td>
-        <td>dd</td>
+        <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
+        <td>Agree</td>
+        <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
+        <td class="timestamp">{{aVoter.timestamp}}</td>
       </tr>
+    {% endfor %}
+    {% for aVoter in aProposal.vote.disagree.list %}
+      <tr>
+        <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
+        <td>Disagree</td>
+        <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
+        <td class="timestamp">{{aVoter.timestamp}}</td>
+      </tr>
+    {% endfor %}
     </tbody>
   </table>
 </div>
-{{aProposal}}
 {% endblock %}
