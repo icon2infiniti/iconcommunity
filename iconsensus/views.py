@@ -4,18 +4,28 @@ from .models import CorePrep
 from django.contrib.staticfiles.templatetags.staticfiles import static
 
 
-def about(request):
+def init_mode(request):
     if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
+        request.session['nightmode'] = True
     if 'navbar' not in request.session:
         request.session['navbar'] = True
+    if 'fromAddress' not in request.session:
+        request.session['fromAddress'] = 'none'
 
     context = {
         'nightmode': request.session['nightmode'],
         'navbar': request.session['navbar'],
+        'fromAddress': request.session['fromAddress'],
         'section': 'ICONSENSUS',
-        'subsection': 'ABOUT',
     }
+    return context
+
+
+def about(request):
+    context = init_mode(request)
+    context.update({
+        'subsection': 'ABOUT',
+    })
     return render(request, 'iconsensus/about.html', context)
 
 
@@ -32,15 +42,11 @@ def get_map_marker(prep):
             },
             'url': url
         }
-        return data
+    return data
 
 
 def candidates(request):
-    if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
-    if 'navbar' not in request.session:
-        request.session['navbar'] = True
-
+    context = init_mode(request)
     preps = CorePrep.objects.using('prepsqlite3').filter(display=True).order_by('-id')
     total = CorePrep.objects.using('prepsqlite3').filter(display=True).count
 
@@ -54,28 +60,21 @@ def candidates(request):
         except Exception as e:
             pass
 
-    context = {
-        'nightmode': request.session['nightmode'],
-        'navbar': request.session['navbar'],
-        'section': 'ICONSENSUS',
+    context.update({
         'subsection': 'CANDIDATES',
         'preps': preps,
         'prep_locations': locations,
         'total': total,
-    }
-
+    })
     return render(request, 'iconsensus/candidates.html', context)
 
 
 def candidate_detail(request, pk):
+    context = init_mode(request)
     prep = CorePrep.objects.using('prepsqlite3').get(pk=pk)
 
-    context = {
-        'nightmode': request.session['nightmode'],
-        'navbar': request.session['navbar'],
-        'section': 'ICONSENSUS',
+    context.update({
         'subsection': 'CANDIDATES',
         'prep': prep,
-    }
-
+    })
     return render(request, 'iconsensus/candidate_detail.html', context)
