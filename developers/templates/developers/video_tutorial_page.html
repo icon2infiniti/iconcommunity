@@ -4,11 +4,11 @@
     {% paginate 3 video_tutorials using "video_tutorial_page" %}
     {% for video_tutorial in video_tutorials %}
     <div class="col-md-4 mb-3">
-      <div class="embed-responsive embed-responsive-4by3">
-        <iframe class="embed-responsive-item" src="{{ video_tutorial.video_tutorial_link }}"></iframe>
-      </div>
-      <p><h4>{{ video_tutorial.video_tutorial_title }}</h4></p>
-      <p><h5>{{ video_tutorial.video_tutorial_date }}</h5></p>
+      <a href="{{ video_tutorial.tutorial_link }}" target="_blank">
+        <img src="{{ video_tutorial.tutorial_logo.url }}" class="blog-tutorial-img">
+      </a>
+      <p><h4><a href="{{ video_tutorial.tutorial_link }}" target="_blank">{{ video_tutorial.tutorial_title }}</a></h4></p>
+      <p><h5>{{ video_tutorial.tutorial_date }}</h5></p>
     </div>
     {% endfor %}
   </div>

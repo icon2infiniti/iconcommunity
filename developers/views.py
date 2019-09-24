@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import BlogTutorial, VideoTutorial, VideoPresentation, RewardCalculator, SCORE, Wallet, DB, IDE
+from .models import Tutorial, VideoPresentation, MiniCard
 from el_pagination.decorators import page_template
 
 
@@ -13,23 +13,19 @@ def developers(request, template='developers/developers.html', extra_context=Non
     if 'fromAddress' not in request.session:
         request.session['fromAddress'] = 'none'
 
-    video_tutorials = VideoTutorial.objects.all().order_by('-video_tutorial_date')
-    for url in video_tutorials:
-        url.video_tutorial_link = url.video_tutorial_link.replace("watch?v=", "embed/")+"?rel=0"
-
     video_presentations = VideoPresentation.objects.all().order_by('-video_presentation_date')
     for url in video_presentations:
         url.video_presentation_link = url.video_presentation_link.replace("watch?v=", "embed/")+"?rel=0"
 
     context = {
-        'blog_tutorials': BlogTutorial.objects.all().order_by('-blog_tutorial_date'),
-        'video_tutorials': video_tutorials,
+        'blog_tutorials': Tutorial.objects.filter(tutorial_category="Blog").order_by('-tutorial_date'),
+        'video_tutorials': Tutorial.objects.filter(tutorial_category="Video").order_by('-tutorial_date'),
         'video_presentations': video_presentations,
-        'reward_calculators': RewardCalculator.objects.all().order_by('-rc_date'),
-        'scores': SCORE.objects.all().order_by('-score_date'),
-        'wallets': Wallet.objects.all().order_by('-wallet_date'),
-        'dbs': DB.objects.all().order_by('-db_date'),
-        'ides': IDE.objects.all().order_by('-ide_date'),
+        'reward_calculators': MiniCard.objects.filter(minicard_category="Reward Calculator").order_by('-minicard_date'),
+        'scores': MiniCard.objects.filter(minicard_category="SCORE").order_by('-minicard_date'),
+        'wallets': MiniCard.objects.filter(minicard_category="Wallet").order_by('-minicard_date'),
+        'dbs': MiniCard.objects.filter(minicard_category="Database").order_by('-minicard_date'),
+        'ides': MiniCard.objects.filter(minicard_category="IDE").order_by('-minicard_date'),
         'nightmode': request.session['nightmode'],
         'navbar': request.session['navbar'],
         'fromAddress': request.session['fromAddress'],

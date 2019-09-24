@@ -3,11 +3,7 @@
 {% block extra_head %}
   <link href="{% static 'developers/css/developers.css' %}" rel="stylesheet"/>
   <script>
-    var rc_list = {};
-    var score_list = {};
-    var wallet_list = {};
-    var db_list = {};
-    var ide_list = {};
+    var minicard_list = {};
   </script>
 {% endblock %}
 {% block title %}Developers{% endblock %}
@@ -22,7 +18,7 @@
   <div class="card-body">
     <div class="row">
       <div class="col-sm-4 mb-5">
-        <a href="#" target="_blank">
+        <a href="https://github.com/icon-project" target="_blank">
           {% if nightmode == True %}
             <img id="github" src="{% static 'developers/img/github-512_w.png' %}" class="mainlink">
           {% else %}
@@ -33,7 +29,7 @@
         <h3><p><a href="https://github.com/icon-project" target="_blank">ICON Project Github</a></p></h3>
       </div>
       <div class="col-sm-4 mb-5">
-        <a href="#" target="_blank">
+        <a href="https://icondev.io" target="_blank">
           {% if nightmode == True %}
             <img id="developer" src="{% static 'developers/img/developers-512_w.png' %}" class="mainlink">
           {% else %}
@@ -44,7 +40,7 @@
         <h3><p><a href="https://icondev.io" target="_blank">ICON Developer Portal</a></p></h3>
       </div>
       <div class="col-sm-4 mb-5">
-        <a href="#" target="_blank">
+        <a href="https://t.me/icondev" target="_blank">
           {% if nightmode == True %}
             <img id="telegram" src="{% static 'developers/img/telegram-512_w.png' %}" class="mainlink">
           {% else %}
@@ -55,18 +51,31 @@
         <h3><p><a href="https://t.me/icondev" target="_blank">ICON Dev Telegram</a></p></h3>
       </div>
     </div>
+    <div class="row">
+      <div class="col-sm-4 mb-5">
+        <a href="https://www.slideshare.net/helloiconworld" target="_blank">
+          {% if nightmode == True %}
+            <img id="slideshare" src="{% static 'developers/img/slideshare_w.png' %}" class="mainlink">
+          {% else %}
+            <img id="slideshare" src="{% static 'developers/img/slideshare.png' %}" class="mainlink">
+          {% endif %}
+        </a>
+        <br><br>
+        <h3><p><a href="https://www.slideshare.net/helloiconworld" target="_blank">ICON SlideShare</a></p></h3>
+      </div>
+    </div>
   </div>
 
   <!-- Tutorials -->
   <h3 class="title mt-5">Tutorials</h3>
 
-  <h3 class="mt-5">Blog Tutorial</h3>
+  <h3 class="mt-5 mb-0">Blog Tutorial</h3>
   <div class="endless_page_template">
       {% include "developers/blog_tutorial_page.html" %}
   </div>
   <br><br>
 
-  <h3 class="mt-5">Video Tutorial</h3>
+  <h3 class="mt-5 mb-0">Video Tutorial</h3>
   <div class="endless_page_template">
       {% include "developers/video_tutorial_page.html" %}
   </div>
@@ -84,11 +93,11 @@
     <h3 class="mt-5">Reward Calculator</h3>
     <div class="row-flex">
       {% for reward_calculator in reward_calculators %}
-      <script>rc_list[{{ reward_calculator.id }}] = ["{{ reward_calculator.rc_logo_w.url }}", "{{ reward_calculator.rc_logo.url }}"];</script>
-      <a target="_blank" href="{{ reward_calculator.rc_link }}" class="sblock">
-        <img id="rc{{ reward_calculator.id }}" src="{{ reward_calculator.rc_logo.url }}">
-        <div class="title">{{ reward_calculator.rc_title }}</div>
-        <div class="description">{{ reward_calculator.rc_description }}</div>
+      <script>minicard_list[{{ reward_calculator.id }}] = ["{{ reward_calculator.minicard_logo_w.url }}", "{{ reward_calculator.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ reward_calculator.minicard_link }}" class="sblock">
+        <img id="{{ reward_calculator.id }}" src="{{ reward_calculator.minicard_logo.url }}">
+        <div class="title">{{ reward_calculator.minicard_title }}</div>
+        <div class="description">{{ reward_calculator.minicard_description }}</div>
       </a>
       {% endfor %}
     </div>
@@ -97,11 +106,11 @@
     <h3 class="mt-5">SCORE</h3>
     <div class="row-flex">
       {% for score in scores %}
-      <script>score_list[{{ score.id }}] = ["{{ score.score_logo_w.url }}", "{{ score.score_logo.url }}"];</script>
-      <a target="_blank" href="{{ score.score_link }}" class="sblock">
-        <img id="score{{ score.id }}" src="{{ score.score_logo.url }}">
-        <div class="title">{{ score.score_title }}</div>
-        <div class="description">{{ score.score_description }}</div>
+      <script>minicard_list[{{ score.id }}] = ["{{ score.minicard_logo_w.url }}", "{{ score.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ score.minicard_link }}" class="sblock">
+        <img id="{{ score.id }}" src="{{ score.minicard_logo.url }}">
+        <div class="title">{{ score.minicard_title }}</div>
+        <div class="description">{{ score.minicard_description }}</div>
       </a>
       {% endfor %}
     </div>
@@ -110,11 +119,11 @@
     <h3 class="mt-5">Wallet</h3>
     <div class="row-flex">
       {% for wallet in wallets %}
-      <script>wallet_list[{{ wallet.id }}] = ["{{ wallet.wallet_logo_w.url }}", "{{ wallet.wallet_logo.url }}"];</script>
-      <a target="_blank" href="{{ wallet.wallet_link }}" class="sblock">
-        <img id="wallet{{ wallet.id }}" src="{{ wallet.wallet_logo.url }}">
-        <div class="title">{{ wallet.wallet_title }}</div>
-        <div class="description">{{ wallet.wallet_description }}</div>
+      <script>minicard_list[{{ wallet.id }}] = ["{{ wallet.minicard_logo_w.url }}", "{{ wallet.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ wallet.minicard_link }}" class="sblock">
+        <img id="{{ wallet.id }}" src="{{ wallet.minicard_logo.url }}">
+        <div class="title">{{ wallet.minicard_title }}</div>
+        <div class="description">{{ wallet.minicard_description }}</div>
       </a>
       {% endfor %}
     </div>
@@ -123,11 +132,11 @@
     <h3 class="mt-5">Database</h3>
     <div class="row-flex">
       {% for db in dbs %}
-      <script>db_list[{{ db.id }}] = ["{{ db.db_logo_w.url }}", "{{ db.db_logo.url }}"];</script>
-      <a target="_blank" href="{{ db.db_link }}" class="sblock">
-        <img id="db{{ db.id }}" src="{{ db.db_logo.url }}">
-        <div class="title">{{ db.db_title }}</div>
-        <div class="description">{{ db.db_description }}</div>
+      <script>minicard_list[{{ db.id }}] = ["{{ db.minicard_logo_w.url }}", "{{ db.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ db.minicard_link }}" class="sblock">
+        <img id="{{ db.id }}" src="{{ db.minicard_logo.url }}">
+        <div class="title">{{ db.minicard_title }}</div>
+        <div class="description">{{ db.minicard_description }}</div>
       </a>
       {% endfor %}
     </div>
@@ -136,11 +145,11 @@
     <h3 class="mt-5">IDE</h3>
     <div class="row-flex">
       {% for ide in ides %}
-      <script>ide_list[{{ ide.id }}] = ["{{ ide.ide_logo_w.url }}", "{{ ide.ide_logo.url }}"];</script>
-      <a target="_blank" href="{{ ide.ide_link }}" class="sblock">
-        <img id="ide{{ ide.id }}" src="{{ ide.ide_logo.url }}">
-        <div class="title">{{ ide.ide_title }}</div>
-        <div class="description">{{ ide.ide_description }}</div>
+      <script>minicard_list[{{ ide.id }}] = ["{{ ide.minicard_logo_w.url }}", "{{ ide.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ ide.minicard_link }}" class="sblock">
+        <img id="{{ ide.id }}" src="{{ ide.minicard_logo.url }}">
+        <div class="title">{{ ide.minicard_title }}</div>
+        <div class="description">{{ ide.minicard_description }}</div>
       </a>
       {% endfor %}
     </div>
@@ -150,45 +159,23 @@
 {% block pre_extra_js %}
   <script>
   function morning_image(){
-    for(var key in rc_list){
-        $('#rc'+key).attr("src", rc_list[key][1]);
-    }
-    for(var key in score_list){
-        $('#score'+key).attr("src", score_list[key][1]);
-    }
-    for(var key in wallet_list){
-        $('#wallet'+key).attr("src", wallet_list[key][1]);
-    }
-    for(var key in db_list){
-        $('#db'+key).attr("src", db_list[key][1]);
-    }
-    for(var key in ide_list){
-        $('#ide'+key).attr("src", ide_list[key][1]);
+    for(var key in minicard_list){
+        $('#'+key).attr("src", minicard_list[key][1]);
     }
     $('#github').attr("src", "{% static 'developers/img/github-512.png' %}");
     $('#developer').attr("src", "{% static 'developers/img/developers-512.png' %}");
     $('#telegram').attr("src", "{% static 'developers/img/telegram-512.png' %}");
+    $('#slideshare').attr("src", "{% static 'developers/img/slideshare.png' %}");
   }
 
   function night_image(){
-    for(var key in rc_list){
-        $('#rc'+key).attr("src", rc_list[key][0]);
-    }
-    for(var key in score_list){
-        $('#score'+key).attr("src", score_list[key][0]);
-    }
-    for(var key in wallet_list){
-        $('#wallet'+key).attr("src", wallet_list[key][0]);
-    }
-    for(var key in db_list){
-        $('#db'+key).attr("src", db_list[key][0]);
-    }
-    for(var key in ide_list){
-        $('#ide'+key).attr("src", ide_list[key][0]);
+    for(var key in minicard_list){
+        $('#'+key).attr("src", minicard_list[key][0]);
     }
     $('#github').attr("src", "{% static 'developers/img/github-512_w.png' %}");
     $('#developer').attr("src", "{% static 'developers/img/developers-512_w.png' %}");
     $('#telegram').attr("src", "{% static 'developers/img/telegram-512_w.png' %}");
+    $('#slideshare').attr("src", "{% static 'developers/img/slideshare_w.png' %}");
   }
   </script>
 {% endblock %}

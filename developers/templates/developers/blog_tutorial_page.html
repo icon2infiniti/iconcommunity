@@ -4,11 +4,11 @@
     {% paginate 3 blog_tutorials using "blog_tutorial_page" %}
     {% for blog_tutorial in blog_tutorials %}
     <div class="col-md-4 mb-3">
-      <a href="{{ blog_tutorial.blog_tutorial_link }}" target="_blank">
-        <img src="{{ blog_tutorial.blog_tutorial_logo.url }}" class="blog-tutorial-img">
+      <a href="{{ blog_tutorial.tutorial_link }}" target="_blank">
+        <img src="{{ blog_tutorial.tutorial_logo.url }}" class="blog-tutorial-img">
       </a>
-      <p><h4><a href="{{ blog_tutorial.blog_tutorial_link }}" target="_blank">{{ blog_tutorial.blog_tutorial_title }}</a></h4></p>
-      <p><h5>{{ blog_tutorial.blog_tutorial_date }}</h5></p>
+      <p><h4><a href="{{ blog_tutorial.tutorial_link }}" target="_blank">{{ blog_tutorial.tutorial_title }}</a></h4></p>
+      <p><h5>{{ blog_tutorial.tutorial_date }}</h5></p>
     </div>
     {% endfor %}
   </div>
