@@ -28,3 +28,21 @@ mapobj = {
     },
 
 };
+
+function showmain(){
+    $('#ranking_all').hide();
+    $('#ranking_sub').hide();
+    $('#ranking_main').show();
+}
+
+function showsub(){
+    $('#ranking_all').hide();
+    $('#ranking_sub').show();
+    $('#ranking_main').hide();
+}
+
+function showall(){
+    $('#ranking_all').show();
+    $('#ranking_sub').hide();
+    $('#ranking_main').hide();
+}
