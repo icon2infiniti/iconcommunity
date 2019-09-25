@@ -53,7 +53,7 @@
           <div class="col-sm-12">
             <label>Text Message</label>
             <div class="form-group">
-              <textarea id="content" style="height:400px;width:400px;resize:none;"></textarea>
+              <textarea id="content" style="height:400px;width:100%;resize:none;"></textarea>
             </div>
           </div>
         </div>
@@ -62,7 +62,7 @@
           <div class="col-sm-6">
             <label>Revision Code</label>
             <div class="form-group">
-              <input id="revision_code" type="text" class="form-control">
+              <input id="revision_code" type="number" class="form-control">
             </div>
           </div>
           <div class="col-sm-6">
@@ -104,7 +104,7 @@
           <div class="col-sm-12">
             <label>value</label>
             <div class="form-group">
-              <input id="step_price_in_loop" type="text" class="form-control">
+              <input id="step_price_in_loop" type="number" step="1" min="0" class="form-control">
             </div>
           </div>
         </div>
@@ -196,8 +196,8 @@
   async function registerProposal() {
     let from_wallet = "{{ fromAddress }}";
     let method_name = "registerProposal";
-    let title = $('#title').val();
-    let description = $('#description').val();
+    let title = $('#title').val().trim();
+    let description = $('#description').val().trim();
     let ProposalType = $('#ProposalType').val();
 
     if(title === "") {
@@ -234,14 +234,25 @@
       break;
       case "2":
         params['address'] = $("#address_of_score").val();
-        if(params['address'] === "") {
-          alert("address_of_score is empty");
+        aAddress = params['address'].trim().toLowerCase()
+        if(aAddress.length !== 42) {
+          alert("address_of_score length incorrect");
+          return;
+        } else if(aAddress.substring(0,2) !== "cx"){
+          alert("address_of_score is not SCORE address");
           return;
         }
-        params['type'] = "0x"+$("#type").val();
       break;
       case "3":
         params['address'] = $("#address_of_prep").val();
+        aAddress = params['address'].trim().toLowerCase()
+        if(aAddress.length !== 42) {
+          alert("address_of_prep length incorrect");
+          return;
+        } else if(aAddress.substring(0,2) !== "hx"){
+          alert("address_of_prep is not address");
+          return;
+        }
         if(params['address'] === "") {
           alert("address_of_prep is empty");
           return;
@@ -258,8 +269,6 @@
         console.log("out of type")
       break;
     }
-
-    console.log(params);
 
     // Need to sign or send to ICONex
     let timestamp = new Date();
@@ -289,6 +298,8 @@
         payload: parsed
       }
     }));
+
+    // redirect
   }
 
 
