@@ -13,15 +13,40 @@
 {% load mathfilters %}
 
   <!-- Ranking -->
-
   <div class="row">
 
     <!-- Block Producer Ranking -->
     <div class="col-12">
       <div class="card">
+
+        <!-- Card Header -->
         <div class="card-header">
-          <h2 class="card-title">P-Rep Rankings</h2>
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title">P-Rep Rankings</h2>
+            </div>
+            <div class="col-sm-6 duration">
+              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                <label class="btn btn-sm btn-primary btn-simple" id="main">
+                  <input type="radio" name="options" checked>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showmain();">Main</span>
+                  <span class="d-block d-sm-none" onclick="toggleDuration('MAIN');">Main</span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple" id="sub">
+                  <input type="radio" class="d-none d-sm-none" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showsub();">Sub</span>
+                  <span class="d-block d-sm-none" onclick="toggleDuration('SUB');">Sub</span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple active" id="all">
+                  <input type="radio" class="d-none" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showall();">All</span>
+                  <span class="d-block d-sm-none" onclick="toggleDuration('ALL');">All</span>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
+
         <div class="card-body">
           <div class="table-responsive">
             <table class="table ranking" style="margin-bottom:0px!important;">
@@ -34,32 +59,52 @@
                 <th width="8%">i_rep</th>
                 <th width="10%">Self-Staked</th>
                 <th width="8%">Delegated</th>
-                <!--
-                <th width="17%">Validated Blocks</th>
-                <th width="15%">Total Blocks</th>
-                -->
               </tr>
               </thead>
 
-              <tbody>
-
-                {% for prep in prep_all %}
+              <tbody id="ranking_main" style="display:none;">
+                {% for prep in prep_main %}
                 <tr>
-                  <td width="8%">{{ prep.index }}</td>
+                  <td width="8%">{{ forloop.counter }}</td>
                   <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
                   <td width="8%">{{ prep.country }}</td>
                   <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
                   <td width="8%" id="irep">{{ prep.irep }}</td>
                   <td width="10%" id="stake">{{ prep.stake }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
-                  <!--
-                  <td width="10%" id="validatedBlocks">{{ prep.validatedBlocks }}</td>
-                  <td width="10%" id="totalBlocks">{{ prep.totalBlocks }}</td>
-                  -->
                 </tr>
                 {% endfor %}
-
               </tbody>
+
+              <tbody id="ranking_sub" style="display:none;">
+                {% for prep in prep_sub %}
+                <tr>
+                  <td width="8%">{{ forloop.counter }}</td>
+                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
+                  <td width="8%">{{ prep.country }}</td>
+                  <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
+                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="10%" id="stake">{{ prep.stake }}</td>
+                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+              <tbody id="ranking_all">
+                {% for prep in prep_all %}
+                <tr>
+                  <td width="8%">{{ forloop.counter }}</td>
+                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
+                  <td width="8%">{{ prep.country }}</td>
+                  <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
+                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="10%" id="stake">{{ prep.stake }}</td>
+                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+
 
             </table>
 
@@ -422,11 +467,9 @@
 
 {% block extra_js %}
 
-  <script src="{% static 'dashboard/js/chartjs.min.js' %}"></script>
   <script src="{% static 'dashboard/js/chart.bundle.min.js' %}"></script>
   <script src="{% static 'dashboard/js/coininfo.js' %}"></script>
   <script src="{% static 'dashboard/js/jquery-jvectormap.js' %}"></script>
-  <!--<script src="{% static 'dashboard/js/demo.js' %}"></script>-->
   <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
 
   <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>

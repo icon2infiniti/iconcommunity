@@ -13,7 +13,7 @@ class DashboardRPCCalls:
         self._to_contract = to_contract
 
     def json_rpc_call(self, method_name, params):
-        icon_service = IconService(HTTPProvider(DashboardRPCCalls.MAIN_NET))
+        icon_service = IconService(HTTPProvider(DashboardRPCCalls.TEMP_NET))
         call_builder = CallBuilder() \
             .to(self._to_contract) \
             .method(method_name) \

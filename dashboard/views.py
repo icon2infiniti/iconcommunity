@@ -9,7 +9,6 @@ from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
-
 from collections import OrderedDict
 from operator import itemgetter
 
@@ -47,7 +46,6 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     session = Session()
     session.headers.update(headers)
 
-    #icx_price = 0.215
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
@@ -55,19 +53,10 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     except (ConnectionError, Timeout, TooManyRedirects) as e:
         print(e)
 
-    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
     parameters = {
         'id': '2722',  # AC3=2722, ICX=2099, USD=2781
         'convert': 'ICX'
     }
-    headers = {
-        'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
-    }
-
-    session = Session()
-    session.headers.update(headers)
-
     try:
         response = session.get(url, params=parameters)
         data = json.loads(response.text)
@@ -83,42 +72,25 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     except JSONRPCException as e:
         print(str(e.message))
 
-    TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/1000000000000000000
-
+    # Query and rebuild custom ranking list
+    TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/10**18
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
 
-    MAIN_PREPS = 0
-    SUB_PREPS = 0
-    PREPS = 0
-
     countries = {}
-
-    i = 1
     for prep in preps['preps']:
-        prep['index'] = i
-        i += 1
         prep_grade = int(prep['grade'], 16)
         prep['grade'] = PREP_GRADE[prep_grade]
-        if prep_grade == 0:
-            MAIN_PREPS += 1
-        elif prep_grade == 1:
-            SUB_PREPS += 1
-
-        irep = int(int(prep['irep'], 16)/1000000000000000000)
+        irep = int(int(prep['irep'], 16)/10**18)
         prep['irep'] = '{:,}'.format(irep)
-        prep['stake'] = int(prep['stake'], 16)/1000000000000000000
-        delegated = int(prep['delegated'], 16)/1000000000000000000
+        prep['stake'] = int(prep['stake'], 16)/10**18
+        delegated = int(prep['delegated'], 16)/10**18
         prep['delegated'] = delegated  # = '{:,}'.format(delegated)
-
         delegation_rate = delegated / TOTAL_DELEGATED * 100
         prep['delegate_percent'] = delegation_rate
         prep['reward'] = prep_reward(irep, delegation_rate)
         prep['reward_usd'] = int(prep['reward'])*icx_price
-
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
-
-        PREPS += 1
 
         if not prep['country'] in countries:
             countries[prep['country']] = 1
@@ -144,22 +116,23 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         countries_alpha2[convert_alpha_3_to_2(k)] = v
         countries_name[convert_alpha_3_to_name(k)] = v
 
-    countries_name_sorted = OrderedDict(
-        sorted(countries_name.items(), key=itemgetter(1), reverse=True))
+    countries_name_sorted = OrderedDict(sorted(countries_name.items(), key=itemgetter(1), reverse=True))
 
     prep_all = preps['preps']
+    prep_main = list(filter(lambda d: d['grade'] == 'Main P-Rep', prep_all))
+    prep_sub = list(filter(lambda d: d['grade'] == 'Sub P-Rep', prep_all))
 
     context.update({
         'ac3data': ac3data,
         'prep_all': prep_all,
-        'main_preps_count': MAIN_PREPS,
-        'sub_preps_count': SUB_PREPS,
-        'preps_count': PREPS,
+        'main_preps_count': len(prep_main),
+        'sub_preps_count': len(prep_sub),
+        'preps_count': len(prep_all),
+        'prep_main': prep_main,
+        'prep_sub': prep_sub,
         'countries_alpha2': countries_alpha2,
         'countries_name_sorted': countries_name_sorted,
     })
-    # END CMC
-
     if extra_context is not None:
         context.update(extra_context)
     return render(request, template, context)
