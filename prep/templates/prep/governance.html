@@ -94,6 +94,7 @@
 
 {% block extra_js %}
 <script src="{% static 'js/plugins/jquery.tablesorter.js' %}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 <script>
   $(document).ready(function () {
     const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
@@ -154,9 +155,9 @@
 
     $('.hex2dec').each(function(index, item){
       if(item.classList.contains('loop2icx')){
-        item.innerHTML = parseInt(item.innerHTML)/(10**18);
+        item.innerHTML = numeral(parseInt(item.innerHTML)/(10**18)).format('0,00');
       } else {
-        item.innerHTML = parseInt(item.innerHTML);
+        item.innerHTML = numeral(parseInt(item.innerHTML)).format('0,00');
       }
     });
 
@@ -170,7 +171,7 @@
 
     result = json_rpc_call("getIISSInfo", {})
     .then(function(res){
-      $('#currentIRep').append(parseInt(res.variable.irep));
+      $('#currentIRep').append(numeral(parseInt(res.variable.irep)).format('0,00'));
     });
 
     $('#iRepUpdate').click(function () {
