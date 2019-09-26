@@ -75,6 +75,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@0.7.1/src/index.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 <!-- FILTERS -->
 <script>
@@ -196,14 +197,13 @@
             total += data.datasets[i].data[tooltipItem.index];
           }
 
-          console.log("abc", type, value, tooltipItem.datasetIndex, data.datasets.length);
           if (tooltipItem.datasetIndex === data.datasets.length-1) {
             return [
-              type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","), "Overall : " + total.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              type + " : " + numeral(value).format('0,00'), "Overall : " + numeral(total).format('0,00')
             ];
           } else {
             return (
-              type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              type + " : " + numeral(value).format('0,00')
             );
           }
         }
@@ -249,11 +249,8 @@
   };
 
 
-  function makecard(proposalType, proposalStatus, Proposal, PRep, token, quorum, id) {
-    console.log(token);
-    console.log(quorum);
-    console.log(id);
-    let quorumTotal = quorum.agree + quorum.disagree + quorum.notvoted;
+  function makecard(proposalType, proposalStatus, Proposal, PRep, token, voter, id) {
+    let voterTotal = voter.agree + voter.disagree + voter.notvoted;
     let tokenTotal = token.agree + token.disagree + token.notvoted;
     template = `
     <div class="grid-item col-md-6 textproposal" data-category="textproposal">
@@ -267,7 +264,7 @@
               <p><a href="../proposaldetail/${Proposal.id}"><h4><b>${Proposal.contents.title}</b></h4></a></p>
               <p><h5 style="text-overflow:ellipsis;"><i>${Proposal.contents.description}</i></h5></p>
               <p>Proposed by <span><a href="https://tracker.icon.foundation/address/"+${Proposal.proposer}>${PRep.name}</a></span></p>
-              <p>Quorum Agree ${((quorum.agree/quorumTotal)*100).toFixed(2)}%, Disagree ${((quorum.disagree/quorumTotal)*100).toFixed(2)}%, Not Voted ${((quorum.notvoted/quorumTotal)*100).toFixed(2)}%</p>
+              <p>Voter Agree ${((voter.agree/voterTotal)*100).toFixed(2)}%, Disagree ${((voter.disagree/voterTotal)*100).toFixed(2)}%, Not Voted ${((voter.notvoted/voterTotal)*100).toFixed(2)}%</p>
               <p>Token vote Agree ${((token.agree/tokenTotal)*100).toFixed(2)}%, Disagree ${((token.disagree/tokenTotal)*100).toFixed(2)}%, Not Voted ${((token.notvoted/tokenTotal)*100).toFixed(2)}%</p>
             </div>
             <div class="col-5">
@@ -284,7 +281,7 @@
     let voteData = [{
         label: "Agree",
         backgroundColor: "#1aaaba",
-        data: [token.agree, quorum.agree],
+        data: [token.agree, voter.agree],
         // Change options only for labels of THIS DATASET
         datalabels: {
           color: "white",
@@ -294,7 +291,7 @@
       {
         label: "Disagree",
         backgroundColor: "#ff0000",
-        data: [token.disagree, quorum.disagree],
+        data: [token.disagree, voter.disagree],
         // Change options only for labels of THIS DATASET
         datalabels: {
           color: "white",
@@ -304,7 +301,7 @@
       {
         label: "Not Voted",
         backgroundColor: "#cccccc",
-        data: [token.notvoted, quorum.notvoted],
+        data: [token.notvoted, voter.notvoted],
         // Change options only for labels of THIS DATASET
         datalabels: {
           color: "white",
@@ -318,7 +315,7 @@
     var aChart = new Chart(ctx, {
       type: "bar",
       data: {
-        labels: ["Token", "Quorum"],
+        labels: ["Token", "Voter"],
         datasets: voteData
       },
       options: options

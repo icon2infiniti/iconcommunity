@@ -20,6 +20,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@0.7.1/src/index.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 <script>
   const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
@@ -127,13 +128,11 @@
 
     $("#contentsValue")[0].innerHTML = replace_str;
 
-    console.log(replace_str);
-
     proposal_vote_json_str = "{{aProposal.vote}}";
     proposal_vote_json_str = proposal_vote_json_str.replace(/&#39;/gi, "\"");
     Voter = JSON.parse(proposal_vote_json_str);
 
-    Quorum = {
+    Voter = {
       agree: Voter.agree.list.length,
       disagree: Voter.disagree.list.length,
       noVote: Voter.noVote.list.length,
@@ -174,14 +173,13 @@
               total += data.datasets[i].data[tooltipItem.index];
             }
 
-            console.log("abc", type, value, tooltipItem.datasetIndex, data.datasets.length);
             if (tooltipItem.datasetIndex === data.datasets.length-1) {
               return [
-                type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ","), "Overall : " + total.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                type + " : " + numeral(value).format('0,00'), "Overall : " + numeral(total).format('0,00')
               ];
             } else {
               return (
-                type + " : " + value.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                type + " : " + numeral(value).format('0,00')
               );
             }
           }
@@ -277,10 +275,10 @@
       });
     }
 
-    makeChart($('#Quorum')[0], "Quorum", Quorum);  
+    makeChart($('#Voter')[0], "Voter", Voter);  
     makeChart($('#Token')[0], "Token", Token);  
 
-    var quorumbar = new ProgressBar.Line(QuorumProgress, {
+    var voterbar = new ProgressBar.Line(VoterProgress, {
       strokeWidth: 4,
       easing: 'easeInOut',
       duration: 1400,
@@ -308,7 +306,7 @@
         bar.setText(Math.round(bar.value() * 100) + ' %');
       }
     });
-    quorumbar.animate((Quorum.agree + Quorum.disagree) / Quorum.total);
+    voterbar.animate((Voter.agree + Voter.disagree) / Voter.total);
 
     var tokenbar = new ProgressBar.Line(TokenProgress, {
       strokeWidth: 4,
@@ -340,30 +338,30 @@
     });
     tokenbar.animate((Token.agree+Token.disagree)/Token.total);
 
-    $("#QuorumAgreeRate").append(((Quorum.agree / Quorum.total)*100).toFixed(0)  + " %");
-    $("#QuorumDisagreeRate").append(((Quorum.disagree / Quorum.total)*100).toFixed(0) + " %");
-    $("#QuorumNoVoteRate").append(((Quorum.noVote / Quorum.total)*100).toFixed(0) + " %");
-    $("#TotalQuorum").append((((Quorum.agree + Quorum.disagree) / Quorum.total)*100).toFixed(0)  + " % (" + (Quorum
-      .agree + Quorum.disagree) + ")");
-    $("#TotalQuorum2").append("(" + (Quorum.agree + Quorum.disagree) + ")");
-    $("#QuorumAgreeRate2").append(((Quorum.agree / Quorum.total)*100).toFixed(0) + " %");
-    $("#QuorumDisagreeRate2").append(((Quorum.disagree / Quorum.total)*100).toFixed(0) + " %");
-    $("#QuorumNoVoteRate2").append(((Quorum.noVote / Quorum.total)*100).toFixed(0) + " %");
-    $("#QuorumAgree").append(Quorum.agree);
-    $("#QuorumDisagree").append(Quorum.disagree);
-    $("#QuorumNoVote").append(Quorum.noVote);
+    $("#VoterAgreeRate").append(((Voter.agree / Voter.total)*100).toFixed(0)  + " %");
+    $("#VoterDisagreeRate").append(((Voter.disagree / Voter.total)*100).toFixed(0) + " %");
+    $("#VoterNoVoteRate").append(((Voter.noVote / Voter.total)*100).toFixed(0) + " %");
+    $("#TotalVoter").append((((Voter.agree + Voter.disagree) / Voter.total)*100).toFixed(0)  + " % (" + (Voter
+      .agree + Voter.disagree) + ")");
+    $("#TotalVoter2").append("(" + (Voter.agree + Voter.disagree) + ")");
+    $("#VoterAgreeRate2").append(((Voter.agree / Voter.total)*100).toFixed(0) + " %");
+    $("#VoterDisagreeRate2").append(((Voter.disagree / Voter.total)*100).toFixed(0) + " %");
+    $("#VoterNoVoteRate2").append(((Voter.noVote / Voter.total)*100).toFixed(0) + " %");
+    $("#VoterAgree").append(Voter.agree);
+    $("#VoterDisagree").append(Voter.disagree);
+    $("#VoterNoVote").append(Voter.noVote);
 
     $("#TokenAgreeRate").append(((Token.agree / Token.total)*100).toFixed(0) + " %");
     $("#TokenDisagreeRate").append(((Token.disagree / Token.total)*100).toFixed(0) + " %");
     $("#TokenNoVoteRate").append(((Token.noVote / Token.total)*100).toFixed(0) + " %");
-    $("#TotalToken").append((Token.agree + Token.disagree) + " ICX");
-    $("#TotalToken2").append("(" + (Token.agree + Token.disagree) + " ICX)");
+    $("#TotalToken").append(numeral(Token.agree + Token.disagree).format('0,00') + " ICX");
+    $("#TotalToken2").append("(" + numeral(Token.agree + Token.disagree).format('0,00') + " ICX)");
     $("#TokenAgreeRate2").append(((Token.agree / Token.total)*100).toFixed(0) + " %");
     $("#TokenDisagreeRate2").append(((Token.disagree / Token.total)*100).toFixed(0) + " %");
     $("#TokenNoVoteRate2").append(((Token.noVote / Token.total)*100).toFixed(0) + " %");
-    $("#TokenAgree").append(Token.agree + " ICX");
-    $("#TokenDisagree").append(Token.disagree + " ICX");
-    $("#TokenNoVote").append(Token.noVote + " ICX");
+    $("#TokenAgree").append(numeral(Token.agree).format('0,00') + " ICX");
+    $("#TokenDisagree").append(numeral(Token.disagree).format('0,00') + " ICX");
+    $("#TokenNoVote").append(numeral(Token.noVote).format('0,00') + " ICX");
 
     $('#voteAgree').click(function () {
       json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
@@ -385,15 +383,13 @@
 
     $('.votedToken').each(function(index, item){
       if(item.innerHTML !== "") {
-        item.innerHTML = parseInt(item.innerHTML);
+        item.innerHTML = numeral(parseInt(item.innerHTML)).format('0,00');
       } else {
         item.innerHTML = 0;
       }
     });
 
     $('.timestamp').each(function(index, item){
-      console.log(item.innerHTML);
-      console.log(parseInt(item.innerHTML));
       aDate = new Date(parseInt(item.innerHTML));
       item.innerHTML = aDate;
     });
@@ -454,29 +450,29 @@
   <table>
     <tr>
       <td rowspan="3">
-        <div id="Quorum">
+        <div id="Voter">
         </div>
       </td>
       <td colspan="3">
-        <b>Total Quorum</b><br />
-        <H5 id="TotalQuorum"></H5>
+        <b>Total Voter</b><br />
+        <H5 id="TotalVoter"></H5>
       </td>
     </tr>
     <tr>
       <td style="text-align:center">
         Agreed<br />
-        <h2 id="QuorumAgreeRate2"></h2>
-        <h4 id="QuorumAgree"></h4>
+        <h2 id="VoterAgreeRate2"></h2>
+        <h4 id="VoterAgree"></h4>
       </td>
       <td style="text-align:center">
         Disagreed<br />
-        <h2 id="QuorumDisagreeRate2"></h2>
-        <h4 id="QuorumDisagree"></h4>
+        <h2 id="VoterDisagreeRate2"></h2>
+        <h4 id="VoterDisagree"></h4>
       </td>
       <td style="text-align:center">
         Not Voted<br />
-        <h2 id="QuorumNoVoteRate2"></h2>
-        <h4 id="QuorumNoVote"></h4>
+        <h2 id="VoterNoVoteRate2"></h2>
+        <h4 id="VoterNoVote"></h4>
       </td>
     </tr>
   </table>
@@ -520,9 +516,9 @@
   <table>
     <tr>
       <td>
-  <H3 style="float:left">Total Quorum&nbsp;</H3>
-  <H3 id="TotalQuorum2" style="float:left"></H3>
-  <div id="QuorumProgress" style="margin:20px;height:8px;position:relative;"></div>
+  <H3 style="float:left">Total Voter&nbsp;</H3>
+  <H3 id="TotalVoter2" style="float:left"></H3>
+  <div id="VoterProgress" style="margin:20px;height:8px;position:relative;"></div>
       </td>
       <td>
   <H3 style="float:left">Total Token Votes&nbsp;</H3>
@@ -565,9 +561,4 @@
     </tbody>
   </table>
 </div>
-<br/>
-<br/>
-<br/>
-<br/>
-{{aProposal}}
 {% endblock %}
