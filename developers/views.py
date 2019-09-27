@@ -21,6 +21,7 @@ def developers(request, template='developers/developers.html', extra_context=Non
         'wallets': MiniCard.objects.filter(minicard_category="Wallet").order_by('-minicard_date'),
         'dbs': MiniCard.objects.filter(minicard_category="Database").order_by('-minicard_date'),
         'ides': MiniCard.objects.filter(minicard_category="IDE").order_by('-minicard_date'),
+        'faucets': MiniCard.objects.filter(minicard_category="Faucet").order_by('-minicard_date'),
         'nightmode': request.session['nightmode'],
         'navbar': request.session['navbar'],
         'fromAddress': request.session['fromAddress'],
