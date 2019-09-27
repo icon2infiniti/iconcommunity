@@ -278,10 +278,11 @@
 
     $("#proposalcards")[0].appendChild(htmlToElement(template));
 
-    let voteData = [{
-        label: "Agree",
-        backgroundColor: "#1aaaba",
-        data: [token.agree, voter.agree],
+    let voteData = [
+      {
+        label: "Not Voted",
+        backgroundColor: "#cccccc",
+        data: [token.notvoted, voter.notvoted],
         // Change options only for labels of THIS DATASET
         datalabels: {
           color: "white",
@@ -297,11 +298,10 @@
           color: "white",
           formatter: formatter
         }
-      },
-      {
-        label: "Not Voted",
-        backgroundColor: "#cccccc",
-        data: [token.notvoted, voter.notvoted],
+      },{
+        label: "Agree",
+        backgroundColor: "#1aaaba",
+        data: [token.agree, voter.agree],
         // Change options only for labels of THIS DATASET
         datalabels: {
           color: "white",
