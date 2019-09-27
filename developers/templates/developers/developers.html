@@ -179,6 +179,24 @@
       {% endfor %}
     </div>
 
+    <!-- Faucets -->
+    <h3 class="mt-5">Faucets</h3>
+    <div class="row-flex">
+      {% for faucet in faucets %}
+      <script>minicard_list[{{ faucet.id }}] = ["{{ faucet.minicard_logo_w.url }}", "{{ faucet.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ faucet.minicard_link }}" class="sblock">
+        {% if nightmode == True %}
+          <img id="{{ faucet.id }}" src="{{ faucet.minicard_logo_w.url }}">
+        {% else %}
+          <img id="{{ faucet.id }}" src="{{ faucet.minicard_logo.url }}">
+        {% endif %}
+        <div class="title">{{ faucet.minicard_title }}</div>
+        <div class="description">{{ faucet.minicard_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
+
+
 {% endblock %}
 
 {% block pre_extra_js %}
