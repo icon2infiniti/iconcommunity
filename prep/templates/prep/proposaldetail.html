@@ -432,13 +432,13 @@
 </div>
 {% if getPRep %}
 <div id="vote">
-  <button id="voteAgree">Agree</button>
-  <button id="voteDisagree">Disagree</button>
+  <a href="#" id="voteAgree" class="btn btn-primary">Agree</a>
+  <a href="#" id="voteDisagree" class="btn btn-danger">Disagree</a>
 </div>
 {% endif %}
 {% if aProposal.proposer == userAddress %}
 <div id="cancel">
-  <button id="cancelProposal">Cancel Proposal</button>
+  <a href="#" id="cancelProposal" class="btn btn-dark">Cancel Proposal</a>
 </div>
 {% endif %}
 <HR />
@@ -533,11 +533,11 @@
 <div>
   <table>
     <thead>
-      <td>Voter</td>
-      <td>Answer</td>
-      <td>Tx Hash</td>
-      <td>Timestamp</td>
-      <td>Voted Token</td>
+      <td style="text-align:center">Voter</td>
+      <td style="text-align:center">Answer</td>
+      <td style="text-align:center">Tx Hash</td>
+      <td style="text-align:center">Timestamp</td>
+      <td style="text-align:center">Voted Token</td>
     </thead>
     <tbody id="voterList">
     {% for aVoter in aProposal.vote.agree.list %}
@@ -546,7 +546,7 @@
         <td>Agree</td>
         <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
         <td class="timestamp">{{aVoter.timestamp}}</td>
-        <td class="votedToken">{{aVoter.amount}}</td>
+        <td class="votedToken" style="text-align:right">{{aVoter.amount}}</td>
       </tr>
     {% endfor %}
     {% for aVoter in aProposal.vote.disagree.list %}
@@ -555,7 +555,7 @@
         <td>Disagree</td>
         <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
         <td class="timestamp">{{aVoter.timestamp}}</td>
-        <td class="votedToken"></td>
+        <td class="votedToken" style="text-align:right"></td>
       </tr>
     {% endfor %}
     </tbody>

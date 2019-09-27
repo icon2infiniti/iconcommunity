@@ -45,9 +45,14 @@ def get_preps():
         'endRanking': "0x8",
         'blockHeight': "0x1234"
     }
-    response = preprpc.PrepRPCCalls(
-        "cx0000000000000000000000000000000000000000").json_rpc_call("getPReps", params)
-    return response
+    response = None
+    try:
+        response = preprpc.PrepRPCCalls(
+            "cx0000000000000000000000000000000000000000").json_rpc_call("getPReps", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+    finally:
+        return response
 
 
 def get_proposal(proposal_id):
@@ -114,12 +119,14 @@ def management(request, template='prep/management.html'):
 def governance(request, template='prep/governance.html'):
     context = init_mode(request)
     PReps = get_preps()
-    context["dataList"] = PReps['preps']
+    if PReps != None:
+        context["dataList"] = PReps['preps']
 
     getPRep = get_prep(request.session['fromAddress'])
-    context.update({
-        'getPRep': getPRep
-    })
+    if getPRep != None:
+        context.update({
+            'getPRep': getPRep
+        })
     context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
     return render(request, template, context)
@@ -128,13 +135,18 @@ def governance(request, template='prep/governance.html'):
 def proposal(request, template='prep/proposal.html'):
     context = init_mode(request)
 
-    getPRep = get_prep(request.session['fromAddress'])
-    context.update({
-        'getPRep': getPRep
-    })
-    context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
+    getPRep = None
+    try:
+        getPRep = get_prep(request.session['fromAddress'])
+    except JSONRPCException as e:
+        print(str(e.message))
+    finally:
+        context.update({
+            'getPRep': getPRep
+        })
+        context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
-    return render(request, template, context)
+        return render(request, template, context)
 
 
 def newproposal(request, template='prep/newproposal.html'):
@@ -150,24 +162,29 @@ def newproposal(request, template='prep/newproposal.html'):
 
 
 def proposaldetail(request, proposal_id):
-    print("request", request)
     context = init_mode(request)
-    print("proposal_id", proposal_id)
     aProposal = get_proposal(proposal_id)
-    print("aProposal", aProposal)
-    context['aProposal'] = aProposal
-    print(aProposal)
-    aPRep = get_prep(aProposal['proposer'])
-    context['aPRep'] = aPRep
-    startBlock = get_block(aProposal['startBlockHeight'])
-    endBlock = get_block(aProposal['endBlockHeight'])
-    context['start'] = startBlock['time_stamp']
-    context['end'] = endBlock['time_stamp']
+    if aProposal != None:
+        context['aProposal'] = aProposal
+
+        startBlock = get_block(aProposal['startBlockHeight'])
+        if startBlock != None:
+            context['start'] = startBlock['time_stamp']
+
+        endBlock = get_block(aProposal['endBlockHeight'])
+        if endBlock != None:
+            context['end'] = endBlock['time_stamp']
+
+        aPRep = get_prep(aProposal['proposer'])
+        if aPRep != None:
+            context['aPRep'] = aPRep
 
     getPRep = get_prep(request.session['fromAddress'])
-    context.update({
-        'getPRep': getPRep
-    })
+    if getPRep != None:
+        context.update({
+            'getPRep': getPRep
+        })
+
     context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
 
     return render(request, 'prep/proposaldetail.html', context)
