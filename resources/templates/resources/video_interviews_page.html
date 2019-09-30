@@ -5,10 +5,10 @@
     {% for video_interview in video_interviews %}
     <div class="col-md-4 mb-3">
       <div class="embed-responsive embed-responsive-4by3">
-        <iframe class="embed-responsive-item" src="{{ video_interview.video_interviews_link }}"></iframe>
+        <iframe class="embed-responsive-item" src="{{ video_interview.video_link }}"></iframe>
       </div>
-      <p><h4>{{ video_interview.video_interviews_title }}</h4></p>
-      <p><h5>{{ video_interview.video_interviews_date }}</h5></p>
+      <p><h4>{{ video_interview.video_title }}</h4></p>
+      <p><h5>{{ video_interview.video_date }}</h5></p>
     </div>
     {% endfor %}
   </div>

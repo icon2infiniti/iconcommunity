@@ -29,6 +29,18 @@ class Press(models.Model):
         return self.press_title
 
 
+class Video(models.Model):
+    video_title = models.CharField(max_length=2000, default='')
+    video_link = models.URLField(max_length=2000, default='')
+    video_date = models.DateField(_("Date"), default=datetime.date.today)
+    video_category = models.CharField(max_length=2000, default='')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.video_title
+
+
 class VideoIconsensus(models.Model):
     video_iconsensus_title = models.CharField(max_length=2000, default='')
     video_iconsensus_link = models.URLField(max_length=2000, default='')

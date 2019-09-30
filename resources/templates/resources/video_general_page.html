@@ -1,14 +1,14 @@
 {% load el_pagination_tags %}
 <div class="card-body">
   <div class="row">
-    {% paginate 3 video_events using "video_events_page" %}
-    {% for video_event in video_events %}
+    {% paginate 3 video_generals using "video_general_page" %}
+    {% for video_general in video_generals %}
     <div class="col-md-4 mb-3">
       <div class="embed-responsive embed-responsive-4by3">
-        <iframe class="embed-responsive-item" src="{{ video_event.video_link }}"></iframe>
+        <iframe class="embed-responsive-item" src="{{ video_general.video_link }}"></iframe>
       </div>
-      <p><h4>{{ video_event.video_title }}</h4></p>
-      <p><h5>{{ video_event.video_date }}</h5></p>
+      <p><h4>{{ video_general.video_title }}</h4></p>
+      <p><h5>{{ video_general.video_date }}</h5></p>
     </div>
     {% endfor %}
   </div>
