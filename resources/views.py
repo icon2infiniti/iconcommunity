@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import News, Press, Video, VideoEvents, VideoInterviews#, VideoIconsensus
+from .models import News, Press, Video
 from el_pagination.decorators import page_template
 
 
