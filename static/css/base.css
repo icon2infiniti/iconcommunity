@@ -9695,7 +9695,11 @@ fieldset[disabled]
   .footer .copyright {
     font-size: 0.75rem;
     line-height: 1.8;
-    color: #ffffff; }
+    color: #ffffff;
+  }
+  .footer .copyright i {
+    margin: 0 5px;
+  }
   .footer:after {
     display: table;
     clear: both;
@@ -14883,3 +14887,4 @@ code {
 .white-content .tim-icons.icon-single-02 {
   color: #333!important;
 }
+
