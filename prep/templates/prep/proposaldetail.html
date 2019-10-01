@@ -430,13 +430,13 @@
   <H5><b>Value</b></H5>
   <H4 id="contentsValue">{{aProposal.contents.value}}</H4>
 </div>
-{% if getPRep %}
+{% if getPRep and userAddress in aProposal.vote.noVote.list %}
 <div id="vote">
   <a href="#" id="voteAgree" class="btn btn-primary">Agree</a>
   <a href="#" id="voteDisagree" class="btn btn-danger">Disagree</a>
 </div>
 {% endif %}
-{% if aProposal.proposer == userAddress %}
+{% if aProposal.proposer == userAddress and aProposal.status == '0x0' %}
 <div id="cancel">
   <a href="#" id="cancelProposal" class="btn btn-dark">Cancel Proposal</a>
 </div>
@@ -561,4 +561,9 @@
     </tbody>
   </table>
 </div>
+<br/>
+<br/>
+<br/>
+<br/>
+{{aProposal}}
 {% endblock %}
