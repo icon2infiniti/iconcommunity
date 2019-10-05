@@ -65,3 +65,46 @@ li.active span {
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
 }
+
+.headerimg {
+  height: 40px;
+  margin-bottom: 30px;
+}
+
+.white-content .divideline {
+  border-top: 1px solid #cccccc;
+}
+
+.divideline {
+  border-top: 1px solid #666666;
+}
+
+.thumbnails {
+    width: 55px;
+    height: 55px;
+}
+
+.thumbdiv {
+  min-width: 55px;
+  max-width: 80px;
+}
+
+.entrycontent {
+  word-break: break-word;
+}
+
+.white-content .newslink {
+  color: #000000;
+}
+
+.newslink {
+  color: #cccccc;
+}
+
+.newslink:hover {
+  color: #1aaaba;
+}
+.spacer {
+  margin-left: 8px;
+  margin-right: 14px;
+}
