@@ -100,10 +100,18 @@
                   <span class="sidebar-normal section">Collateral</span>
                 </a>
               </li>
+             <!--
               <li {% if subsection == 'PRESS' %}class="active"{% endif %}>
                 <a href="/resources/press/">
                   <span class="sidebar-mini-icon">P</span>
                   <span class="sidebar-normal section">Press</span>
+                </a>
+              </li>
+              -->
+              <li {% if subsection == 'NEWS' %}class="active"{% endif %}>
+                <a href="/resources/news/">
+                  <span class="sidebar-mini-icon">N</span>
+                  <span class="sidebar-normal section">News</span>
                 </a>
               </li>
             </ul>
@@ -272,11 +280,18 @@
     <footer class="footer">
       <div class="container-fluid">
         <div class="copyright">
+
+          <a href="https://twitter.com/iconcm/" target="_blank"><i class="fab fa-twitter fa-2x"></i></a>
+          <a href="https://medium.com/iconcm/" target="_blank"><i class="fab fa-medium-m fa-2x"></i></a>
+          <a href="https://t.me/iconcm/" target="_blank"><i class="fab fa-telegram-plane fa-2x"></i></a>
+          <a href="mailto:support@icon.community"><i class="fas fa-envelope fa-2x"></i></a>
+          <!--
           ©
           <script>
               document.write(new Date().getFullYear())
           </script>
           icon.community
+          -->
         </div>
       </div>
     </footer>

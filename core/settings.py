@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 
     'el_pagination',
     'mathfilters',
+    'feedparser',
 ]
 
 MIDDLEWARE = [

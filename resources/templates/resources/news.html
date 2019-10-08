@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+  <link href="{% static 'resources/css/resources.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block title %}News{% endblock %}
+{% block section %}News{% endblock %}
+{% block content %}
+
+  <div class="card-body">
+
+    <!-- TWITTER -->
+    <div class="row">
+      <div class="col-12 mb-5">
+        <img class="headerimg" src="{% static 'resources/img/twitter.png' %}">
+
+        {% for entry in twitter_entries %}
+        <div class="row">
+          <div class="col-3 thumbdiv">
+            {% if entry.user.profile_image_url_https %}
+              <a class="newslink" href="https://twitter.com/{{ entry.user.screen_name }}/status/{{ entry.id }}" target="_blank"><img class="thumbnails" src="{{ entry.user.profile_image_url_https }}"></a>
+            {% else %}
+              <a class="newslink" href="https://twitter.com/{{ entry.user.screen_name }}/status/{{ entry.id }}" target="_blank"><img class="thumbnails" src="{% static 'resources/img/twitterthumb.png' %}"></a>
+            {% endif %}
+          </div>
+          <div class="col-9">
+            {{ entry.user.screen_name }} {{ entry.created_at }}<br>
+            <a class="newslink" href="https://twitter.com/{{ entry.user.screen_name }}/status/{{ entry.id }}" target="_blank">{{ entry.text }}</a><br>
+            <i class="fas fa-retweet"></i> <span class="spacer">{{ entry.retweet_count }}</span><i class="fas fa-heart"></i> <span class="spacer">{{ entry.favorite_count }}</span>
+          </div>
+        </div>
+        <hr class="divideline">
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- REDDIT -->
+    <div class="row">
+      <div class="col-12 mb-5">
+        {% if nightmode == True %}
+          <img id="reddit" class="headerimg" src="{% static 'resources/img/reddit_w.png' %}">
+        {% else %}
+          <img id="reddit" class="headerimg" src="{% static 'resources/img/reddit.png' %}">
+        {% endif %}
+
+        {% for entry in reddit_entries %}
+        <div class="row">
+          <div class="col-3 thumbdiv">
+            {% if entry.thumb %}
+              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{{ entry.thumb }}"></a>
+            {% else %}
+              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{% static 'resources/img/redditthumb.png' %}"></a>
+            {% endif %}
+          </div>
+          <div class="col-9">
+            <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
+          </div>
+        </div>
+        <hr class="divideline">
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- MEDIUM -->
+    <div class="row">
+      <div class="col-12 mb-5">
+        {% if nightmode == True %}
+          <img id="medium" class="headerimg" src="{% static 'resources/img/medium_w.png' %}">
+        {% else %}
+          <img id="medium" class="headerimg" src="{% static 'resources/img/medium.png' %}">
+        {% endif %}
+
+        {% for entry in medium_entries %}
+        <div class="row">
+          <div class="col-3 thumbdiv">
+            {% if entry.thumb %}
+              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{{ entry.thumb }}"></a>
+            {% else %}
+              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{% static 'resources/img/mediumthumb.png' %}"></a>
+            {% endif %}
+          </div>
+          <div class="col-9">
+            <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
+          </div>
+        </div>
+        <hr class="divideline">
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- THEICONIST -->
+    <div class="row">
+      <div class="col-12 mb-5">
+        {% if nightmode == True %}
+          <img id="theiconist" class="headerimg" src="{% static 'resources/img/theiconist_w.png' %}">
+        {% else %}
+          <img id="theiconist" class="headerimg" src="{% static 'resources/img/theiconist.png' %}">
+        {% endif %}
+
+        {% for entry in theiconist_entries %}
+        <div class="row">
+          <div class="col-3 thumbdiv">
+            {% if entry.thumb %}
+              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{{ entry.thumb }}"></a>
+            {% else %}
+              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{% static 'resources/img/theiconistthumb.png' %}"></a>
+            {% endif %}
+          </div>
+          <div class="col-9">
+            <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
+          </div>
+        </div>
+        <hr class="divideline">
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block pre_extra_js %}
+  <script>
+  function morning_image(){
+    $('#reddit').attr("src", "{% static 'resources/img/reddit.png' %}");
+    $('#medium').attr("src", "{% static 'resources/img/medium.png' %}");
+    $('#theiconist').attr("src", "{% static 'resources/img/theiconist.png' %}");
+  }
+
+  function night_image(){
+    $('#reddit').attr("src", "{% static 'resources/img/reddit_w.png' %}");
+    $('#medium').attr("src", "{% static 'resources/img/medium_w.png' %}");
+    $('#theiconist').attr("src", "{% static 'resources/img/theiconist_w.png' %}");
+  }
+  </script>
+{% endblock %}
+
