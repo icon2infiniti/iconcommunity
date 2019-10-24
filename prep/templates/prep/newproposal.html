@@ -133,7 +133,7 @@
   const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
   const TEMP_NET = "https://devorg.icon.foundation/api/v3";
   const DEV_NET = "http://20.20.7.156:9000/api/v3"
-  const DUMMY_NET = "http://localhost:8888"
+  const DUMMY_NET = "http://localhost:9000/api/v3"
   const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
 
   const IconService = window['icon-sdk-js'];
@@ -193,6 +193,29 @@
     $('#Proposal' + ProposalType).attr('style', 'visibility:block');
   }
 
+  String.prototype.hexEncode = function(){
+    var hex, i;
+
+    var result = "";
+    for (i=0; i<this.length; i++) {
+        hex = this.charCodeAt(i).toString(16);
+        result += ("000"+hex).slice(-4);
+    }
+
+    return result
+  }
+
+  String.prototype.hexDecode = function(){
+    var j;
+    var hexes = this.match(/.{1,4}/g) || [];
+    var back = "";
+    for(j = 0; j<hexes.length; j++) {
+        back += String.fromCharCode(parseInt(hexes[j], 16));
+    }
+
+    return back;
+  }
+
   async function registerProposal() {
     let from_wallet = "{{ fromAddress }}";
     let method_name = "registerProposal";
@@ -210,31 +233,32 @@
       return;
     }
 
-    let params = {"title":title, "description":description, "type":"0x"+ProposalType.toString()};
+    let params = {"title":title, "description":description, "type":IconConverter.toHex(parseInt(ProposalType))};
 
+    let value = {}
     switch(ProposalType) {
       case "0":
-        params['value'] = $("#content").val();
-        if(params['value'] === "") {
+        value['value'] = $("#content").val();
+        if(value['value'] === "") {
           alert("content is empty");
           return;
         }
       break;
       case "1":
-        params['code'] = $("#revision_code").val();
-        if(params['code'] === "") {
+        value['code'] = $("#revision_code").val();
+        if(value['code'] === "") {
           alert("revision_code is empty");
           return;
         }
-        params['name'] = $("#icon-service_version").val();
-        if(params['name'] === "") {
+        value['name'] = $("#icon-service_version").val();
+        if(value['name'] === "") {
           alert("icon-service_version is empty");
           return;
         }
       break;
       case "2":
-        params['address'] = $("#address_of_score").val();
-        aAddress = params['address'].trim().toLowerCase()
+        value['address'] = $("#address_of_score").val();
+        aAddress = value['address'].trim().toLowerCase()
         if(aAddress.length !== 42) {
           alert("address_of_score length incorrect");
           return;
@@ -244,8 +268,8 @@
         }
       break;
       case "3":
-        params['address'] = $("#address_of_prep").val();
-        aAddress = params['address'].trim().toLowerCase()
+        value['address'] = $("#address_of_prep").val();
+        aAddress = value['address'].trim().toLowerCase()
         if(aAddress.length !== 42) {
           alert("address_of_prep length incorrect");
           return;
@@ -253,14 +277,14 @@
           alert("address_of_prep is not address");
           return;
         }
-        if(params['address'] === "") {
+        if(value['address'] === "") {
           alert("address_of_prep is empty");
           return;
         }
       break;
       case "4":
-        params['value'] = $("#step_price_in_loop").val();
-        if(params['value'] === "") {
+        value['value'] = $("#step_price_in_loop").val();
+        if(value['value'] === "") {
           alert("step_price_in_loop is empty");
           return;
         }
@@ -269,6 +293,8 @@
         console.log("out of type")
       break;
     }
+    params['value'] = "0x" + encodeURI(JSON.stringify(value)).hexEncode()
+    console.log("register proposal:", params);
 
     // Need to sign or send to ICONex
     let timestamp = new Date();
@@ -288,7 +314,7 @@
       "jsonrpc": "2.0",
       "method": "icx_sendTransaction",
       "params": IconConverter.toRawTransaction(txObj),
-      "id": 44
+      "id": 0
     });
 
     const parsed = JSON.parse(scoreData);

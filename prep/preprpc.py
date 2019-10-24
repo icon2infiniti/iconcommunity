@@ -10,7 +10,7 @@ class PrepRPCCalls:
     TEST_NET_3 = "https://zicon.net.solidwallet.io/api/v3/"
     TEMP_NET = "https://devorg.icon.foundation/api/v3"
     DEV_NET = "http://20.20.7.156:9000/api/v3"
-    DUMMY_NET = "http://localhost:8888"
+    DUMMY_NET = "http://localhost:9000/api/v3"
 
     USE_NET = DUMMY_NET
     USE_NET_NAME = "DUMMY_NET"
