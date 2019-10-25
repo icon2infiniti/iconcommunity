@@ -30,3 +30,13 @@ class PrepRPCCalls:
         response = icon_service.call(call_builder)
 
         return response
+
+    def get_block(self, block_height):
+        icon_service = IconService(HTTPProvider(PrepRPCCalls.USE_NET))
+
+        latest_block = icon_service.get_block("latest")
+        if latest_block['height'] < block_height:
+            return None
+
+        block = icon_service.get_block(block_height)
+        return block

@@ -193,28 +193,11 @@
     $('#Proposal' + ProposalType).attr('style', 'visibility:block');
   }
 
-  String.prototype.hexEncode = function(){
-    var hex, i;
-
-    var result = "";
-    for (i=0; i<this.length; i++) {
-        hex = this.charCodeAt(i).toString(16);
-        result += ("000"+hex).slice(-4);
-    }
-
-    return result
-  }
-
-  String.prototype.hexDecode = function(){
-    var j;
-    var hexes = this.match(/.{1,4}/g) || [];
-    var back = "";
-    for(j = 0; j<hexes.length; j++) {
-        back += String.fromCharCode(parseInt(hexes[j], 16));
-    }
-
-    return back;
-  }
+  function toHexString(byteArray) {
+  return Array.from(byteArray, function(byte) {
+    return ('0' + (byte & 0xFF).toString(16)).slice(-2);
+  }).join('')
+}
 
   async function registerProposal() {
     let from_wallet = "{{ fromAddress }}";
@@ -258,6 +241,7 @@
       break;
       case "2":
         value['address'] = $("#address_of_score").val();
+        value['type'] = "0x"+$("#type").val();
         aAddress = value['address'].trim().toLowerCase()
         if(aAddress.length !== 42) {
           alert("address_of_score length incorrect");
@@ -293,8 +277,8 @@
         console.log("out of type")
       break;
     }
-    params['value'] = "0x" + encodeURI(JSON.stringify(value)).hexEncode()
-    console.log("register proposal:", params);
+    let encoded = new TextEncoder("utf-8").encode(JSON.stringify(value))
+    params['value'] = "0x" + toHexString(encoded);
 
     // Need to sign or send to ICONex
     let timestamp = new Date();

@@ -70,6 +70,12 @@ def get_proposal(proposal_id):
 
 
 def get_block(blockHeight):
+    block = preprpc.PrepRPCCalls(
+        "cx0000000000000000000000000000000000000001").get_block(int(blockHeight, 16))
+    return block
+
+
+"""
     params = {
         'value': blockHeight
     }
@@ -81,6 +87,7 @@ def get_block(blockHeight):
         print(str(e.message))
     finally:
         return response
+"""
 
 
 def get_transaction(txHash):
@@ -174,6 +181,8 @@ def proposaldetail(request, proposal_id):
         endBlock = get_block(aProposal['endBlockHeight'])
         if endBlock != None:
             context['end'] = endBlock['time_stamp']
+        else:
+            context['end'] = aProposal['endBlockHeight']
 
         aPRep = get_prep(aProposal['proposer'])
         if aPRep != None:
