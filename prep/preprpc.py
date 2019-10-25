@@ -10,7 +10,7 @@ class PrepRPCCalls:
     TEST_NET_3 = "https://zicon.net.solidwallet.io/api/v3/"
     TEMP_NET = "https://devorg.icon.foundation/api/v3"
     DEV_NET = "http://20.20.7.156:9000/api/v3"
-    DUMMY_NET = "http://localhost:8888"
+    DUMMY_NET = "http://localhost:9000/api/v3"
 
     USE_NET = DUMMY_NET
     USE_NET_NAME = "DUMMY_NET"
@@ -30,3 +30,13 @@ class PrepRPCCalls:
         response = icon_service.call(call_builder)
 
         return response
+
+    def get_block(self, block_height):
+        icon_service = IconService(HTTPProvider(PrepRPCCalls.USE_NET))
+
+        latest_block = icon_service.get_block("latest")
+        if latest_block['height'] < block_height:
+            return None
+
+        block = icon_service.get_block(block_height)
+        return block
