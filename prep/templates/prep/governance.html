@@ -77,7 +77,7 @@
               <tr>
                 <td class="text-center">{{forloop.counter}}</td>
                 <td class="text-center">{{item.name}}</td>
-                <td class="text-center hex2dec">{{item.irep}}</td>
+                <td class="text-center hex2dec loop2icx">{{item.irep}}</td>
                 <td class="text-center hex2dec">{{item.irepUpdateBlockHeight}}</td>
                 <td class="text-center hex2dec loop2icx">{{item.stake}}</td>
                 <td class="text-center hex2dec loop2icx">{{item.delegated}}</td>
@@ -101,7 +101,7 @@
     const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
     const TEMP_NET = "https://devorg.icon.foundation/api/v3";
     const DEV_NET = "http://20.20.7.156:9000/api/v3";
-    const DUMMY_NET = "http://localhost:8888";
+    const DUMMY_NET = "http://localhost:9000/api/v3";
     const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
     const IconService = window['icon-sdk-js'];
@@ -161,22 +161,40 @@
       }
     });
 
-    $('#irep').val(String(parseInt({{ getPRep.irep }})));
+    $('#irep').val(numeral(parseInt("{{ getPRep.irep }}")/(10**18)).format('0'));
 
-    let result = json_rpc_call("getBlockByHeight", {"height":"{{ getPRep.irepUpdateBlockHeight }}"})
-    .then(function(result){
-      let date = new Date(result.time_stamp)
-      $('#iRepUpdateBlockHeight').append("Update i_rep at " + parseInt({{ getPRep.irepUpdateBlockHeight }}) + "(" + date.toString() + ")");
-    });
+    $.ajax({
+      url:{{USE_NET_NAME}},
+      type:'POST',
+      data:JSON.stringify({
+        "jsonrpc":"2.0",
+        "id":"0",
+        "method":"icx_getBlockByHeight",
+        "params":{
+          "height":"{{getPRep.irepUpdateBlockHeight}}"
+        }
+      }),
+      dataType:"json",
+      success:function(res){
+        let date = new Date(res.result.time_stamp);
+        $('#iRepUpdateBlockHeight').append("Update i_rep at " + parseInt("{{ getPRep.irepUpdateBlockHeight }}") + "(" + date.toString() + ")");
+      },
+      error:function(res){
+        console.log("getBlock Error", res);
+      }
+    })
 
     result = json_rpc_call("getIISSInfo", {})
     .then(function(res){
-      $('#currentIRep').append(numeral(parseInt(res.variable.irep)).format('0,00'));
+      console.log("current", res.variable.irep);
+      $('#currentIRep').append(numeral(parseInt(res.variable.irep)/(10**18)).format('0,00'));
     });
 
     $('#iRepUpdate').click(function () {
+      let irepsend = IconConverter.toBigNumber(parseInt($('#irep').val())*(10**18));
+      console.log(irepsend);
       json_rpc_transaction_call("{{ fromAddress }}", "setGovernanceVariables", {
-        "irep": $('#irep').val()
+        "irep": IconConverter.toHex(parseInt($('#irep').val())*(10**18))
       });
     });
 
@@ -190,6 +208,7 @@
       },
       type: "numeric"
     });
+
     $("#prep-table").tablesorter({
       headers: {
         2: {
