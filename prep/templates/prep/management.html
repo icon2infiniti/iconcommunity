@@ -191,10 +191,6 @@
 <script src="{% static 'prep/js/ISOConvert.js' %}"></script>
 <script>
   const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
-  const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
-  const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-  const DEV_NET = "http://20.20.7.156:9000/api/v3";
-  const DUMMY_NET = "http://localhost:9000/api/v3";
   const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
   const IconService = window['icon-sdk-js'];
@@ -213,9 +209,9 @@
     params.website = $('#website').val();
     params.details = $('#details').val();
     params.p2pEndpoint = $('#p2pEndpoint').val();
-    console.log(params);
+//    console.log(params);
     let response = register_PRep_transaction_call("{{ fromAddress }}", "registerPRep", params);
-    console.log(response);
+//    console.log(response);
   }
 
   function updatePRep() {
@@ -227,15 +223,15 @@
     params.website = $('#website').val();
     params.details = $('#details').val();
     params.p2pEndpoint = $('#p2pEndpoint').val();
-    console.log(params);
+//    console.log(params);
     let response = json_rpc_transaction_call("{{ fromAddress }}", "setPRep", params);
-    console.log(response);
+//    console.log(response);
   }
 
   function unregisterPRep() {
     let params = {};
     let response = json_rpc_transaction_call("{{ fromAddress }}", "unregisterPRep", params);
-    console.log(response);
+//    console.log(response);
   }
 
   function getPRep() {
@@ -243,7 +239,7 @@
       'address': {{ fromAddress }}
     };
     let response = json_rpc_call("getPRep", params);
-    console.log(response);
+//    console.log(response);
   }
 
   async function json_rpc_call(method_name, params) {
@@ -263,7 +259,7 @@
     var txObj = txBuilder
       .from(from_wallet)
       .to(TO_CONTRACT)
-      .nid(IconConverter.toBigNumber("3"))
+      .nid(IconConverter.toBigNumber("1"))
       .version(IconConverter.toBigNumber("3"))
       .stepLimit(IconConverter.toBigNumber("10000000"))
       .timestamp(timestamp * 1000)
@@ -294,7 +290,7 @@
     var txObj = txBuilder
       .from(from_wallet)
       .to(TO_CONTRACT)
-      .nid(IconConverter.toBigNumber("3"))
+      .nid(IconConverter.toBigNumber("1"))
       .version(IconConverter.toBigNumber("3"))
       .stepLimit(IconConverter.toBigNumber("10000000"))
       .value(IconAmount.of(2000, IconAmount.Unit.ICX).toLoop())
@@ -412,7 +408,7 @@
     function resetFormGroup(formGroup) {
       formGroup.classList.remove("has-danger");
       formGroup.classList.remove("has-success");
-      console.log(formGroup);
+//      console.log(formGroup);
       _.each(formGroup.querySelectorAll(".help-block.error"), function(el) {
         el.parentNode.removeChild(el);
       });
