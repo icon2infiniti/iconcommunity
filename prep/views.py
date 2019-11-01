@@ -5,7 +5,7 @@ from iconsdk.exception import JSONRPCException
 
 def init_mode(request):
     if 'nightmode' not in request.session:
-        request.session['nightmode'] = False
+        request.session['nightmode'] = True
     if 'navbar' not in request.session:
         request.session['navbar'] = True
     if 'fromAddress' not in request.session:
