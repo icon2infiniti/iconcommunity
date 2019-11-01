@@ -24,10 +24,6 @@
 
 <script>
   const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
-  const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
-  const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-  const DEV_NET = "http://20.20.7.156:9000/api/v3";
-  const DUMMY_NET = "http://localhost:9000/api/v3";
   const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
 
   const IconService = window['icon-sdk-js'];
@@ -52,7 +48,7 @@
     var txObj = txBuilder
       .from(from_wallet)
       .to(TO_CONTRACT)
-      .nid(IconConverter.toBigNumber("3"))
+      .nid(IconConverter.toBigNumber("1"))
       .version(IconConverter.toBigNumber("3"))
       .stepLimit(IconConverter.toBigNumber("10000000"))
       .timestamp((new Date()).getTime()*1000)
@@ -152,8 +148,8 @@
         parseInt("{{aProposal.vote.noVote.amount}}"))/(10**18)
     };
 
-    console.log(Voter);
-    console.log(Token);
+//    console.log(Voter);
+//    console.log(Token);
 
     const formatter = (value, ctx) => {
       let total = 0;

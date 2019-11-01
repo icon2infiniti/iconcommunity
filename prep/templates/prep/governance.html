@@ -98,10 +98,6 @@
 <script>
   $(document).ready(function () {
     const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
-    const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
-    const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-    const DEV_NET = "http://20.20.7.156:9000/api/v3";
-    const DUMMY_NET = "http://localhost:9000/api/v3";
     const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
 
     const IconService = window['icon-sdk-js'];
@@ -127,7 +123,7 @@
       var txObj = txBuilder
         .from(from_wallet)
         .to(TO_CONTRACT)
-        .nid(IconConverter.toBigNumber("3"))
+        .nid(IconConverter.toBigNumber("1"))
         .version(IconConverter.toBigNumber("3"))
         .stepLimit(IconConverter.toBigNumber("10000000"))
         .timestamp(timestamp * 1000)
@@ -186,13 +182,13 @@
 
     result = json_rpc_call("getIISSInfo", {})
     .then(function(res){
-      console.log("current", res.variable.irep);
+//      console.log("current", res.variable.irep);
       $('#currentIRep').append(numeral(parseInt(res.variable.irep)/(10**18)).format('0,00'));
     });
 
     $('#iRepUpdate').click(function () {
       let irepsend = IconConverter.toBigNumber(parseInt($('#irep').val())*(10**18));
-      console.log(irepsend);
+//      console.log(irepsend);
       json_rpc_transaction_call("{{ fromAddress }}", "setGovernanceVariables", {
         "irep": IconConverter.toHex(parseInt($('#irep').val())*(10**18))
       });
