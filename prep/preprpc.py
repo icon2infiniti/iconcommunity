@@ -6,14 +6,9 @@ from iconsdk.providers.http_provider import HTTPProvider
 class PrepRPCCalls:
 
     MAIN_NET = "https://ctz.solidwallet.io/api/v3"
-    TEST_NET = "https://bicon.net.solidwallet.io/api/v3"
-    TEST_NET_3 = "https://zicon.net.solidwallet.io/api/v3/"
-    TEMP_NET = "https://devorg.icon.foundation/api/v3"
-    DEV_NET = "http://20.20.7.156:9000/api/v3"
-    DUMMY_NET = "http://localhost:9000/api/v3"
 
-    USE_NET = DUMMY_NET
-    USE_NET_NAME = "DUMMY_NET"
+    USE_NET = MAIN_NET
+    USE_NET_NAME = "MAIN_NET"
 
     def __init__(self, to_contract="cx0000000000000000000000000000000000000000"):
         self._to_contract = to_contract

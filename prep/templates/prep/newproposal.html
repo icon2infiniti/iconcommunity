@@ -102,7 +102,7 @@
         <!-- Step Price -->
         <div id="Proposal4" class="row" style="display:none">
           <div class="col-sm-12">
-            <label>value</label>
+            <label>value(step price in loop)</label>
             <div class="form-group">
               <input id="step_price_in_loop" type="number" step="1" min="0" class="form-control">
             </div>
@@ -130,10 +130,6 @@
 <!-- CHART -->
 <script>
   const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
-  const TEST_NET = "https://bicon.net.solidwallet.io/api/v3";
-  const TEMP_NET = "https://devorg.icon.foundation/api/v3";
-  const DEV_NET = "http://20.20.7.156:9000/api/v3"
-  const DUMMY_NET = "http://localhost:9000/api/v3"
   const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
 
   const IconService = window['icon-sdk-js'];
@@ -286,7 +282,7 @@
     var txObj = txBuilder
       .from(from_wallet)
       .to(TO_CONTRACT)
-      .nid(IconConverter.toBigNumber("3"))
+      .nid(IconConverter.toBigNumber("1"))
       .version(IconConverter.toBigNumber("3"))
       .stepLimit(IconConverter.toBigNumber("10000000"))
       .timestamp(timestamp * 1000)
