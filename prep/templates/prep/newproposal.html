@@ -12,13 +12,13 @@
   }
 </style>
 {% endblock %}
-{% block title %}CREATE NETWORK PROPOSAL{% endblock %}
-{% block section %}CREATE NETWORK PROPOSAL{% endblock %}
+{% block title %}CREATE PROPOSAL{% endblock %}
+{% block section %}CREATE PROPOSAL{% endblock %}
 {% block content %}
 
 <div>
-  <div class="col-lg-5 col-md-6 col-sm-3">
-    <label class="mx-1">Type</label>
+  <div class="col-lg-5 col-md-6 col-sm-3 pl-0 ml-0">
+    <label class="mx-0">Type</label>
     <select id="ProposalType" class="selectpicker" data-size="7" data-style="btn btn-primary"
       onchange="filterchange();">
       <option value="0" selected>Text Proposal</option>
@@ -30,9 +30,11 @@
   </div>
   <div class="row">
     <div class="card">
+      <!--
       <div class="card-header">
-        <h2 class="card-title" id="ProposalType"></h2>
+        <h2 class="card-title" id="ProposalType">Text Proposal</h2>
       </div>
+      -->
       <div class="card-body">
         <div id="ProposalDefault" class="row" style="visibility:block">
           <div class="col-sm-12">
@@ -53,7 +55,7 @@
           <div class="col-sm-12">
             <label>Text Message</label>
             <div class="form-group">
-              <textarea id="content" style="height:400px;width:100%;resize:none;"></textarea>
+              <textarea class="textproposalarea" id="content"></textarea>
             </div>
           </div>
         </div>
@@ -112,7 +114,7 @@
 
       </div>
       <div class="card-footer text-center">
-        <button onclick="registerProposal()" class="btn btn-fill btn-primary">Register</button>
+        <button onclick="registerProposal()" class="btn btn-fill btn-primary">Submit Proposal</button>
       </div>
     </div>
   </div>

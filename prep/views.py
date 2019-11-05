@@ -41,9 +41,9 @@ def get_prep(address):
 
 def get_preps():
     params = {
-        'startRanking': "0x1",
-        'endRanking': "0x8",
-        'blockHeight': "0x1234"
+        #'startRanking': "0x1",
+        #'endRanking': "0x8",
+        #'blockHeight': "0x1234"
     }
     response = None
     try:
