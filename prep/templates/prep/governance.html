@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
 {% load static i18n %}
+{% load l10n %}
 {% block extra_head %}
+
 <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet">
+<link href="{% static 'prep/css/countrySelect.min.css' %}" rel="stylesheet">
 <style type="text/css">
   table.tablesorter thead tr .header {
     background-image: url({% static 'prep/img/bg.gif' %});
@@ -22,13 +25,106 @@
 {% block title %}GOVERNANCE VARIABLE{% endblock %}
 {% block section %}GOVERNANCE VARIABLE{% endblock %}
 {% block content %}
+
+{% if getPRep.irepUpdateBlockHeight is not None %}
+  <script>
+    let blockno = {{ getPRep.irepUpdateBlockHeight }};
+  </script>
+{% endif %}
+
+{% if getPRep == None %}
+<h3>You're not currently registered as a P-Rep. To register, fill the information below. Note that on-chain registration
+  costs 2,000 ICX which will be burned.</h3>
 <div class="row">
-{% if getPRep %}
+  <div class="card">
+    <div class="card-header">
+      <h2 class="card-title">P-Rep Registration</h2>
+    </div>
+    <div class="card-body">
+      <form id="PRepRegInfo" action="#">
+      <!-- name, email -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Name*</label>
+          <div class="form-group">
+            <input id="name" type="text" class="form-control" name="name">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label>Email*</label>
+          <div class="form-group">
+            <input id="email" type="email" class="form-control" name="email">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- country, city -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Country*</label>
+          <div class="form-group">
+            <input id="country" type="text" class="form-control">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label>City*</label>
+          <div class="form-group">
+            <input id="city" type="text" class="form-control" name="city">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- website, detail -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Website*</label>
+          <div class="form-group">
+            <input id="website" type="text" class="form-control" name="website">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <label>Off-Chain JSON*</label>
+          <div class="form-group">
+            <input id="details" type="text" class="form-control" name="details">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- p2p, key -->
+      <div class="row">
+        <div class="col-sm-6">
+          <label>P2P Endpoint*</label>
+          <div class="form-group">
+            <input id="p2pEndpoint" type="text" class="form-control" name="p2pEndpoint">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
+      </div>
+      </form>
+    </div>
+    <div class="card-footer text-center">
+      <button onclick="registerPRep()" class="btn btn-fill btn-primary">Register</button>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="row">
   <div class="col-md-6">
-    <div class="card">
+    <div class="card fh">
 
       <div class="card-header">
-        <h4 class="card-title" id="iRepUpdateBlockHeight">&nbsp;</h4>
+        <h4 class="card-title" id="iRepUpdateBlockHeight"></h4>
       </div>
 
       <div class="card-body">
@@ -39,10 +135,9 @@
       </div>
     </div>
   </div>
-{% endif %}
 
   <div class="col-md-6">
-    <div class="card">
+    <div class="card fh">
       <div class="card-header">
         <h4 class="card-title">Current irep</h4>
       </div>
@@ -52,7 +147,6 @@
     </div>
   </div>
 </div>
-
 <div class="row">
   <div class="col-md-12 mb-5">
     <div class="card ">
@@ -90,21 +184,101 @@
     </div>
   </div>
 </div>
+{% endif %}
+
 {% endblock %}
 
 {% block extra_js %}
 <script src="{% static 'js/plugins/jquery.tablesorter.js' %}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
+<script src="{% static 'prep/js/countrySelect.js' %}"></script>
+<script src="{% static 'prep/js/isoConvert.js' %}"></script>
+
 <script>
-  $(document).ready(function () {
     const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
     const TO_CONTRACT = "cx0000000000000000000000000000000000000000";
-
     const IconService = window['icon-sdk-js'];
     const provider = new IconService.HttpProvider({{ USE_NET_NAME }});
     const icon_service = new IconService(provider);
     const IconBuilder = IconService.IconBuilder;
     const IconConverter = IconService.IconConverter;
+    const IconAmount = IconService.IconAmount;
+
+    function registerPRep() {
+      let params = {};
+      params.name = $('#name').val();
+      params.email = $('#email').val();
+      params.country = getCountryISO3($('#country').countrySelect("getSelectedCountryData"));
+      params.city = $('#city').val();
+      params.website = $('#website').val();
+      params.details = $('#details').val();
+      params.p2pEndpoint = $('#p2pEndpoint').val();
+  //    console.log(params);
+      let response = register_PRep_transaction_call("{{ fromAddress }}", "registerPRep", params);
+  //    console.log(response);
+    }
+
+    function updatePRep() {
+      let params = {};
+      params.name = $('#name').val();
+      params.email = $('#email').val();
+      params.country = getCountryISO3($('#country').countrySelect("getSelectedCountryData").iso2.toUpperCase());
+      params.city = $('#city').val();
+      params.website = $('#website').val();
+      params.details = $('#details').val();
+      params.p2pEndpoint = $('#p2pEndpoint').val();
+  //    console.log(params);
+      let response = json_rpc_transaction_call("{{ fromAddress }}", "setPRep", params);
+  //    console.log(response);
+    }
+
+    function unregisterPRep() {
+      let params = {};
+      let response = json_rpc_transaction_call("{{ fromAddress }}", "unregisterPRep", params);
+  //    console.log(response);
+    }
+
+    function getPRep() {
+      let params = {
+        'address': {{ fromAddress }}
+      };
+      let response = json_rpc_call("getPRep", params);
+  //    console.log(response);
+    }
+
+    async function register_PRep_transaction_call(from_wallet, method_name, params) {
+      // Need to sign or send to ICONex
+      let timestamp = new Date();
+      var txBuilder = new IconBuilder.CallTransactionBuilder();
+      var txObj = txBuilder
+        .from(from_wallet)
+        .to(TO_CONTRACT)
+        .nid(IconConverter.toBigNumber("1"))
+        .version(IconConverter.toBigNumber("3"))
+        .stepLimit(IconConverter.toBigNumber("10000000"))
+        .value(IconAmount.of(2000, IconAmount.Unit.ICX).toLoop())
+        .timestamp(timestamp * 1000)
+        .method(method_name)
+        .params(params)
+        .build();
+
+      const scoreData = JSON.stringify({
+        "jsonrpc": "2.0",
+        "method": "icx_sendTransaction",
+        "params": IconConverter.toRawTransaction(txObj),
+        "id": 44
+      });
+
+      const parsed = JSON.parse(scoreData);
+      window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
+        detail: {
+          type: 'REQUEST_JSON-RPC',
+          payload: parsed
+        }
+      }));
+    }
 
     async function json_rpc_call(method_name, params) {
       var callBuilder = new IconBuilder.CallBuilder();
@@ -149,6 +323,9 @@
       //return await icon_service.call(txObj).execute();
     }
 
+
+  $(document).ready(function () {
+
     $('.hex2dec').each(function(index, item){
       if(item.classList.contains('loop2icx')){
         item.innerHTML = numeral(parseInt(item.innerHTML)/(10**18)).format('0,00');
@@ -172,8 +349,8 @@
       }),
       dataType:"json",
       success:function(res){
-        let date = new Date(res.result.time_stamp);
-        $('#iRepUpdateBlockHeight').append("Update i_rep at " + parseInt("{{ getPRep.irepUpdateBlockHeight }}") + "(" + date.toString() + ")");
+        let date = new Date(res.result.time_stamp/1000);
+        $('#iRepUpdateBlockHeight').append("Updated i_rep at block " + blockno + "<br>"+"<span class='timestamp'>(" + date.toString() + ")</span>");
       },
       error:function(res){
         console.log("getBlock Error", res);
@@ -221,6 +398,116 @@
         },
       }
     });
+
+    let CountryCode = getCountryISO2($('#country').val().toUpperCase());
+
+    $('#country').countrySelect();
+    $('#country').countrySelect("selectCountry", CountryCode);
+    $('.country-select')[0].setAttribute('style', 'width:100%')
+
+
+    let constraints = {
+      name: {
+        presence: true,
+        length: {
+          minimum: 3,
+          maximum: 20
+        }
+      },
+      city: {
+        presence: true
+      },
+      email: {
+        presence: true,
+        email: true
+      },
+      website: {
+        presence: true,
+        url: true
+      },
+      p2pEndpoint: {
+        presence: true,
+        url: true
+      },
+      details: {
+        presence: true,
+        url: true
+      }
+    };
+
+    let form = document.querySelector("form#PRepRegInfo");
+    form.addEventListener("submit", function(ev) {
+      ev.preventDefault();
+      handleFormSubmit(form);
+    });
+
+    let inputs = document.querySelectorAll("input, select")
+    for (let i = 0; i < inputs.length; ++i) {
+      inputs.item(i).addEventListener("change", function(ev) {
+        let errors = validate(form, constraints) || {};
+        showErrorsForInput(this, errors[this.name])
+      });
+    }
+
+    function handleFormSubmit(form, input) {
+      let errors = validate(form, constraints) || {};
+      showErrors(form, errors);
+      if (!errors) {
+        showSuccess();
+      }
+    }
+
+    function showErrors(form, errors) {
+      _.each(form.querySelectorAll("input[name], select[name]"), function(input) {
+        showErrorsForInput(input, errors && errors[input.name]);
+      });
+    }
+
+    function showErrorsForInput(input, errors) {
+      let formGroup = closestParent(input.parentNode, "form-group");
+      let messages = formGroup.querySelector(".messages") || {};
+      resetFormGroup(formGroup);
+      if (errors) {
+        formGroup.classList.add("has-danger");
+        _.each(errors, function(error) {
+          addError(messages, error);
+        });
+      } else {
+        formGroup.classList.add("has-success");
+      }
+    }
+
+    function closestParent(child, className) {
+      if (!child || child == document) {
+        return null;
+      }
+      if (child.classList.contains(className)) {
+        return child;
+      } else {
+        return closestParent(child.parentNode, className);
+      }
+    }
+
+    function resetFormGroup(formGroup) {
+      formGroup.classList.remove("has-danger");
+      formGroup.classList.remove("has-success");
+//      console.log(formGroup);
+      _.each(formGroup.querySelectorAll(".help-block.error"), function(el) {
+        el.parentNode.removeChild(el);
+      });
+    }
+
+    function addError(messages, error) {
+      let block = document.createElement("p");
+      block.classList.add("help-block");
+      block.classList.add("error");
+      block.innerText = error;
+      messages.appendChild(block);
+    }
+
+    function showSuccess() {
+      alert("Success!");
+    }
   });
 </script>
 {% endblock %}
