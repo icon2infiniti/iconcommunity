@@ -76,6 +76,12 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/10**18
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
 
+    TOTAL_IREP = 0
+
+    for prep in preps['preps']:
+        if int(prep['grade'],16) == 0:
+            TOTAL_IREP += int(int(prep['irep'], 16)/10**18)
+
     countries = {}
     for prep in preps['preps']:
         prep_grade = int(prep['grade'], 16)
@@ -87,7 +93,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         prep['delegated'] = delegated  # = '{:,}'.format(delegated)
         delegation_rate = delegated / TOTAL_DELEGATED * 100
         prep['delegate_percent'] = delegation_rate
-        prep['reward'] = prep_reward(irep, delegation_rate)
+        prep['reward'] = prep_reward(TOTAL_IREP/22, delegation_rate)
         prep['reward_usd'] = int(prep['reward'])*icx_price
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
@@ -99,9 +105,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
 
         # get Prep details, but too slow. Do more efficient way
         # address = {
-        #    "address": prep['address']
+        #   "address": prep['address']
         # }
-
         # try:
         #    prep['detail'] = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", address)
         # except JSONRPCException as e:
