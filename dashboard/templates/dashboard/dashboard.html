@@ -70,7 +70,7 @@
                   <td width="8%">{{ prep.country }}</td>
                   <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
                   <td width="8%" id="irep">{{ prep.irep }}</td>
-                  <td width="10%" id="stake">{{ prep.stake }}</td>
+                  <td width="10%" id="stake">{{ prep.stake|floatformat:2 }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
                 </tr>
                 {% endfor %}
@@ -84,7 +84,7 @@
                   <td width="8%">{{ prep.country }}</td>
                   <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
                   <td width="8%" id="irep">{{ prep.irep }}</td>
-                  <td width="10%" id="stake">{{ prep.stake }}</td>
+                  <td width="10%" id="stake">{{ prep.stake|floatformat:2 }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
                 </tr>
                 {% endfor %}
@@ -98,7 +98,7 @@
                   <td width="8%">{{ prep.country }}</td>
                   <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
                   <td width="8%" id="irep">{{ prep.irep }}</td>
-                  <td width="10%" id="stake">{{ prep.stake }}</td>
+                  <td width="10%" id="stake">{{ prep.stake|floatformat:2 }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
                 </tr>
                 {% endfor %}
