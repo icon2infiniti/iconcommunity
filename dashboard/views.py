@@ -147,8 +147,8 @@ def preplist(request, type):
 
 
 def prep_reward(i_rep, delegation_rate):
-    print("irep: " + str(i_rep))
-    print("delegation: " + str(delegation_rate))
+    #print("irep: " + str(i_rep))
+    #print("delegation: " + str(delegation_rate))
     return i_rep * 0.5 * 100 * (delegation_rate/100)
 
 
