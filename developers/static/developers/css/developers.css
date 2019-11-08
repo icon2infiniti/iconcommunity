@@ -69,6 +69,7 @@ li.active span {
 .blog-tutorial-img {
   min-height: 260px;
   width: 100%;
+  max-width: 370px;
   object-fit: contain;
 }
 
@@ -91,6 +92,7 @@ li.active span {
     line-height: 1.25;
     width: calc(25% - 12px);
     min-width: 200px;
+    max-width: 300px;
     border-width: 1px;
     border-style: solid;
     border-color: rgb(204, 204, 204);
