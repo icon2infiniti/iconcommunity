@@ -16,6 +16,7 @@ def developers(request, template='developers/developers.html', extra_context=Non
     context = {
         'blog_tutorials': Tutorial.objects.filter(tutorial_category="Blog").order_by('-tutorial_date'),
         'video_tutorials': Tutorial.objects.filter(tutorial_category="Video").order_by('-tutorial_date'),
+        'governances': MiniCard.objects.filter(minicard_category="Governance").order_by('-minicard_date'),
         'reward_calculators': MiniCard.objects.filter(minicard_category="Reward Calculator").order_by('-minicard_date'),
         'scores': MiniCard.objects.filter(minicard_category="SCORE").order_by('-minicard_date'),
         'wallets': MiniCard.objects.filter(minicard_category="Wallet").order_by('-minicard_date'),
