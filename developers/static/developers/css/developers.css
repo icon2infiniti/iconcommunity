@@ -138,3 +138,9 @@ a {
     width: 64px;
     height: 64px;
 }
+
+@media (max-width: 441px) {
+    .row-flex.minicard {
+        justify-content: center;
+    }
+}
