@@ -96,6 +96,23 @@
   <!-- Tools -->
   <h3 class="title mt-5">Tools</h3>
 
+    <!-- App -->
+    <h3 class="mt-5">App</h3>
+    <div class="row-flex minicard">
+      {% for app in apps %}
+      <script>minicard_list[{{ app.id }}] = ["{{ app.minicard_logo_w.url }}", "{{ app.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ app.minicard_link }}" class="sblock">
+        {% if nightmode == True %}
+          <img id="{{ app.id }}" src="{{ app.minicard_logo_w.url }}">
+        {% else %}
+          <img id="{{ app.id }}" src="{{ app.minicard_logo.url }}">
+        {% endif %}
+        <div class="title">{{ app.minicard_title }}</div>
+        <div class="description">{{ app.minicard_description }}</div>
+      </a>
+      {% endfor %}
+    </div>
+
     <!-- Automation -->
     <h3 class="mt-5">Automation</h3>
     <div class="row-flex minicard">

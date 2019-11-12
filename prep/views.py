@@ -176,11 +176,11 @@ def proposaldetail(request, proposal_id):
 
         startBlock = get_block(aProposal['startBlockHeight'])
         if startBlock != None:
-            context['start'] = startBlock['time_stamp']
+            context['start'] = startBlock['time_stamp']/1000
 
         endBlock = get_block(aProposal['endBlockHeight'])
         if endBlock != None:
-            context['end'] = endBlock['time_stamp']
+            context['end'] = endBlock['time_stamp']/1000
         else:
             context['end'] = aProposal['endBlockHeight']
 
