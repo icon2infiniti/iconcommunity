@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '!w2lf5-ry3o#wcn@zyw2*e)r@pg0l=bs@rnlx63%909n#vp#8n'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['localhost', '157.230.7.98', 'icon.community', 'www.icon.community']
 
@@ -112,11 +112,14 @@ LOCALE_PATHS = [
 ]
 
 STATIC_ROOT = "/home/iconcommunity/staticall/"
-STATIC_URL = '/staticall/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticall')
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+MEDIA_ROOT = "/home/iconcommunity/media/"
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
