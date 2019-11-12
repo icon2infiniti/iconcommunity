@@ -397,7 +397,7 @@
     });
 
     $('.timestamp').each(function(index, item){
-      aDate = new Date(parseInt(item.innerHTML));
+      aDate = new Date(parseInt(item.innerHTML)/1000);
       item.innerHTML = aDate;
     });
 
@@ -552,6 +552,9 @@
         <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
         <td>Agree</td>
         <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
+        <script>
+          //let newtimestamp = {{aVoter.timestamp}}/1000;
+        </script>
         <td class="timestamp">{{aVoter.timestamp}}</td>
         <td class="votedToken" style="text-align:right">{{aVoter.amount}}</td>
       </tr>
