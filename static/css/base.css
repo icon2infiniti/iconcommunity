@@ -14888,3 +14888,9 @@ code {
   color: #333!important;
 }
 
+@media (max-width: 768px){
+  .tim-icons.icon-single-02 {
+    color: #333!important;
+  }
+}
+
