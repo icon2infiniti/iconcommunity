@@ -2,15 +2,6 @@
 {% load static i18n %}
 {% block extra_head %}
 <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />
-<style type="text/css">
-  .white-content .proposaltype {
-    color: rgba(0, 0, 0, 0.9);
-  }
-
-  .proposaltype {
-    color: rgba(255, 255, 255, 0.8);
-  }
-</style>
 {% endblock %}
 {% block title %}Network Proposal{% endblock %}
 {% block twittertitle %}Network Proposal{% endblock %}
@@ -130,7 +121,6 @@
     return await icon_service.call(txObj).execute();
   }
 
-
   function getProposalType(i) {
     switch (i) {
       case 0:
@@ -222,7 +212,7 @@
           },
           display: false,
           ticks: {
-            fontColor: "#000"
+            fontColor: "#4ca0ba"
           }
         },
         {
@@ -230,7 +220,7 @@
           offset: true,
           position: 'top',
           ticks: {
-            fontColor: "#000"
+            fontColor: "#4ca0ba"
           },
           gridLines: {
             display: false
@@ -250,7 +240,6 @@
     }
   };
 
-
   function makecard(proposalType, proposalStatus, Proposal, token, voter, id) {
     let voterTotal = voter.agree + voter.disagree + voter.notvoted;
     let tokenTotal = token.agree + token.disagree + token.notvoted;
@@ -261,13 +250,13 @@
           <div class="row">
             <div class="col-7">
               <div class="info-icon icon-primary mb-3">
-                <i class="tim-icons icon-paper"></i><span class="proposaltype">${proposalType}</span>&nbsp;&nbsp;<span class="proposalstatus" style="border-radius:20px;background-color:black;color:white;">&nbsp;${proposalStatus}&nbsp;</span>
+                <i class="tim-icons icon-paper"></i><span class="proposaltype">${proposalType}</span>&nbsp;&nbsp;<span class="proposalstatus">&nbsp;${proposalStatus}&nbsp;</span>
               </div>
               <p><a href="../proposaldetail/${Proposal.id}"><h4><b>${Proposal.contents.title}</b></h4></a></p>
               <p><h5 style="text-overflow:ellipsis;"><i>${Proposal.contents.description}</i></h5></p>
-              <p>Proposed by <span><a href="https://tracker.icon.foundation/address/${Proposal.proposer}">${Proposal.proposerName}</a></span></p>
-              <p>Voter Agree ${((voter.agree/voterTotal)*100).toFixed(2)}%, Disagree ${((voter.disagree/voterTotal)*100).toFixed(2)}%, Not Voted ${((voter.notvoted/voterTotal)*100).toFixed(2)}%</p>
-              <p>Token vote Agree ${((token.agree/tokenTotal)*100).toFixed(2)}%, Disagree ${((token.disagree/tokenTotal)*100).toFixed(2)}%, Not Voted ${((token.notvoted/tokenTotal)*100).toFixed(2)}%</p>
+              <p>Proposed by <span><a href="https://tracker.icon.foundation/address/${Proposal.proposer}" target="_blank">${Proposal.proposerName}</a></span></p>
+              <p class="voters">Voters <br>Agree ${((voter.agree/voterTotal)*100).toFixed(2)}%, Disagree ${((voter.disagree/voterTotal)*100).toFixed(2)}%, Not Voted ${((voter.notvoted/voterTotal)*100).toFixed(2)}%</p>
+              <p class="voters">Token Votes<br> Agree ${((token.agree/tokenTotal)*100).toFixed(2)}%, Disagree ${((token.disagree/tokenTotal)*100).toFixed(2)}%, Not Voted ${((token.notvoted/tokenTotal)*100).toFixed(2)}%</p>
             </div>
             <div class="col-5">
               <div><canvas id="mychart${String(id)}"></canvas></div>
@@ -339,11 +328,11 @@
     let ProposalList = response.proposals;
 
     let e = $("#proposalcards")[0];
-    var child = e.lastElementChild;  
-    while (child) { 
-      e.removeChild(child); 
-      child = e.lastElementChild; 
-    } 
+    var child = e.lastElementChild;
+    while (child) {
+      e.removeChild(child);
+      child = e.lastElementChild;
+    }
 
     for (let i = 0; i < ProposalList.length; i++) {
       let aProposal = ProposalList[i];
