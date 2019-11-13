@@ -2,15 +2,6 @@
 {% load static i18n %}
 {% block extra_head %}
 <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />
-<style type="text/css">
-  .white-content .proposaltype {
-    color: rgba(0, 0, 0, 0.9);
-  }
-
-  .proposaltype {
-    color: rgba(255, 255, 255, 0.8);
-  }
-</style>
 {% endblock %}
 {% block title %}Proposal Detail{% endblock %}
 {% block twittertitle %}Proposal Detail{% endblock %}
@@ -109,7 +100,7 @@
   }
 
   $(document).ready(function () {
-    $("#status").append("Status: " + getProposalStatus(parseInt({{aProposal.status}})));
+    $("#status").append(getProposalStatus(parseInt({{aProposal.status}})));
     $("#type").append("Type: " + getProposalType(parseInt({{aProposal.contents.type}})));
     var StartDate = new Date({{start}});
     $("#start").append("Created: " + StartDate);
@@ -390,7 +381,7 @@
 
     $('.votedToken').each(function(index, item){
       if(item.innerHTML !== "") {
-        item.innerHTML = numeral(parseInt(item.innerHTML)).format('0,00');
+        item.innerHTML = numeral(parseInt(item.innerHTML)/10**18).format('0,00');
       } else {
         item.innerHTML = 0;
       }
@@ -418,10 +409,11 @@
 {% block content %}
 
 <div id="proposal">
-  <H4>Network Proposal Details</H4>
-  <H3><b>{{aProposal.contents.title}}</b></H3>
-  <H5 id="status"></H5>
+  <!--<H4>Network Proposal Details</H4>-->
+  <H3><b>{{aProposal.contents.title}} (<span id="status"></span>)</b></H3>
   <H5 id="type"></H5>
+  <H5><b>Description</b></H5>
+  <H4>{{aProposal.contents.description}}</H4>
   <H5>Proposer: <a href="{{aPRep.website}}">{{aPRep.name}}</a></H5>
   <H5>Tx Hash: <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}">{{aProposal.id}}</a></H5>
   <H5 id="start"></H5>
@@ -429,8 +421,7 @@
 </div>
 <HR />
 <div>
-  <H5><b>Description</b></H5>
-  <H4>{{aProposal.contents.description}}</H4>
+
 </div>
 <HR />
 <div>
