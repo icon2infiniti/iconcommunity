@@ -101,15 +101,15 @@
 
   $(document).ready(function () {
     $("#status").append(getProposalStatus(parseInt({{aProposal.status}})));
-    $("#type").append("Type: " + getProposalType(parseInt({{aProposal.contents.type}})));
+    $("#type").append(getProposalType(parseInt({{aProposal.contents.type}})));
     var StartDate = new Date({{start}});
-    $("#start").append("Created: " + StartDate);
+    $("#start").append(StartDate);
 
     var EndDate = new Date({{end}});
     if (StartDate > EndDate) {
-      $("#end").append("Expires: block height " + {{end}});
+      $("#end").append("Block Height " + {{end}});
     } else {
-      $("#end").append("Expires: " + EndDate);
+      $("#end").append(EndDate);
     }
 
     let aJson = $("#contentsValue")[0].innerHTML;
@@ -194,7 +194,7 @@
             },
             display: false,
             ticks: {
-              fontColor: "#000"
+              fontColor: "#4ca0ba"
             }
           },
           {
@@ -202,7 +202,7 @@
             offset: true,
             position: 'top',
             ticks: {
-              fontColor: "#000"
+              fontColor: "#4ca0ba"
             },
             gridLines: {
               display: false
@@ -336,27 +336,27 @@
     });
     tokenbar.animate((Token.agree+Token.disagree)/Token.total);
 
-    $("#VoterAgreeRate").append(((Voter.agree / Voter.total)*100).toFixed(0)  + " %");
-    $("#VoterDisagreeRate").append(((Voter.disagree / Voter.total)*100).toFixed(0) + " %");
-    $("#VoterNoVoteRate").append(((Voter.noVote / Voter.total)*100).toFixed(0) + " %");
-    $("#TotalVoter").append((((Voter.agree + Voter.disagree) / Voter.total)*100).toFixed(0)  + " % (" + (Voter
-      .agree + Voter.disagree) + ")");
+    $("#VoterAgreeRate").append(((Voter.agree / Voter.total)*100).toFixed(0)  + "%");
+    $("#VoterDisagreeRate").append(((Voter.disagree / Voter.total)*100).toFixed(0) + "%");
+    $("#VoterNoVoteRate").append(((Voter.noVote / Voter.total)*100).toFixed(0) + "%");
+    $("#TotalVoter").append((((Voter.agree + Voter.disagree) / Voter.total)*100).toFixed(0)  + "% (" + (Voter
+      .agree + Voter.disagree) + " votes)");
     $("#TotalVoter2").append("(" + (Voter.agree + Voter.disagree) + ")");
-    $("#VoterAgreeRate2").append(((Voter.agree / Voter.total)*100).toFixed(0) + " %");
-    $("#VoterDisagreeRate2").append(((Voter.disagree / Voter.total)*100).toFixed(0) + " %");
-    $("#VoterNoVoteRate2").append(((Voter.noVote / Voter.total)*100).toFixed(0) + " %");
+    $("#VoterAgreeRate2").append(((Voter.agree / Voter.total)*100).toFixed(0) + "%");
+    $("#VoterDisagreeRate2").append(((Voter.disagree / Voter.total)*100).toFixed(0) + "%");
+    $("#VoterNoVoteRate2").append(((Voter.noVote / Voter.total)*100).toFixed(0) + "%");
     $("#VoterAgree").append(Voter.agree);
     $("#VoterDisagree").append(Voter.disagree);
     $("#VoterNoVote").append(Voter.noVote);
 
-    $("#TokenAgreeRate").append(((Token.agree / Token.total)*100).toFixed(0) + " %");
-    $("#TokenDisagreeRate").append(((Token.disagree / Token.total)*100).toFixed(0) + " %");
-    $("#TokenNoVoteRate").append(((Token.noVote / Token.total)*100).toFixed(0) + " %");
+    $("#TokenAgreeRate").append(((Token.agree / Token.total)*100).toFixed(0) + "%");
+    $("#TokenDisagreeRate").append(((Token.disagree / Token.total)*100).toFixed(0) + "%");
+    $("#TokenNoVoteRate").append(((Token.noVote / Token.total)*100).toFixed(0) + "%");
     $("#TotalToken").append(numeral(Token.agree + Token.disagree).format('0,00') + " ICX");
     $("#TotalToken2").append("(" + numeral(Token.agree + Token.disagree).format('0,00') + " ICX)");
-    $("#TokenAgreeRate2").append(((Token.agree / Token.total)*100).toFixed(0) + " %");
-    $("#TokenDisagreeRate2").append(((Token.disagree / Token.total)*100).toFixed(0) + " %");
-    $("#TokenNoVoteRate2").append(((Token.noVote / Token.total)*100).toFixed(0) + " %");
+    $("#TokenAgreeRate2").append(((Token.agree / Token.total)*100).toFixed(0) + "%");
+    $("#TokenDisagreeRate2").append(((Token.disagree / Token.total)*100).toFixed(0) + "%");
+    $("#TokenNoVoteRate2").append(((Token.noVote / Token.total)*100).toFixed(0) + "%");
     $("#TokenAgree").append(numeral(Token.agree).format('0,00') + " ICX");
     $("#TokenDisagree").append(numeral(Token.disagree).format('0,00') + " ICX");
     $("#TokenNoVote").append(numeral(Token.noVote).format('0,00') + " ICX");
@@ -408,126 +408,289 @@
 {% endblock %}
 {% block content %}
 
+<!-- Proposal Detail -->
 <div id="proposal">
-  <!--<H4>Network Proposal Details</H4>-->
-  <H3><b>{{aProposal.contents.title}} (<span id="status"></span>)</b></H3>
-  <H5 id="type"></H5>
-  <H5><b>Description</b></H5>
-  <H4>{{aProposal.contents.description}}</H4>
-  <H5>Proposer: <a href="{{aPRep.website}}">{{aPRep.name}}</a></H5>
-  <H5>Tx Hash: <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}">{{aProposal.id}}</a></H5>
-  <H5 id="start"></H5>
-  <H5 id="end"></H5>
+  <h3><b>{{aProposal.contents.title}} (<span id="status"></span>)</b></h3>
+  <h4><b>Proposal Detail</b></h4>
+  <h5 id="type"><b>Type: </b></h5>
+  <h5><b>Description:</b> {{aProposal.contents.description}}</h5>
+  <h5><b>Proposer:</b> <a href="{{aPRep.website}}">{{aPRep.name}}</a></h5>
+  <h5><b>Tx Hash:</b> <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}" target="_blank">{{aProposal.id}}</a></h5>
+  <h5 id="start"><b>Created:</b> </h5>
+  <h5 id="end"><b>Expires:</b> </h5>
+  <h5><b>Value: </b><span id="contentsValue">{{aProposal.contents.value}}</span></h5>
 </div>
-<HR />
-<div>
+<hr />
 
-</div>
-<HR />
-<div>
-  <H5><b>Value</b></H5>
-  <H4 id="contentsValue">{{aProposal.contents.value}}</H4>
-</div>
+<!-- Voting buttons -->
 {% if getPRep and fromAddress in aProposal.vote.noVote.list and aProposal.status == '0x0' %}
 <div id="vote">
   <a href="#" id="voteAgree" class="btn btn-primary">Agree</a>
   <a href="#" id="voteDisagree" class="btn btn-danger">Disagree</a>
 </div>
+<hr />
 {% endif %}
 {% if aProposal.proposer == fromAddress and aProposal.status == '0x0' %}
 <div id="cancel">
   <a href="#" id="cancelProposal" class="btn btn-dark">Cancel Proposal</a>
 </div>
+<hr />
 {% endif %}
-<HR />
+
+
+
+<!-- Votes -->
+<h4><b>Votes</b></h4>
+<div class="row">
+  <div class="col-lg-6">
+    <div class="row">
+      <div class="col-3">
+        <div id="Voter" style="width: 100px;"></div>
+      </div>
+      <div class="col-9">
+        <div class="row">
+          <div class="col-12">
+            <h3><span>Total Voters: </span><span id="TotalVoter"></span></h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <p>Agreed</p>
+            <h4><span id="VoterAgree"></span> (<span id="VoterAgreeRate2"></span>)</h4>
+          </div>
+          <div class="col-4">
+            <p>Disagreed</p>
+            <h4><span id="VoterDisagree"></span> (<span id="VoterDisagreeRate2"></span>)</h4>
+          </div>
+          <div class="col-4">
+            <p>Not Voted</p>
+            <h4><span id="VoterNoVote"></span> (<span id="VoterNoVoteRate2"></span>)</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="row">
+      <div class="col-3">
+        <div id="Token" style="width: 100px;"></div>
+      </div>
+      <div class="col-9">
+        <div class="row">
+          <div class="col-12">
+            <h3><span>Total Token Votes: </span><span id="TotalToken"></span></h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <p>Agreed</p>
+            <h4><span id="TokenAgree"></span> (<span id="TokenAgreeRate2"></span>)</h4>
+          </div>
+          <div class="col-4">
+            <p>Disagreed</p>
+            <h4><span id="TokenDisagree"></span> (<span id="TokenDisagreeRate2"></span>)</h4>
+          </div>
+          <div class="col-4">
+            <p>Not Voted</p>
+            <h4><span id="TokenNoVote"></span> (<span id="TokenNoVoteRate2"></span>)</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--
+    <table>
+      <tr>
+        <td rowspan="3">
+          <div id="Token"></div>
+        </td>
+        <td colspan="3">
+          <b>Total Token Votes</b><br />
+          <H5 id="TotalToken"></H5>
+        </td>
+      </tr>
+      <tr>
+        <td style="text-align:center">
+          Agreed<br />
+          <h2 id="TokenAgreeRate2"></h2>
+          <h4 id="TokenAgree"></h4>
+        </td>
+        <td style="text-align:center">
+          Disagreed<br />
+          <h2 id="TokenDisagreeRate2"></h2>
+          <h4 id="TokenDisagree"></h4>
+        </td>
+        <td style="text-align:center">
+          Not Voted<br />
+          <h2 id="TokenNoVoteRate2"></h2>
+          <h4 id="TokenNoVote"></h4>
+        </td>
+      </tr>
+    </table>
+    -->
+  </div>
+</div>
+
+<!-- old voter detail -->
+<!--
 <div>
   <H4><b>Votes</b></H4>
   <table>
-  <tr>
-  <td>
-  <table>
     <tr>
-      <td rowspan="3">
-        <div id="Voter">
-        </div>
+      <td>
+        <table>
+          <tr>
+            <td rowspan="3">
+              <div id="Voter">
+              </div>
+            </td>
+            <td colspan="3">
+              <b>Total Voter</b><br />
+              <H5 id="TotalVoter"></H5>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center">
+              Agreed<br />
+              <h2 id="VoterAgreeRate2"></h2>
+              <h4 id="VoterAgree"></h4>
+            </td>
+            <td style="text-align:center">
+              Disagreed<br />
+              <h2 id="VoterDisagreeRate2"></h2>
+              <h4 id="VoterDisagree"></h4>
+            </td>
+            <td style="text-align:center">
+              Not Voted<br />
+              <h2 id="VoterNoVoteRate2"></h2>
+              <h4 id="VoterNoVote"></h4>
+            </td>
+          </tr>
+        </table>
       </td>
-      <td colspan="3">
-        <b>Total Voter</b><br />
-        <H5 id="TotalVoter"></H5>
+      <td>
+        <table>
+          <tr>
+            <td rowspan="3">
+              <div id="Token"></div>
+            </td>
+            <td colspan="3">
+              <b>Total Token Votes</b><br />
+              <H5 id="TotalToken"></H5>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align:center">
+              Agreed<br />
+              <h2 id="TokenAgreeRate2"></h2>
+              <h4 id="TokenAgree"></h4>
+            </td>
+            <td style="text-align:center">
+              Disagreed<br />
+              <h2 id="TokenDisagreeRate2"></h2>
+              <h4 id="TokenDisagree"></h4>
+            </td>
+            <td style="text-align:center">
+              Not Voted<br />
+              <h2 id="TokenNoVoteRate2"></h2>
+              <h4 id="TokenNoVote"></h4>
+            </td>
+          </tr>
+        </table>
       </td>
     </tr>
-    <tr>
-      <td style="text-align:center">
-        Agreed<br />
-        <h2 id="VoterAgreeRate2"></h2>
-        <h4 id="VoterAgree"></h4>
-      </td>
-      <td style="text-align:center">
-        Disagreed<br />
-        <h2 id="VoterDisagreeRate2"></h2>
-        <h4 id="VoterDisagree"></h4>
-      </td>
-      <td style="text-align:center">
-        Not Voted<br />
-        <h2 id="VoterNoVoteRate2"></h2>
-        <h4 id="VoterNoVote"></h4>
-      </td>
-    </tr>
-  </table>
-  </td>
-  <td>
-  <table>
-    <tr>
-      <td rowspan="3">
-        <div id="Token"></div>
-      </td>
-      <td colspan="3">
-        <b>Total Token Votes</b><br />
-        <H5 id="TotalToken"></H5>
-      </td>
-    </tr>
-    <tr>
-      <td style="text-align:center">
-        Agreed<br />
-        <h2 id="TokenAgreeRate2"></h2>
-        <h4 id="TokenAgree"></h4>
-      </td>
-      <td style="text-align:center">
-        Disagreed<br />
-        <h2 id="TokenDisagreeRate2"></h2>
-        <h4 id="TokenDisagree"></h4>
-      </td>
-      <td style="text-align:center">
-        Not Voted<br />
-        <h2 id="TokenNoVoteRate2"></h2>
-        <h4 id="TokenNoVote"></h4>
-      </td>
-    </tr>
-  </table>
-  </td>
-  </tr>
   </table>
 </div>
-<HR />
+-->
+
+
+<hr />
+
+<!-- Vote Status -->
+<h4><b>Vote Status</b></h4>
+<div class="row">
+  <div class="col-lg-6">
+    <h3>Total Voters <span id="TotalVoter2"></span></h3>
+    <div id="VoterProgress" class="votebar"></div>
+  </div>
+  <div class="col-lg-6">
+    <h3>Total Token Votes <span id="TotalToken2"></span></h3>
+    <div id="TokenProgress" class="votebar"></div>
+  </div>
+</div>
+
+
+<!-- old voter status -->
+<!--
 <div>
   <H4><b>Vote Status</b></H4><br />
   <table>
     <tr>
       <td>
-  <H3 style="float:left">Total Voter&nbsp;</H3>
-  <H3 id="TotalVoter2" style="float:left"></H3>
-  <div id="VoterProgress" style="margin:20px;height:8px;position:relative;"></div>
+        <H3 style="float:left">Total Voter&nbsp;</H3>
+        <H3 id="TotalVoter2" style="float:left"></H3>
+        <div id="VoterProgress" style="margin:20px;height:8px;position:relative;"></div>
       </td>
       <td>
-  <H3 style="float:left">Total Token Votes&nbsp;</H3>
-  <H3 id="TotalToken2" style="float:left"></H3>
-  <div id="TokenProgress" style="margin:20px;height:8px;position:relative;"></div>
+        <H3 style="float:left">Total Token Votes&nbsp;</H3>
+        <H3 id="TotalToken2" style="float:left"></H3>
+        <div id="TokenProgress" style="margin:20px;height:8px;position:relative;"></div>
       </td>
     </tr>
   </table>
 </div>
-<br/>
-<HR />
+-->
+
+<hr />
+
+<!-- Vote History -->
+<div class="row">
+  <div class="col-md-12 mb-5">
+    <div class="card ">
+      <div class="card-header">
+        <h2 class="card-title">Vote History</h2>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="prep-table">
+            <thead class=" text-primary">
+              <tr>
+                <th width="10%">Voter</th>
+                <th width="10%">Decision</th>
+                <th width="25%" class="text-center">Tx Hash</th>
+                <th width="30%">Timestamp</th>
+                <th width="25%"class="text-center">Voted Token</th>
+              </tr>
+            </thead>
+            <tbody id="voterList">
+            {% for aVoter in aProposal.vote.agree.list %}
+              <tr>
+                <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
+                <td>Agree</td>
+                <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
+                <td class="timestamp">{{aVoter.timestamp}}</td>
+                <td class="votedToken text-center">{{aVoter.amount}}</td>
+              </tr>
+            {% endfor %}
+            {% for aVoter in aProposal.vote.disagree.list %}
+              <tr>
+                <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
+                <td>Disagree</td>
+                <td><a href="https://tracker.icon.foundation/transaction/{{aVoter.id}}">{{aVoter.id}}</a></td>
+                <td class="timestamp">{{aVoter.timestamp}}</td>
+                <td class="votedToken text-center"></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- old vote history -->
+<!--
 <div>
   <table>
     <thead>
@@ -562,4 +725,6 @@
     </tbody>
   </table>
 </div>
+-->
+
 {% endblock %}
