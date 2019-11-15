@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = '!w2lf5-ry3o#wcn@zyw2*e)r@pg0l=bs@rnlx63%909n#vp#8n'
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '157.230.7.98', 'icon.community', 'www.icon.community']
 
