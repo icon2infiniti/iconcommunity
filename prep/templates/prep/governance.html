@@ -35,18 +35,18 @@
 {% endif %}
 
 {% if getPRep == None %}
-<h3>You're not currently registered as a P-Rep. In order to set governance variable i_rep, you must be registered as a P-Rep first.</h3>
+<h3>{% trans "You're not currently registered as a P-Rep. In order to set governance variable i_rep, you must be registered as a P-Rep first." %}</h3>
 <div class="row">
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">P-Rep Registration</h2>
+      <h2 class="card-title">{% trans 'P-Rep Registration' %}</h2>
     </div>
     <div class="card-body">
       <form id="PRepRegInfo" action="#">
       <!-- name, email -->
       <div class="row">
         <div class="col-sm-6">
-          <label>Name*</label>
+          <label>{% trans 'Name*' %}</label>
           <div class="form-group">
             <input id="name" type="text" class="form-control" name="name">
             <div class="messages">
@@ -54,7 +54,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <label>Email*</label>
+          <label>{% trans 'Email*' %}</label>
           <div class="form-group">
             <input id="email" type="email" class="form-control" name="email">
             <div class="messages">
@@ -65,7 +65,7 @@
       <!-- country, city -->
       <div class="row">
         <div class="col-sm-6">
-          <label>Country*</label>
+          <label>{% trans 'Country*' %}</label>
           <div class="form-group">
             <input id="country" type="text" class="form-control">
             <div class="messages">
@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <label>City*</label>
+          <label>{% trans 'City*' %}</label>
           <div class="form-group">
             <input id="city" type="text" class="form-control" name="city">
             <div class="messages">
@@ -84,7 +84,7 @@
       <!-- website, detail -->
       <div class="row">
         <div class="col-sm-6">
-          <label>Website*</label>
+          <label>{% trans 'Website*' %}</label>
           <div class="form-group">
             <input id="website" type="text" class="form-control" name="website">
             <div class="messages">
@@ -92,7 +92,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <label>Off-Chain JSON*</label>
+          <label>{% trans 'Off-Chain JSON*' %}</label>
           <div class="form-group">
             <input id="details" type="text" class="form-control" name="details">
             <div class="messages">
@@ -104,7 +104,7 @@
       <!-- p2p, key -->
       <div class="row">
         <div class="col-sm-6">
-          <label>P2P Endpoint*</label>
+          <label>{% trans 'P2P Endpoint*' %}</label>
           <div class="form-group">
             <input id="p2pEndpoint" type="text" class="form-control" name="p2pEndpoint">
             <div class="messages">
@@ -115,7 +115,7 @@
       </form>
     </div>
     <div class="card-footer text-center">
-      <button onclick="registerPRep()" class="btn btn-fill btn-primary">Register</button>
+      <button onclick="registerPRep()" class="btn btn-fill btn-primary">{% trans 'Register' %}</button>
     </div>
   </div>
 </div>
@@ -131,7 +131,7 @@
       <div class="card-body">
         <div class="form-inline">
           <input id="irep" class="form-control" type="number" step="1" size="32">
-          <button id="iRepUpdate" type="submit" class="btn btn-primary">Update</button>
+          <button id="iRepUpdate" type="submit" class="btn btn-primary">{% trans 'Update' %}</button>
         </div>
       </div>
     </div>
@@ -140,7 +140,7 @@
   <div class="col-md-6">
     <div class="card fh">
       <div class="card-header">
-        <h4 class="card-title">i_rep Weighted Average</h4>
+        <h4 class="card-title">{% trans 'i_rep Weighted Average' %}</h4>
       </div>
       <div class="card-body">
         <H2 id="currentIRep"></H2>
@@ -152,7 +152,7 @@
   <div class="col-md-12 mb-5">
     <div class="card ">
       <div class="card-header">
-        <h2 class="card-title">P-Rep Ranking</h2>
+        <h2 class="card-title">{% trans 'P-Rep Ranking' %}</h2>
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -160,11 +160,11 @@
             <thead class=" text-primary">
               <tr>
                 <th class="text-center">#</th>
-                <th class="text-center">Name</th>
-                <th class="text-center">i_rep</th>
-                <th class="text-center">i_rep Updated</th>
-                <th class="text-center">Self-Staked</th>
-                <th class="text-center">Delegated</th>
+                <th class="text-center">{% trans 'Name' %}</th>
+                <th class="text-center">{% trans 'i_rep' %}</th>
+                <th class="text-center">{% trans 'i_rep Updated' %}</th>
+                <th class="text-center">{% trans 'Self-Staked' %}</th>
+                <th class="text-center">{% trans 'Delegated' %}</th>
               </tr>
             </thead>
             <tbody>

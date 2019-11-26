@@ -14,33 +14,33 @@
   <div class="col-md-12">
     <div class="card">
       <div class="card-header">
-        <h2 class="card-title">Proposal Filter</h2>
+        <h2 class="card-title">{% trans 'Proposal Filter' %}</h2>
       </div>
       <div class="card-body">
         <div class="row">
           <div class="col-md-6 mb-4">
             <div class="row">
               <div class="col-lg-5 col-md-6 col-sm-3">
-                <label class="mx-1">Type</label>
+                <label class="mx-1">{% trans 'Type' %}</label>
                 <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary"
                   onchange="filterchange();">
-                  <option value="*" selected>All</option>
-                  <option value="0">Text Proposal</option>
-                  <option value="1">Revision Update</option>
-                  <option value="2">Malicious SCORE Proposal</option>
-                  <option value="3">P-Rep Disqualification Proposal</option>
-                  <option value="4">Step Price Proposal</option>
+                  <option value="*" selected>{% trans 'All' %}</option>
+                  <option value="0">{% trans 'Text Proposal' %}</option>
+                  <option value="1">{% trans 'Revision Update' %}</option>
+                  <option value="2">{% trans 'Malicious SCORE Proposal' %}</option>
+                  <option value="3">{% trans 'P-Rep Disqualification Proposal' %}</option>
+                  <option value="4">{% trans 'Step Price Proposal' %}</option>
                 </select>
               </div>
               <div class="col-lg-5 col-md-6 col-sm-3">
-                <label class="mx-1">Status</label>
+                <label class="mx-1">{% trans 'Status' %}</label>
                 <select id="status" class="selectpicker" data-size="7" data-style="btn btn-primary"
                   onchange="filterchange();">
-                  <option value="*" selected>All</option>
-                  <option value="0">Voting</option>
-                  <option value="1">Accepted</option>
-                  <option value="2">Rejected</option>
-                  <option value="3">Canceled</option>
+                  <option value="*" selected>{% trans 'All' %}</option>
+                  <option value="0">{% trans 'Voting' %}</option>
+                  <option value="1">{% trans 'Accepted' %}</option>
+                  <option value="2">{% trans 'Rejected' %}</option>
+                  <option value="3">{% trans 'Canceled' %}</option>
                 </select>
               </div>
             </div>
@@ -49,7 +49,7 @@
             <div class="row">
             {% if getPRep %}
               <div class="col-12 text-center mt-3">
-              <a href="#" id="newProposal" class="btn btn-primary">New Proposal</a>
+              <a href="#" id="newProposal" class="btn btn-primary">{% trans 'New Proposal' %}</a>
               </div>
             {% endif %}
             </div>

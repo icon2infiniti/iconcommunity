@@ -13,19 +13,18 @@
 {% block content %}
 
 {% if getPRep == None %}
-<h3>You're not currently registered as a P-Rep. To register, fill the information below. Note that on-chain registration
-  costs 2,000 ICX which will be burned.</h3>
+<h3>{% trans "You're not currently registered as a P-Rep. To register, fill the information below. Note that on-chain registration costs 2,000 ICX which will be burned." %}</h3>
 <div class="row">
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">P-Rep Registration</h2>
+      <h2 class="card-title">{% trans 'P-Rep Registration' %}</h2>
     </div>
     <div class="card-body">
       <form id="PRepRegInfo" action="#">
       <!-- name, email -->
       <div class="row">
         <div class="col-sm-6">
-          <label>Name*</label>
+          <label>{% trans 'Name*' %}</label>
           <div class="form-group">
             <input id="name" type="text" class="form-control" name="name">
             <div class="messages">
@@ -33,7 +32,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <label>Email*</label>
+          <label>{% trans 'Email*' %}</label>
           <div class="form-group">
             <input id="email" type="email" class="form-control" name="email">
             <div class="messages">
@@ -44,7 +43,7 @@
       <!-- country, city -->
       <div class="row">
         <div class="col-sm-6">
-          <label>Country*</label>
+          <label>{% trans 'Country*' %}</label>
           <div class="form-group">
             <input id="country" type="text" class="form-control">
             <div class="messages">
@@ -52,7 +51,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <label>City*</label>
+          <label>{% trans 'City*' %}</label>
           <div class="form-group">
             <input id="city" type="text" class="form-control" name="city">
             <div class="messages">
@@ -63,7 +62,7 @@
       <!-- website, detail -->
       <div class="row">
         <div class="col-sm-6">
-          <label>Website*</label>
+          <label>{% trans 'Website*' %}</label>
           <div class="form-group">
             <input id="website" type="text" class="form-control" name="website">
             <div class="messages">
@@ -71,7 +70,7 @@
           </div>
         </div>
         <div class="col-sm-6">
-          <label>Off-Chain JSON*</label>
+          <label>{% trans 'Off-Chain JSON*' %}</label>
           <div class="form-group">
             <input id="details" type="text" class="form-control" name="details">
             <div class="messages">
@@ -83,7 +82,7 @@
       <!-- p2p, key -->
       <div class="row">
         <div class="col-sm-6">
-          <label>P2P Endpoint*</label>
+          <label>{% trans 'P2P Endpoint*' %}</label>
           <div class="form-group">
             <input id="p2pEndpoint" type="text" class="form-control" name="p2pEndpoint">
             <div class="messages">
@@ -94,7 +93,7 @@
       </form>
     </div>
     <div class="card-footer text-center">
-      <button onclick="registerPRep()" class="btn btn-fill btn-primary">Register</button>
+      <button onclick="registerPRep()" class="btn btn-fill btn-primary">{% trans 'Register' %}</button>
     </div>
   </div>
 </div>
@@ -102,14 +101,14 @@
 <div class="row">
   <div class="card">
     <div class="card-header">
-      <h2 class="card-title">P-Rep Information</h2>
+      <h2 class="card-title">{% trans 'P-Rep Information' %}</h2>
     </div>
     <div class="card-body">
       <form id="PRepRegInfo" action="#">
         <!-- name, email -->
         <div class="row">
           <div class="col-sm-6">
-            <label>Name*</label>
+            <label>{% trans 'Name*' %}</label>
             <div class="form-group">
               <input id="name" type="text" class="form-control" value="{{ getPRep.name }}" name="name">
               <div class="messages">
@@ -117,7 +116,7 @@
             </div>
           </div>
           <div class="col-sm-6">
-            <label>Email*</label>
+            <label>{% trans 'Email*' %}</label>
             <div class="form-group">
               <input id="email" type="email" class="form-control" value="{{ getPRep.email }}" name="email">
               <div class="messages">
@@ -128,7 +127,7 @@
         <!-- country, city -->
         <div class="row">
           <div class="col-sm-6">
-            <label>Country*</label>
+            <label>{% trans 'Country*' %}</label>
             <div class="form-group">
               <input id="country" type="text" class="form-control" value="{{ getPRep.country }}">
               <div class="messages">
@@ -136,7 +135,7 @@
             </div>
           </div>
           <div class="col-sm-6">
-            <label>City*</label>
+            <label>{% trans 'City*' %}</label>
             <div class="form-group">
               <input id="city" type="text" class="form-control" value="{{ getPRep.city }}" name="city">
               <div class="messages">
@@ -147,7 +146,7 @@
         <!-- website, detail -->
         <div class="row">
           <div class="col-sm-6">
-            <label>Website*</label>
+            <label>{% trans 'Website*' %}</label>
             <div class="form-group">
               <input id="website" type="text" class="form-control" value="{{ getPRep.website }}" name="website">
               <div class="messages">
@@ -155,7 +154,7 @@
             </div>
           </div>
           <div class="col-sm-6">
-            <label>Off-Chain JSON*</label>
+            <label>{% trans 'Off-Chain JSON*' %}</label>
             <div class="form-group">
               <input id="details" type="text" class="form-control" value="{{ getPRep.details }}" name="details">
               <div class="messages">
@@ -167,7 +166,7 @@
         <!-- p2p, key -->
         <div class="row">
           <div class="col-sm-6">
-            <label>P2P Endpoint*</label>
+            <label>{% trans 'P2P Endpoint*' %}</label>
             <div class="form-group">
               <input id="p2pEndpoint" type="text" class="form-control" value="{{ getPRep.p2pEndpoint }}" name="p2pEndpoint">
               <div class="messages">
@@ -179,8 +178,8 @@
       </form>
     </div>
     <div class="card-footer text-center">
-      <button onclick="updatePRep()" class="btn btn-fill btn-primary">Update</button>
-      <button onclick="unresterPRep()" class="btn btn-fill btn-danger">Unregister</button>
+      <button onclick="updatePRep()" class="btn btn-fill btn-primary">{% trans 'Update' %}</button>
+      <button onclick="unresterPRep()" class="btn btn-fill btn-danger">{% trans 'Unregister' %}</button>
     </div>
   </div>
 </div>

@@ -30,7 +30,6 @@
   <meta name="twitter:image" content="https://icon.community/staticall/logo/icon.community_logo.png" />
   <meta name="twitter:url" value="https://icon.community/" />
 
-
   <title>{% block title %}{% endblock %} - icon.community</title>
   <link rel="icon" type="image/png" href="{% static 'favicon.ico' %}">
 
@@ -45,8 +44,7 @@
 
 </head>
 
-<body
-    class="{% if nightmode == True %} {% else %} white-content {% endif %} {% if navbar == True %} {% else %} sidebar-mini {% endif %}">
+<body class="{% if nightmode == True %} {% else %} white-content {% endif %} {% if navbar == True %} {% else %} sidebar-mini {% endif %}">
 
 {% get_current_language as LANGUAGE_CODE %}
 
@@ -57,7 +55,6 @@
       <i class="tim-icons icon-bullet-list-67 visible-on-sidebar-mini text-muted"></i>
     </button>
   </div>
-
 
   <!-- SIDEBAR -->
   <div class="sidebar">
@@ -78,7 +75,7 @@
             <i class="tim-icons">
               <img src="{% static 'logo/pie.png' %}" width="22" height="22" style="margin-top: -10px; margin-left: -5px;">
             </i>
-            <p>Dashboard</p>
+            <p>{% trans 'Dashboard' %}</p>
           </a>
         </li>
 
@@ -88,20 +85,20 @@
             <i class="tim-icons">
               <img src="{% static 'logo/iconsensus.png' %}" width="27" height="27" style="margin-top: -10px; margin-left: -5px;">
             </i>
-            <p>ICONSENSUS <b class="caret"></b></p>
+            <p>{% trans 'ICONSENSUS' %} <b class="caret"></b></p>
           </a>
           <div class="collapse {% if section == 'ICONSENSUS' %}show{% endif %}" id="iconsensusSub">
             <ul class="nav">
               <li {% if subsection == 'ABOUT' %}class="active"{% endif %}>
                 <a href="/iconsensus/about/">
                   <span class="sidebar-mini-icon">A</span>
-                  <span class="sidebar-normal section">About</span>
+                  <span class="sidebar-normal section">{% trans 'About' %}</span>
                 </a>
               </li>
               <li {% if subsection == 'CANDIDATES' %}class="active"{% endif %}>
                 <a href="/iconsensus/candidates/">
                   <span class="sidebar-mini-icon">P</span>
-                  <span class="sidebar-normal section">P-Rep Candidates</span>
+                  <span class="sidebar-normal section">{% trans 'P-Rep Candidates' %}</span>
                 </a>
               </li>
             </ul>
@@ -114,14 +111,14 @@
             <i class="tim-icons">
               <img src="{% static 'logo/resources.png' %}" width="26" height="26" style="margin-top: -10px; margin-left: -6px;">
             </i>
-            <p>Resources <b class="caret"></b></p>
+            <p>{% trans 'Resources' %} <b class="caret"></b></p>
           </a>
           <div class="collapse {% if section == 'RESOURCES' %}show{% endif %}" id="resourceSub">
             <ul class="nav">
               <li {% if subsection == 'COLLATERAL' %}class="active"{% endif %}>
                 <a href="/resources/collateral/">
                   <span class="sidebar-mini-icon">C</span>
-                  <span class="sidebar-normal section">Collateral</span>
+                  <span class="sidebar-normal section">{% trans 'Collateral' %}</span>
                 </a>
               </li>
              <!--
@@ -150,7 +147,7 @@
             <i class="tim-icons">
               <img src="{% static 'logo/developers.png' %}" width="24" height="24" style="margin-top: -10px; margin-left: -6px;">
             </i>
-            <p>Developers</p>
+            <p>{% trans 'Developers' %}</p>
           </a>
         </li>
 
@@ -160,7 +157,7 @@
             <i class="tim-icons">
               <img src="{% static 'logo/dapps.png' %}" width="24" height="24" style="margin-top: -10px; margin-left: -6px;">
             </i>
-            <p>DApps</p>
+            <p>{% trans 'DApps' %}</p>
           </a>
         </li>
 
@@ -170,7 +167,7 @@
             <i class="tim-icons">
               <img src="{% static 'logo/forum.png' %}" width="24" height="24" style="margin-top: -10px; margin-left: -4px;">
             </i>
-            <p>Forum</p>
+            <p>{% trans 'Forum' %}</p>
           </a>
         </li>
 
@@ -208,24 +205,7 @@
 
         <div class="collapse navbar-collapse" id="navigation">
 
-          <ul class="navbar-nav ml-auto level1group">
-
-            <!-- language redirect -->
-            <form id="language_form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
-              {% get_current_language as LANGUAGE_CODE %}
-              <input name="next" type="hidden" value="{{ redirect_to }}">
-              <input id="post_lang" name="language" value="{{ LANGUAGE_CODE }}" type="hidden">
-            </form>
-
-
-            <!-- language toggle placeholder -->
-            <li class="nav-item level1">
-              <a href="javascript:void(0)" class="nav-link">
-                <div class="d-none d-lg-block d-xl-block"></div>
-                <a class="nav-lang">&nbsp;</a>
-              </a>
-            </li>
-
+          <ul class="navbar-nav ml-auto level1group mb-1 mr-2">
 
             <!-- LANGUAGE TOGGLE
             <li class="nav-item level1">
@@ -247,29 +227,60 @@
             </li>
             -->
 
-
             <li class="nav-item level1">
               <a href="javascript:void(0)" class="nav-link" aria-expanded="false">
                 <div class="d-none d-lg-block d-xl-block"></div>
-
-                <a id="moon" onclick="toggle_nightmode();">
+                <a id="moon" onclick="toggle_nightmode(); togglelanglogo();">
                   <i class="{% if nightmode == True %} fas fa-moon {% else %} far fa-moon {% endif %}"></i>
                 </a>
-
               </a>
             </li>
           </ul>
 
+          <!-- Language Toggle -->
           <ul class="navbar-nav">
+            <!-- language redirect -->
+            <form id="language_form" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+              {% get_current_language as LANGUAGE_CODE %}
+              <input name="next" type="hidden" value="{{ redirect_to }}">
+              <input id="post_lang" name="language" value="{{ LANGUAGE_CODE }}" type="hidden">
+            </form>
 
-            <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"{% else %}style="height:47px;"{% endif %}>
-              <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.6em;">
-                <i class="tim-icons icon-single-02"></i> <span class="nav-lang">Login</span>
+            <li class="dropdown nav-item">
+              <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="margin-top:0.5em;">
+                <div class="langlogo" style="margin-right:5px;">
+                  {% if nightmode == True %}
+                    <img id="languagelogo" src="{% static 'img/language_w.png' %}">
+                  {% else %}
+                    <img id="languagelogo" src="{% static 'img/language.png' %}">
+                  {% endif %}
+                </div>
+                <b class="caret d-none d-lg-block d-xl-block"></b>
+                <p class="d-lg-none"></p>
               </a>
+              <ul class="dropdown-menu dropdown-navbar mr-auto" style="left: -88px;">
+                <li class="nav-link">
+                  <a class="nav-item dropdown-item" href="javascript:void(0)" onclick="change_language('en');">English</a>
+                </li>
+                <li class="nav-link">
+                  <a class="nav-item dropdown-item" href="javascript:void(0)" onclick="change_language('kr');">한국어</a>
+                </li>
+                <li class="nav-link">
+                  <a class="nav-item dropdown-item" href="javascript:void(0)" onclick="change_language('zh-hans');">中文</a>
+                </li>
+              </ul>
             </li>
 
-            <li id="loggedin" class="dropdown nav-item" {% if fromAddress == "none" %}style="display:none;"
-            {% endif %}>
+          </ul>
+
+          <!-- ICONex Login -->
+          <ul class="navbar-nav">
+            <li id="prelogin" class="nav-item" {% if fromAddress != "none" %}style="display:none;"{% else %}style="height:47px;"{% endif %}>
+              <a href="javascript:iconexlogin();" class="nav-link" style="margin-top:0.6em;">
+                <i class="tim-icons icon-single-02"></i> <span class="nav-lang">{% trans 'Login' %}</span>
+              </a>
+            </li>
+            <li id="loggedin" class="dropdown nav-item" {% if fromAddress == "none" %}style="display:none;"{% endif %}>
               <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="margin-top:0.5em;">
                 <div class="photo" style="margin-right:5px;">
                   <!--<img src="{% static 'img/mike.jpg' %}">-->
@@ -284,24 +295,24 @@
                       class="nav-item dropdown-item">{{ fromAddress|truncatechars:18 }}</a>
                 </li>
                 <li class="nav-link">
-                  <a href="{% url 'management' %}" class="nav-item dropdown-item">P-Rep Management</a>
+                  <a href="{% url 'management' %}" class="nav-item dropdown-item">{% trans 'P-Rep Management' %}</a>
                 </li>
                 <li class="nav-link">
-                  <a href="{% url 'governance' %}" class="nav-item dropdown-item">Governance Variable</a>
+                  <a href="{% url 'governance' %}" class="nav-item dropdown-item">{% trans 'Governance Variable' %}</a>
                 </li>
                 <li class="nav-link">
-                  <a href="{% url 'proposal' %}" class="nav-item dropdown-item">Network Proposal</a>
+                  <a href="{% url 'proposal' %}" class="nav-item dropdown-item">{% trans 'Network Proposal' %}</a>
                 </li>
                 <li class="dropdown-divider"></li>
                 <li class="nav-link">
-                  <a href="javascript:logout();" class="nav-item dropdown-item">Log out</a>
+                  <a href="javascript:logout();" class="nav-item dropdown-item">{% trans 'Log out' %}</a>
                 </li>
               </ul>
             </li>
-
             <li class="separator d-lg-none"></li>
-
           </ul>
+
+
 
         </div>
 
@@ -452,6 +463,14 @@
             format: 'svg'
         }).toString();
         $('#avatar').attr("src", "data:image/svg+xml;base64," + data);
+    }
+
+    function togglelanglogo(){
+        if($('#languagelogo').attr('src') == '/static/img/language.png'){
+            $('#languagelogo').attr('src', "{% static 'img/language_w.png' %}");
+        }else{
+            $('#languagelogo').attr('src', "{% static 'img/language.png' %}");
+        }
     }
 </script>
 

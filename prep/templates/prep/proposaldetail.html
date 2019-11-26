@@ -14,6 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@0.7.1/src/index.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/10.0.0/markdown-it.js"></script>
 
 <script>
   const MAIN_NET = "https://ctz.solidwallet.io/api/v3";
@@ -112,6 +113,9 @@
       $("#end").append(EndDate);
     }
 
+    var md = window.markdownit();
+    //var result = md.render('# markdown-it rulezz!');
+
     let aJson = $("#contentsValue")[0].innerHTML;
     let value_json = JSON.parse(aJson.replace(/'/gi, "\""));
     let replace_str = "";
@@ -121,7 +125,11 @@
       }
     }
 
+    replace_str = md.render(replace_str);
+
     $("#contentsValue")[0].innerHTML = replace_str;
+
+    $("#proposaldesc")[0].innerHTML = md.render($("#proposaldesc")[0].innerHTML);
 
     proposal_vote_json_str = "{{aProposal.vote}}";
     proposal_vote_json_str = proposal_vote_json_str.replace(/&#39;/gi, "\"");
@@ -411,14 +419,14 @@
 <!-- Proposal Detail -->
 <div id="proposal">
   <h3><b>{{aProposal.contents.title}} (<span id="status"></span>)</b></h3>
-  <h4><b>Proposal Detail</b></h4>
-  <h5 id="type"><b>Type: </b></h5>
-  <h5><b>Description:</b> {{aProposal.contents.description}}</h5>
-  <h5><b>Proposer:</b> <a href="{{aPRep.website}}">{{aPRep.name}}</a></h5>
-  <h5><b>Tx Hash:</b> <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}" target="_blank">{{aProposal.id}}</a></h5>
-  <h5 id="start"><b>Created:</b> </h5>
-  <h5 id="end"><b>Expires:</b> </h5>
-  <h5><b>Value: </b><span id="contentsValue">{{aProposal.contents.value}}</span></h5>
+  <h4><b>{% trans 'Proposal Detail' %}</b></h4>
+  <h5 id="type"><b>{% trans 'Type:' %} </b></h5>
+  <h5><b>{% trans 'Description:' %}</b> <span id="proposaldesc">{{ aProposal.contents.description }}</span></h5>
+  <h5><b>{% trans 'Proposer:' %}</b> <a href="{{aPRep.website}}">{{aPRep.name}}</a></h5>
+  <h5><b>{% trans 'Tx Hash:' %}</b> <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}" target="_blank">{{aProposal.id}}</a></h5>
+  <h5 id="start"><b>{% trans 'Created:' %}</b> </h5>
+  <h5 id="end"><b>{% trans 'Expires:' %}</b> </h5>
+  <h5><b>{% trans 'Additional Information:' %} </b><span id="contentsValue">{{aProposal.contents.value}}</span></h5>
 </div>
 <hr />
 
@@ -440,7 +448,7 @@
 
 
 <!-- Votes -->
-<h4><b>Votes</b></h4>
+<h4><b>{% trans 'Votes' %}</b></h4>
 <div class="row">
   <div class="col-lg-6">
     <div class="row">
@@ -450,20 +458,20 @@
       <div class="col-9">
         <div class="row">
           <div class="col-12">
-            <h3><span>Total Voters: </span><span id="TotalVoter"></span></h3>
+            <h3><span>{% trans 'Total Voters:' %} </span><span id="TotalVoter"></span></h3>
           </div>
         </div>
         <div class="row">
           <div class="col-4">
-            <p>Agreed</p>
+            <p>{% trans 'Agreed' %}</p>
             <h4><span id="VoterAgree"></span> (<span id="VoterAgreeRate2"></span>)</h4>
           </div>
           <div class="col-4">
-            <p>Disagreed</p>
+            <p>{% trans 'Disagreed' %}</p>
             <h4><span id="VoterDisagree"></span> (<span id="VoterDisagreeRate2"></span>)</h4>
           </div>
           <div class="col-4">
-            <p>Not Voted</p>
+            <p>{% trans 'Not Voted' %}</p>
             <h4><span id="VoterNoVote"></span> (<span id="VoterNoVoteRate2"></span>)</h4>
           </div>
         </div>
@@ -479,20 +487,20 @@
       <div class="col-9">
         <div class="row">
           <div class="col-12">
-            <h3><span>Total Token Votes: </span><span id="TotalToken"></span></h3>
+            <h3><span>{% trans 'Total Token Votes:' %} </span><span id="TotalToken"></span></h3>
           </div>
         </div>
         <div class="row">
           <div class="col-4">
-            <p>Agreed</p>
+            <p>{% trans 'Agreed' %}</p>
             <h4><span id="TokenAgree"></span> (<span id="TokenAgreeRate2"></span>)</h4>
           </div>
           <div class="col-4">
-            <p>Disagreed</p>
+            <p>{% trans 'Disagreed' %}</p>
             <h4><span id="TokenDisagree"></span> (<span id="TokenDisagreeRate2"></span>)</h4>
           </div>
           <div class="col-4">
-            <p>Not Voted</p>
+            <p>{% trans 'Not Voted' %}</p>
             <h4><span id="TokenNoVote"></span> (<span id="TokenNoVoteRate2"></span>)</h4>
           </div>
         </div>
@@ -607,14 +615,14 @@
 <hr />
 
 <!-- Vote Status -->
-<h4><b>Vote Status</b></h4>
+<h4><b>{% trans 'Vote Status' %} </b></h4>
 <div class="row">
   <div class="col-lg-6">
-    <h3>Total Voters <span id="TotalVoter2"></span></h3>
+    <h3>{% trans 'Total Voters' %} <span id="TotalVoter2"></span></h3>
     <div id="VoterProgress" class="votebar"></div>
   </div>
   <div class="col-lg-6">
-    <h3>Total Token Votes <span id="TotalToken2"></span></h3>
+    <h3>{% trans 'Total Token Votes' %} <span id="TotalToken2"></span></h3>
     <div id="TokenProgress" class="votebar"></div>
   </div>
 </div>
@@ -648,18 +656,18 @@
   <div class="col-md-12 mb-5">
     <div class="card ">
       <div class="card-header">
-        <h2 class="card-title">Vote History</h2>
+        <h2 class="card-title">{% trans 'Vote History' %}</h2>
       </div>
       <div class="card-body">
         <div class="table-responsive">
           <table class="table tablesorter " id="prep-table">
             <thead class=" text-primary">
               <tr>
-                <th width="10%">Voter</th>
-                <th width="10%">Decision</th>
-                <th width="25%" class="text-center">Tx Hash</th>
-                <th width="30%">Timestamp</th>
-                <th width="25%"class="text-center">Voted Token</th>
+                <th width="10%">{% trans 'Voter' %}</th>
+                <th width="10%">{% trans 'Decision' %}</th>
+                <th width="25%" class="text-center">{% trans 'Tx Hash' %}</th>
+                <th width="30%">{% trans 'Timestamp' %}</th>
+                <th width="25%"class="text-center">{% trans 'Voted Token' %}</th>
               </tr>
             </thead>
             <tbody id="voterList">

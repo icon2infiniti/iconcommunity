@@ -25,23 +25,23 @@
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left">
-              <h2 class="card-title">P-Rep Rankings</h2>
+              <h2 class="card-title">{% trans 'P-Rep Rankings' %}</h2>
             </div>
             <div class="col-sm-6 duration">
               <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
                 <label class="btn btn-sm btn-primary btn-simple" id="main">
                   <input type="radio" name="options" checked>
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showmain();">Main</span>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showmain();">{% trans 'Main' %}</span>
                   <span class="d-block d-sm-none" onclick="toggleDuration('MAIN');">Main</span>
                 </label>
                 <label class="btn btn-sm btn-primary btn-simple" id="sub">
                   <input type="radio" class="d-none d-sm-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showsub();">Sub</span>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showsub();">{% trans 'Sub' %}</span>
                   <span class="d-block d-sm-none" onclick="toggleDuration('SUB');">Sub</span>
                 </label>
                 <label class="btn btn-sm btn-primary btn-simple active" id="all">
                   <input type="radio" class="d-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showall();">All</span>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showall();">{% trans 'All' %}</span>
                   <span class="d-block d-sm-none" onclick="toggleDuration('ALL');">All</span>
                 </label>
               </div>
@@ -55,12 +55,12 @@
               <thead class="text-primary">
               <tr>
                 <th width="8%">#</th>
-                <th width="32%">Name</th>
-                <th width="8%">Country</th>
-                <th width="15%">Monthly Reward</th>
-                <th width="8%">i_rep</th>
-                <th width="10%">Self-Staked</th>
-                <th width="8%">Delegated</th>
+                <th width="32%">{% trans 'Name' %}</th>
+                <th width="8%">{% trans 'Country' %}</th>
+                <th width="15%">{% trans 'Monthly Reward' %}</th>
+                <th width="8%">{% trans 'i_rep' %}</th>
+                <th width="10%">{% trans 'Self-Staked' %}</th>
+                <th width="8%">{% trans 'Delegated' %}</th>
               </tr>
               </thead>
 
@@ -124,7 +124,7 @@
             </div>
             <div class="col-7">
               <div class="numbers">
-                <p class="card-category">Main P-Reps</p>
+                <p class="card-category">{% trans 'Main P-Reps' %}</p>
                 <h3 class="card-title">{{ main_preps_count }}</h3>
               </div>
             </div>
@@ -151,7 +151,7 @@
             </div>
             <div class="col-7">
               <div class="numbers">
-                <p class="card-category">Sub P-Reps</p>
+                <p class="card-category">{% trans 'Sub P-Reps' %}</p>
                 <h3 class="card-title">{{ sub_preps_count }}</h3>
               </div>
             </div>
@@ -178,7 +178,7 @@
             </div>
             <div class="col-7">
               <div class="numbers">
-                <p class="card-category">Total P-Reps</p>
+                <p class="card-category">{% trans 'All P-Reps' %}</p>
                 <h3 class="card-title">{{ preps_count }}</h3>
               </div>
             </div>
@@ -205,8 +205,8 @@
             </div>
             <div class="col-7">
               <div class="numbers">
-                <p class="card-category">Pre-Registered</p>
-                <h3 class="card-title">77</h3>
+                <p class="card-category">{% trans 'Pre-Registered' %}</p>
+                <h3 class="card-title">87</h3>
               </div>
             </div>
           </div>
@@ -270,8 +270,8 @@
     <div class="col-lg-12">
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">P-Rep Locations</h2>
-          <p class="card-category">Distribution of P-Rep Nodes</p>
+          <h2 class="card-title">{% trans 'P-Rep Locations' %}</h2>
+          <p class="card-category">{% trans 'Distribution of P-Rep Nodes' %}</p>
         </div>
         <div class="card-body">
           <div class="row">
@@ -309,7 +309,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- ICX Price -->
@@ -320,7 +319,7 @@
         <!-- Card Header -->
         <div class="card-header">
           <div class="row">
-            <div class="col-sm-6 text-left"><h2 class="card-title">ICX Price</h2></div>
+            <div class="col-sm-6 text-left"><h2 class="card-title">{% trans 'ICX Price' %}</h2></div>
             <div class="col-sm-6 rate">
               <div class="btn-group btn-group-toggle float-right currency" data-toggle="buttons">
                 <label class="btn btn-sm btn-primary btn-simple active" id="0">
@@ -354,11 +353,11 @@
 
             <ul class="content half market-vol-wrap">
               <li class="left">
-                <p class="subTitle">Marketcap</p>
+                <p class="subTitle">{% trans 'Market Cap' %}</p>
                 <p><em>B</em>0<em>K</em></p>
               </li>
               <li class="right">
-                <p class="subTitle">Volume</p>
+                <p class="subTitle">{% trans 'Volume' %}</p>
                 <p><em>B</em>0</p>
               </li>
             </ul>
@@ -378,23 +377,23 @@
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left">
-              <h2 class="card-title">ICX Chart</h2>
+              <h2 class="card-title">{% trans 'ICX Chart' %}</h2>
             </div>
             <div class="col-sm-6 duration">
               <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
                 <label class="btn btn-sm btn-primary btn-simple active" id="0">
                   <input type="radio" name="options" checked>
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('DAY');">Day</span>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('DAY');">{% trans 'Day' %}</span>
                   <span class="d-block d-sm-none" onclick="toggleDuration('DAY');">24H</span>
                 </label>
                 <label class="btn btn-sm btn-primary btn-simple" id="1">
                   <input type="radio" class="d-none d-sm-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('WEEK');">Week</span>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('WEEK');">{% trans 'Week' %}</span>
                   <span class="d-block d-sm-none" onclick="toggleDuration('WEEK');">7D</span>
                 </label>
                 <label class="btn btn-sm btn-primary btn-simple" id="2">
                   <input type="radio" class="d-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('MONTH');">Month</span>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('MONTH');">{% trans 'Month' %}</span>
                   <span class="d-block d-sm-none" onclick="toggleDuration('MONTH');">30D</span>
                 </label>
               </div>
@@ -416,7 +415,7 @@
     <div class="col-12">
       <div class="card">
         <div class="card-header">
-          <h2 class="card-title">Dapps Market Cap</h2>
+          <h2 class="card-title">{% trans 'Dapps Market Cap' %}</h2>
         </div>
         <div class="card-body">
           <div class="table-responsive">
@@ -424,11 +423,11 @@
               <thead class="text-primary">
               <tr>
                 <th class="text-center">#</th>
-                <th>Token</th>
-                <th>Price (ICX)</th>
-                <th>% Change (24h)</th>
-                <th>Volume (24h)</th>
-                <th>Market Cap (ICX)</th>
+                <th>{% trans 'Token' %}</th>
+                <th>{% trans 'Price (ICX)' %}</th>
+                <th>{% trans '% Change (24h)' %}</th>
+                <th>{% trans 'Volume (24h)' %}</th>
+                <th>{% trans 'Market Cap (ICX)' %}</th>
               </tr>
               </thead>
               <tbody>
