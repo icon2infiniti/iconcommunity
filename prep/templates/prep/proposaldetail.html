@@ -114,6 +114,7 @@
     }
 
     var md = window.markdownit();
+    md.set({html: true, breaks: true});
     //var result = md.render('# markdown-it rulezz!');
 
     let aJson = $("#contentsValue")[0].innerHTML;
