@@ -130,7 +130,10 @@
 
     $("#contentsValue")[0].innerHTML = replace_str;
 
-    $("#proposaldesc")[0].innerHTML = md.render($("#proposaldesc")[0].innerHTML);
+    desc_str = $("#proposaldesc")[0].innerHTML;
+    desc_str = desc_str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    //alert(desc_str);
+    $("#proposaldesc")[0].innerHTML = md.render(desc_str);
 
     proposal_vote_json_str = "{{aProposal.vote}}";
     proposal_vote_json_str = proposal_vote_json_str.replace(/&#39;/gi, "\"");
