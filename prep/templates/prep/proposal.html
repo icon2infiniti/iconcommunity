@@ -327,6 +327,7 @@
     }
     let response = await json_rpc_call("getProposals", params);
     let ProposalList = response.proposals;
+    ProposalList.reverse();
 
     let e = $("#proposalcards")[0];
     var child = e.lastElementChild;
