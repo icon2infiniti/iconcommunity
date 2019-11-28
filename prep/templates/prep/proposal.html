@@ -253,7 +253,7 @@
                 <i class="tim-icons icon-paper"></i><span class="proposaltype">${proposalType}</span>&nbsp;&nbsp;<span class="proposalstatus">&nbsp;${proposalStatus}&nbsp;</span>
               </div>
               <p><a href="../proposaldetail/${Proposal.id}"><h4><b>${Proposal.contents.title}</b></h4></a></p>
-              <p><h5 style="text-overflow:ellipsis;"><i>${Proposal.contents.description.substring(0, 50)}</i></h5></p>
+
               <p>Proposed by <span><a href="https://tracker.icon.foundation/address/${Proposal.proposer}" target="_blank">${Proposal.proposerName}</a></span></p>
               <p class="voters">Voters <br>Agree ${((voter.agree/voterTotal)*100).toFixed(2)}%, Disagree ${((voter.disagree/voterTotal)*100).toFixed(2)}%, Not Voted ${((voter.notvoted/voterTotal)*100).toFixed(2)}%</p>
               <p class="voters">Token Votes<br> Agree ${((token.agree/tokenTotal)*100).toFixed(2)}%, Disagree ${((token.disagree/tokenTotal)*100).toFixed(2)}%, Not Voted ${((token.notvoted/tokenTotal)*100).toFixed(2)}%</p>
