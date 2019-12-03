@@ -40,6 +40,31 @@
   <!-- CSS -->
   <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet"/>
   <link href="{% static 'css/base.css' %}" rel="stylesheet"/>
+
+  <style type="text/css">
+    .navbar-transparent .langlogoimg {
+      /*background-image: url("{% static 'img/language_w.png' %}");*/
+      display: inline-block;
+      background-size: 30px;
+      height: 30px;
+      width: 30px;
+      border-radius: 5%;
+      vertical-align: middle;
+      overflow: hidden;
+    }
+
+    .bg-white .langlogoimg {
+      background-image: url("{% static 'img/language.png' %}")!important;
+      display: inline-block;
+      background-size: 30px;
+      height: 30px;
+      width: 30px;
+      border-radius: 5%;
+      vertical-align: middle;
+      overflow: hidden;
+    }
+
+  </style>
   {% block extra_head %}{% endblock %}
 
 </head>
@@ -206,27 +231,6 @@
         <div class="collapse navbar-collapse" id="navigation">
 
           <ul class="navbar-nav ml-auto level1group mb-1 mr-2">
-
-            <!-- LANGUAGE TOGGLE
-            <li class="nav-item level1">
-              <a href="javascript:void(0)" class="nav-link">
-                <div class="d-none d-lg-block d-xl-block"></div>
-                <a class="nav-lang {% if LANGUAGE_CODE == 'en' %}active{% endif %}" href="javascript:void(0)"
-                    onclick="change_language('en');">EN</a>
-              </a>
-            </li>
-
-            <li class="separator d-lg-none"></li>
-
-            <li class="nav-item level1" style="margin-bottom:-5px;">
-              <a href="javascript:void(0)" class="nav-link" aria-expanded="false">
-                <div class="d-none d-lg-block d-xl-block"></div>
-                <a class="nav-lang {% if LANGUAGE_CODE == 'ko' %}active{% endif %}" href="javascript:void(0)"
-                    onclick="change_language('ko');">KR</a>
-              </a>
-            </li>
-            -->
-
             <li class="nav-item level1">
               <a href="javascript:void(0)" class="nav-link" aria-expanded="false">
                 <div class="d-none d-lg-block d-xl-block"></div>
@@ -248,12 +252,15 @@
 
             <li class="dropdown nav-item">
               <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" style="margin-top:0.5em;">
-                <div class="langlogo" style="margin-right:5px;">
+                <div class="langlogoimg" style="margin-right:5px; {% if nightmode == True %}background-image: url({% static 'img/language_w.png' %}); {% else %}background-image: url({% static 'img/language.png' %}); {% endif %}">
+
+                  <!--
                   {% if nightmode == True %}
                     <img id="languagelogo" src="{% static 'img/language_w.png' %}">
                   {% else %}
                     <img id="languagelogo" src="{% static 'img/language.png' %}">
                   {% endif %}
+                  -->
                 </div>
                 <b class="caret d-none d-lg-block d-xl-block"></b>
                 <p class="d-lg-none"></p>
@@ -466,11 +473,21 @@
     }
 
     function togglelanglogo(){
+
+        let langlogodom = $('.navbar-transparent .langlogoimg');
+        if(langlogodom.css('background-image') == 'url("http://localhost:8000/static/img/language_w.png")') {
+            langlogodom.css('background-image', 'url("http://localhost:8000/static/img/language.png")');
+        }else {
+            langlogodom.css('background-image', 'url("http://localhost:8000/static/img/language_w.png")');
+        }
+
+        /*
         if($('#languagelogo').attr('src') == '/static/img/language.png'){
             $('#languagelogo').attr('src', "{% static 'img/language_w.png' %}");
         }else{
             $('#languagelogo').attr('src', "{% static 'img/language.png' %}");
         }
+        */
     }
 </script>
 
