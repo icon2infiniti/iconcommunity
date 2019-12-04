@@ -115,10 +115,9 @@
 
     var md = window.markdownit();
     md.set({html: true, breaks: true});
-    //var result = md.render('# markdown-it rulezz!');
 
     let aJson = $("#contentsValue")[0].innerHTML;
-    let value_json = JSON.parse(aJson.replace(/'/gi, "\""));
+    let value_json = "";//JSON.parse(aJson);//JSON.parse(aJson.replace(/'/gi, "\""));
     let replace_str = "";
     for (var key in value_json) {
       if (value_json.hasOwnProperty(key)) {
@@ -132,7 +131,7 @@
 
     desc_str = $("#proposaldesc")[0].innerHTML;
     desc_str = desc_str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-    //alert(desc_str);
+
     $("#proposaldesc")[0].innerHTML = md.render(desc_str);
 
     proposal_vote_json_str = "{{aProposal.vote}}";
