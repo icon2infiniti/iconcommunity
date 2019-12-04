@@ -117,7 +117,7 @@
     md.set({html: true, breaks: true});
 
     let aJson = $("#contentsValue")[0].innerHTML;
-    let value_json = "";//JSON.parse(aJson);//JSON.parse(aJson.replace(/'/gi, "\""));
+    let value_json = JSON.parse(aJson.replace(/'/gi, "\""));
     let replace_str = "";
     for (var key in value_json) {
       if (value_json.hasOwnProperty(key)) {
