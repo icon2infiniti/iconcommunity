@@ -104,6 +104,13 @@
 
 {% endblock %}
 
+{% block pre_extra_js %}
+  <script>
+    function morning_image(){}
+    function night_image(){}
+  </script>
+{% endblock %}
+
 {% block extra_js %}
   <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
   <script>$.endlessPaginate();</script>
