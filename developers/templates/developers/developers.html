@@ -97,18 +97,18 @@
   <h3 class="title mt-5">{% trans 'Tools' %}</h3>
 
     <!-- App -->
-    <h3 class="mt-5">{% trans 'Tracker' %}</h3>
+    <h3 class="mt-5">{% trans 'Explorer' %}</h3>
     <div class="row-flex minicard">
-      {% for tracker in trackers %}
-      <script>minicard_list[{{ tracker.id }}] = ["{{ tracker.minicard_logo_w.url }}", "{{ tracker.minicard_logo.url }}"];</script>
-      <a target="_blank" href="{{ tracker.minicard_link }}" class="sblock">
+      {% for explorer in explorers %}
+      <script>minicard_list[{{ explorer.id }}] = ["{{ explorer.minicard_logo_w.url }}", "{{ explorer.minicard_logo.url }}"];</script>
+      <a target="_blank" href="{{ explorer.minicard_link }}" class="sblock">
         {% if nightmode == True %}
-          <img id="{{ tracker.id }}" src="{{ tracker.minicard_logo_w.url }}">
+          <img id="{{ explorer.id }}" src="{{ explorer.minicard_logo_w.url }}">
         {% else %}
-          <img id="{{ tracker.id }}" src="{{ tracker.minicard_logo.url }}">
+          <img id="{{ explorer.id }}" src="{{ explorer.minicard_logo.url }}">
         {% endif %}
-        <div class="title">{{ tracker.minicard_title }}</div>
-        <div class="description">{{ tracker.minicard_description }}</div>
+        <div class="title">{{ explorer.minicard_title }}</div>
+        <div class="description">{{ explorer.minicard_description }}</div>
       </a>
       {% endfor %}
     </div>
