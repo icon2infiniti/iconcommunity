@@ -72,6 +72,11 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     except JSONRPCException as e:
         print(str(e.message))
 
+    #for wallet in preps['preps']:
+    #    params = {"address": wallet['address']}
+    #    email = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", params)
+    #    print(email['name'] + ' ' + email['email'])
+
     # Query and rebuild custom ranking list
     TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/10**18
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
