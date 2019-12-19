@@ -1,9 +1,8 @@
 from django.shortcuts import render
 
-#import feedparser
-#from bs4 import BeautifulSoup
+import feedparser
+from bs4 import BeautifulSoup
 
-#from datetime import datetime
 from dateutil.parser import parse
 import tweepy
 import praw
@@ -68,27 +67,30 @@ def news(request, template='news/news.html', extra_context=None):
     for dt in twitter_entries:
         dt['created_at'] = parse(dt['created_at'])
 
-    # Reddit
+    #Reddit
     reddit = praw.Reddit(client_id='GYqmrmi5cunm1A',
                          client_secret='rydmYFNqBKpnwkvjwybmfNzSY-g',
                          user_agent='icon.community')
 
     reddit_entries = reddit.subreddit('helloicon').hot(limit=10)
 
-    '''
-    for submission in submissions:
-        print(submission.title)  # Output: the submission's title
-        print(submission.score)  # Output: the submission's score
-        print(submission.id)  # Output: the submission's ID
-        print(submission.url)  # Output: the URL the submission points to
-        print(submission.num_comments)
-    '''
+
+    #TheICONist
+    THEICONIST = feedparser.parse('https://theicon.ist/feed/')
+    theiconist_entries = THEICONIST['entries']
+    for entry in theiconist_entries:
+        entry['published'] = parse(entry['published'])
+        soup = BeautifulSoup(entry['content'][0]['value'], 'html.parser')
+        imgtag = soup.find('img')
+        if imgtag:
+            entry['thumb'] = imgtag['src']
+
 
     context.update({
         'subsection': 'NEWS',
         'reddit_entries': reddit_entries,
         #'medium_entries': medium_entries,
-        #'theiconist_entries': theiconist_entries,
+        'theiconist_entries': theiconist_entries,
         'twitter_entries': twitter_entries,
     })
 
