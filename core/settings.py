@@ -20,6 +20,7 @@ INSTALLED_APPS = [
 
     'prep',
     'dashboard',
+    'news',
     'iconsensus',
     'resources',
     'developers',
