@@ -66,8 +66,6 @@
       </div>
     </div>
 
-
-
     <!-- MEDIUM
     <div class="row">
       <div class="col-12 mb-5">
@@ -96,7 +94,7 @@
     </div>
     -->
 
-    <!-- THEICONIST
+    <!-- THEICONIST -->
     <div class="row">
       <div class="col-12 mb-5">
         {% if nightmode == True %}
@@ -115,6 +113,7 @@
             {% endif %}
           </div>
           <div class="col-9">
+            {{ entry.author }} at {{ entry.published }}<br>
             <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
           </div>
         </div>
@@ -122,7 +121,6 @@
         {% endfor %}
       </div>
     </div>
-    -->
 
   </div>
 
