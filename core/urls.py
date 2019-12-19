@@ -9,6 +9,7 @@ urlpatterns = [
     path('', include('dashboard.urls')),
     path('prep/', include('prep.urls')),
     path('dashboard/', include('dashboard.urls')),
+    path('news/', include('news.urls')),
     path('iconsensus/', include('iconsensus.urls')),
     path('resources/', include('resources.urls')),
     path('developers/', include('developers.urls')),

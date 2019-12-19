@@ -104,6 +104,16 @@
           </a>
         </li>
 
+        <!-- News -->
+        <li {% if section == 'NEWS' %}class="active"{% endif %}>
+          <a href="/news/">
+            <i class="tim-icons">
+              <img src="{% static 'logo/news.png' %}" width="25" height="25" style="margin-top: -10px; margin-left: -5px;">
+            </i>
+            <p>{% trans 'News' %}</p>
+          </a>
+        </li>
+
         <!-- ICONSENSUS -->
         <li {% if section == 'ICONSENSUS' %}class="active"{% endif %}>
           <a data-toggle="collapse" href="#iconsensusSub">

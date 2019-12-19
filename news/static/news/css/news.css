@@ -1,0 +1,45 @@
+
+.headerimg {
+  height: 40px;
+  margin-bottom: 30px;
+  margin-left: 5px;
+}
+
+.white-content .divideline {
+  border-top: 1px solid #cccccc;
+}
+
+.divideline {
+  border-top: 1px solid #666666;
+}
+
+.thumbnails {
+  width: 55px;
+  height: 55px;
+  margin-left: 5px;
+}
+
+.thumbdiv {
+  min-width: 55px;
+  max-width: 80px;
+}
+
+.entrycontent {
+  word-break: break-word;
+}
+
+.white-content .newslink {
+  color: #000000;
+}
+
+.newslink {
+  color: #cccccc;
+}
+
+.newslink:hover {
+  color: #1aaaba;
+}
+.spacer {
+  margin-left: 6px;
+  margin-right: 14px;
+}
