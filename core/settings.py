@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'el_pagination',
     'mathfilters',
     'feedparser',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +122,8 @@ STATICFILES_DIRS = [
 #MEDIA_ROOT = "/home/iconcommunity/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+CRONJOBS = [
+    ('*/1 * * * *', 'news.cron.latest_news', '>> ./cron.log')
+]
