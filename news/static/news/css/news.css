@@ -19,8 +19,17 @@
   margin-left: 5px;
 }
 
+.thumbnailstwitter {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-left: 10px;
+}
+
 .thumbdiv {
   min-width: 55px;
+  min-height: 55px;
   max-width: 80px;
 }
 
@@ -33,7 +42,7 @@
 }
 
 .newslink {
-  color: #cccccc;
+  color: rgb(255, 255, 255);
 }
 
 .newslink:hover {
@@ -42,4 +51,32 @@
 .spacer {
   margin-left: 6px;
   margin-right: 14px;
+}
+
+.white-content .author {
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+
+.author {
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.white-content .published {
+  color: #666666;
+}
+
+.published {
+  color: rgb(136, 153, 166);
+}
+
+.white-content .foot {
+  margin-top: 4px;
+  color: #666666;
+}
+
+.foot {
+  margin-top: 4px;
+  color: rgb(136, 153, 166);
 }
