@@ -27,6 +27,7 @@ def latest_tweets():
         tweet.retweet = entry['retweet_count']
         tweet.likes = entry['favorite_count']
         tweet.save()
+        '''
         print('thumb: '+tweet.thumb)
         print('author: ' + tweet.author)
         print('created_at: ' + str(tweet.created_at))
@@ -35,7 +36,7 @@ def latest_tweets():
         print('retweet: ' + str(tweet.retweet))
         print('likes: ' + str(tweet.likes))
         print('queried_at: ' + str(tweet.queried_at))
-
+        '''
 
 def latest_reddits():
     print("Reddit!")
@@ -57,6 +58,7 @@ def latest_reddits():
         reddit.score = entry.score
         reddit.num_comments = entry.num_comments
         reddit.save()
+        '''
         print('thumb: '+reddit.thumbnail)
         print('author: ' + reddit.author)
         print('created: ' + str(reddit.created))
@@ -64,7 +66,7 @@ def latest_reddits():
         print('url: ' + reddit.url)
         print('score: ' + str(reddit.score))
         print('num_comments: ' + str(reddit.num_comments))
-
+        '''
 
 def latest_iconists():
     print("Iconist!")
@@ -84,12 +86,13 @@ def latest_iconists():
         iconist.link = entry.link
         iconist.title = entry.title
         iconist.save()
+        '''
         print('thumb: '+iconist.thumb)
         print('author: ' + iconist.author)
         print('published: ' + str(iconist.published))
         print('link: ' + iconist.link)
         print('title: ' + iconist.title)
-
+        '''
 
 def latest_mediums():
     print("Medium!")
@@ -110,9 +113,11 @@ def latest_mediums():
         medium.link = entry.link
         medium.title = entry.title
         medium.save()
+        '''
         print('thumb: '+medium.thumb)
         print('creator: ' + medium.author)
         print('category: ' + medium.category)
         print('published: ' + str(medium.published))
         print('link: ' + medium.link)
         print('title: ' + medium.title)
+        '''
