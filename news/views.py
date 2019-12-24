@@ -1,13 +1,13 @@
 from django.shortcuts import render
-from news.cron import latest_tweets, latest_reddits, latest_iconists
+#from news.cron import latest_tweets, latest_reddits, latest_iconists
 from .models import Tweet, Reddit, Iconist
 
-import feedparser
-from bs4 import BeautifulSoup
+#import feedparser
+#from bs4 import BeautifulSoup
 
-from dateutil.parser import parse
+#from dateutil.parser import parse
 #import tweepy
-import praw
+#import praw
 
 
 def init_mode(request):
@@ -30,9 +30,9 @@ def init_mode(request):
 def news(request, template='news/news.html', extra_context=None):
     context = init_mode(request)
 
-    latest_tweets()
-    latest_reddits()
-    latest_iconists()
+    #latest_tweets()
+    #latest_reddits()
+    #latest_iconists()
 
     '''
     MEDIUM = feedparser.parse('https://medium.com/feed/helloiconworld')
