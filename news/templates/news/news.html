@@ -20,16 +20,16 @@
         {% for entry in twitter_entries %}
         <div class="row">
           <div class="col-3 thumbdiv">
-            {% if entry.user.profile_image_url_https %}
-              <a class="newslink" href="https://twitter.com/{{ entry.user.screen_name }}/status/{{ entry.id }}" target="_blank"><img class="thumbnails" src="{{ entry.user.profile_image_url_https }}"></a>
+            {% if entry.thumb %}
+              <a class="newslink" href="https://twitter.com/{{ entry.author }}/status/{{ entry.id }}" target="_blank"><img class="thumbnails" src="{{ entry.thumb }}"></a>
             {% else %}
-              <a class="newslink" href="https://twitter.com/{{ entry.user.screen_name }}/status/{{ entry.id }}" target="_blank"><img class="thumbnails" src="{% static 'news/img/twitterthumb.png' %}"></a>
+              <a class="newslink" href="https://twitter.com/{{ entry.author }}/status/{{ entry.id }}" target="_blank"><img class="thumbnails" src="{% static 'news/img/twitterthumb.png' %}"></a>
             {% endif %}
           </div>
           <div class="col-9">
-            {{ entry.user.screen_name }} at {{ entry.created_at }}<br>
-            <a class="newslink" href="https://twitter.com/{{ entry.user.screen_name }}/status/{{ entry.id }}" target="_blank">{{ entry.text }}</a><br>
-            <i class="fas fa-retweet"></i> <span class="spacer">{{ entry.retweet_count }}</span><i class="fas fa-heart"></i> <span class="spacer">{{ entry.favorite_count }}</span>
+            {{ entry.author }} at {{ entry.created_at }}<br>
+            <a class="newslink" href="{{ entry.url }}" target="_blank">{{ entry.content }}</a><br>
+            <i class="fas fa-retweet"></i> <span class="spacer">{{ entry.retweet }}</span><i class="fas fa-heart"></i> <span class="spacer">{{ entry.likes }}</span>
           </div>
         </div>
         <hr class="divideline">
@@ -103,7 +103,7 @@
           <img id="theiconist" class="headerimg" src="{% static 'news/img/theiconist.png' %}">
         {% endif %}
 
-        {% for entry in theiconist_entries %}
+        {% for entry in iconist_entries %}
         <div class="row">
           <div class="col-3 thumbdiv">
             {% if entry.thumb %}
@@ -121,6 +121,7 @@
         {% endfor %}
       </div>
     </div>
+
 
   </div>
 
