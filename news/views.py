@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from news.cron import latest_tweets, latest_reddits, latest_iconists, latest_mediums
+#from news.cron import latest_tweets, latest_reddits, latest_iconists, latest_mediums
 from .models import Tweet, Reddit, Iconist, Medium
 
 #import feedparser
@@ -30,10 +30,10 @@ def init_mode(request):
 def news(request, template='news/news.html', extra_context=None):
     context = init_mode(request)
 
-    latest_tweets()
-    latest_reddits()
-    latest_iconists()
-    latest_mediums()
+    #latest_tweets()
+    #latest_reddits()
+    #latest_iconists()
+    #latest_mediums()
 
     '''
     MEDIUM = feedparser.parse('https://medium.com/feed/helloiconworld')
