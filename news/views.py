@@ -30,9 +30,9 @@ def init_mode(request):
 def news(request, template='news/news.html', extra_context=None):
     context = init_mode(request)
 
-    #latest_tweets()
-    #latest_reddits()
-    #latest_iconists()
+    latest_tweets()
+    latest_reddits()
+    latest_iconists()
     latest_mediums()
 
     '''
