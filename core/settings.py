@@ -125,5 +125,7 @@ MEDIA_URL = '/media/'
 
 
 CRONJOBS = [
-    ('*/1 * * * *', 'news.cron.latest_news', '>> /tmp/cronjobs.log')
+    ('*/15 * * * *', 'news.cron.latest_tweets', '>> /tmp/cronjobs.log'),
+    ('*/60 * * * *', 'news.cron.latest_reddits', '>> /tmp/cronjobs.log'),
+    ('0 0 * * *', 'news.cron.latest_iconists', '>> /tmp/cronjobs.log'),
 ]
