@@ -1,6 +1,6 @@
 from django.shortcuts import render
-#from news.cron import latest_tweets, latest_reddits, latest_iconists
-from .models import Tweet, Reddit, Iconist
+from news.cron import latest_tweets, latest_reddits, latest_iconists, latest_mediums
+from .models import Tweet, Reddit, Iconist, Medium
 
 #import feedparser
 #from bs4 import BeautifulSoup
@@ -33,6 +33,7 @@ def news(request, template='news/news.html', extra_context=None):
     #latest_tweets()
     #latest_reddits()
     #latest_iconists()
+    latest_mediums()
 
     '''
     MEDIUM = feedparser.parse('https://medium.com/feed/helloiconworld')
@@ -65,6 +66,7 @@ def news(request, template='news/news.html', extra_context=None):
 
     twitter_entries = Tweet.objects.all()
     reddit_entries = Reddit.objects.all()
+    medium_entries = Medium.objects.all()
     iconist_entries = Iconist.objects.all()
 
     #Reddit
@@ -92,8 +94,8 @@ def news(request, template='news/news.html', extra_context=None):
         'subsection': 'NEWS',
         'twitter_entries': twitter_entries,
         'reddit_entries': reddit_entries,
+        'medium_entries': medium_entries,
         'iconist_entries': iconist_entries,
-        #'medium_entries': medium_entries,
     })
 
     if extra_context is not None:

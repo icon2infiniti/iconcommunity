@@ -1,4 +1,4 @@
-from .models import Tweet, Reddit, Iconist
+from .models import Tweet, Reddit, Iconist, Medium
 from dateutil.parser import parse
 import tweepy
 import praw
@@ -89,3 +89,30 @@ def latest_iconists():
         print('published: ' + str(iconist.published))
         print('link: ' + iconist.link)
         print('title: ' + iconist.title)
+
+
+def latest_mediums():
+    print("Medium!")
+
+    MEDIUM = feedparser.parse('https://medium.com/feed/helloiconworld')
+    medium_entries = MEDIUM['entries']
+
+    Medium.objects.all().delete()
+    for entry in medium_entries:
+        medium = Medium()
+        soup = BeautifulSoup(entry['content'][0]['value'], 'html.parser')
+        imgtag = soup.find('img')
+        if imgtag:
+            medium.thumb = imgtag['src']
+        medium.author = entry.author
+        medium.category = entry.category
+        medium.published = parse(entry['published'])
+        medium.link = entry.link
+        medium.title = entry.title
+        medium.save()
+        print('thumb: '+medium.thumb)
+        print('creator: ' + medium.author)
+        print('category: ' + medium.category)
+        print('published: ' + str(medium.published))
+        print('link: ' + medium.link)
+        print('title: ' + medium.title)
