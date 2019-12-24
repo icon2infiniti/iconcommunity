@@ -38,6 +38,7 @@ def latest_tweets():
         print('queried_at: ' + str(tweet.queried_at))
         '''
 
+
 def latest_reddits():
     print("Reddit!")
 
@@ -68,6 +69,7 @@ def latest_reddits():
         print('num_comments: ' + str(reddit.num_comments))
         '''
 
+
 def latest_iconists():
     print("Iconist!")
 
@@ -93,6 +95,7 @@ def latest_iconists():
         print('link: ' + iconist.link)
         print('title: ' + iconist.title)
         '''
+
 
 def latest_mediums():
     print("Medium!")
