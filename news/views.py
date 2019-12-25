@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from news.cron import latest_tweets, latest_reddits, latest_iconists, latest_mediums, latest_youtubes
+#from news.cron import latest_tweets, latest_reddits, latest_iconists, latest_mediums, latest_youtubes
 from .models import Tweet, Reddit, Iconist, Medium, YouTube
 
 
@@ -27,7 +27,7 @@ def news(request, template='news/news.html', extra_context=None):
     #latest_reddits()
     #latest_iconists()
     #latest_mediums()
-    latest_youtubes()
+    #latest_youtubes()
 
     twitter_entries = Tweet.objects.all()
     reddit_entries = Reddit.objects.all()
