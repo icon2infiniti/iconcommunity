@@ -1,10 +1,11 @@
-from .models import Tweet, Reddit, Iconist, Medium
+from .models import Tweet, Reddit, Iconist, Medium, YouTube
 from dateutil.parser import parse
 import tweepy
 import praw
 import feedparser
 from bs4 import BeautifulSoup
-
+import requests
+from isodate import parse_duration
 
 def latest_tweets():
     print("Tweet!")
@@ -124,3 +125,46 @@ def latest_mediums():
         print('link: ' + medium.link)
         print('title: ' + medium.title)
         '''
+
+
+def latest_youtubes():
+    print("YouTube!")
+
+    YOUTUBE_KEY = 'AIzaSyCE_5nBlyA8-mUfUh661k0AOfSbd5EhZeo'
+    search_url = 'https://www.googleapis.com/youtube/v3/search'
+    video_url = 'https://www.googleapis.com/youtube/v3/videos'
+
+    search_params = {
+        'part': 'snippet',
+        'q': 'ICX',
+        'key': YOUTUBE_KEY,
+        'maxResults': 10,
+        'type': 'video',
+    }
+    r = requests.get(search_url, params=search_params)
+    results = r.json()['items']
+
+    video_ids = []
+    for result in results:
+        video_ids.append(result['id']['videoId'])
+
+
+    video_params = {
+        'key': YOUTUBE_KEY,
+        'part': 'snippet,contentDetails',
+        'id': ','.join(video_ids),
+        'maxResults': 10
+    }
+    r = requests.get(video_url, params=video_params)
+    youtube_entries = r.json()['items']
+
+    YouTube.objects.all().delete()
+    for entry in youtube_entries:
+        youtube = YouTube()
+        youtube.youtube_id = entry['id']
+        youtube.title = entry['snippet']['title']
+        youtube.published = parse(entry['snippet']['publishedAt'])
+        youtube.duration = int(parse_duration(entry['contentDetails']['duration']).total_seconds()//60)
+        youtube.thumb = entry['snippet']['thumbnails']['default']['url']
+        youtube.author = entry['snippet']['channelTitle']
+        youtube.save()
