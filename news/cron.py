@@ -136,7 +136,7 @@ def latest_youtubes():
 
     search_params = {
         'part': 'snippet',
-        'q': 'ICX',
+        'q': 'ICON ICX',
         'key': YOUTUBE_KEY,
         'maxResults': 10,
         'type': 'video',
