@@ -129,4 +129,5 @@ CRONJOBS = [
     ('*/60 * * * *', 'news.cron.latest_reddits', '>> /tmp/cronjobs.log'),
     ('0 0 * * *', 'news.cron.latest_iconists', '>> /tmp/cronjobs.log'),
     ('0 0 * * *', 'news.cron.latest_mediums', '>> /tmp/cronjobs.log'),
+    ('0 0 * * *', 'news.cron.latest_youtubes', '>> /tmp/cronjobs.log'),
 ]
