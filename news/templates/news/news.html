@@ -21,9 +21,9 @@
         <div class="row">
           <div class="col-3 thumbdiv">
             {% if entry.thumb %}
-              <a class="newslink" href="https://twitter.com/{{ entry.author }}/status/{{ entry.id }}" target="_blank"><img class="thumbnailstwitter" src="{{ entry.thumb }}"></a>
+              <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnailstwitter" src="{{ entry.thumb }}"></a>
             {% else %}
-              <a class="newslink" href="https://twitter.com/{{ entry.author }}/status/{{ entry.id }}" target="_blank"><img class="thumbnailstwitter" src="{% static 'news/img/twitterthumb.png' %}"></a>
+              <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnailstwitter" src="{% static 'news/img/twitterthumb.png' %}"></a>
             {% endif %}
           </div>
           <div class="col-9">
@@ -54,9 +54,9 @@
         <div class="row">
           <div class="col-3 thumbdiv">
             {% if entry.thumbnail and entry.thumbnail != 'self' %}
-              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{{ entry.thumbnail }}"></a>
+              <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnails" src="{{ entry.thumbnail }}"></a>
             {% else %}
-              <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{% static 'news/img/redditthumb.png' %}"></a>
+              <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnails" src="{% static 'news/img/redditthumb.png' %}"></a>
             {% endif %}
           </div>
           <div class="col-9">
@@ -66,6 +66,39 @@
             <a class="newslink" href="{{ entry.url }}" target="_blank">{{ entry.title }}</a><br>
             <div class="foot">
               <i class="fas fa-arrow-up"></i> <span class="spacer">{{ entry.score }}</span> <i class="fas fa-comments"></i> <span class="spacer">{{ entry.num_comments }}</span>
+            </div>
+          </div>
+        </div>
+        <hr class="divideline">
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- YouTube -->
+    <div class="row">
+      <div class="col-12 mb-5">
+        {% if nightmode == True %}
+          <img id="youtube" class="headerimg" src="{% static 'news/img/youtube_w.png' %}">
+        {% else %}
+          <img id="youtube" class="headerimg" src="{% static 'news/img/youtube.png' %}">
+        {% endif %}
+
+        {% for entry in youtube_entries %}
+        <div class="row">
+          <div class="col-3 thumbdiv">
+            {% if entry.thumb and entry.thumb != 'self' %}
+              <a class="newslink" href="https://www.youtube.com/watch?v={{ entry.youtube_id }}" target="_blank"><img class="thumbnails" src="{{ entry.thumb }}"></a>
+            {% else %}
+              <a class="newslink" href="https://www.youtube.com/watch?v={{ entry.youtube_id }}" target="_blank"><img class="thumbnails" src="{% static 'news/img/youtubethumb.png' %}"></a>
+            {% endif %}
+          </div>
+          <div class="col-9">
+            <div style="margin-bottom: 4px;">
+              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.published }}</span>
+            </div>
+            <a class="newslink" href="https://www.youtube.com/watch?v={{ entry.youtube_id }}" target="_blank">{{ entry.title }}</a><br>
+            <div class="foot">
+              <i class="fas fa-clock"></i><span class="spacer">{{ entry.duration }} mins</span>
             </div>
           </div>
         </div>
@@ -143,12 +176,14 @@
   <script>
   function morning_image(){
     $('#reddit').attr("src", "{% static 'news/img/reddit.png' %}");
+    $('#youtube').attr("src", "{% static 'news/img/youtube.png' %}");
     $('#medium').attr("src", "{% static 'news/img/medium.png' %}");
     $('#theiconist').attr("src", "{% static 'news/img/theiconist.png' %}");
   }
 
   function night_image(){
     $('#reddit').attr("src", "{% static 'news/img/reddit_w.png' %}");
+    $('#youtube').attr("src", "{% static 'news/img/youtube_w.png' %}");
     $('#medium').attr("src", "{% static 'news/img/medium_w.png' %}");
     $('#theiconist').attr("src", "{% static 'news/img/theiconist_w.png' %}");
   }

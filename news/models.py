@@ -53,3 +53,16 @@ class Medium(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class YouTube(models.Model):
+    youtube_id = models.CharField(max_length=50, default='')
+    thumb = models.URLField(max_length=500, default='')
+    title = models.CharField(max_length=500, default='')
+    published = models.DateTimeField()
+    duration = models.IntegerField()
+    author = models.CharField(max_length=100, default='')
+    queried_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
