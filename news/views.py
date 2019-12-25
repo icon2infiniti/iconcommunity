@@ -31,7 +31,7 @@ def news(request, template='news/news.html', extra_context=None):
 
     twitter_entries = Tweet.objects.all()
     reddit_entries = Reddit.objects.all()
-    youtube_entries = YouTube.objects.all()
+    youtube_entries = YouTube.objects.all().order_by('-published')
     medium_entries = Medium.objects.all()
     iconist_entries = Iconist.objects.all()
 
