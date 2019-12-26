@@ -1,6 +1,8 @@
 from django.shortcuts import render
 #from news.cron import latest_tweets, latest_reddits, latest_iconists, latest_mediums, latest_youtubes
 from .models import Tweet, Reddit, Iconist, Medium, YouTube
+import datetime
+from datetime import timedelta
 
 
 def init_mode(request):
@@ -23,6 +25,9 @@ def init_mode(request):
 def news(request, template='news/news.html', extra_context=None):
     context = init_mode(request)
 
+    today = datetime.datetime.now()
+    long_ago = today + timedelta(days=-60)
+
     #latest_tweets()
     #latest_reddits()
     #latest_iconists()
@@ -31,9 +36,9 @@ def news(request, template='news/news.html', extra_context=None):
 
     twitter_entries = Tweet.objects.all()
     reddit_entries = Reddit.objects.all()
-    youtube_entries = YouTube.objects.all().order_by('-published')
-    medium_entries = Medium.objects.all()
-    iconist_entries = Iconist.objects.all()
+    youtube_entries = YouTube.objects.filter(published__gte=long_ago).order_by('-published')
+    medium_entries = Medium.objects.filter(published__gte=long_ago)
+    iconist_entries = Iconist.objects.filter(published__gte=long_ago)
 
     context.update({
         'subsection': 'NEWS',
