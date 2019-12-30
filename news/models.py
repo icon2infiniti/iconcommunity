@@ -66,3 +66,16 @@ class YouTube(models.Model):
 
     def __str__(self):
         return self.title
+
+
+'''
+class Featured(models.Model):
+    thumb = models.URLField(max_length=500, default='')
+    title = models.CharField(max_length=500, default='')
+    published = models.DateTimeField()
+    author = models.CharField(max_length=100, default='')
+    queried_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.title
+'''
