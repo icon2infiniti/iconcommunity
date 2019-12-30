@@ -53,7 +53,7 @@
         {% for entry in reddit_entries %}
         <div class="row">
           <div class="col-3 thumbdiv">
-            {% if entry.thumbnail and entry.thumbnail != 'self' %}
+            {% if entry.thumbnail and entry.thumbnail != 'self' and entry.thumbnail != 'default' %}
               <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnails" src="{{ entry.thumbnail }}"></a>
             {% else %}
               <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnails" src="{% static 'news/img/redditthumb.png' %}"></a>
