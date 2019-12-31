@@ -142,6 +142,7 @@ def latest_youtubes():
         'type': 'video',
     }
     r = requests.get(search_url, params=search_params)
+    print(r.json())
     results = r.json()['items']
 
     video_ids = []
