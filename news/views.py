@@ -34,7 +34,7 @@ def news(request, template='news/news.html', extra_context=None):
     #latest_mediums()
     #latest_youtubes()
 
-    twitter_entries = Tweet.objects.all()
+    twitter_entries = Tweet.objects.all().order_by('-created_at')
     reddit_entries = Reddit.objects.all()
     youtube_entries = YouTube.objects.filter(published__gte=long_ago).order_by('-published')
     medium_entries = Medium.objects.filter(published__gte=long_ago)
