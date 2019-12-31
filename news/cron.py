@@ -14,7 +14,7 @@ def latest_tweets():
     MAX_TWEETS = 20
     auth = tweepy.OAuthHandler("sq3iEj5FrRHtuZdHG209GNhNX", "it8cSeHYGPPB6pegyzgKUr9rZ4pT05NJVnQM0d3g5cpxTYdffx")
     api = tweepy.API(auth)
-    twitter_entries = [status._json for status in tweepy.Cursor(api.search,  q='#ICONProject -filter:retweets').items(MAX_TWEETS)]
+    twitter_entries = [status._json for status in tweepy.Cursor(api.search,  q='#ICONProject -filter:retweets -from:ICXshark').items(MAX_TWEETS)]
 
     Tweet.objects.all().delete()
     for entry in twitter_entries:
