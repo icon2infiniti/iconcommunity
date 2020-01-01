@@ -1,16 +1,21 @@
 from django.shortcuts import render
 
-# icon sdk test
+# icon sdk
 from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
-# coinmarketcap test
+# coinmarketcap
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
 
 from collections import OrderedDict
 from operator import itemgetter
+
+import requests
+
+from dashboard.cron import get_daily_transactions
+from .models import DailyTransactions
 
 
 def init_mode(request):
@@ -132,6 +137,18 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     prep_main = list(filter(lambda d: d['grade'] == 'Main P-Rep', prep_all))
     prep_sub = list(filter(lambda d: d['grade'] == 'Sub P-Rep', prep_all))
 
+    # Daily transactions
+    get_daily_transactions()
+    daily_txs = DailyTransactions.objects.all()
+
+    targetDates = []
+    txCounts = []
+
+    for entry in daily_txs:
+        md = entry.targetDate.split("-")[1] + '/' + entry.targetDate.split("-")[2]
+        targetDates.append(md)
+        txCounts.append(entry.txCount)
+
     context.update({
         'ac3data': ac3data,
         'prep_all': prep_all,
@@ -142,6 +159,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'prep_sub': prep_sub,
         'countries_alpha2': countries_alpha2,
         'countries_name_sorted': countries_name_sorted,
+        'targetDates': targetDates,
+        'txCounts': txCounts,
     })
     if extra_context is not None:
         context.update(extra_context)
@@ -157,8 +176,6 @@ def preplist(request, type):
 
 
 def prep_reward(i_rep, delegation_rate):
-    #print("irep: " + str(i_rep))
-    #print("delegation: " + str(delegation_rate))
     return i_rep * 0.5 * 100 * (delegation_rate/100)
 
 

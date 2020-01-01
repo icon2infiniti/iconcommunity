@@ -169,3 +169,9 @@ def latest_youtubes():
         youtube.thumb = entry['snippet']['thumbnails']['default']['url']
         youtube.author = entry['snippet']['channelTitle']
         youtube.save()
+
+
+def daily_news_cron():
+    latest_iconists()
+    latest_mediums()
+    latest_youtubes()
