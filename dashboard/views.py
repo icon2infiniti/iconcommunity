@@ -12,9 +12,7 @@ import json
 from collections import OrderedDict
 from operator import itemgetter
 
-import requests
-
-from dashboard.cron import get_daily_transactions
+#from dashboard.cron import get_daily_transactions
 from .models import DailyTransactions
 
 
@@ -138,7 +136,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     prep_sub = list(filter(lambda d: d['grade'] == 'Sub P-Rep', prep_all))
 
     # Daily transactions
-    get_daily_transactions()
+    #get_daily_transactions()
     daily_txs = DailyTransactions.objects.all()
 
     targetDates = []
