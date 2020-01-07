@@ -2,11 +2,6 @@ from .models import DailyTransactions, WalletCount
 import requests
 
 
-def daily_dashboard_cron():
-    get_daily_transactions()
-    get_wallet_count()
-
-
 def get_daily_transactions():
     print("Daily Transactions!")
 
@@ -40,3 +35,8 @@ def get_wallet_count():
         selectDate=wc['selectDate'].split("T")[0],
         defaults={'selectDate': wc['selectDate'].split("T")[0], 'balanceCount': wc['balanceCount'], 'totalCount': wc['totalCount']}
     )
+
+
+def daily_dashboard_cron():
+    get_daily_transactions()
+    get_wallet_count()
