@@ -128,5 +128,5 @@ CRONJOBS = [
     ('*/15 * * * *', 'news.cron.latest_tweets', '>> /tmp/cronjobs.log'),
     ('*/60 * * * *', 'news.cron.latest_reddits', '>> /tmp/cronjobs.log'),
     ('0 0 * * *', 'news.cron.daily_news_cron', '>> /tmp/cronjobs.log'),
-    ('0 0 * * *', 'dashboard.cron.get_daily_transactions', '>> /tmp/cronjobs.log'),
+    ('0 0 * * *', 'dashboard.cron.daily_dashboard_cron', '>> /tmp/cronjobs.log'),
 ]

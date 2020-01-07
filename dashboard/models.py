@@ -7,3 +7,13 @@ class DailyTransactions(models.Model):
 
     def __str__(self):
         return str(self.targetDate)
+
+
+class WalletCount(models.Model):
+    selectDate = models.CharField(max_length=20, default='')
+    #active = models.IntegerField()
+    totalCount = models.IntegerField()
+    balanceCount = models.IntegerField()
+
+    def __str__(self):
+        return str(self.selectDate)
