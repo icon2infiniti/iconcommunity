@@ -175,3 +175,11 @@ def daily_news_cron():
     latest_iconists()
     latest_mediums()
     latest_youtubes()
+
+
+def all_news_cron():
+    latest_tweets()
+    latest_reddits()
+    latest_iconists()
+    latest_mediums()
+    latest_youtubes()
