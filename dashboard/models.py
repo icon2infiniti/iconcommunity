@@ -17,3 +17,15 @@ class WalletCount(models.Model):
 
     def __str__(self):
         return str(self.selectDate)
+
+
+class RewardRate(models.Model):
+    total_delegation = models.FloatField()
+    total_supply = models.FloatField()
+    circ_supply = models.FloatField()
+    transactionCount = models.IntegerField()
+    publicTreasury = models.FloatField()
+    create_day = models.DateField()
+
+    def __str__(self):
+        return str(self.create_day)
