@@ -2,11 +2,9 @@
 {% load static i18n %}
 {% block extra_head %}
   <link href="{% static 'resources/css/resources.css' %}" rel="stylesheet"/>
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
-      var general_ids = {{ general_ids|safe }};
-      var events_ids = {{ events_ids|safe }};
-      var interviews_ids = {{ events_ids|safe }};
+      // Global array for all players, for stopping purposes
+      var players = [];
   </script>
 {% endblock %}
 {% block title %}Collateral{% endblock %}
@@ -101,13 +99,13 @@
 
   <!-- VIDEOS
   <h3 class="title mt-5">{ trans 'Videos' }</h3>
-
   <h3 class="mt-5">{ trans 'General' }</h3>
   <div class="endless_page_template">
     { include "resources/video_general_page.html" }
   </div>
-  <br><br>
   -->
+
+  <br><br>
 
   <!--
   <h3 class="mt-5">{ trans 'Events' }</h3>
@@ -139,8 +137,7 @@
   <script>$.endlessPaginate();</script>
 
   <script>
-      var players = [];
-
+      /*
       function onYouTubeIframeAPIReady() {
           for (var i = 0; i < general_ids.length; i++) {
               var player = new YT.Player(general_ids[i], {
@@ -151,6 +148,7 @@
               });
               players.push(player);
           }
+          console.log(players);
       }
 
       function onPlayerStateChange(event) {
@@ -166,5 +164,7 @@
                   players[i].stopVideo();
           }
       }
+
+       */
   </script>
 {% endblock %}
