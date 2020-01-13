@@ -4,7 +4,7 @@ from django.shortcuts import render
 from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
-from dashboard.cron import daily_dashboard_cron
+#from dashboard.cron import daily_dashboard_cron
 
 from .models import DailyTransactions, WalletCount, RewardRate
 
