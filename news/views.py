@@ -1,6 +1,6 @@
 from django.shortcuts import render
 #from news.cron import latest_tweets, latest_reddits, latest_iconists, latest_mediums, latest_youtubes
-from news.cron import all_news_cron
+#from news.cron import all_news_cron
 from .models import Tweet, Reddit, Iconist, Medium, YouTube
 import datetime
 from datetime import timedelta
@@ -29,7 +29,7 @@ def news(request, template='news/news.html', extra_context=None):
     today = datetime.datetime.now()
     long_ago = today + timedelta(days=-60)
 
-    all_news_cron()
+    #all_news_cron()
     #latest_tweets()
     #latest_reddits()
     #latest_iconists()
