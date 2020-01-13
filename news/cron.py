@@ -174,7 +174,7 @@ def latest_youtubes():
 def daily_news_cron():
     latest_iconists()
     latest_mediums()
-    latest_youtubes()
+    #latest_youtubes()
 
 
 def all_news_cron():
