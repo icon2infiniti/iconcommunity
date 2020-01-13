@@ -23,43 +23,29 @@
 
 
 {% endblock %}
-{% block title %}P-Rep Candidates{% endblock %}
+{% block title %}Candidates{% endblock %}
 {% block twittertitle %}P-Rep Candidates{% endblock %}
 {% block ogtitle %}P-Rep Candidates{% endblock %}
-{% block section %}P-Rep Candidates{% endblock %}
+{% block section %}Candidates{% endblock %}
 {% block content %}
 
   <div class="container2">
 
-    <div id="gmap"></div>
-
+    <!--<div id="gmap"></div>
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
     <script src="{% static 'js/core/jquery.min.js' %}"></script>
     <script src="{% static 'iconsensus/js/map.js' %}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC8QmgeeNNnaMvqqMOavForCRI7kqGpd9E&callback=initMap&language=en&region=US"></script>
+    -->
 
     <div class="row">
       <div class="col-md-12">
         <div class="card">
 
-          <!-- HEADER
+          <!-- HEADER -->
           <div class="card-header">
-            <div class="tools float-right">
-              <div class="dropdown">
-                <button type="button" class="btn btn-default dropdown-toggle btn-link btn-icon" data-toggle="dropdown">
-                  <i class="tim-icons icon-settings-gear-63"></i>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                  <a class="dropdown-item text-danger" href="#">Remove Data</a>
-                </div>
-              </div>
-            </div>
-            <h4 class="card-title">Pre-Registeration</h4>
+            <h2 class="card-title">{% trans 'P-Rep Candidates' %}</h2>
           </div>
-          -->
 
           <!-- BODY -->
           <div class="card-body">
@@ -76,7 +62,7 @@
                   <th width="10%"></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="tborder">
 
                 {% for prep in preps %}
                   <tr>

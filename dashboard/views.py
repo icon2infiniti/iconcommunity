@@ -4,16 +4,11 @@ from django.shortcuts import render
 from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
-# coinmarketcap
-from requests import Request, Session
-from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
-import json
+from dashboard.cron import daily_dashboard_cron
 
-from collections import OrderedDict
-from operator import itemgetter
+from .models import DailyTransactions, WalletCount, RewardRate
 
-#from dashboard.cron import get_daily_transactions
-from .models import DailyTransactions
+import requests
 
 
 def init_mode(request):
@@ -33,132 +28,171 @@ def init_mode(request):
     return context
 
 
+def top20wallets():
+    url = 'https://tracker.icon.foundation/v0/wallet/addrList'
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    rjson = r.json()['data']
+    return rjson
+
+
+def main_info():
+    url = 'https://tracker.icon.foundation/v3/main/mainInfo'
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    rjson = r.json()['tmainInfo']
+    return rjson
+
+
+def tx24h():
+    url = 'https://tracker.icon.foundation/v3/main/txCountIn24h'
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    rjson = r.json()['data']
+    return rjson
+
+
+def rrep(delrate):
+    r_min = 0.02
+    r_max = 0.12
+    r_point = 0.7
+    rrep_result = ((r_max - r_min) / (r_point ** 2)) * ((delrate / 100) - r_point) ** 2 + r_min
+    rrep3rate = round(rrep_result * 3 * 100, 2)
+    return rrep3rate
+
+
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
 
-    # CMC data, consider upgrading to pro or use oracle, need to refactor this
-    url = 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest'
-    parameters = {
-        'id': '2099'
-    }
-    headers = {
-        'Accepts': 'application/json',
-        'X-CMC_PRO_API_KEY': 'abd96001-925b-40d1-8160-9e02a66e7f5a',
-    }
+    #daily_dashboard_cron()
 
-    session = Session()
-    session.headers.update(headers)
-
-    try:
-        response = session.get(url, params=parameters)
-        data = json.loads(response.text)
-        icx_price = data["data"]["2099"]["quote"]["USD"]["price"]
-    except (ConnectionError, Timeout, TooManyRedirects) as e:
-        print(e)
-
-    parameters = {
-        'id': '2722',  # AC3=2722, ICX=2099, USD=2781
-        'convert': 'ICX'
-    }
-    try:
-        response = session.get(url, params=parameters)
-        data = json.loads(response.text)
-        ac3data = data["data"]["2722"]
-    except (ConnectionError, Timeout, TooManyRedirects) as e:
-        print(e)
-
-    # GetPReps
-    params = {}
-    preps = {}
-    try:
-        preps = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPReps", params)
-    except JSONRPCException as e:
-        print(str(e.message))
-
-    #for wallet in preps['preps']:
-    #    params = {"address": wallet['address']}
-    #    email = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", params)
-    #    print(email['name'] + ' ' + email['email'])
-
-    # Query and rebuild custom ranking list
-    TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/10**18
-    PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
-
-    TOTAL_IREP = 0
-
-    for prep in preps['preps']:
-        if int(prep['grade'],16) == 0:
-            TOTAL_IREP += int(int(prep['irep'], 16)/10**18)
-
-    countries = {}
-    for prep in preps['preps']:
-        prep_grade = int(prep['grade'], 16)
-        prep['grade'] = PREP_GRADE[prep_grade]
-        irep = int(int(prep['irep'], 16)/10**18)
-        prep['irep'] = '{:,}'.format(irep)
-        prep['stake'] = int(prep['stake'], 16)/10**18
-        delegated = int(prep['delegated'], 16)/10**18
-        prep['delegated'] = delegated  # = '{:,}'.format(delegated)
-        delegation_rate = delegated / TOTAL_DELEGATED * 100
-        prep['delegate_percent'] = delegation_rate
-        prep['reward'] = prep_reward(TOTAL_IREP/22, delegation_rate)
-        prep['reward_usd'] = int(prep['reward'])*icx_price
-        prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
-        prep['totalBlocks'] = int(prep['totalBlocks'], 16)
-
-        if not prep['country'] in countries:
-            countries[prep['country']] = 1
+    #####################################################################################
+    # Top wallets
+    #####################################################################################
+    t20 = top20wallets()
+    ret20 = []
+    count = 0
+    tokens_total = 0
+    percent_total = 0
+    for wallet in t20:
+        tokens_total += float(wallet['balance'])
+        percent_total += float(wallet['percentage'])
+        if(count == 0):
+            ret20.append({'name': wallet['address'], 'y': wallet['percentage'], 'tokens': wallet['balance'], 'sliced': 'true', 'selected': 'true'})
         else:
-            countries[prep['country']] += 1
+            ret20.append({'name': wallet['address'], 'tokens': wallet['balance'], 'y': wallet['percentage']})
+        count += 1
 
-        # get Prep details, but too slow. Do more efficient way
-        # address = {
-        #   "address": prep['address']
-        # }
-        # try:
-        #    prep['detail'] = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", address)
-        # except JSONRPCException as e:
-        #    print(str(e.message))
+    #####################################################################################
+    # Main Info
+    #####################################################################################
+    maininfo = main_info()
+    total_supply = maininfo['icxSupply']
+    marketcap = maininfo['marketCap']
+    circulating_supply = maininfo['icxCirculationy']
+    public_treasury = maininfo['publicTreasury']
 
-        #prep_json = prep['detail']['details']
-        # print(prep_json)
+    remain_token = float(total_supply) - tokens_total
+    remain_percent = 100 - percent_total
+    ret20.append({'name': 'REMAINING ACCOUNTS', 'tokens': remain_token, 'y': remain_percent})
 
-    countries_alpha2 = {}
-    countries_name = {}
-    for k, v in countries.items():
-        countries_alpha2[convert_alpha_3_to_2(k)] = v
-        countries_name[convert_alpha_3_to_name(k)] = v
-
-    countries_name_sorted = OrderedDict(sorted(countries_name.items(), key=itemgetter(1), reverse=True))
-
-    prep_all = preps['preps']
-    prep_main = list(filter(lambda d: d['grade'] == 'Main P-Rep', prep_all))
-    prep_sub = list(filter(lambda d: d['grade'] == 'Sub P-Rep', prep_all))
-
+    #####################################################################################
     # Daily transactions
-    #get_daily_transactions()
-    daily_txs = DailyTransactions.objects.all()
+    #####################################################################################
+    daily_txs = DailyTransactions.objects.all().order_by('targetDate')
 
     targetDates = []
     txCounts = []
 
     for entry in daily_txs:
-        md = entry.targetDate.split("-")[1] + '/' + entry.targetDate.split("-")[2]
+        md = entry.targetDate.split("-")[1].lstrip("0") + '/' + entry.targetDate.split("-")[2].lstrip("0")
         targetDates.append(md)
         txCounts.append(entry.txCount)
 
+    transactions_24h = tx24h()
+    transactions_all = maininfo['transactionCount']
+
+    #####################################################################################
+    # Total Vote / Stake
+    #####################################################################################
+    params = {}
+    try:
+        preps = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPReps", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+
+    total_voted = int(preps['totalDelegated'], 16)/10**18
+    total_stake = int(preps['totalStake'], 16)/10**18
+
+    #####################################################################################
+    # Wallet Count
+    #####################################################################################
+    #get_wallet_count()
+    wallet_counts = WalletCount.objects.all().order_by('selectDate')
+
+    selectDates = []
+    totalCounts = []
+    balanceCounts = []
+
+    for entry in wallet_counts:
+        md = entry.selectDate.split("-")[1].lstrip("0") + '/' + entry.selectDate.split("-")[2].lstrip("0")
+        selectDates.append(md)
+        totalCounts.append(entry.totalCount)
+        balanceCounts.append(entry.balanceCount)
+
+    #####################################################################################
+    # Reward Rate
+    #####################################################################################
+    rewardrate = RewardRate.objects.all().order_by('create_day')
+
+    total_supply_list = []
+    annual_reward_list = []
+    reward_rate_dates_list = []
+    for entry in rewardrate:
+        total_supply_list.append(entry.total_supply)
+        annual_reward_list.append(rrep(entry.total_delegation/entry.total_supply*100))
+        reward_rate_dates_list.append(str(entry.create_day).split("-")[1].lstrip("0")+"/"+str(entry.create_day).split("-")[2].lstrip("0"))
+
+    annual_reward_list.pop(0)
+    reward_rate_dates_list.pop(0)
+
+    annual_inflation_list = []
+    for i in range(len(total_supply_list)):
+        if i >= 1:
+            daily_rate = total_supply_list[i]/total_supply_list[i-1]-1
+            annual_rate = round(((daily_rate+1)**365-1)*100, 2)
+            annual_inflation_list.append(annual_rate)
+
+    #print(delegation_rate_list)
+    #print(inflation_rate_list)
+
     context.update({
-        'ac3data': ac3data,
-        'prep_all': prep_all,
-        'main_preps_count': len(prep_main),
-        'sub_preps_count': len(prep_sub),
-        'preps_count': len(prep_all),
-        'prep_main': prep_main,
-        'prep_sub': prep_sub,
-        'countries_alpha2': countries_alpha2,
-        'countries_name_sorted': countries_name_sorted,
+        'ret20': ret20,
         'targetDates': targetDates,
         'txCounts': txCounts,
+        'transactions_24h': transactions_24h,
+        'transactions_all': transactions_all,
+
+        'marketcap': marketcap,
+        'circulating_supply': circulating_supply,
+        'total_supply': total_supply,
+        'public_treasury': public_treasury,
+        'total_voted': total_voted,
+        'total_stake': total_stake,
+
+        'selectDates': selectDates,
+        'totalCounts': totalCounts,
+        'balanceCounts': balanceCounts,
+
+        'annual_reward_list': annual_reward_list,
+        'annual_inflation_list': annual_inflation_list,
+        'reward_rate_dates_list': reward_rate_dates_list,
     })
     if extra_context is not None:
         context.update(extra_context)
@@ -171,513 +205,3 @@ def preplist(request, type):
         'section': 'P-REP LISTING'
     })
     return render(request, 'dashboard/preplist.html', context)
-
-
-def prep_reward(i_rep, delegation_rate):
-    return i_rep * 0.5 * 100 * (delegation_rate/100)
-
-
-def convert_alpha_3_to_2(code):
-    countryISOMapping = {
-        "AFG": "AF",
-        "ALA": "AX",
-        "ALB": "AL",
-        "DZA": "DZ",
-        "ASM": "AS",
-        "AND": "AD",
-        "AGO": "AO",
-        "AIA": "AI",
-        "ATA": "AQ",
-        "ATG": "AG",
-        "ARG": "AR",
-        "ARM": "AM",
-        "ABW": "AW",
-        "AUS": "AU",
-        "AUT": "AT",
-        "AZE": "AZ",
-        "BHS": "BS",
-        "BHR": "BH",
-        "BGD": "BD",
-        "BRB": "BB",
-        "BLR": "BY",
-        "BEL": "BE",
-        "BLZ": "BZ",
-        "BEN": "BJ",
-        "BMU": "BM",
-        "BTN": "BT",
-        "BOL": "BO",
-        "BIH": "BA",
-        "BWA": "BW",
-        "BVT": "BV",
-        "BRA": "BR",
-        "VGB": "VG",
-        "IOT": "IO",
-        "BRN": "BN",
-        "BGR": "BG",
-        "BFA": "BF",
-        "BDI": "BI",
-        "KHM": "KH",
-        "CMR": "CM",
-        "CAN": "CA",
-        "CPV": "CV",
-        "CYM": "KY",
-        "CAF": "CF",
-        "TCD": "TD",
-        "CHL": "CL",
-        "CHN": "CN",
-        "HKG": "HK",
-        "MAC": "MO",
-        "CXR": "CX",
-        "CCK": "CC",
-        "COL": "CO",
-        "COM": "KM",
-        "COG": "CG",
-        "COD": "CD",
-        "COK": "CK",
-        "CRI": "CR",
-        "CIV": "CI",
-        "HRV": "HR",
-        "CUB": "CU",
-        "CYP": "CY",
-        "CZE": "CZ",
-        "DNK": "DK",
-        "DJI": "DJ",
-        "DMA": "DM",
-        "DOM": "DO",
-        "ECU": "EC",
-        "EGY": "EG",
-        "SLV": "SV",
-        "GNQ": "GQ",
-        "ERI": "ER",
-        "EST": "EE",
-        "ETH": "ET",
-        "FLK": "FK",
-        "FRO": "FO",
-        "FJI": "FJ",
-        "FIN": "FI",
-        "FRA": "FR",
-        "GUF": "GF",
-        "PYF": "PF",
-        "ATF": "TF",
-        "GAB": "GA",
-        "GMB": "GM",
-        "GEO": "GE",
-        "DEU": "DE",
-        "GHA": "GH",
-        "GIB": "GI",
-        "GRC": "GR",
-        "GRL": "GL",
-        "GRD": "GD",
-        "GLP": "GP",
-        "GUM": "GU",
-        "GTM": "GT",
-        "GGY": "GG",
-        "GIN": "GN",
-        "GNB": "GW",
-        "GUY": "GY",
-        "HTI": "HT",
-        "HMD": "HM",
-        "VAT": "VA",
-        "HND": "HN",
-        "HUN": "HU",
-        "ISL": "IS",
-        "IND": "IN",
-        "IDN": "ID",
-        "IRN": "IR",
-        "IRQ": "IQ",
-        "IRL": "IE",
-        "IMN": "IM",
-        "ISR": "IL",
-        "ITA": "IT",
-        "JAM": "JM",
-        "JPN": "JP",
-        "JEY": "JE",
-        "JOR": "JO",
-        "KAZ": "KZ",
-        "KEN": "KE",
-        "KIR": "KI",
-        "PRK": "KP",
-        "KOR": "KR",
-        "KWT": "KW",
-        "KGZ": "KG",
-        "LAO": "LA",
-        "LVA": "LV",
-        "LBN": "LB",
-        "LSO": "LS",
-        "LBR": "LR",
-        "LBY": "LY",
-        "LIE": "LI",
-        "LTU": "LT",
-        "LUX": "LU",
-        "MKD": "MK",
-        "MDG": "MG",
-        "MWI": "MW",
-        "MYS": "MY",
-        "MDV": "MV",
-        "MLI": "ML",
-        "MLT": "MT",
-        "MHL": "MH",
-        "MTQ": "MQ",
-        "MRT": "MR",
-        "MUS": "MU",
-        "MYT": "YT",
-        "MEX": "MX",
-        "FSM": "FM",
-        "MDA": "MD",
-        "MCO": "MC",
-        "MNG": "MN",
-        "MNE": "ME",
-        "MSR": "MS",
-        "MAR": "MA",
-        "MOZ": "MZ",
-        "MMR": "MM",
-        "NAM": "NA",
-        "NRU": "NR",
-        "NPL": "NP",
-        "NLD": "NL",
-        "ANT": "AN",
-        "NCL": "NC",
-        "NZL": "NZ",
-        "NIC": "NI",
-        "NER": "NE",
-        "NGA": "NG",
-        "NIU": "NU",
-        "NFK": "NF",
-        "MNP": "MP",
-        "NOR": "NO",
-        "OMN": "OM",
-        "PAK": "PK",
-        "PLW": "PW",
-        "PSE": "PS",
-        "PAN": "PA",
-        "PNG": "PG",
-        "PRY": "PY",
-        "PER": "PE",
-        "PHL": "PH",
-        "PCN": "PN",
-        "POL": "PL",
-        "PRT": "PT",
-        "PRI": "PR",
-        "QAT": "QA",
-        "REU": "RE",
-        "ROU": "RO",
-        "RUS": "RU",
-        "RWA": "RW",
-        "BLM": "BL",
-        "SHN": "SH",
-        "KNA": "KN",
-        "LCA": "LC",
-        "MAF": "MF",
-        "SPM": "PM",
-        "VCT": "VC",
-        "WSM": "WS",
-        "SMR": "SM",
-        "STP": "ST",
-        "SAU": "SA",
-        "SEN": "SN",
-        "SRB": "RS",
-        "SYC": "SC",
-        "SLE": "SL",
-        "SGP": "SG",
-        "SVK": "SK",
-        "SVN": "SI",
-        "SLB": "SB",
-        "SOM": "SO",
-        "ZAF": "ZA",
-        "SGS": "GS",
-        "SSD": "SS",
-        "ESP": "ES",
-        "LKA": "LK",
-        "SDN": "SD",
-        "SUR": "SR",
-        "SJM": "SJ",
-        "SWZ": "SZ",
-        "SWE": "SE",
-        "CHE": "CH",
-        "SYR": "SY",
-        "TWN": "TW",
-        "TJK": "TJ",
-        "TZA": "TZ",
-        "THA": "TH",
-        "TLS": "TL",
-        "TGO": "TG",
-        "TKL": "TK",
-        "TON": "TO",
-        "TTO": "TT",
-        "TUN": "TN",
-        "TUR": "TR",
-        "TKM": "TM",
-        "TCA": "TC",
-        "TUV": "TV",
-        "UGA": "UG",
-        "UKR": "UA",
-        "ARE": "AE",
-        "GBR": "GB",
-        "USA": "US",
-        "UMI": "UM",
-        "URY": "UY",
-        "UZB": "UZ",
-        "VUT": "VU",
-        "VEN": "VE",
-        "VNM": "VN",
-        "VIR": "VI",
-        "WLF": "WF",
-        "ESH": "EH",
-        "YEM": "YE",
-        "ZMB": "ZM",
-        "ZWE": "ZW"
-    }
-    return countryISOMapping[code]
-
-
-def convert_alpha_3_to_name(code):
-    countryISOMapping = {
-        'AFG': 'Afghanistan',
-        'ALA': 'Aland Islands',
-        'ALB': 'Albania',
-        'DZA': 'Algeria',
-        'ASM': 'American Samoa',
-        'AND': 'Andorra',
-        'AGO': 'Angola',
-        'AIA': 'Anguilla',
-        'ATA': 'Antarctica',
-        'ATG': 'Antigua and Barbuda',
-        'ARG': 'Argentina',
-        'ARM': 'Armenia',
-        'ABW': 'Aruba',
-        'AUS': 'Australia',
-        'AUT': 'Austria',
-        'AZE': 'Azerbaijan',
-        'BHS': 'Bahamas',
-        'BHR': 'Bahrain',
-        'BGD': 'Bangladesh',
-        'BRB': 'Barbados',
-        'BLR': 'Belarus',
-        'BEL': 'Belgium',
-        'BLZ': 'Belize',
-        'BEN': 'Benin',
-        'BMU': 'Bermuda',
-        'BTN': 'Bhutan',
-        'BOL': 'Bolivia',
-        'BIH': 'Bosnia and Herzegovina',
-        'BWA': 'Botswana',
-        'BVT': 'Bouvet Island',
-        'BRA': 'Brazil',
-        'VGB': 'British Virgin Islands',
-        'IOT': 'British Indian Ocean Territory',
-        'BRN': 'Brunei Darussalam',
-        'BGR': 'Bulgaria',
-        'BFA': 'Burkina Faso',
-        'BDI': 'Burundi',
-        'KHM': 'Cambodia',
-        'CMR': 'Cameroon',
-        'CAN': 'Canada',
-        'CPV': 'Cape Verde',
-        'CYM': 'Cayman Islands',
-        'CAF': 'Central African Republic',
-        'TCD': 'Chad',
-        'CHL': 'Chile',
-        'CHN': 'China',
-        'HKG': 'Hong Kong, Special Administrative Region of China',
-        'MAC': 'Macao, Special Administrative Region of China',
-        'CXR': 'Christmas Island',
-        'CCK': 'Cocos (Keeling) Islands',
-        'COL': 'Colombia',
-        'COM': 'Comoros',
-        'COG': 'Congo (Brazzaville)',
-        'COD': 'Congo, Democratic Republic of the',
-        'COK': 'Cook Islands',
-        'CRI': 'Costa Rica',
-        'CIV': 'Cote d\'Ivoire',
-        'HRV': 'Croatia',
-        'CUB': 'Cuba',
-        'CYP': 'Cyprus',
-        'CZE': 'Czech Republic',
-        'DNK': 'Denmark',
-        'DJI': 'Djibouti',
-        'DMA': 'Dominica',
-        'DOM': 'Dominican Republic',
-        'ECU': 'Ecuador',
-        'EGY': 'Egypt',
-        'SLV': 'El Salvador',
-        'GNQ': 'Equatorial Guinea',
-        'ERI': 'Eritrea',
-        'EST': 'Estonia',
-        'ETH': 'Ethiopia',
-        'FLK': 'Falkland Islands (Malvinas)',
-        'FRO': 'Faroe Islands',
-        'FJI': 'Fiji',
-        'FIN': 'Finland',
-        'FRA': 'France',
-        'GUF': 'French Guiana',
-        'PYF': 'French Polynesia',
-        'ATF': 'French Southern Territories',
-        'GAB': 'Gabon',
-        'GMB': 'Gambia',
-        'GEO': 'Georgia',
-        'DEU': 'Germany',
-        'GHA': 'Ghana',
-        'GIB': 'Gibraltar',
-        'GRC': 'Greece',
-        'GRL': 'Greenland',
-        'GRD': 'Grenada',
-        'GLP': 'Guadeloupe',
-        'GUM': 'Guam',
-        'GTM': 'Guatemala',
-        'GGY': 'Guernsey',
-        'GIN': 'Guinea',
-        'GNB': 'Guinea-Bissau',
-        'GUY': 'Guyana',
-        'HTI': 'Haiti',
-        'HMD': 'Heard Island and Mcdonald Islands',
-        'VAT': 'Holy See (Vatican City State)',
-        'HND': 'Honduras',
-        'HUN': 'Hungary',
-        'ISL': 'Iceland',
-        'IND': 'India',
-        'IDN': 'Indonesia',
-        'IRN': 'Iran, Islamic Republic of',
-        'IRQ': 'Iraq',
-        'IRL': 'Ireland',
-        'IMN': 'Isle of Man',
-        'ISR': 'Israel',
-        'ITA': 'Italy',
-        'JAM': 'Jamaica',
-        'JPN': 'Japan',
-        'JEY': 'Jersey',
-        'JOR': 'Jordan',
-        'KAZ': 'Kazakhstan',
-        'KEN': 'Kenya',
-        'KIR': 'Kiribati',
-        'PRK': 'North Korea',
-        'KOR': 'South Korea',
-        'KWT': 'Kuwait',
-        'KGZ': 'Kyrgyzstan',
-        'LAO': 'Lao PDR',
-        'LVA': 'Latvia',
-        'LBN': 'Lebanon',
-        'LSO': 'Lesotho',
-        'LBR': 'Liberia',
-        'LBY': 'Libya',
-        'LIE': 'Liechtenstein',
-        'LTU': 'Lithuania',
-        'LUX': 'Luxembourg',
-        'MKD': 'Macedonia, Republic of',
-        'MDG': 'Madagascar',
-        'MWI': 'Malawi',
-        'MYS': 'Malaysia',
-        'MDV': 'Maldives',
-        'MLI': 'Mali',
-        'MLT': 'Malta',
-        'MHL': 'Marshall Islands',
-        'MTQ': 'Martinique',
-        'MRT': 'Mauritania',
-        'MUS': 'Mauritius',
-        'MYT': 'Mayotte',
-        'MEX': 'Mexico',
-        'FSM': 'Micronesia, Federated States of',
-        'MDA': 'Moldova',
-        'MCO': 'Monaco',
-        'MNG': 'Mongolia',
-        'MNE': 'Montenegro',
-        'MSR': 'Montserrat',
-        'MAR': 'Morocco',
-        'MOZ': 'Mozambique',
-        'MMR': 'Myanmar',
-        'NAM': 'Namibia',
-        'NRU': 'Nauru',
-        'NPL': 'Nepal',
-        'NLD': 'Netherlands',
-        'ANT': 'Netherlands Antilles',
-        'NCL': 'New Caledonia',
-        'NZL': 'New Zealand',
-        'NIC': 'Nicaragua',
-        'NER': 'Niger',
-        'NGA': 'Nigeria',
-        'NIU': 'Niue',
-        'NFK': 'Norfolk Island',
-        'MNP': 'Northern Mariana Islands',
-        'NOR': 'Norway',
-        'OMN': 'Oman',
-        'PAK': 'Pakistan',
-        'PLW': 'Palau',
-        'PSE': 'Palestinian Territory, Occupied',
-        'PAN': 'Panama',
-        'PNG': 'Papua New Guinea',
-        'PRY': 'Paraguay',
-        'PER': 'Peru',
-        'PHL': 'Philippines',
-        'PCN': 'Pitcairn',
-        'POL': 'Poland',
-        'PRT': 'Portugal',
-        'PRI': 'Puerto Rico',
-        'QAT': 'Qatar',
-        'REU': 'Reunion',
-        'ROU': 'Romania',
-        'RUS': 'Russian Federation',
-        'RWA': 'Rwanda',
-        'BLM': 'Saint-Barthelemy',
-        'SHN': 'Saint Helena',
-        'KNA': 'Saint Kitts and Nevis',
-        'LCA': 'Saint Lucia',
-        'MAF': 'Saint-Martin (French part)',
-        'SPM': 'Saint Pierre and Miquelon',
-        'VCT': 'Saint Vincent and Grenadines',
-        'WSM': 'Samoa',
-        'SMR': 'San Marino',
-        'STP': 'Sao Tome and Principe',
-        'SAU': 'Saudi Arabia',
-        'SEN': 'Senegal',
-        'SRB': 'Serbia',
-        'SYC': 'Seychelles',
-        'SLE': 'Sierra Leone',
-        'SGP': 'Singapore',
-        'SVK': 'Slovakia',
-        'SVN': 'Slovenia',
-        'SLB': 'Solomon Islands',
-        'SOM': 'Somalia',
-        'ZAF': 'South Africa',
-        'SGS': 'South Georgia and the South Sandwich Islands',
-        'SSD': 'South Sudan',
-        'ESP': 'Spain',
-        'LKA': 'Sri Lanka',
-        'SDN': 'Sudan',
-        'SUR': 'Suriname',
-        'SJM': 'Svalbard and Jan Mayen Islands',
-        'SWZ': 'Swaziland',
-        'SWE': 'Sweden',
-        'CHE': 'Switzerland',
-        'SYR': 'Syrian Arab Republic (Syria)',
-        'TWN': 'Taiwan, Republic of China',
-        'TJK': 'Tajikistan',
-        'TZA': 'Tanzania, United Republic of',
-        'THA': 'Thailand',
-        'TLS': 'Timor-Leste',
-        'TGO': 'Togo',
-        'TKL': 'Tokelau',
-        'TON': 'Tonga',
-        'TTO': 'Trinidad and Tobago',
-        'TUN': 'Tunisia',
-        'TUR': 'Turkey',
-        'TKM': 'Turkmenistan',
-        'TCA': 'Turks and Caicos Islands',
-        'TUV': 'Tuvalu',
-        'UGA': 'Uganda',
-        'UKR': 'Ukraine',
-        'ARE': 'United Arab Emirates',
-        'GBR': 'United Kingdom',
-        'USA': 'United States of America',
-        'UMI': 'United States Minor Outlying Islands',
-        'URY': 'Uruguay',
-        'UZB': 'Uzbekistan',
-        'VUT': 'Vanuatu',
-        'VEN': 'Venezuela (Bolivarian Republic of)',
-        'VNM': 'Viet Nam',
-        'VIR': 'Virgin Islands, US',
-        'WLF': 'Wallis and Futuna Islands',
-        'ESH': 'Western Sahara',
-        'YEM': 'Yemen',
-        'ZMB': 'Zambia',
-        'ZWE': 'Zimbabwe'
-    }
-    return countryISOMapping[code]

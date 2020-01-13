@@ -1,0 +1,454 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% load humanize %}
+{% block extra_head %}
+  <link href="{% static 'iconsensus/css/iconsensus.css' %}" rel="stylesheet"/>
+  <script>
+    var countries_alpha2 = {{ countries_alpha2|safe }};
+  </script>
+{% endblock %}
+{% block title %}Overview{% endblock %}
+{% block twittertitle %}P-Rep Overview{% endblock %}
+{% block ogtitle %}P-Rep Overview{% endblock %}
+{% block section %}Overview{% endblock %}
+{% block content %}
+{% load mathfilters %}
+
+  <!-- Delegation Overview -->
+  <div class="row">
+
+    <div class="col-lg-4 col-md-4">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <div class="info-icon text-center icon-primary">
+                <i class="fas fa-level-down-alt incard"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Total Staked (ICX)' %}</p>
+                <h3 class="card-title">{{ total_staked|intcomma }} <span class="card-category">({{ total_staked_percent }}%)</span></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <div class="info-icon text-center icon-primary">
+                <i class="fas fa-check incard"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Total Voted (ICX)' %}</p>
+                <h3 class="card-title">{{ total_voted|intcomma }} <span class="card-category">({{ total_voted_percent }}%)</span></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <div class="info-icon text-center dollargreen">
+                <i class="fas fa-dollar-sign incard"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Public Treasury (ICX)' %}</p>
+                <h3 class="card-title">{{ public_treasury|intcomma }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Calculator -->
+  <div class="row">
+
+    <!-- P-Rep Reward -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title">{% trans 'P-Rep Reward' %}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label style="font-size: 14px; display:block; text-align:right;">Own or receive vote for</label>
+                <input id="prepstake" class="form-control rrinput text-right" placeholder="100,000 ICX">
+              </div>
+            </div>
+            <div class="col-6">
+              <h4>You will earn <span id="pr_icx"></span> ICX (<span id="pr_usd"></span> USD) per month.</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voter Reward -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title">{% trans 'Voter Reward' %}</h2>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-6">
+              <div class="form-group">
+                <label style="font-size: 14px; display:block; text-align:right;">Vote</label>
+                <input id="iconiststake" class="form-control rrinput text-right" placeholder="1,000 ICX">
+              </div>
+            </div>
+            <div class="col-6">
+              <h4>You will earn <span id="ir_icx"></span> ICX (<span id="ir_usd"></span> USD) per month.</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Ranking -->
+  <div class="row">
+    <!-- Block Producer Ranking -->
+    <div class="col-12">
+      <div class="card">
+
+        <!-- Card Header -->
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title">{% trans 'P-Rep Rankings' %}</h2>
+            </div>
+            <div class="col-sm-6 duration">
+              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                <label class="btn btn-sm btn-primary btn-simple" id="main">
+                  <input type="radio" name="options" checked>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showmain();">{% trans 'Main' %}</span>
+                  <span class="d-block d-sm-none" onclick="toggleDuration('MAIN');">Main</span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple" id="sub">
+                  <input type="radio" class="d-none d-sm-none" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showsub();">{% trans 'Sub' %}</span>
+                  <span class="d-block d-sm-none" onclick="toggleDuration('SUB');">Sub</span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple active" id="all">
+                  <input type="radio" class="d-none" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showall();">{% trans 'All' %}</span>
+                  <span class="d-block d-sm-none" onclick="toggleDuration('ALL');">All</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table ranking" style="margin-bottom:0px!important;">
+              <thead class="text-primary">
+              <tr>
+                <th width="8%">#</th>
+                <th width="32%">{% trans 'Name' %}</th>
+                <th width="8%">{% trans 'Country' %}</th>
+                <th width="15%">{% trans 'Monthly Reward' %}</th>
+                <th width="8%">{% trans 'i_rep' %}</th>
+                <th width="10%">{% trans 'Self-Staked' %}</th>
+                <th width="8%">{% trans 'Delegated' %}</th>
+              </tr>
+              </thead>
+
+              <tbody class="tborder" id="ranking_main" style="display:none;">
+                {% for prep in prep_main %}
+                <tr>
+                  <td width="8%">{{ forloop.counter }}</td>
+                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
+                  <td width="8%">{{ prep.country }}</td>
+                  <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
+                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="10%" id="stake">{{ prep.stake|intcomma }}</td>
+                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+              <tbody class="tborder" id="ranking_sub" style="display:none;">
+                {% for prep in prep_sub %}
+                <tr>
+                  <td width="8%">{{ forloop.counter }}</td>
+                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
+                  <td width="8%">{{ prep.country }}</td>
+                  <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
+                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="10%" id="stake">{{ prep.stake|intcomma }}</td>
+                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+
+              <tbody class="tborder" id="ranking_all">
+                {% for prep in prep_all %}
+                <tr>
+                  <td width="8%">{{ forloop.counter }}</td>
+                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
+                  <td width="8%">{{ prep.country }}</td>
+                  <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
+                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="10%" id="stake">{{ prep.stake|intcomma }}</td>
+                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rep cards -->
+    <div class="col-lg-3 col-md-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5">
+              <div class="info-icon text-center icon-success">
+                <i class="tim-icons icon-single-02 incard"></i>
+              </div>
+            </div>
+            <div class="col-7">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Main P-Reps' %}</p>
+                <h3 class="card-title">{{ main_preps_count }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="card-footer">
+          <hr>
+          <div class="stats">
+            <a href="{% url 'preplist' 'main' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
+          </div>
+        </div>
+        -->
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5">
+              <div class="info-icon text-center icon-primary">
+                <i class="tim-icons icon-single-02 incard"></i>
+              </div>
+            </div>
+            <div class="col-7">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Sub P-Reps' %}</p>
+                <h3 class="card-title">{{ sub_preps_count }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="card-footer">
+          <hr>
+          <div class="stats">
+            <a href="{% url 'preplist' 'sub' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
+          </div>
+        </div>
+        -->
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5">
+              <div class="info-icon text-center icon-info">
+                <i class="tim-icons icon-single-02 incard"></i>
+              </div>
+            </div>
+            <div class="col-7">
+              <div class="numbers">
+                <p class="card-category">{% trans 'All P-Reps' %}</p>
+                <h3 class="card-title">{{ preps_count }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="card-footer">
+          <hr>
+          <div class="stats">
+            <a href="{% url 'preplist' 'joined' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
+          </div>
+        </div>
+        -->
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-5">
+              <div class="info-icon text-center icon-warning">
+                <i class="tim-icons icon-single-02 incard"></i>
+              </div>
+            </div>
+            <div class="col-7">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Pre-Registered' %}</p>
+                <h3 class="card-title">87</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--
+        <div class="card-footer">
+          <hr>
+          <div class="stats">
+            <a href="{% url 'candidates' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
+          </div>
+        </div>
+        -->
+      </div>
+    </div>
+
+    <!-- P-Rep Locations -->
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">{% trans 'P-Rep Locations' %}</h2>
+          <p class="card-category">{% trans 'Distribution of P-Rep Nodes' %}</p>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="table-responsive">
+                <table class="table">
+                  <tbody>
+                  {% for k, v in countries_name_sorted.items %}
+                    <tr>
+                      <td>
+                        <div class="flag">
+                          {% with 'iconsensus/img/flags/'|add:k|add:'.png' as flag_static %}
+                          <img src="{% static flag_static %}" alt="flag" width="23" height="23">
+                          {% endwith %}
+                        </div>
+                      </td>
+                      <td>{{ k }}</td>
+                      <td class="text-right">
+                        {{ v }}
+                      </td>
+                      <td class="text-right">
+                        {{ v|div:preps_count|mul:100|floatformat:"2" }}%
+                      </td>
+                    </tr>
+                  {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-6 ml-auto mr-auto">
+              <div id="worldMap" style="height: 300px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block pre_extra_js %}
+  <script>
+    function morning_image(){}
+    function night_image(){}
+  </script>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'iconsensus/js/jquery-jvectormap.js' %}"></script>
+  <script src="{% static 'iconsensus/js/prep.js' %}"></script>
+  <script>
+
+    var average_irep = {{ average_irep }};
+    var TOTAL_DELEGATED = {{ TOTAL_DELEGATED }};
+    var icx_price = {{ icx_price }};
+    var total_staked_percent = {{ total_staked_percent }};
+
+    function icx_reward(delegated){
+        var delegation_rate = delegated / TOTAL_DELEGATED * 100;
+        return Math.trunc(average_irep * 0.5 * 100 * (delegation_rate/100)).toLocaleString();
+    }
+    function usd_reward(delegated){
+        var delegation_rate = delegated / TOTAL_DELEGATED * 100;
+        var icx = Math.trunc(average_irep * 0.5 * 100 * (delegation_rate/100));
+        var usd = Math.trunc(icx * icx_price).toLocaleString();
+        return '$'+usd;
+    }
+
+    function iconist_icx_reward(stake){
+        const r_min = 0.02, r_max = 0.12, r_point = 0.7;
+        var reward = ((r_max-r_min)/(r_point**2)) * ((total_staked_percent/100)-r_point)**2 + r_min;
+        return Math.round(reward * stake * 3 / 12).toLocaleString();
+    }
+
+    function iconist_usd_reward(stake){
+        const r_min = 0.02, r_max = 0.12, r_point = 0.7;
+        var reward = (((r_max-r_min)/(r_point**2)) * ((total_staked_percent/100)-r_point)**2 + r_min)*icx_price;
+        return '$'+Math.round(reward * stake * 3 / 12).toLocaleString();
+    }
+
+    $(document).ready(function() {
+        mapobj.initVectorMap(countries_alpha2);
+
+        $('#pr_icx').text(icx_reward(100000));
+        $('#pr_usd').text(usd_reward(100000));
+        $('#ir_icx').text(iconist_icx_reward(1000));
+        $('#ir_usd').text(iconist_usd_reward(1000));
+
+        $('#prepstake').keyup(function(e){
+            var ir = icx_reward($('#prepstake').val());
+            var ur = usd_reward($('#prepstake').val());
+            $('#pr_icx').text(ir);
+            $('#pr_usd').text(ur);
+        })
+        $('#iconiststake').keyup(function(e){
+            var iconist_icx = iconist_icx_reward($('#iconiststake').val());
+            var iconist_usd = iconist_usd_reward($('#iconiststake').val());
+            $('#ir_icx').text(iconist_icx);
+            $('#ir_usd').text(iconist_usd);
+        })
+    });
+  </script>
+{% endblock %}

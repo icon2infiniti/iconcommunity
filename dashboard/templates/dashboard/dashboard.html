@@ -4,9 +4,24 @@
 {% block extra_head %}
   <link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet"/>
   <script>
-    var countries_alpha2 = {{ countries_alpha2|safe }};
-    var chartlabels = {{ targetDates|safe }};
-    var chartdata = {{ txCounts }};
+
+      // Daily Tx
+      var chartlabels = {{ targetDates|safe }};
+      var chartdata = {{ txCounts }};
+
+      // Top 20 Wallets
+      var ret20 = {{ ret20|safe }};
+
+      // Wallet Count
+      var selectDates = {{ selectDates|safe }};
+      var balanceCounts = {{ balanceCounts }};
+      var totalCounts = {{ totalCounts }};
+
+      // Reward Rate
+      var annual_reward_list = {{ annual_reward_list }};
+      var annual_inflation_list = {{ annual_inflation_list }};
+      var reward_rate_dates_list = {{ reward_rate_dates_list|safe }};
+
   </script>
 {% endblock %}
 {% block title %}Dashboard{% endblock %}
@@ -14,41 +29,47 @@
 {% block twittertitle %}Dashboard{% endblock %}
 {% block section %}Dashboard{% endblock %}
 {% block content %}
-{% load mathfilters %}
+  {% load mathfilters %}
 
-  <!-- Ranking -->
+  <!-- Move to P-Rep Overview
+  {{ total_voted }}<br>
+  {{ total_stake }}<br>
+  {{ total_supply }}
+  -->
+
+  <!-- Daily transactions -->
   <div class="row">
-
-    <!-- Daily transactions
     <div class="col-12">
       <div class="card card-chart">
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left">
               <h2 class="card-title">{% trans 'Daily Transactions' %}</h2>
+              <h5>24H Transactions: {{ transactions_24h|intcomma }}
+                <span class="spacing">&vert;</span> All Transactions: {{ transactions_all|intcomma }}</h5>
             </div>
-
+            <!-- Sort Buttons -->
             <div class="col-sm-6">
               <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                  <input type="radio" name="options" checked>
+                <label class="btn btn-sm btn-primary btn-simple" id="0">
+                  <input type="radio" name="options">
                   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">7D</span>
                   <span class="d-block d-sm-none">
-                    <i class="tim-icons icon-single-02"></i>
+                    7D
                   </span>
                 </label>
                 <label class="btn btn-sm btn-primary btn-simple" id="1">
                   <input type="radio" class="d-none d-sm-none" name="options">
                   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">14D</span>
                   <span class="d-block d-sm-none">
-                    <i class="tim-icons icon-gift-2"></i>
+                    14D
                   </span>
                 </label>
-                <label class="btn btn-sm btn-primary btn-simple" id="2">
-                  <input type="radio" class="d-none" name="options">
+                <label class="btn btn-sm btn-primary btn-simple active" id="2">
+                  <input type="radio" class="d-none" name="options" checked>
                   <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">30D</span>
                   <span class="d-block d-sm-none">
-                    <i class="tim-icons icon-tap-02"></i>
+                    30D
                   </span>
                 </label>
               </div>
@@ -57,300 +78,90 @@
         </div>
         <div class="card-body">
           <div class="chart-area">
-            <canvas id="chartBig1"></canvas>
+            <canvas id="dailyTx"></canvas>
           </div>
         </div>
       </div>
     </div>
-    -->
+  </div>
 
-
-    <!-- Block Producer Ranking -->
-    <div class="col-12">
-      <div class="card">
-
-        <!-- Card Header -->
-        <div class="card-header">
-          <div class="row">
-            <div class="col-sm-6 text-left">
-              <h2 class="card-title">{% trans 'P-Rep Rankings' %}</h2>
-            </div>
-            <div class="col-sm-6 duration">
-              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                <label class="btn btn-sm btn-primary btn-simple" id="main">
-                  <input type="radio" name="options" checked>
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showmain();">{% trans 'Main' %}</span>
-                  <span class="d-block d-sm-none" onclick="toggleDuration('MAIN');">Main</span>
-                </label>
-                <label class="btn btn-sm btn-primary btn-simple" id="sub">
-                  <input type="radio" class="d-none d-sm-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showsub();">{% trans 'Sub' %}</span>
-                  <span class="d-block d-sm-none" onclick="toggleDuration('SUB');">Sub</span>
-                </label>
-                <label class="btn btn-sm btn-primary btn-simple active" id="all">
-                  <input type="radio" class="d-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showall();">{% trans 'All' %}</span>
-                  <span class="d-block d-sm-none" onclick="toggleDuration('ALL');">All</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table ranking" style="margin-bottom:0px!important;">
-              <thead class="text-primary">
-              <tr>
-                <th width="8%">#</th>
-                <th width="32%">{% trans 'Name' %}</th>
-                <th width="8%">{% trans 'Country' %}</th>
-                <th width="15%">{% trans 'Monthly Reward' %}</th>
-                <th width="8%">{% trans 'i_rep' %}</th>
-                <th width="10%">{% trans 'Self-Staked' %}</th>
-                <th width="8%">{% trans 'Delegated' %}</th>
-              </tr>
-              </thead>
-
-              <tbody id="ranking_main" style="display:none;">
-                {% for prep in prep_main %}
-                <tr>
-                  <td width="8%">{{ forloop.counter }}</td>
-                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
-                  <td width="8%">{{ prep.country }}</td>
-                  <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
-                  <td width="8%" id="irep">{{ prep.irep }}</td>
-                  <td width="10%" id="stake">{{ prep.stake|floatformat:2 }}</td>
-                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-
-              <tbody id="ranking_sub" style="display:none;">
-                {% for prep in prep_sub %}
-                <tr>
-                  <td width="8%">{{ forloop.counter }}</td>
-                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
-                  <td width="8%">{{ prep.country }}</td>
-                  <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
-                  <td width="8%" id="irep">{{ prep.irep }}</td>
-                  <td width="10%" id="stake">{{ prep.stake|floatformat:2 }}</td>
-                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-
-              <tbody id="ranking_all">
-                {% for prep in prep_all %}
-                <tr>
-                  <td width="8%">{{ forloop.counter }}</td>
-                  <td width="32%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
-                  <td width="8%">{{ prep.country }}</td>
-                  <td width="15%" id="reward">{{ prep.reward|floatformat:2|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|floatformat:2|intcomma }} USD</span></td>
-                  <td width="8%" id="irep">{{ prep.irep }}</td>
-                  <td width="10%" id="stake">{{ prep.stake|floatformat:2 }}</td>
-                  <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|floatformat:2|intcomma }}</span></td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Rep cards -->
+  <!-- Main Info -->
+  <div class="row">
+    <!-- Market Cap -->
     <div class="col-lg-3 col-md-6">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
-            <div class="col-5">
-              <div class="info-icon text-center icon-success">
-                <i class="tim-icons icon-single-02 incard"></i>
+            <div class="col-4">
+              <div class="info-icon text-center dollar">
+                <i class="fas fa-dollar-sign"></i>
               </div>
             </div>
-            <div class="col-7">
+            <div class="col-8">
               <div class="numbers">
-                <p class="card-category">{% trans 'Main P-Reps' %}</p>
-                <h3 class="card-title">{{ main_preps_count }}</h3>
+                <p class="card-category">{% trans 'Market Cap (USD)' %}</p>
+                <h3 class="card-title">{{ marketcap|floatformat:0|intcomma }}</h3>
               </div>
             </div>
           </div>
         </div>
-        <!--
-        <div class="card-footer">
-          <hr>
-          <div class="stats">
-            <a href="{% url 'preplist' 'main' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
-          </div>
-        </div>
-        -->
       </div>
     </div>
+    <!-- Circulating Supply -->
     <div class="col-lg-3 col-md-6">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
-            <div class="col-5">
+            <div class="col-4">
               <div class="info-icon text-center icon-primary">
-                <i class="tim-icons icon-single-02 incard"></i>
+                <img src="{% static 'dashboard/img/ICX_logo.png' %}" style="width: 24px; height: 24px; margin-top: 13px;">
               </div>
             </div>
-            <div class="col-7">
+            <div class="col-8">
               <div class="numbers">
-                <p class="card-category">{% trans 'Sub P-Reps' %}</p>
-                <h3 class="card-title">{{ sub_preps_count }}</h3>
+                <p class="card-category">{% trans 'Circulating Supply' %}</p>
+                <h3 class="card-title">{{ circulating_supply|floatformat:0|intcomma }}</h3>
               </div>
             </div>
           </div>
         </div>
-        <!--
-        <div class="card-footer">
-          <hr>
-          <div class="stats">
-            <a href="{% url 'preplist' 'sub' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
-          </div>
-        </div>
-        -->
       </div>
     </div>
+    <!-- Total Supply -->
     <div class="col-lg-3 col-md-6">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
-            <div class="col-5">
-              <div class="info-icon text-center icon-info">
-                <i class="tim-icons icon-single-02 incard"></i>
+            <div class="col-4">
+              <div class="info-icon text-center icon-primary">
+                <img src="{% static 'dashboard/img/ICX_logo.png' %}" style="width: 24px; height: 24px; margin-top: 13px;">
               </div>
             </div>
-            <div class="col-7">
+            <div class="col-8">
               <div class="numbers">
-                <p class="card-category">{% trans 'All P-Reps' %}</p>
-                <h3 class="card-title">{{ preps_count }}</h3>
+                <p class="card-category">{% trans 'Total Supply' %}</p>
+                <h3 class="card-title">{{ total_supply|floatformat:0|intcomma }}</h3>
               </div>
             </div>
           </div>
         </div>
-        <!--
-        <div class="card-footer">
-          <hr>
-          <div class="stats">
-            <a href="{% url 'preplist' 'joined' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
-          </div>
-        </div>
-        -->
       </div>
     </div>
+    <!-- Public Treasury -->
     <div class="col-lg-3 col-md-6">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
-            <div class="col-5">
-              <div class="info-icon text-center icon-warning">
-                <i class="tim-icons icon-single-02 incard"></i>
+            <div class="col-4">
+              <div class="info-icon text-center dollargreen">
+                <i class="fas fa-dollar-sign"></i>
               </div>
             </div>
-            <div class="col-7">
+            <div class="col-8">
               <div class="numbers">
-                <p class="card-category">{% trans 'Pre-Registered' %}</p>
-                <h3 class="card-title">87</h3>
+                <p class="card-category">{% trans 'Public Treasury' %}</p>
+                <h3 class="card-title">{{ public_treasury|floatformat:0|intcomma }}</h3>
               </div>
-            </div>
-          </div>
-        </div>
-        <!--
-        <div class="card-footer">
-          <hr>
-          <div class="stats">
-            <a href="{% url 'candidates' %}"><i class="tim-icons icon-double-right"></i> Full List</a>
-          </div>
-        </div>
-        -->
-      </div>
-    </div>
-
-    <!-- Bar/Curve charts -->
-    <!--
-    <div class="col-lg-4">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">Some Curves</h5>
-          <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> 763,215</h3>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="chartLinePurple"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">Some Bars</h5>
-          <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500</h3>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="CountryChart"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-4">
-      <div class="card card-chart">
-        <div class="card-header">
-          <h5 class="card-category">Some More Curves</h5>
-          <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100</h3>
-        </div>
-        <div class="card-body">
-          <div class="chart-area">
-            <canvas id="chartLineGreen"></canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
-
-    <!-- P-Rep Locations -->
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-title">{% trans 'P-Rep Locations' %}</h2>
-          <p class="card-category">{% trans 'Distribution of P-Rep Nodes' %}</p>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-6">
-              <div class="table-responsive">
-                <table class="table">
-                  <tbody>
-                  {% for k, v in countries_name_sorted.items %}
-                    <tr>
-                      <td>
-                        <div class="flag">
-                          {% with 'dashboard/img/flags/'|add:k|add:'.png' as flag_static %}
-                          <img src="{% static flag_static %}" alt="flag" width="23" height="23">
-                          {% endwith %}
-                        </div>
-                      </td>
-                      <td>{{ k }}</td>
-                      <td class="text-right">
-                        {{ v }}
-                      </td>
-                      <td class="text-right">
-                        {{ v|div:preps_count|mul:100|floatformat:"2" }}%
-                      </td>
-                    </tr>
-                  {% endfor %}
-
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="col-md-6 ml-auto mr-auto">
-              <div id="worldMap" style="height: 300px;"></div>
             </div>
           </div>
         </div>
@@ -358,12 +169,187 @@
     </div>
   </div>
 
+  <!-- RR & WC -->
+  <div class="row">
+    <!-- Reward Rate -->
+    <div class="col-lg-6">
+      <div class="card card-chart">
+
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title" style="margin-bottom: 0px;">{% trans 'Reward Rate' %}</h2>
+              <h5 class="card-category">Against Inflation Rate</h5>
+            </div>
+            <!-- Sort Buttons -->
+            <div class="col-sm-6">
+              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                <label class="btn btn-sm btn-primary btn-simple" id="rr0">
+                  <input type="radio" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">7D</span>
+                  <span class="d-block d-sm-none">
+                    7D
+                  </span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple" id="rr1">
+                  <input type="radio" class="d-none d-sm-none" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">14D</span>
+                  <span class="d-block d-sm-none">
+                    14D
+                  </span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple active" id="rr2">
+                  <input type="radio" class="d-none" name="options" checked>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">All</span>
+                  <span class="d-block d-sm-none">
+                    All
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="chart-area">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand">
+                <div class=""></div>
+              </div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class=""></div>
+              </div>
+            </div>
+            <canvas id="RewardRate" class="chartjs-render-monitor" style="display: block;"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Wallet Count -->
+    <div class="col-lg-6">
+      <div class="card card-chart">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title" style="margin-bottom: 0px;">{% trans 'Wallet Count' %}</h2>
+              <h5 class="card-category">Cumulative data</h5>
+            </div>
+            <!-- Sort Buttons -->
+            <div class="col-sm-6">
+              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                <label class="btn btn-sm btn-primary btn-simple" id="wc0">
+                  <input type="radio" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">7D</span>
+                  <span class="d-block d-sm-none">
+                    7D
+                  </span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple" id="wc1">
+                  <input type="radio" class="d-none d-sm-none" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">14D</span>
+                  <span class="d-block d-sm-none">
+                    14D
+                  </span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple active" id="wc2">
+                  <input type="radio" class="d-none" name="options" checked>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">All</span>
+                  <span class="d-block d-sm-none">
+                    All
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <div class="chartjs-size-monitor">
+              <div class="chartjs-size-monitor-expand">
+                <div class=""></div>
+              </div>
+              <div class="chartjs-size-monitor-shrink">
+                <div class=""></div>
+              </div>
+            </div>
+            <canvas id="WalletCountChart" class="chartjs-render-monitor" style="display: block;"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Wallets -->
+  <div class="row">
+    <div class="col-md-12 ml-auto">
+      <div class="card card-chart card-chart-pie">
+        <div class="card-header">
+          <h2 class="card-title">ICX Holder Chart</h2>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="chart-area">
+                <div id="top20wallets"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bar/Curve charts -->
+  <!--
+  <div class="col-lg-4">
+    <div class="card card-chart">
+      <div class="card-header">
+        <h5 class="card-category">Some Curves</h5>
+        <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> 763,215</h3>
+      </div>
+      <div class="card-body">
+        <div class="chart-area">
+          <canvas id="chartLinePurple"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card card-chart">
+      <div class="card-header">
+        <h5 class="card-category">Some Bars</h5>
+        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500</h3>
+      </div>
+      <div class="card-body">
+        <div class="chart-area">
+          <canvas id="CountryChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-4">
+    <div class="card card-chart">
+      <div class="card-header">
+        <h5 class="card-category">Some More Curves</h5>
+        <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100</h3>
+      </div>
+      <div class="card-body">
+        <div class="chart-area">
+          <canvas id="chartLineGreen"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  -->
+
   <!-- ICX Price -->
+  <!--
   <div class="row">
     <div class="col-12">
       <div class="card">
-
-        <!-- Card Header -->
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left"><h2 class="card-title">{% trans 'ICX Price' %}</h2></div>
@@ -388,8 +374,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Card Body -->
         <div class="card-body">
           <div class="part rates">
 
@@ -415,12 +399,13 @@
       </div>
     </div>
   </div>
+  -->
 
   <!-- ICX Market Chart -->
+  <!--
   <div class="row">
     <div class="col-12">
       <div class="card card-chart">
-        <!-- Card Header -->
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left">
@@ -447,7 +432,6 @@
             </div>
           </div>
         </div>
-        <!-- Card Body -->
         <div class="card-body">
 						<div class="chart">
 						  <canvas class="chartCanvas" id="chartCanvas"></canvas>
@@ -456,8 +440,10 @@
       </div>
     </div>
   </div>
+  -->
 
   <!-- DAPPs Market Cap -->
+  <!--
   <div class="row">
     <div class="col-12">
       <div class="card">
@@ -491,22 +477,6 @@
                 <td id="ac3_volume">{{ ac3data.quote.ICX.volume_24h|floatformat:0 }}</td>
                 <td id="ac3_market_cap">{{ ac3data.quote.ICX.market_cap|floatformat:0 }} </td>
               </tr>
-
-              <!--Not listed
-              <tr>
-                <td class="text-center">
-                  <div class="photo">
-                    <img src="{% static 'dashboard/img/mecacoin.png' %}" alt="photo">
-                  </div>
-                </td>
-                <td>MECA Coin (MCA)<p></p></td>
-                <td><p>-<em>USD</em></p><p>-<em>ICX</em></p><p>-<em>BTC</em></p><p>-<em>ETH</em></p></td>
-                <td>+5%</td>
-                <td>500,000 USD</td>
-                <td>18,000,000 USD</td>
-              </tr>
-              -->
-
               </tbody>
             </table>
           </div>
@@ -514,51 +484,76 @@
       </div>
     </div>
   </div>
-
+  -->
 
 {% endblock %}
 
 {% block pre_extra_js %}
   <script>
-    function morning_image(){}
-    function night_image(){}
+      function morning_image() {
+      }
+
+      function night_image() {
+      }
   </script>
 {% endblock %}
 
 {% block extra_js %}
 
   <script src="{% static 'dashboard/js/chart.bundle.min.js' %}"></script>
+  <!--
   <script src="{% static 'dashboard/js/coininfo.js' %}"></script>
   <script src="{% static 'dashboard/js/jquery-jvectormap.js' %}"></script>
+  -->
   <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
 
   <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
 
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+
   <script>
-    $(document).ready(function() {
-        //charts.initDashboardPageCharts(chartlabels, chartdata);
-        mapobj.initVectorMap(countries_alpha2);
-        var ac3_market_cap = parseFloat($('#ac3_market_cap').text()).toLocaleString();
-        var ac3_volume = parseFloat($('#ac3_volume').text()).toLocaleString();
-        var ac3_change = parseFloat($('#ac3_change > span').text());
+      $(document).ready(function () {
+          charts.initDashboardPageCharts(chartlabels, chartdata);
 
-        if (ac3_change > 0) {
-            $('#ac3_change > span').addClass('moon');
-        } else {
-            $('#ac3_change > span').addClass('rekt');
-        }
+          charts.initWalletCharts(ret20);
 
-        $('#ac3_market_cap').text(ac3_market_cap+" ICX");
-        $('#ac3_volume').text(ac3_volume+" ICX");
-        $('#ac3_change > span').text(ac3_change+" %");
-    });
+          charts.initWalletCountChart(selectDates, balanceCounts, totalCounts);
+
+          charts.initRewardRateChart(annual_inflation_list, annual_reward_list, reward_rate_dates_list);
+
+
+          <!--mapobj.initVectorMap(countries_alpha2);-->
+          <!--
+          var ac3_market_cap = parseFloat($('#ac3_market_cap').text()).toLocaleString();
+          var ac3_volume = parseFloat($('#ac3_volume').text()).toLocaleString();
+          var ac3_change = parseFloat($('#ac3_change > span').text());
+
+          if (ac3_change > 0) {
+              $('#ac3_change > span').addClass('moon');
+          } else {
+              $('#ac3_change > span').addClass('rekt');
+          }
+
+          $('#ac3_market_cap').text(ac3_market_cap+" ICX");
+          $('#ac3_volume').text(ac3_volume+" ICX");
+          $('#ac3_change > span').text(ac3_change+" %");
+          -->
+      });
   </script>
 
 
   <script>
-        $.endlessPaginate({
-            contentSelector: '.endless_content_wrapper'
-        });
+      $.endlessPaginate({
+          contentSelector: '.endless_content_wrapper'
+      });
+
+      /* CALCULATOR
+      function rrep(delrate){
+        const r_min = 0.02, r_max = 0.12, r_point = 0.7;
+        return ((r_max-r_min)/(r_point**2)) * ((delrate/100)-r_point)**2 + r_min;
+      }
+      */
+
   </script>
 
 {% endblock %}

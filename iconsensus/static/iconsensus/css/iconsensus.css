@@ -156,3 +156,49 @@ caption {
 .border-bottom {
     border-bottom: 0.0625rem solid rgba(255,255,255,0.3) !important;
 }
+
+
+/* Ranking */
+.table.ranking th, .table.ranking td {
+    text-align: center;
+}
+
+.white-content .subtext {
+    color: #cccccc;
+}
+
+.subtext {
+    color: #666666;
+}
+
+.white-content .tim-icons.icon-single-02.incard {
+    color: #fff!important;
+}
+
+.tim-icons.icon-single-02.incard {
+    color: #fff!important;
+}
+
+.tborder {
+    border-top: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.white-content .tborder {
+    border-top: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.dollargreen {
+    background: #30b800 !important;
+    background-image: linear-gradient(to bottom left, #30b800, #3d7437, #30b800) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.rrinput {
+    padding: 12px;
+    font-size: 20px;
+}
+
+input:focus {
+    background-color: transparent!important;
+}
