@@ -8,7 +8,7 @@ import datetime
 
 
 def get_daily_transactions():
-    print("Daily Transactions!")
+    print("Daily Transactions: "+str(datetime.datetime.now()))
 
     url = 'https://tracker.icon.foundation/v3/main/mainChart'
     try:
@@ -26,7 +26,7 @@ def get_daily_transactions():
 
 
 def get_wallet_count():
-    print("Wallet Count")
+    print("Wallet Count: "+str(datetime.datetime.now()))
 
     url = 'https://tracker.icon.foundation/v3/address/count'
     try:
@@ -43,7 +43,7 @@ def get_wallet_count():
 
 
 def get_reward_rate():
-    print("Reward Rate")
+    print("Reward Rate: "+str(datetime.datetime.now()))
 
     params = {}
     try:
@@ -77,7 +77,7 @@ def get_reward_rate():
     )
 
 
-def daily_dashboard_cron():
+def dashboard_cron_6h():
     get_daily_transactions()
     get_wallet_count()
     get_reward_rate()
