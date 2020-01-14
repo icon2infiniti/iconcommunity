@@ -6,9 +6,10 @@ import feedparser
 from bs4 import BeautifulSoup
 import requests
 from isodate import parse_duration
+import datetime
 
 def latest_tweets():
-    print("Tweet!")
+    print("Tweet: "+str(datetime.datetime.now()))
 
     #Twitter
     MAX_TWEETS = 20
@@ -41,7 +42,7 @@ def latest_tweets():
 
 
 def latest_reddits():
-    print("Reddit!")
+    print("Reddit: "+str(datetime.datetime.now()))
 
     reddit = praw.Reddit(client_id='GYqmrmi5cunm1A',
                          client_secret='rydmYFNqBKpnwkvjwybmfNzSY-g',
@@ -72,7 +73,7 @@ def latest_reddits():
 
 
 def latest_iconists():
-    print("Iconist!")
+    print("Iconist: "+str(datetime.datetime.now()))
 
     THEICONIST = feedparser.parse('https://theicon.ist/feed/')
     theiconist_entries = THEICONIST['entries']
@@ -99,7 +100,7 @@ def latest_iconists():
 
 
 def latest_mediums():
-    print("Medium!")
+    print("Medium: "+str(datetime.datetime.now()))
 
     MEDIUM = feedparser.parse('https://medium.com/feed/helloiconworld')
     medium_entries = MEDIUM['entries']
@@ -128,7 +129,7 @@ def latest_mediums():
 
 
 def latest_youtubes():
-    print("YouTube!")
+    print("YouTube: "+str(datetime.datetime.now()))
 
     YOUTUBE_KEY = 'AIzaSyCE_5nBlyA8-mUfUh661k0AOfSbd5EhZeo'
     search_url = 'https://www.googleapis.com/youtube/v3/search'
@@ -142,7 +143,7 @@ def latest_youtubes():
         'type': 'video',
     }
     r = requests.get(search_url, params=search_params)
-    print(r.json())
+    #print(r.json())
     results = r.json()['items']
 
     video_ids = []
@@ -171,15 +172,12 @@ def latest_youtubes():
         youtube.save()
 
 
-def daily_news_cron():
-    latest_iconists()
-    latest_mediums()
-    #latest_youtubes()
-
-
-def all_news_cron():
+def news_cron_15m():
     latest_tweets()
     latest_reddits()
+
+
+def news_cron_6h():
     latest_iconists()
     latest_mediums()
     latest_youtubes()

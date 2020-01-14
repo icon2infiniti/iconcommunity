@@ -5,6 +5,7 @@ from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
 #from dashboard.cron import daily_dashboard_cron
+from dashboard.cron import get_daily_transactions
 
 from .models import DailyTransactions, WalletCount, RewardRate
 
@@ -70,6 +71,7 @@ def rrep(delrate):
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
 
+    get_daily_transactions()
     #daily_dashboard_cron()
 
     #####################################################################################
