@@ -159,7 +159,7 @@
             </div>
             <div class="col-8">
               <div class="numbers">
-                <p class="card-category">{% trans 'Public Treasury' %}</p>
+                <p class="card-category">{% trans 'Public Treasury' %}&nbsp; <i class="fas fa-info-circle tip" data-toggle="tooltip" title="Unclaimed ICX from additional issuance."></i></p>
                 <h3 class="card-title">{{ public_treasury|floatformat:0|intcomma }}</h3>
               </div>
             </div>
@@ -521,6 +521,7 @@
 
           charts.initRewardRateChart(annual_inflation_list, annual_reward_list, reward_rate_dates_list);
 
+          $('[data-toggle="tooltip"]').tooltip();
 
           <!--mapobj.initVectorMap(countries_alpha2);-->
           <!--
