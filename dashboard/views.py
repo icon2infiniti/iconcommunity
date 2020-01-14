@@ -100,7 +100,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
 
     remain_token = float(total_supply) - tokens_total
     remain_percent = 100 - percent_total
-    ret20.append({'name': 'REMAINING ACCOUNTS', 'tokens': remain_token, 'y': remain_percent})
+    ret20.append({'name': 'OTHER ACCOUNTS', 'tokens': remain_token, 'y': remain_percent})
 
     #####################################################################################
     # Daily transactions

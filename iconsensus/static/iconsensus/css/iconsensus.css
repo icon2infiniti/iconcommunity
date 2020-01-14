@@ -202,3 +202,7 @@ caption {
 input:focus {
     background-color: transparent!important;
 }
+
+input:focus::placeholder {
+  color: transparent;
+}
