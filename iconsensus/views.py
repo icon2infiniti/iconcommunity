@@ -10,6 +10,10 @@ from operator import itemgetter
 
 import requests
 
+from dashboard.models import MainInfo
+
+import json
+
 
 def init_mode(request):
     if 'nightmode' not in request.session:
@@ -40,16 +44,6 @@ def prep_reward(i_rep, delegation_rate):
     return i_rep * 0.5 * 100 * (delegation_rate/100)
 
 
-def main_info():
-    url = 'https://tracker.icon.foundation/v3/main/mainInfo'
-    try:
-        r = requests.get(url)
-    except requests.exceptions.RequestException as e:
-        print(e)
-    rjson = r.json()['tmainInfo']
-    return rjson
-
-
 def overview(request):
     context = init_mode(request)
 
@@ -66,19 +60,13 @@ def overview(request):
     except JSONRPCException as e:
         print(str(e.message))
 
-    #for wallet in preps['preps']:
-    #    params = {"address": wallet['address']}
-    #    email = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", params)
-    #    print(email['name'] + ' ' + email['email'])
-
     # Query and rebuild custom ranking list
     TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/10**18
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
-
     TOTAL_IREP = 0
 
     for prep in preps['preps']:
-        if int(prep['grade'],16) == 0:
+        if int(prep['grade'], 16) == 0:
             TOTAL_IREP += int(int(prep['irep'], 16)/10**18)
 
     average_irep = TOTAL_IREP/22
@@ -128,7 +116,10 @@ def overview(request):
     prep_main = list(filter(lambda d: d['grade'] == 'Main P-Rep', prep_all))
     prep_sub = list(filter(lambda d: d['grade'] == 'Sub P-Rep', prep_all))
 
-    maininfo = main_info()
+    maininfo = MainInfo.objects.all()[0].maininfo_json
+    maininfo = maininfo.replace("\'", "\"")
+    maininfo = json.loads(maininfo)
+
     public_treasury = int(float(maininfo['publicTreasury']))
     total_supply = float(maininfo['icxSupply'])
     total_staked = int(preps['totalStake'], 16) / 10 ** 18
