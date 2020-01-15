@@ -10,6 +10,7 @@ from operator import itemgetter
 
 import requests
 
+
 def init_mode(request):
     if 'nightmode' not in request.session:
         request.session['nightmode'] = True
@@ -715,4 +716,3 @@ def convert_alpha_3_to_name(code):
         'ZWE': 'Zimbabwe'
     }
     return countryISOMapping[code]
-
