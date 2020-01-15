@@ -4,12 +4,11 @@ from django.shortcuts import render
 from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
-#from dashboard.cron import daily_dashboard_cron
-from dashboard.cron import get_daily_transactions
-
 from .models import DailyTransactions, WalletCount, RewardRate
 
 import requests
+
+from dashboard.cron import dashboard_cron_6h
 
 
 def init_mode(request):
@@ -71,8 +70,7 @@ def rrep(delrate):
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
 
-    get_daily_transactions()
-    #daily_dashboard_cron()
+    dashboard_cron_6h()
 
     #####################################################################################
     # Top wallets
@@ -91,9 +89,6 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
             ret20.append({'name': wallet['address'], 'tokens': wallet['balance'], 'y': wallet['percentage']})
         count += 1
 
-    #####################################################################################
-    # Main Info
-    #####################################################################################
     maininfo = main_info()
     total_supply = maininfo['icxSupply']
     marketcap = maininfo['marketCap']
