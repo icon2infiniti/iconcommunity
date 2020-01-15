@@ -4,24 +4,19 @@
 {% block extra_head %}
   <link href="{% static 'dashboard/css/dashboard.css' %}" rel="stylesheet"/>
   <script>
-
       // Daily Tx
       var chartlabels = {{ targetDates|safe }};
       var chartdata = {{ txCounts }};
-
       // Top 20 Wallets
       var ret20 = {{ ret20|safe }};
-
       // Wallet Count
       var selectDates = {{ selectDates|safe }};
       var balanceCounts = {{ balanceCounts }};
       var totalCounts = {{ totalCounts }};
-
       // Reward Rate
       var annual_reward_list = {{ annual_reward_list }};
       var annual_inflation_list = {{ annual_inflation_list }};
       var reward_rate_dates_list = {{ reward_rate_dates_list|safe }};
-
   </script>
 {% endblock %}
 {% block title %}Dashboard{% endblock %}
@@ -30,12 +25,6 @@
 {% block section %}Dashboard{% endblock %}
 {% block content %}
   {% load mathfilters %}
-
-  <!-- Move to P-Rep Overview
-  {{ total_voted }}<br>
-  {{ total_stake }}<br>
-  {{ total_supply }}
-  -->
 
   <!-- Daily transactions -->
   <div class="row">
