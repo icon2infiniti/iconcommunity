@@ -4,9 +4,9 @@ from django.shortcuts import render
 from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
-from .models import DailyTransactions, WalletCount, RewardRate
+from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo
 
-import requests
+import json
 
 from dashboard.cron import dashboard_cron_6h
 
@@ -28,36 +28,6 @@ def init_mode(request):
     return context
 
 
-def top20wallets():
-    url = 'https://tracker.icon.foundation/v0/wallet/addrList'
-    try:
-        r = requests.get(url)
-    except requests.exceptions.RequestException as e:
-        print(e)
-    rjson = r.json()['data']
-    return rjson
-
-
-def main_info():
-    url = 'https://tracker.icon.foundation/v3/main/mainInfo'
-    try:
-        r = requests.get(url)
-    except requests.exceptions.RequestException as e:
-        print(e)
-    rjson = r.json()['tmainInfo']
-    return rjson
-
-
-def tx24h():
-    url = 'https://tracker.icon.foundation/v3/main/txCountIn24h'
-    try:
-        r = requests.get(url)
-    except requests.exceptions.RequestException as e:
-        print(e)
-    rjson = r.json()['data']
-    return rjson
-
-
 def rrep(delrate):
     r_min = 0.02
     r_max = 0.12
@@ -69,13 +39,13 @@ def rrep(delrate):
 
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
-
     dashboard_cron_6h()
-
     #####################################################################################
     # Top wallets
     #####################################################################################
-    t20 = top20wallets()
+    t20 = Top20Wallets.objects.all()[0].t20json
+    t20 = t20.replace("\'", "\"")
+    t20 = json.loads(t20)
     ret20 = []
     count = 0
     tokens_total = 0
@@ -89,7 +59,10 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
             ret20.append({'name': wallet['address'], 'tokens': wallet['balance'], 'y': wallet['percentage']})
         count += 1
 
-    maininfo = main_info()
+    maininfo = MainInfo.objects.all()[0].maininfo_json
+    maininfo = maininfo.replace("\'", "\"")
+    maininfo = json.loads(maininfo)
+
     total_supply = maininfo['icxSupply']
     marketcap = maininfo['marketCap']
     circulating_supply = maininfo['icxCirculationy']
@@ -103,16 +76,14 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     # Daily transactions
     #####################################################################################
     daily_txs = DailyTransactions.objects.all().order_by('targetDate')
-
     targetDates = []
     txCounts = []
-
     for entry in daily_txs:
         md = entry.targetDate.split("-")[1].lstrip("0") + '/' + entry.targetDate.split("-")[2].lstrip("0")
         targetDates.append(md)
         txCounts.append(entry.txCount)
 
-    transactions_24h = tx24h()
+    transactions_24h = daily_txs.last().tx24h
     transactions_all = maininfo['transactionCount']
 
     #####################################################################################
@@ -194,11 +165,3 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     if extra_context is not None:
         context.update(extra_context)
     return render(request, template, context)
-
-
-def preplist(request, type):
-    context = init_mode(request)
-    context.update({
-        'section': 'P-REP LISTING'
-    })
-    return render(request, 'dashboard/preplist.html', context)
