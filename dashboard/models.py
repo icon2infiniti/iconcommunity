@@ -4,6 +4,7 @@ from django.db import models
 class DailyTransactions(models.Model):
     targetDate = models.CharField(max_length=20, default='')
     txCount = models.IntegerField()
+    tx24h = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.targetDate)
@@ -11,7 +12,6 @@ class DailyTransactions(models.Model):
 
 class WalletCount(models.Model):
     selectDate = models.CharField(max_length=20, default='')
-    #active = models.IntegerField()
     totalCount = models.IntegerField()
     balanceCount = models.IntegerField()
 
@@ -29,3 +29,13 @@ class RewardRate(models.Model):
 
     def __str__(self):
         return str(self.create_day)
+
+
+class Top20Wallets(models.Model):
+    t20json = models.CharField(max_length=5000)
+    query_date = models.DateTimeField(auto_now=True)
+
+
+class MainInfo(models.Model):
+    maininfo_json = models.CharField(max_length=1000)
+    query_date = models.DateTimeField(auto_now=True)
