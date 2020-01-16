@@ -96,7 +96,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         print(str(e.message))
 
     total_voted = int(preps['totalDelegated'], 16)/10**18
-    total_stake = int(preps['totalStake'], 16)/10**18
+    total_staked = int(preps['totalStake'], 16)/10**18
 
     #####################################################################################
     # Wallet Count
@@ -146,6 +146,12 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     #print(delegation_rate_list)
     #print(inflation_rate_list)
 
+    total_supply = float(total_supply)
+    total_staked_percent = round(total_staked / total_supply * 100, 2)
+    total_voted_percent = round(total_voted / total_supply * 100, 2)
+    total_staked = int(total_staked)
+    total_voted = int(total_voted)
+
     context.update({
         'ret20': ret20,
         'targetDates': targetDates,
@@ -156,9 +162,11 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'marketcap': marketcap,
         'circulating_supply': circulating_supply,
         'total_supply': total_supply,
-        'public_treasury': public_treasury,
-        'total_voted': total_voted,
-        'total_stake': total_stake,
+        'public_treasury': int(float(public_treasury)),
+        'total_voted': int(total_voted),
+        'total_staked': int(total_staked),
+        'total_staked_percent': total_staked_percent,
+        'total_voted_percent': total_voted_percent,
 
         'selectDates': selectDates,
         'totalCounts': totalCounts,
