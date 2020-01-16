@@ -18,6 +18,9 @@
       var annual_reward_list = {{ annual_reward_list }};
       var annual_inflation_list = {{ annual_inflation_list }};
       var reward_rate_dates_list = {{ reward_rate_dates_list|safe }};
+      //Unstaking
+      var total_staked = {{ total_staked }};
+      var total_supply = {{ total_supply }};
   </script>
 {% endblock %}
 {% block title %}Dashboard{% endblock %}
@@ -78,7 +81,7 @@
   <!-- Main Info -->
   <div class="row">
     <!-- Market Cap -->
-    <div class="col-lg-3 col-md-6">
+    <div class="col-md-4">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
@@ -98,7 +101,7 @@
       </div>
     </div>
     <!-- Circulating Supply -->
-    <div class="col-lg-3 col-md-6">
+    <div class="col-md-4">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
@@ -118,7 +121,7 @@
       </div>
     </div>
     <!-- Total Supply -->
-    <div class="col-lg-3 col-md-6">
+    <div class="col-md-4">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
@@ -137,7 +140,7 @@
         </div>
       </div>
     </div>
-    <!-- Public Treasury -->
+    <!-- Public Treasury
     <div class="col-lg-3 col-md-6">
       <div class="card card-stats">
         <div class="card-body">
@@ -157,6 +160,7 @@
         </div>
       </div>
     </div>
+    -->
   </div>
 
   <!-- RR & WC -->
@@ -292,189 +296,88 @@
     </div>
   </div>
 
-  <!-- Bar/Curve charts -->
-  <!--
-  <div class="col-lg-4">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-category">Some Curves</h5>
-        <h3 class="card-title"><i class="tim-icons icon-bell-55 text-primary"></i> 763,215</h3>
-      </div>
-      <div class="card-body">
-        <div class="chart-area">
-          <canvas id="chartLinePurple"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-category">Some Bars</h5>
-        <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> 3,500</h3>
-      </div>
-      <div class="card-body">
-        <div class="chart-area">
-          <canvas id="CountryChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-4">
-    <div class="card card-chart">
-      <div class="card-header">
-        <h5 class="card-category">Some More Curves</h5>
-        <h3 class="card-title"><i class="tim-icons icon-send text-success"></i> 12,100</h3>
-      </div>
-      <div class="card-body">
-        <div class="chart-area">
-          <canvas id="chartLineGreen"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-  -->
-
-  <!-- ICX Price -->
-  <!--
+  <!-- Governance Info -->
   <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
+
+    <div class="col-lg-3">
+      <div class="card card-stats">
+        <div class="card-body">
           <div class="row">
-            <div class="col-sm-6 text-left"><h2 class="card-title">{% trans 'ICX Price' %}</h2></div>
-            <div class="col-sm-6 rate">
-              <div class="btn-group btn-group-toggle float-right currency" data-toggle="buttons">
-                <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                  <input type="radio" name="options" checked>
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleCurrency('BTC');">BTC</span>
-                  <span class="d-block d-sm-none" onclick="toggleCurrency('BTC');">BTC</span>
-                </label>
-                <label class="btn btn-sm btn-primary btn-simple" id="1">
-                  <input type="radio" class="d-none d-sm-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleCurrency('ETH');">ETH</span>
-                  <span class="d-block d-sm-none" onclick="toggleCurrency('ETH');">ETH</span>
-                </label>
-                <label class="btn btn-sm btn-primary btn-simple" id="2">
-                  <input type="radio" class="d-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleCurrency('USD');">USD</span>
-                  <span class="d-block d-sm-none" onclick="toggleCurrency('USD');">USD</span>
-                </label>
+            <div class="col-4">
+              <div class="info-icon text-center icon-primary">
+                <i class="fas fa-level-down-alt incard"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Total Staked' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Total staked rate on the ICON Network."></i></p>
+                <h3 class="card-title">{{ total_staked_percent }}%</h3>
               </div>
             </div>
           </div>
         </div>
-        <div class="card-body">
-          <div class="part rates">
-
-            <p class="icx-group">
-              <span class="icx">1<em>ICX</em></span> <span class="same">=</span>
-              <span class="eth" id="eth">0<em>BTC</em></span>
-            </p>
-
-            <ul class="content half market-vol-wrap">
-              <li class="left">
-                <p class="subTitle">{% trans 'Market Cap' %}</p>
-                <p><em>B</em>0<em>K</em></p>
-              </li>
-              <li class="right">
-                <p class="subTitle">{% trans 'Volume' %}</p>
-                <p><em>B</em>0</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-
       </div>
     </div>
-  </div>
-  -->
-
-  <!-- ICX Market Chart -->
-  <!--
-  <div class="row">
-    <div class="col-12">
-      <div class="card card-chart">
-        <div class="card-header">
+    <div class="col-lg-3">
+      <div class="card card-stats">
+        <div class="card-body">
           <div class="row">
-            <div class="col-sm-6 text-left">
-              <h2 class="card-title">{% trans 'ICX Chart' %}</h2>
+            <div class="col-4">
+              <div class="info-icon text-center icon-primary">
+                <i class="fas fa-check incard"></i>
+              </div>
             </div>
-            <div class="col-sm-6 duration">
-              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
-                <label class="btn btn-sm btn-primary btn-simple active" id="0">
-                  <input type="radio" name="options" checked>
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('DAY');">{% trans 'Day' %}</span>
-                  <span class="d-block d-sm-none" onclick="toggleDuration('DAY');">24H</span>
-                </label>
-                <label class="btn btn-sm btn-primary btn-simple" id="1">
-                  <input type="radio" class="d-none d-sm-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('WEEK');">{% trans 'Week' %}</span>
-                  <span class="d-block d-sm-none" onclick="toggleDuration('WEEK');">7D</span>
-                </label>
-                <label class="btn btn-sm btn-primary btn-simple" id="2">
-                  <input type="radio" class="d-none" name="options">
-                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="toggleDuration('MONTH');">{% trans 'Month' %}</span>
-                  <span class="d-block d-sm-none" onclick="toggleDuration('MONTH');">30D</span>
-                </label>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Network Delegation' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Total delegation rate on the ICON Network."></i></p>
+                <h3 class="card-title">{{ total_voted_percent }}%</h3>
               </div>
             </div>
           </div>
         </div>
-        <div class="card-body">
-						<div class="chart">
-						  <canvas class="chartCanvas" id="chartCanvas"></canvas>
-						</div>
-        </div>
       </div>
     </div>
-  </div>
-  -->
-
-  <!-- DAPPs Market Cap -->
-  <!--
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-header">
-          <h2 class="card-title">{% trans 'Dapps Market Cap' %}</h2>
-        </div>
+    <div class="col-lg-3">
+      <div class="card card-stats">
         <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-typeI">
-              <thead class="text-primary">
-              <tr>
-                <th class="text-center">#</th>
-                <th>{% trans 'Token' %}</th>
-                <th>{% trans 'Price (ICX)' %}</th>
-                <th>{% trans '% Change (24h)' %}</th>
-                <th>{% trans 'Volume (24h)' %}</th>
-                <th>{% trans 'Market Cap (ICX)' %}</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr>
-                <td class="text-center">
-                  <div class="photo">
-                    <img src="{% static 'dashboard/img/ac3.jpg' %}" alt="photo">
-                  </div>
-                </td>
-                <td>AC3 (AC3)</td>
-                <td>{{ ac3data.quote.ICX.price|floatformat:"5" }} ICX</td>
-                <td id="ac3_change"><span class="rekt">{{ ac3data.quote.ICX.percent_change_24h }}</span></td>
-                <td id="ac3_volume">{{ ac3data.quote.ICX.volume_24h|floatformat:0 }}</td>
-                <td id="ac3_market_cap">{{ ac3data.quote.ICX.market_cap|floatformat:0 }} </td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="row">
+            <div class="col-4">
+              <div class="info-icon text-center dollargreen">
+                <i class="fas fa-dollar-sign incard"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Public Treasury' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Unclaimed ICX from additional issuance."></i></p>
+                <h3 class="card-title">{{ public_treasury|intcomma }} ICX</h3>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+    <!-- Unstaking Period -->
+    <div class="col-lg-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <div class="info-icon text-center clock">
+                <i class="fas fa-clock"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Unstaking Period' %}&nbsp; <i class="fas fa-info-circle tip" data-toggle="tooltip" title="Number of days required to convert a Staked ICX to a liquid ICX on the ICON Network."></i></p>
+                <h3 class="card-title"><span id="unstaking_period"></span></h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
-  -->
 
 {% endblock %}
 
@@ -491,15 +394,21 @@
 {% block extra_js %}
 
   <script src="{% static 'dashboard/js/chart.bundle.min.js' %}"></script>
-  <!--
-  <script src="{% static 'dashboard/js/coininfo.js' %}"></script>
-  <script src="{% static 'dashboard/js/jquery-jvectormap.js' %}"></script>
-  -->
   <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
-
   <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
-
   <script src="https://code.highcharts.com/highcharts.js"></script>
+
+  <script>
+      function unstaking_period(){
+        var i_max = 20, i_min = 5, i_point = 0.7;
+        var i_period = ((i_max-i_min)/(i_point)**2)*(total_staked/total_supply-i_point)**2+i_min;
+        return i_period.toFixed(1);
+      }
+
+      $.endlessPaginate({
+          contentSelector: '.endless_content_wrapper'
+      });
+  </script>
 
   <script>
       $(document).ready(function () {
@@ -513,38 +422,8 @@
 
           $('[data-toggle="tooltip"]').tooltip();
 
-          <!--mapobj.initVectorMap(countries_alpha2);-->
-          <!--
-          var ac3_market_cap = parseFloat($('#ac3_market_cap').text()).toLocaleString();
-          var ac3_volume = parseFloat($('#ac3_volume').text()).toLocaleString();
-          var ac3_change = parseFloat($('#ac3_change > span').text());
-
-          if (ac3_change > 0) {
-              $('#ac3_change > span').addClass('moon');
-          } else {
-              $('#ac3_change > span').addClass('rekt');
-          }
-
-          $('#ac3_market_cap').text(ac3_market_cap+" ICX");
-          $('#ac3_volume').text(ac3_volume+" ICX");
-          $('#ac3_change > span').text(ac3_change+" %");
-          -->
+          $('#unstaking_period').text(unstaking_period()+" Days");
       });
-  </script>
-
-
-  <script>
-      $.endlessPaginate({
-          contentSelector: '.endless_content_wrapper'
-      });
-
-      /* CALCULATOR
-      function rrep(delrate){
-        const r_min = 0.02, r_max = 0.12, r_point = 0.7;
-        return ((r_max-r_min)/(r_point**2)) * ((delrate/100)-r_point)**2 + r_min;
-      }
-      */
-
   </script>
 
 {% endblock %}

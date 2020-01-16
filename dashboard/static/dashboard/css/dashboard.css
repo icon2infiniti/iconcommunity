@@ -164,3 +164,10 @@ tspan {
     background-size: 210% 210% !important;
     background-position: top right!important;
 }
+
+.clock {
+    background: #b8781b !important;
+    background-image: linear-gradient(to bottom left, #b8781b, #865818, #b8781b) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
