@@ -343,7 +343,7 @@ charts = {
         });
     },
 
-    initRewardRateChart: function (inflation, reward, dates) {
+    initRewardRateChart: function (inflation, reward, realyield, dates) {
 
         gradientChartOptionsConfigurationWithTooltipPurple = {
             maintainAspectRatio: false,
@@ -377,7 +377,7 @@ charts = {
                     },
                     ticks: {
                         suggestedMin: 0,
-                        suggestedMax: 25,
+                        suggestedMax: 20,
                         padding: 20,
                         fontColor: "#9a9a9a"
                     }
@@ -407,6 +407,24 @@ charts = {
         var data = {
             labels: dates,
             datasets: [
+            {
+                label: "Real Yield",
+                fill: true,
+                backgroundColor: gradientStroke,
+                borderColor: '#d048b6',
+                borderWidth: 2,
+                borderDash: [],
+                borderDashOffset: 0.0,
+                pointBackgroundColor: '#d048b6',
+                pointBorderColor: 'rgba(255,255,255,0)',
+                pointHoverBackgroundColor: '#d048b6',
+                pointBorderWidth: 20,
+                pointHoverRadius: 4,
+                pointHoverBorderWidth: 15,
+                pointRadius: 4,
+                data: realyield,
+            },
+            /*
             {
                 label: "Annual Inflation",
                 fill: true,
@@ -442,7 +460,9 @@ charts = {
                 pointRadius: 4,
                 //data: [1, 2, 3, 7, 80, 90],
                 data: reward,
-            }]
+            }
+            */
+            ]
         };
 
         var rrChart = new Chart(ctx, {
