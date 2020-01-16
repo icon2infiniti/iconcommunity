@@ -224,7 +224,10 @@ charts = {
                 position: "nearest",
                 callbacks: {
                   label: function(tooltipItems, data) {
-                    return data.datasets[tooltipItems.datasetIndex].label + ': ' + data.datasets[0].data[tooltipItems.index].toLocaleString();
+                      if(tooltipItems.datasetIndex === 0)
+                        return data.datasets[tooltipItems.datasetIndex].label + ': ' + data.datasets[0].data[tooltipItems.index].toLocaleString();
+                      else if (tooltipItems.datasetIndex === 1)
+                        return data.datasets[tooltipItems.datasetIndex].label + ': ' + data.datasets[1].data[tooltipItems.index].toLocaleString();
                   }
                 }
             },
@@ -305,18 +308,18 @@ charts = {
                     //data: [80, 100, 70, 80, 120, 80],
                     data: balanceCounts,
                 },
-                    {
-                        label: "Total Wallets",
-                        fill: true,
-                        backgroundColor: gradientStroke2,
-                        hoverBackgroundColor: gradientStroke2,
-                        borderColor: '#098186',
-                        borderWidth: 2,
-                        borderDash: [],
-                        borderDashOffset: 0.0,
-                        //data: [60, 110, 90, 70, 90, 100],
-                        data: totalCounts,
-                    }]
+                {
+                    label: "Total Wallets",
+                    fill: true,
+                    backgroundColor: gradientStroke2,
+                    hoverBackgroundColor: gradientStroke2,
+                    borderColor: '#098186',
+                    borderWidth: 2,
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    //data: [60, 110, 90, 70, 90, 100],
+                    data: totalCounts,
+                }]
             },
             options: gradientBarChartConfiguration
         });
@@ -376,8 +379,8 @@ charts = {
                         zeroLineColor: "transparent",
                     },
                     ticks: {
-                        suggestedMin: 0,
-                        suggestedMax: 20,
+                        suggestedMin: 8,
+                        suggestedMax: 14,
                         padding: 20,
                         fontColor: "#9a9a9a"
                     }
