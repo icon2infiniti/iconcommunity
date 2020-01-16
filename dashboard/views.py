@@ -134,7 +134,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     for i in range(len(total_supply_list)):
         if i >= 1:
             daily_rate = total_supply_list[i]/total_supply_list[i-1]-1
-            annual_rate = round(((daily_rate+1)**365-1)*100, 2)
+            #annual_rate = round(((daily_rate+1)**365-1)*100, 2)
+            annual_rate = round(((total_supply_list[i] - total_supply_list[i-1]) * 365 / total_supply_list[i])*100, 2)
             annual_inflation_list.append(annual_rate)
 
     #print(delegation_rate_list)
