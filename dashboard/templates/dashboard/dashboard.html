@@ -14,6 +14,7 @@
       var balanceCounts = {{ balanceCounts }};
       var totalCounts = {{ totalCounts }};
       // Reward Rate
+      var annual_real_yield_list = {{ annual_real_yield_list }};
       var annual_reward_list = {{ annual_reward_list }};
       var annual_inflation_list = {{ annual_inflation_list }};
       var reward_rate_dates_list = {{ reward_rate_dates_list|safe }};
@@ -167,8 +168,8 @@
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left">
-              <h2 class="card-title" style="margin-bottom: 0px;">{% trans 'Reward Rate' %}</h2>
-              <h5 class="card-category">Against Inflation Rate</h5>
+              <h2 class="card-title" style="margin-bottom: 0px;">{% trans 'Real Yield' %}</h2>
+              <h5 class="card-category">Reward Rate - Inflation Rate</h5>
             </div>
             <!-- Sort Buttons -->
             <div class="col-sm-6">
@@ -508,7 +509,7 @@
 
           charts.initWalletCountChart(selectDates, balanceCounts, totalCounts);
 
-          charts.initRewardRateChart(annual_inflation_list, annual_reward_list, reward_rate_dates_list);
+          charts.initRewardRateChart(annual_inflation_list, annual_reward_list, annual_real_yield_list, reward_rate_dates_list);
 
           $('[data-toggle="tooltip"]').tooltip();
 
