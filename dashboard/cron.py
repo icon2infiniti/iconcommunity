@@ -1,4 +1,4 @@
-from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo
+from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo, TopDapps
 import requests
 
 from . import dashboardrpc
@@ -116,9 +116,24 @@ def get_main_info():
     maininfo.save()
 
 
+def get_top_dapps():
+    url = 'https://blockmove.eu/icon.json'
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    rjson = r.json()['data']
+
+    TopDapps.objects.update_or_create(
+        create_day=datetime.date.today(),
+        defaults={'topdapps_json': rjson, 'tx': r.json()['tx'], 'vol': r.json()['vol'], 'fee': r.json()['fee'], 'create_day': datetime.date.today()}
+    )
+
+
 def dashboard_cron_6h():
     get_daily_transactions()
     get_wallet_count()
     get_reward_rate()
     get_top20_wallets()
     get_main_info()
+    get_top_dapps()

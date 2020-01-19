@@ -39,3 +39,14 @@ class Top20Wallets(models.Model):
 class MainInfo(models.Model):
     maininfo_json = models.CharField(max_length=1000)
     query_date = models.DateTimeField(auto_now=True)
+
+
+class TopDapps(models.Model):
+    topdapps_json = models.CharField(max_length=5000)
+    tx = models.IntegerField()
+    vol = models.FloatField()
+    fee = models.FloatField()
+    create_day = models.DateField()
+
+    def __str__(self):
+        return str(self.create_day)
