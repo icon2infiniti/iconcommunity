@@ -89,6 +89,7 @@ def get_reward_rate():
 
 
 def get_top20_wallets():
+    print("Top 20 Wallets: " + str(datetime.datetime.now()))
     url = 'https://tracker.icon.foundation/v0/wallet/addrList'
     try:
         r = requests.get(url)
@@ -103,6 +104,7 @@ def get_top20_wallets():
 
 
 def get_main_info():
+    print("Main Info: " + str(datetime.datetime.now()))
     url = 'https://tracker.icon.foundation/v3/main/mainInfo'
     try:
         r = requests.get(url)
@@ -117,6 +119,7 @@ def get_main_info():
 
 
 def get_top_dapps():
+    print("Top Dapps: " + str(datetime.datetime.now()))
     url = 'https://blockmove.eu/icon.json'
     try:
         r = requests.get(url)
