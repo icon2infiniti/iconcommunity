@@ -4,11 +4,11 @@ from django.shortcuts import render
 from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
-from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo
+from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo, TopDapps
 
 import json
 
-#from dashboard.cron import dashboard_cron_6h
+from dashboard.cron import get_top_dapps
 
 
 def init_mode(request):
@@ -39,7 +39,7 @@ def rrep(delrate):
 
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
-    #dashboard_cron_6h()
+    #get_top_dapps()
     #####################################################################################
     # Top wallets
     #####################################################################################
@@ -101,7 +101,6 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     #####################################################################################
     # Wallet Count
     #####################################################################################
-    #get_wallet_count()
     wallet_counts = WalletCount.objects.all().order_by('selectDate')
 
     selectDates = []
@@ -143,14 +142,82 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
             annual_rate = round(((total_supply_list[i] - total_supply_list[i-1]) * 365 / total_supply_list[i])*100, 2)
             annual_inflation_list.append(annual_rate)
 
-    #print(delegation_rate_list)
-    #print(inflation_rate_list)
-
+    #####################################################################################
+    # Governance
+    #####################################################################################
     total_supply = float(total_supply)
     total_staked_percent = round(total_staked / total_supply * 100, 2)
     total_voted_percent = round(total_voted / total_supply * 100, 2)
     total_staked = int(total_staked)
     total_voted = int(total_voted)
+
+    #####################################################################################
+    # Top dApps
+    #####################################################################################
+    topdapps = TopDapps.objects.all().order_by('create_day')
+
+    dapps_create_day_list = []
+
+    daolette_txLastDay = []
+    daolette_volumeLastDayInUSD = []
+    daolette_dauLastDay = []
+
+    daodice_txLastDay = []
+    daodice_volumeLastDayInUSD = []
+    daodice_dauLastDay = []
+
+    stayge_txLastDay = []
+    stayge_volumeLastDayInUSD = []
+    stayge_dauLastDay = []
+
+    somesing_txLastDay = []
+    somesing_volumeLastDayInUSD = []
+    somesing_dauLastDay = []
+
+    for topdapp in topdapps:
+        dapps_create_day_list.append(str(topdapp.create_day))
+
+        dapp_json = topdapp.topdapps_json
+        dapp_json = json.loads(dapp_json)['data']
+
+        for dapp in dapp_json:
+            if contract_name(dapp['url']) == 'ICONBet - DAOdice':
+                daodice_txLastDay.append(dapp['txLastDay'])
+                daodice_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                daodice_dauLastDay.append(dapp['dauLastDay'])
+
+            if contract_name(dapp['url']) == 'ICONBet - DAOlette':
+                daolette_txLastDay.append(dapp['txLastDay'])
+                daolette_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                daolette_dauLastDay.append(dapp['dauLastDay'])
+
+            if contract_name(dapp['url']) == 'Stayge':
+                stayge_txLastDay.append(dapp['txLastDay'])
+                stayge_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                stayge_dauLastDay.append(dapp['dauLastDay'])
+
+            if contract_name(dapp['url']) == 'Somesing':
+                somesing_txLastDay.append(dapp['txLastDay'])
+                somesing_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                somesing_dauLastDay.append(dapp['dauLastDay'])
+
+
+    print(dapps_create_day_list)
+    print(daolette_txLastDay)
+    print(daolette_volumeLastDayInUSD)
+    print(daolette_dauLastDay)
+
+    print(daodice_txLastDay)
+    print(daodice_volumeLastDayInUSD)
+    print(daodice_dauLastDay)
+
+    print(stayge_txLastDay)
+    print(stayge_volumeLastDayInUSD)
+    print(stayge_dauLastDay)
+
+    print(somesing_txLastDay)
+    print(somesing_volumeLastDayInUSD)
+    print(somesing_dauLastDay)
 
     context.update({
         'ret20': ret20,
@@ -176,7 +243,37 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'annual_real_yield_list': annual_real_yield_list,
         'annual_inflation_list': annual_inflation_list,
         'reward_rate_dates_list': reward_rate_dates_list,
+
+        'dapps_create_day_list': dapps_create_day_list,
+        'daodice_txLastDay': daodice_txLastDay,
+        'daodice_volumeLastDayInUSD': daodice_volumeLastDayInUSD,
+        'daodice_dauLastDay': daodice_dauLastDay,
+
+        'daolette_txLastDay': daolette_txLastDay,
+        'daolette_volumeLastDayInUSD': daolette_volumeLastDayInUSD,
+        'daolette_dauLastDay': daolette_dauLastDay,
+
+        'stayge_txLastDay': stayge_txLastDay,
+        'stayge_volumeLastDayInUSD': stayge_volumeLastDayInUSD,
+        'stayge_dauLastDay': stayge_dauLastDay,
+
+        'somesing_txLastDay': somesing_txLastDay,
+        'somesing_volumeLastDayInUSD': somesing_volumeLastDayInUSD,
+        'somesing_dauLastDay': somesing_dauLastDay,
     })
     if extra_context is not None:
         context.update(extra_context)
     return render(request, template, context)
+
+
+def contract_name(address):
+    contract_mapping = {
+        "cxb0b6f777fba13d62961ad8ce11be7ef6c4b2bcc6": "ICONBet - DAOdice",
+        "cx1b97c1abfd001d5cd0b5a3f93f22cccfea77e34e": "ICONBet - DAOlette",
+        "cx502c47463314f01e84b1b203c315180501eb2481": "Stayge",
+        "cx429731644462ebcfd22185df38727273f16f9b87": "Somesing"
+    }
+    if contract_mapping.get(address) != None:
+        return contract_mapping[address]
+    else:
+        return address

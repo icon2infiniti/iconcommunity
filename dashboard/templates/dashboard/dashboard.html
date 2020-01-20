@@ -21,6 +21,20 @@
       //Unstaking
       var total_staked = {{ total_staked }};
       var total_supply = {{ total_supply }};
+      //Top Dapps
+      var dapps_create_day_list = {{ dapps_create_day_list|safe }};
+      var daolette_txLastDay = {{ daolette_txLastDay }};
+      var daolette_volumeLastDayInUSD = {{ daolette_volumeLastDayInUSD }};
+      var daolette_dauLastDay = {{ daolette_dauLastDay }};
+      var daodice_txLastDay = {{ daodice_txLastDay }};
+      var daodice_volumeLastDayInUSD = {{ daodice_volumeLastDayInUSD }};
+      var daodice_dauLastDay = {{ daodice_dauLastDay }};
+      var stayge_txLastDay = {{ stayge_txLastDay }};
+      var stayge_volumeLastDayInUSD = {{ stayge_volumeLastDayInUSD }};
+      var stayge_dauLastDay = {{ stayge_dauLastDay }};
+      var somesing_txLastDay = {{ somesing_txLastDay }};
+      var somesing_volumeLastDayInUSD = {{ somesing_volumeLastDayInUSD }};
+      var somesing_dauLastDay = {{ somesing_dauLastDay }};
   </script>
 {% endblock %}
 {% block title %}Dashboard{% endblock %}
@@ -140,27 +154,6 @@
         </div>
       </div>
     </div>
-    <!-- Public Treasury
-    <div class="col-lg-3 col-md-6">
-      <div class="card card-stats">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <div class="info-icon text-center dollargreen">
-                <i class="fas fa-dollar-sign"></i>
-              </div>
-            </div>
-            <div class="col-8">
-              <div class="numbers">
-                <p class="card-category">{% trans 'Public Treasury' %}&nbsp; <i class="fas fa-info-circle tip" data-toggle="tooltip" title="Unclaimed ICX from additional issuance."></i></p>
-                <h3 class="card-title">{{ public_treasury|floatformat:0|intcomma }}</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    -->
   </div>
 
   <!-- RR & WC -->
@@ -329,7 +322,7 @@
             </div>
             <div class="col-8">
               <div class="numbers">
-                <p class="card-category">{% trans 'Network Delegation' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Total delegation rate on the ICON Network."></i></p>
+                <p class="card-category">{% trans 'Total Voted' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Total delegation rate on the ICON Network."></i></p>
                 <h3 class="card-title">{{ total_voted_percent }}%</h3>
               </div>
             </div>
@@ -349,7 +342,7 @@
             <div class="col-8">
               <div class="numbers">
                 <p class="card-category">{% trans 'Public Treasury' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Unclaimed ICX from additional issuance."></i></p>
-                <h3 class="card-title">{{ public_treasury|intcomma }} ICX</h3>
+                <h3 class="card-title">{{ public_treasury|intcomma }}</h3>
               </div>
             </div>
           </div>
@@ -377,6 +370,22 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- Dapps -->
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h2 class="card-title">Top dApps</h2>
+        </div>
+        <div class="card-body">
+          <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <canvas id="topdapps" style="display: block; height: 220px; width: 383px;" width="478" height="275" class="chartjs-render-monitor"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 {% endblock %}
@@ -419,6 +428,8 @@
           charts.initWalletCountChart(selectDates, balanceCounts, totalCounts);
 
           charts.initRewardRateChart(annual_inflation_list, annual_reward_list, annual_real_yield_list, reward_rate_dates_list);
+
+          charts.initTopDappsChart(dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, stayge_txLastDay, somesing_txLastDay);
 
           $('[data-toggle="tooltip"]').tooltip();
 
