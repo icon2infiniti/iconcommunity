@@ -294,7 +294,6 @@ charts = {
             type: 'bar',
             responsive: true,
             data: {
-                //labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
                 labels: selectDates,
                 datasets: [{
                     label: "Has Balance Wallets",
@@ -305,7 +304,6 @@ charts = {
                     borderWidth: 2,
                     borderDash: [],
                     borderDashOffset: 0.0,
-                    //data: [80, 100, 70, 80, 120, 80],
                     data: balanceCounts,
                 },
                 {
@@ -317,7 +315,6 @@ charts = {
                     borderWidth: 2,
                     borderDash: [],
                     borderDashOffset: 0.0,
-                    //data: [60, 110, 90, 70, 90, 100],
                     data: totalCounts,
                 }]
             },
@@ -495,6 +492,142 @@ charts = {
             data.labels = dates;
             rrChart.update();
         });
+    },
+
+    initTopDappsChart: function(dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, stayge_txLastDay, somesing_txLastDay) {
+
+      gradientChartOptionsConfigurationPurple =  {
+        maintainAspectRatio: false,
+        legend: {
+            display: true,
+            labels: {
+                fontColor: '#9A9A9A'
+            }
+         },
+
+         tooltips: {
+           backgroundColor: '#f5f5f5',
+           titleFontColor: '#333',
+           bodyFontColor: '#666',
+           bodySpacing: 4,
+           xPadding: 12,
+           mode: "nearest",
+           intersect: 0,
+           position: "nearest"
+         },
+         responsive: true,
+        scales:{
+          yAxes: [{
+            barPercentage: 1.6,
+                gridLines: {
+                  drawBorder: false,
+                    color: 'rgba(186,84,245,0.1)',
+                    zeroLineColor: "transparent",
+                },
+                ticks: {
+                    suggestedMin: 60,
+                    suggestedMax: 125,
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                }
+              }],
+
+          xAxes: [{
+            barPercentage: 1.6,
+                gridLines: {
+                  drawBorder: false,
+                    color: 'rgba(186,84,245,0.1)',
+                    zeroLineColor: "transparent",
+                },
+                ticks: {
+                    padding: 20,
+                    fontColor: "#9e9e9e"
+                }
+              }]
+          }
+      };
+
+      var ctx = document.getElementById("topdapps").getContext("2d");
+      var gradientStroke = ctx.createLinearGradient(0,230,0,50);
+
+      var myChart = new Chart(ctx, {
+        type: 'line',
+        responsive: true,
+        data: {
+          labels: dapps_create_day_list,
+          datasets: [{
+            label: "ICONBet - DAOlette",
+            fill: true,
+            backgroundColor: gradientStroke,
+            borderColor: '#2380f7',
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            pointBackgroundColor: '#2380f7',
+            pointBorderColor:'rgba(255,255,255,0)',
+            pointHoverBackgroundColor: '#2380f7',
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+            data: daolette_txLastDay,
+          },
+          {
+            label: "ICONBet - DAOdice",
+            fill: true,
+            backgroundColor: gradientStroke,
+            borderColor: '#be55ed',
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            pointBackgroundColor: '#be55ed',
+            pointBorderColor:'rgba(255,255,255,0)',
+            pointHoverBackgroundColor: '#be55ed',
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+            data: daodice_txLastDay,
+          },
+          {
+            label: "Somesing",
+            fill: true,
+            backgroundColor: gradientStroke,
+            borderColor: '#ef4123',
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            pointBackgroundColor: '#ef4123',
+            pointBorderColor:'rgba(255,255,255,0)',
+            pointHoverBackgroundColor: '#ef4123',
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+            data: somesing_txLastDay,
+          },
+          {
+            label: "Stayge",
+            fill: true,
+            backgroundColor: gradientStroke,
+            borderColor: '#44495d',
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            pointBackgroundColor: '#44495d',
+            pointBorderColor:'rgba(255,255,255,0)',
+            pointHoverBackgroundColor: '#44495d',
+            pointBorderWidth: 20,
+            pointHoverRadius: 4,
+            pointHoverBorderWidth: 15,
+            pointRadius: 4,
+            data: stayge_txLastDay,
+          },
+          ]
+        },
+        options: gradientChartOptionsConfigurationPurple
+      });
+
     },
 };
 

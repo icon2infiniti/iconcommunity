@@ -5,6 +5,7 @@ from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
 import datetime
+import json
 
 
 def tx24h():
@@ -125,11 +126,11 @@ def get_top_dapps():
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
         print(e)
-    rjson = r.json()['data']
+    rjson = r.json()#['data']
 
     TopDapps.objects.update_or_create(
         create_day=datetime.date.today(),
-        defaults={'topdapps_json': rjson, 'tx': r.json()['tx'], 'vol': r.json()['vol'], 'fee': r.json()['fee'], 'create_day': datetime.date.today()}
+        defaults={'topdapps_json': json.dumps(rjson), 'tx': r.json()['tx'], 'vol': r.json()['vol'], 'fee': r.json()['fee'], 'create_day': datetime.date.today()}
     )
 
 
