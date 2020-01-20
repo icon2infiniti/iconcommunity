@@ -140,4 +140,7 @@ def dashboard_cron_6h():
     get_reward_rate()
     get_top20_wallets()
     get_main_info()
+
+
+def dashboard_cron_1h():
     get_top_dapps()
