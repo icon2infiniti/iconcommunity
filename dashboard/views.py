@@ -39,7 +39,7 @@ def rrep(delrate):
 
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
-    #get_top_dapps()
+    get_top_dapps()
     #####################################################################################
     # Top wallets
     #####################################################################################
