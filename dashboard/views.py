@@ -148,6 +148,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     total_supply = float(total_supply)
     total_staked_percent = round(total_staked / total_supply * 100, 2)
     total_voted_percent = round(total_voted / total_supply * 100, 2)
+    circulate_staked_percent = round(total_staked / float(circulating_supply) * 100, 2)
     total_staked = int(total_staked)
     total_voted = int(total_voted)
 
@@ -234,6 +235,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'total_staked': int(total_staked),
         'total_staked_percent': total_staked_percent,
         'total_voted_percent': total_voted_percent,
+        'circulate_staked_percent': circulate_staked_percent,
 
         'selectDates': selectDates,
         'totalCounts': totalCounts,

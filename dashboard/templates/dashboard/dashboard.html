@@ -95,7 +95,7 @@
   <!-- Main Info -->
   <div class="row">
     <!-- Market Cap -->
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
@@ -115,7 +115,7 @@
       </div>
     </div>
     <!-- Circulating Supply -->
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
@@ -135,7 +135,7 @@
       </div>
     </div>
     <!-- Total Supply -->
-    <div class="col-md-4">
+    <div class="col-md-3">
       <div class="card card-stats">
         <div class="card-body">
           <div class="row">
@@ -154,6 +154,27 @@
         </div>
       </div>
     </div>
+
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <div class="info-icon text-center dollargreen">
+                <i class="fas fa-dollar-sign incard"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Public Treasury' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Unclaimed ICX from additional issuance."></i></p>
+                <h3 class="card-title">{{ public_treasury|intcomma }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- RR & WC -->
@@ -292,6 +313,27 @@
   <!-- Governance Info -->
   <div class="row">
 
+    <!-- Circulation Staked -->
+    <div class="col-lg-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-4">
+              <div class="info-icon text-center icon-primary">
+                <i class="fas fa-level-down-alt incard"></i>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Circulation Staked' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Circulating ICX stake rate on the ICON Network."></i></p>
+                <h3 class="card-title">{{ circulate_staked_percent }}%</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Staked -->
     <div class="col-lg-3">
       <div class="card card-stats">
         <div class="card-body">
@@ -311,6 +353,7 @@
         </div>
       </div>
     </div>
+    <!-- Total Voted -->
     <div class="col-lg-3">
       <div class="card card-stats">
         <div class="card-body">
@@ -324,25 +367,6 @@
               <div class="numbers">
                 <p class="card-category">{% trans 'Total Voted' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Total delegation rate on the ICON Network."></i></p>
                 <h3 class="card-title">{{ total_voted_percent }}%</h3>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-3">
-      <div class="card card-stats">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-4">
-              <div class="info-icon text-center dollargreen">
-                <i class="fas fa-dollar-sign incard"></i>
-              </div>
-            </div>
-            <div class="col-8">
-              <div class="numbers">
-                <p class="card-category">{% trans 'Public Treasury' %} &nbsp;<i class="fas fa-info-circle tip" data-toggle="tooltip" title="Unclaimed ICX from additional issuance."></i></p>
-                <h3 class="card-title">{{ public_treasury|intcomma }}</h3>
               </div>
             </div>
           </div>
@@ -404,7 +428,6 @@
 
   <script src="{% static 'dashboard/js/chart.bundle.min.js' %}"></script>
   <script src="{% static 'dashboard/js/dashboard.js' %}"></script>
-  <script src="{% static 'el-pagination/js/el-pagination.js' %}"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
 
   <script>
@@ -413,10 +436,6 @@
         var i_period = ((i_max-i_min)/(i_point)**2)*(total_staked/total_supply-i_point)**2+i_min;
         return i_period.toFixed(1);
       }
-
-      $.endlessPaginate({
-          contentSelector: '.endless_content_wrapper'
-      });
   </script>
 
   <script>
@@ -429,7 +448,7 @@
 
           charts.initRewardRateChart(annual_inflation_list, annual_reward_list, annual_real_yield_list, reward_rate_dates_list);
 
-          charts.initTopDappsChart(dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, stayge_txLastDay, somesing_txLastDay);
+          charts.initTopDappsChart(dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, stayge_txLastDay, somesing_txLastDay, daolette_volumeLastDayInUSD, daodice_volumeLastDayInUSD, stayge_volumeLastDayInUSD, somesing_volumeLastDayInUSD, daolette_dauLastDay, daodice_dauLastDay, stayge_dauLastDay, somesing_dauLastDay);
 
           $('[data-toggle="tooltip"]').tooltip();
 
