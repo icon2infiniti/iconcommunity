@@ -3,7 +3,7 @@ from .models import Tweet, Reddit, Iconist, Medium, YouTube, Rhizome
 import datetime
 from datetime import timedelta
 
-from news.cron import latest_rhizomes
+#from news.cron import latest_tweets
 
 
 def init_mode(request):
@@ -36,7 +36,7 @@ def news(request, template='news/news.html', extra_context=None):
     #latest_iconists()
     #latest_mediums()
     #latest_youtubes()
-    latest_rhizomes()
+    #latest_rhizomes()
 
     twitter_entries = Tweet.objects.all().order_by('-created_at')
     reddit_entries = Reddit.objects.all()
