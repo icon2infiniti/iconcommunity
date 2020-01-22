@@ -1,4 +1,4 @@
-from .models import Tweet, Reddit, Iconist, Medium, YouTube
+from .models import Tweet, Reddit, Iconist, Medium, YouTube, Rhizome
 from dateutil.parser import parse
 import tweepy
 import praw
@@ -172,6 +172,21 @@ def latest_youtubes():
         youtube.save()
 
 
+def latest_rhizomes():
+    print("Rhizome: "+str(datetime.datetime.now()))
+
+    RHIZOME = feedparser.parse('https://rhizomewire.substack.com/feed')
+    rhizome_entries = RHIZOME['entries']
+
+    Rhizome.objects.all().delete()
+    for entry in rhizome_entries:
+        rhizome = Rhizome()
+        rhizome.published = parse(entry['published'])
+        rhizome.link = entry.link
+        rhizome.title = entry.title
+        rhizome.save()
+
+
 def news_cron_15m():
     latest_tweets()
     latest_reddits()
@@ -181,3 +196,4 @@ def news_cron_6h():
     latest_iconists()
     latest_mediums()
     latest_youtubes()
+    latest_rhizomes()

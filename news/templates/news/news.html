@@ -167,6 +167,32 @@
       </div>
     </div>
 
+    <!-- RHIZOME -->
+    <div class="row">
+      <div class="col-12 mb-5">
+        {% if nightmode == True %}
+          <img id="rhizome" class="headerimg" src="{% static 'news/img/rhizome_w.png' %}">
+        {% else %}
+          <img id="rhizome" class="headerimg" src="{% static 'news/img/rhizome.png' %}">
+        {% endif %}
+
+        {% for entry in rhizome_entries %}
+        <div class="row">
+          <div class="col-3 thumbdiv">
+            <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnails" src="{% static 'news/img/rhizomethumb.png' %}"></a>
+          </div>
+          <div class="col-9">
+            <div style="margin-bottom: 4px;">
+              <span class="author"> Rhizome Wire </span><span class="published"> at {{ entry.published }}</span>
+            </div>
+            <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
+          </div>
+        </div>
+        <hr class="divideline">
+        {% endfor %}
+      </div>
+    </div>
+
 
   </div>
 
@@ -179,6 +205,7 @@
     $('#youtube').attr("src", "{% static 'news/img/youtube.png' %}");
     $('#medium').attr("src", "{% static 'news/img/medium.png' %}");
     $('#theiconist').attr("src", "{% static 'news/img/theiconist.png' %}");
+    $('#rhizome').attr("src", "{% static 'news/img/rhizome.png' %}");
   }
 
   function night_image(){
@@ -186,6 +213,7 @@
     $('#youtube').attr("src", "{% static 'news/img/youtube_w.png' %}");
     $('#medium').attr("src", "{% static 'news/img/medium_w.png' %}");
     $('#theiconist').attr("src", "{% static 'news/img/theiconist_w.png' %}");
+    $('#rhizome').attr("src", "{% static 'news/img/rhizome_w.png' %}");
   }
   </script>
 {% endblock %}

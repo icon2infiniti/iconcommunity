@@ -68,14 +68,14 @@ class YouTube(models.Model):
         return self.title
 
 
-'''
-class Featured(models.Model):
-    thumb = models.URLField(max_length=500, default='')
-    title = models.CharField(max_length=500, default='')
+class Rhizome(models.Model):
+    #thumb = models.CharField(max_length=500, default='')
+    #author = models.CharField(max_length=50, default='')
+    #category = models.CharField(max_length=50, default='')
     published = models.DateTimeField()
-    author = models.CharField(max_length=100, default='')
+    link = models.URLField(max_length=500, default='')
+    title = models.CharField(max_length=300, default='')
     queried_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
-'''

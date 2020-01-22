@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-26 02:16+0000\n"
+"POT-Creation-Date: 2020-01-22 01:06+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: core/settings.py:101
+#: core/settings.py:102
 msgid "English"
 msgstr ""
 
-#: core/settings.py:102
+#: core/settings.py:103
 msgid "Simplified Chinese"
 msgstr ""
 
-#: core/settings.py:103
+#: core/settings.py:104
 msgid "Korean"
 msgstr ""
 
@@ -42,126 +42,56 @@ msgstr ""
 msgid "Discover More DApps"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:28
-msgid "P-Rep Rankings"
+#: dashboard/templates/dashboard/dashboard.html:54
+msgid "Daily Transactions"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:34
-msgid "Main"
+#: dashboard/templates/dashboard/dashboard.html:109
+msgid "Market Cap (USD)"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:39
-msgid "Sub"
+#: dashboard/templates/dashboard/dashboard.html:129
+msgid "Circulating Supply"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:44
-#: prep/templates/prep/proposal.html:27 prep/templates/prep/proposal.html:39
-msgid "All"
+#: dashboard/templates/dashboard/dashboard.html:149
+msgid "Total Supply"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:58
-#: prep/templates/prep/governance.html:163
-msgid "Name"
+#: dashboard/templates/dashboard/dashboard.html:169
+msgid "Public Treasury"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:59
-msgid "Country"
+#: dashboard/templates/dashboard/dashboard.html:189
+msgid "Real Yield"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:60
-msgid "Monthly Reward"
+#: dashboard/templates/dashboard/dashboard.html:244
+msgid "Wallet Count"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:61
-#: prep/templates/prep/governance.html:164
-msgid "i_rep"
+#: dashboard/templates/dashboard/dashboard.html:298
+msgid "ICX Holder Chart"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:62
-#: prep/templates/prep/governance.html:166
-msgid "Self-Staked"
+#: dashboard/templates/dashboard/dashboard.html:328
+msgid "Circulation Staked"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:63
-#: prep/templates/prep/governance.html:167
-msgid "Delegated"
+#: dashboard/templates/dashboard/dashboard.html:348
+msgid "Total Staked"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:127
-msgid "Main P-Reps"
+#: dashboard/templates/dashboard/dashboard.html:368
+msgid "Total Voted"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:154
-msgid "Sub P-Reps"
+#: dashboard/templates/dashboard/dashboard.html:388
+msgid "Unstaking Period"
 msgstr ""
 
-#: dashboard/templates/dashboard/dashboard.html:181
-msgid "All P-Reps"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:208
-msgid "Pre-Registered"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:273
-msgid "P-Rep Locations"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:274
-msgid "Distribution of P-Rep Nodes"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:322
-msgid "ICX Price"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:356
-msgid "Market Cap"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:360
-msgid "Volume"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:380
-msgid "ICX Chart"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:386
-msgid "Day"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:391
-msgid "Week"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:396
-msgid "Month"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:418
-msgid "Dapps Market Cap"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:426
-msgid "Token"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:427
-msgid "Price (ICX)"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:428
-#, python-format
-msgid "%% Change (24h)"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:429
-msgid "Volume (24h)"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:430
-msgid "Market Cap (ICX)"
+#: dashboard/templates/dashboard/dashboard.html:404
+msgid "Top dApps"
 msgstr ""
 
 #: developers/models.py:12 developers/models.py:28 resources/models.py:12
@@ -189,59 +119,63 @@ msgstr ""
 msgid "ICON SlideShare"
 msgstr ""
 
-#: developers/templates/developers/developers.html:77
+#: developers/templates/developers/developers.html:78
 msgid "ICON Developer YouTube"
 msgstr ""
 
-#: developers/templates/developers/developers.html:83
+#: developers/templates/developers/developers.html:85
 msgid "Tutorials"
 msgstr ""
 
-#: developers/templates/developers/developers.html:85
+#: developers/templates/developers/developers.html:87
 msgid "Blog Tutorial"
 msgstr ""
 
-#: developers/templates/developers/developers.html:91
+#: developers/templates/developers/developers.html:93
 msgid "Video Tutorial"
 msgstr ""
 
-#: developers/templates/developers/developers.html:97
+#: developers/templates/developers/developers.html:99
 msgid "Tools"
 msgstr ""
 
-#: developers/templates/developers/developers.html:100
+#: developers/templates/developers/developers.html:102
+msgid "Explorer"
+msgstr ""
+
+#: developers/templates/developers/developers.html:119
 msgid "App"
 msgstr ""
 
-#: developers/templates/developers/developers.html:117
+#: developers/templates/developers/developers.html:136
 msgid "Automation"
 msgstr ""
 
-#: developers/templates/developers/developers.html:134
+#: developers/templates/developers/developers.html:153
 msgid "Governance"
 msgstr ""
 
-#: developers/templates/developers/developers.html:151
+#: developers/templates/developers/developers.html:170
 msgid "Reward Calculator"
 msgstr ""
 
-#: developers/templates/developers/developers.html:168
+#: developers/templates/developers/developers.html:187
 msgid "SCORE"
 msgstr ""
 
-#: developers/templates/developers/developers.html:185
+#: developers/templates/developers/developers.html:204
 msgid "Wallet"
 msgstr ""
 
-#: developers/templates/developers/developers.html:202
+#: developers/templates/developers/developers.html:221
 msgid "Database"
 msgstr ""
 
-#: developers/templates/developers/developers.html:219
+#: developers/templates/developers/developers.html:238
 msgid "IDE"
 msgstr ""
 
-#: developers/templates/developers/developers.html:236
+#: developers/templates/developers/developers.html:255
 msgid "Faucet"
 msgstr ""
 
@@ -354,7 +288,7 @@ msgid "Team Information"
 msgstr ""
 
 #: iconsensus/templates/iconsensus/candidate_detail.html:28
-#: iconsensus/templates/iconsensus/candidates.html:74
+#: iconsensus/templates/iconsensus/candidates.html:60
 msgid "HQ"
 msgstr ""
 
@@ -382,32 +316,125 @@ msgstr ""
 msgid "Back to Listing"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/candidates.html:68
+#: iconsensus/templates/iconsensus/candidates.html:47
+msgid "P-Rep Candidates"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidates.html:54
 msgid "Total of"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/candidates.html:68
+#: iconsensus/templates/iconsensus/candidates.html:54 templates/base.html:136
 msgid "Candidates"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/candidates.html:68
+#: iconsensus/templates/iconsensus/candidates.html:54
 msgid "Submit Your Team Here"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/candidates.html:72
+#: iconsensus/templates/iconsensus/candidates.html:58
 msgid "CREATED"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/candidates.html:73
+#: iconsensus/templates/iconsensus/candidates.html:59
 msgid "NAME"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/candidates.html:75
+#: iconsensus/templates/iconsensus/candidates.html:61
 msgid "SERVER LOCATION"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/candidates.html:95
+#: iconsensus/templates/iconsensus/candidates.html:81
 msgid "Detail"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:31
+msgid "Total Staked (ICX)"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:50
+msgid "Total Voted (ICX)"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:69
+msgid "Public Treasury (ICX)"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:89
+msgid "P-Rep Reward"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:115
+msgid "Voter Reward"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:147
+msgid "P-Rep Rankings"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:153
+msgid "Main"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:158
+msgid "Sub"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:163
+#: prep/templates/prep/proposal.html:27 prep/templates/prep/proposal.html:39
+msgid "All"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:177
+#: prep/templates/prep/governance.html:163
+msgid "Name"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:178
+msgid "Country"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:179
+msgid "Monthly Reward"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:180
+#: prep/templates/prep/governance.html:164
+msgid "i_rep"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:181
+#: prep/templates/prep/governance.html:166
+msgid "Self-Staked"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:182
+#: prep/templates/prep/governance.html:167
+msgid "Delegated"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:246
+msgid "Main P-Reps"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:265
+msgid "Sub P-Reps"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:284
+msgid "All P-Reps"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:303
+msgid "Pre-Registered"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:324
+msgid "P-Rep Locations"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:325
+msgid "Distribution of P-Rep Nodes"
 msgstr ""
 
 #: prep/templates/prep/governance.html:38
@@ -552,253 +579,245 @@ msgstr ""
 msgid "New Proposal"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:422
+#: prep/templates/prep/proposaldetail.html:430
 msgid "Proposal Detail"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:423
+#: prep/templates/prep/proposaldetail.html:431
 msgid "Type:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:424
+#: prep/templates/prep/proposaldetail.html:432
 msgid "Description:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:425
+#: prep/templates/prep/proposaldetail.html:433
 msgid "Proposer:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:426
+#: prep/templates/prep/proposaldetail.html:434
 msgid "Tx Hash:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:427
+#: prep/templates/prep/proposaldetail.html:435
 msgid "Created:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:428
+#: prep/templates/prep/proposaldetail.html:436
 msgid "Expires:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:429
+#: prep/templates/prep/proposaldetail.html:437
 msgid "Additional Information:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:451
+#: prep/templates/prep/proposaldetail.html:459
 msgid "Votes"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:461
+#: prep/templates/prep/proposaldetail.html:469
 msgid "Total Voters:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:466
-#: prep/templates/prep/proposaldetail.html:495
-msgid "Agreed"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:470
-#: prep/templates/prep/proposaldetail.html:499
-msgid "Disagreed"
 msgstr ""
 
 #: prep/templates/prep/proposaldetail.html:474
 #: prep/templates/prep/proposaldetail.html:503
+msgid "Agreed"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:478
+#: prep/templates/prep/proposaldetail.html:507
+msgid "Disagreed"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:482
+#: prep/templates/prep/proposaldetail.html:511
 msgid "Not Voted"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:490
+#: prep/templates/prep/proposaldetail.html:498
 msgid "Total Token Votes:"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:618
+#: prep/templates/prep/proposaldetail.html:626
 msgid "Vote Status"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:621
+#: prep/templates/prep/proposaldetail.html:629
 msgid "Total Voters"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:625
+#: prep/templates/prep/proposaldetail.html:633
 msgid "Total Token Votes"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:659
+#: prep/templates/prep/proposaldetail.html:667
 msgid "Vote History"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:666
+#: prep/templates/prep/proposaldetail.html:674
 msgid "Voter"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:667
+#: prep/templates/prep/proposaldetail.html:675
 msgid "Decision"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:668
+#: prep/templates/prep/proposaldetail.html:676
 msgid "Tx Hash"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:669
+#: prep/templates/prep/proposaldetail.html:677
 msgid "Timestamp"
 msgstr ""
 
-#: prep/templates/prep/proposaldetail.html:670
+#: prep/templates/prep/proposaldetail.html:678
 msgid "Voted Token"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:14
+#: resources/templates/resources/collateral.html:18
 msgid "Papers"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:18
+#: resources/templates/resources/collateral.html:22
 msgid "White Paper"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:19
+#: resources/templates/resources/collateral.html:24
 msgid "ICON Whitepaper"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:22
+#: resources/templates/resources/collateral.html:28
 msgid "Yellow Paper"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:25
+#: resources/templates/resources/collateral.html:31
 msgid "ICONstitution & Governance"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:27
+#: resources/templates/resources/collateral.html:33
 msgid "Transaction Fee and SCORE Operation Policy"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:29
+#: resources/templates/resources/collateral.html:35
 msgid "ICON Incentives Scoring System (IISS)"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:31
+#: resources/templates/resources/collateral.html:38
 msgid "Contribution Proposal"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:34 templates/base.html:88
+#: resources/templates/resources/collateral.html:42
 msgid "ICONSENSUS"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:35
+#: resources/templates/resources/collateral.html:44
 msgid "P-Rep Pre-registration Guide"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:36
+#: resources/templates/resources/collateral.html:47
 msgid "ICON Election Introduction"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:38
+#: resources/templates/resources/collateral.html:50
 msgid "Public Representative Introduction"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:44
+#: resources/templates/resources/collateral.html:57
 msgid "Downloads"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:48
+#: resources/templates/resources/collateral.html:61
 msgid "Wallets"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:52
+#: resources/templates/resources/collateral.html:65
 msgid "ICONex - Chrome Extension"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:57
+#: resources/templates/resources/collateral.html:70
 msgid "ICONex - iOS"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:62
+#: resources/templates/resources/collateral.html:75
 msgid "ICONex - Android"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:67
+#: resources/templates/resources/collateral.html:80
 msgid "Media Kit"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:70
+#: resources/templates/resources/collateral.html:83
 msgid "ICON Logo Set"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:75
+#: resources/templates/resources/collateral.html:88
 msgid "ICONLOOP Logo Set"
 msgstr ""
 
-#: resources/templates/resources/collateral.html:80
+#: resources/templates/resources/collateral.html:93
 msgid "ICON Brand Guidelines (Unofficial)"
-msgstr ""
-
-#: resources/templates/resources/collateral.html:88
-msgid "Videos"
-msgstr ""
-
-#: resources/templates/resources/collateral.html:90
-msgid "General"
-msgstr ""
-
-#: resources/templates/resources/collateral.html:95
-msgid "Events"
-msgstr ""
-
-#: resources/templates/resources/collateral.html:100
-msgid "Interviews"
 msgstr ""
 
 #: resources/templates/resources/press.html:7
 msgid "Press"
 msgstr "프레스"
 
-#: templates/base.html:78
+#: templates/base.html:103
 msgid "Dashboard"
 msgstr ""
 
-#: templates/base.html:95
+#: templates/base.html:113
+msgid "News"
+msgstr ""
+
+#: templates/base.html:123
+msgid "P-Rep"
+msgstr ""
+
+#: templates/base.html:130
+msgid "Overview"
+msgstr ""
+
+#: templates/base.html:142
 msgid "About"
 msgstr ""
 
-#: templates/base.html:101
-msgid "P-Rep Candidates"
-msgstr ""
-
-#: templates/base.html:114
+#: templates/base.html:155
 msgid "Resources"
 msgstr ""
 
-#: templates/base.html:121
+#: templates/base.html:162
 msgid "Collateral"
 msgstr ""
 
-#: templates/base.html:150
+#: templates/base.html:191
 msgid "Developers"
 msgstr ""
 
-#: templates/base.html:160
+#: templates/base.html:201
 msgid "DApps"
 msgstr ""
 
-#: templates/base.html:170
+#: templates/base.html:211
 msgid "Forum"
 msgstr ""
 
-#: templates/base.html:280
+#: templates/base.html:303
 msgid "Login"
 msgstr ""
 
-#: templates/base.html:298
+#: templates/base.html:321
 msgid "P-Rep Management"
 msgstr ""
 
-#: templates/base.html:301
+#: templates/base.html:324
 msgid "Governance Variable"
 msgstr ""
 
-#: templates/base.html:304
+#: templates/base.html:327
 msgid "Network Proposal"
 msgstr ""
 
-#: templates/base.html:308
+#: templates/base.html:331
 msgid "Log out"
 msgstr ""
