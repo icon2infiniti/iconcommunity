@@ -180,29 +180,30 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
 
         dapp_json = topdapp.topdapps_json
         dapp_json = json.loads(dapp_json)['data']
+        icx_price = topdapp.icx_price
 
         for dapp in dapp_json:
             if contract_name(dapp['url']) == 'ICONBet - DAOdice':
                 daodice_txLastDay.append(dapp['txLastDay'])
-                daodice_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                daodice_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daodice_dauLastDay.append(dapp['dauLastDay'])
 
             if contract_name(dapp['url']) == 'ICONBet - DAOlette':
                 daolette_txLastDay.append(dapp['txLastDay'])
-                daolette_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                daolette_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daolette_dauLastDay.append(dapp['dauLastDay'])
 
             if contract_name(dapp['url']) == 'Stayge':
                 stayge_txLastDay.append(dapp['txLastDay'])
-                stayge_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                stayge_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 stayge_dauLastDay.append(dapp['dauLastDay'])
 
             if contract_name(dapp['url']) == 'Somesing':
                 somesing_txLastDay.append(dapp['txLastDay'])
-                somesing_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD'])
+                somesing_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 somesing_dauLastDay.append(dapp['dauLastDay'])
 
-
+    '''
     print(dapps_create_day_list)
     print(daolette_txLastDay)
     print(daolette_volumeLastDayInUSD)
@@ -219,6 +220,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     print(somesing_txLastDay)
     print(somesing_volumeLastDayInUSD)
     print(somesing_dauLastDay)
+    '''
 
     context.update({
         'ret20': ret20,

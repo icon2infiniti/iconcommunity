@@ -46,6 +46,7 @@ class TopDapps(models.Model):
     tx = models.IntegerField()
     vol = models.FloatField()
     fee = models.FloatField()
+    icx_price = models.FloatField()
     create_day = models.DateField()
 
     def __str__(self):
