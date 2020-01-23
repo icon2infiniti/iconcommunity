@@ -473,22 +473,19 @@ charts = {
 
         $("#rr0").click(function () {
             var data = rrChart.config.data;
-            data.datasets[0].data = inflation.slice(-7);
-            data.datasets[1].data = reward.slice(-7);
+            data.datasets[0].data = realyield.slice(-7);
             data.labels = dates.slice(-7);
             rrChart.update();
         });
         $("#rr1").click(function () {
             var data = rrChart.config.data;
-            data.datasets[0].data = inflation.slice(-14);
-            data.datasets[1].data = reward.slice(-14);
+            data.datasets[0].data = realyield.slice(-14);
             data.labels = dates.slice(-14);
             rrChart.update();
         });
         $("#rr2").click(function () {
             var data = rrChart.config.data;
-            data.datasets[0].data = inflation;
-            data.datasets[1].data = reward;
+            data.datasets[0].data = realyield;
             data.labels = dates;
             rrChart.update();
         });
