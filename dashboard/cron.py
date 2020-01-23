@@ -126,11 +126,15 @@ def get_top_dapps():
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
         print(e)
-    rjson = r.json()#['data']
+    rjson = r.json()
+
+    price_r = requests.get('https://api.velic.io/api/v1/public/transaction?base_coin=USDT&match_coin=ICX')
+    price_rjson = price_r.json()
+    icx_price = price_rjson[0]['price']
 
     TopDapps.objects.update_or_create(
         create_day=datetime.date.today(),
-        defaults={'topdapps_json': json.dumps(rjson), 'tx': r.json()['tx'], 'vol': r.json()['vol'], 'fee': r.json()['fee'], 'create_day': datetime.date.today()}
+        defaults={'topdapps_json': json.dumps(rjson), 'tx': r.json()['tx'], 'vol': r.json()['vol'], 'fee': r.json()['fee'], 'icx_price': icx_price, 'create_day': datetime.date.today()}
     )
 
 
