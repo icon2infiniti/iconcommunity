@@ -3,7 +3,7 @@ from .models import Tweet, Reddit, Iconist, Medium, YouTube, Rhizome
 import datetime
 from datetime import timedelta
 
-#from news.cron import news_cron_15m, news_cron_6h
+from news.cron import news_cron_15m, news_cron_6h
 
 from itertools import chain
 from operator import attrgetter
@@ -32,8 +32,8 @@ def news(request, template='news/news.html', extra_context=None):
     today = datetime.datetime.now()
     long_ago = today + timedelta(days=-30)
 
-    #news_cron_15m()
-    #news_cron_6h()
+    news_cron_15m()
+    news_cron_6h()
     #latest_tweets()
     #latest_reddits()
     #latest_iconists()
