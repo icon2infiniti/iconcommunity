@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load timestamp_to_time %}
 {% block extra_head %}
   <link href="{% static 'news/css/news.css' %}" rel="stylesheet"/>
 {% endblock %}
@@ -12,7 +11,120 @@
 
   <div class="card-body">
 
-    <!-- TWITTER -->
+    <!-- All -->
+    <div class="row">
+      <div class="col-12 mb-5">
+
+        {% for entry in all_entries %}
+
+          <!-- TWITTER -->
+          {% if entry.type == 'tweet' %}
+          <div class="row">
+            <div class="col-3 thumbdiv">
+              {% if entry.thumb %}
+                <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnailstwitter" src="{{ entry.thumb }}"></a>
+              {% else %}
+                <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnailstwitter" src="{% static 'news/img/twitterthumb.png' %}"></a>
+              {% endif %}
+            </div>
+            <div class="col-9">
+              <div style="margin-bottom: 4px;">
+                <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }} on Twitter</span>
+              </div>
+              <a class="newslink" href="{{ entry.url }}" target="_blank">{{ entry.content }}</a><br>
+              <div class="foot">
+                <i class="fas fa-retweet"></i> <span class="spacer">{{ entry.retweet }}</span><i class="fas fa-heart"></i> <span class="spacer">{{ entry.likes }}</span>
+              </div>
+            </div>
+          </div>
+          <hr class="divideline">
+          {% endif %}
+
+          <!-- REDDIT -->
+          {% if entry.type == 'reddit' %}
+            <div class="row">
+              <div class="col-3 thumbdiv">
+                {% if entry.thumbnail and entry.thumbnail != 'self' and entry.thumbnail != 'default' %}
+                  <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnailstwitter" src="{{ entry.thumbnail }}"></a>
+                {% else %}
+                  <a class="newslink" href="{{ entry.url }}" target="_blank"><img class="thumbnailstwitter" src="{% static 'news/img/redditthumb.png' %}"></a>
+                {% endif %}
+              </div>
+              <div class="col-9">
+                <div style="margin-bottom: 4px;">
+                  <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }} on Reddit</span>
+                </div>
+                <a class="newslink" href="{{ entry.url }}" target="_blank">{{ entry.title }}</a><br>
+                <div class="foot">
+                  <i class="fas fa-arrow-up"></i> <span class="spacer">{{ entry.score }}</span> <i class="fas fa-comments"></i> <span class="spacer">{{ entry.num_comments }}</span>
+                </div>
+              </div>
+            </div>
+            <hr class="divideline">
+          {% endif %}
+
+          <!-- MEDIUM -->
+          {% if entry.type == 'medium' %}
+            <div class="row">
+              <div class="col-3 thumbdiv">
+                {% if entry.thumb %}
+                  <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnailstwitter" src="{{ entry.thumb }}"></a>
+                {% else %}
+                  <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnailstwitter" src="{% static 'news/img/mediumthumb.png' %}"></a>
+                {% endif %}
+              </div>
+              <div class="col-9">
+                <div style="margin-bottom: 4px;">
+                  <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }} on Medium</span>
+                </div>
+                <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
+              </div>
+            </div>
+            <hr class="divideline">
+          {% endif %}
+
+          <!-- ICONIST -->
+          {% if entry.type == 'iconist' %}
+            <div class="row">
+              <div class="col-3 thumbdiv">
+                {% if entry.thumb %}
+                  <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnailstwitter" src="{{ entry.thumb }}"></a>
+                {% else %}
+                  <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnailstwitter" src="{% static 'news/img/theiconistthumb.png' %}"></a>
+                {% endif %}
+              </div>
+              <div class="col-9">
+                <div style="margin-bottom: 4px;">
+                  <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }} on The ICONist</span>
+                </div>
+                <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
+              </div>
+            </div>
+            <hr class="divideline">
+          {% endif %}
+
+          <!-- RHIZOME -->
+          {% if entry.type == 'rhizome' %}
+            <div class="row">
+              <div class="col-3 thumbdiv">
+                <a class="newslink" href="{{ entry.link }}" target="_blank"><img class="thumbnailstwitter" src="{% static 'news/img/rhizomethumb.png' %}"></a>
+              </div>
+              <div class="col-9">
+                <div style="margin-bottom: 4px;">
+                  <span class="author"> Rhizome Wire </span><span class="published"> at {{ entry.created_at }} on Rhizome Wire</span>
+                </div>
+                <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
+              </div>
+            </div>
+            <hr class="divideline">
+          {% endif %}
+
+        {% endfor %}
+      </div>
+    </div>
+
+
+    <!-- TWITTER
     <div class="row">
       <div class="col-12 mb-5">
         <img class="headerimg" src="{% static 'news/img/twitter.png' %}">
@@ -40,8 +152,9 @@
         {% endfor %}
       </div>
     </div>
+    -->
 
-    <!-- REDDIT -->
+    <!-- REDDIT
     <div class="row">
       <div class="col-12 mb-5">
         {% if nightmode == True %}
@@ -61,7 +174,7 @@
           </div>
           <div class="col-9">
             <div style="margin-bottom: 4px;">
-              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created|timestamp_to_time }}</span>
+              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }}</span>
             </div>
             <a class="newslink" href="{{ entry.url }}" target="_blank">{{ entry.title }}</a><br>
             <div class="foot">
@@ -73,8 +186,9 @@
         {% endfor %}
       </div>
     </div>
+    -->
 
-    <!-- YouTube -->
+    <!-- YouTube
     <div class="row">
       <div class="col-12 mb-5">
         {% if nightmode == True %}
@@ -94,7 +208,7 @@
           </div>
           <div class="col-9">
             <div style="margin-bottom: 4px;">
-              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.published }}</span>
+              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }}</span>
             </div>
             <a class="newslink" href="https://www.youtube.com/watch?v={{ entry.youtube_id }}" target="_blank">{{ entry.title }}</a><br>
             <div class="foot">
@@ -106,8 +220,9 @@
         {% endfor %}
       </div>
     </div>
+    -->
 
-    <!-- MEDIUM -->
+    <!-- MEDIUM
     <div class="row">
       <div class="col-12 mb-5">
         {% if nightmode == True %}
@@ -127,7 +242,7 @@
           </div>
           <div class="col-9">
             <div style="margin-bottom: 4px;">
-              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.published }}</span>
+              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }}</span>
             </div>
             <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
           </div>
@@ -136,8 +251,9 @@
         {% endfor %}
       </div>
     </div>
+    -->
 
-    <!-- THEICONIST -->
+    <!-- THEICONIST
     <div class="row">
       <div class="col-12 mb-5">
         {% if nightmode == True %}
@@ -157,7 +273,7 @@
           </div>
           <div class="col-9">
             <div style="margin-bottom: 4px;">
-              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.published }}</span>
+              <span class="author"> {{ entry.author }} </span><span class="published"> at {{ entry.created_at }}</span>
             </div>
             <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
           </div>
@@ -166,8 +282,9 @@
         {% endfor %}
       </div>
     </div>
+    -->
 
-    <!-- RHIZOME -->
+    <!-- RHIZOME
     <div class="row">
       <div class="col-12 mb-5">
         {% if nightmode == True %}
@@ -183,7 +300,7 @@
           </div>
           <div class="col-9">
             <div style="margin-bottom: 4px;">
-              <span class="author"> Rhizome Wire </span><span class="published"> at {{ entry.published }}</span>
+              <span class="author"> Rhizome Wire </span><span class="published"> at {{ entry.created_at }}</span>
             </div>
             <span class="entrycontent"><a class="newslink" href="{{ entry.link }}" target="_blank">{{ entry.title }}</a></span>
           </div>
@@ -192,7 +309,7 @@
         {% endfor %}
       </div>
     </div>
-
+    -->
 
   </div>
 

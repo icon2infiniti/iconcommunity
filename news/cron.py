@@ -8,6 +8,7 @@ import requests
 from isodate import parse_duration
 import datetime
 
+
 def latest_tweets():
     print("Tweet: "+str(datetime.datetime.now()))
 
@@ -55,7 +56,7 @@ def latest_reddits():
         reddit = Reddit()
         reddit.thumbnail = entry.thumbnail
         reddit.author = str(entry.author)
-        reddit.created = entry.created
+        reddit.created_at = datetime.datetime.utcfromtimestamp(entry.created_utc)
         reddit.title = entry.title
         reddit.url = entry.url
         reddit.score = entry.score
@@ -86,7 +87,7 @@ def latest_iconists():
         if imgtag:
             iconist.thumb = imgtag['src']
         iconist.author = entry.author
-        iconist.published = parse(entry['published'])
+        iconist.created_at = parse(entry['published'])
         iconist.link = entry.link
         iconist.title = entry.title
         iconist.save()
@@ -114,7 +115,7 @@ def latest_mediums():
             medium.thumb = imgtag['src']
         medium.author = entry.author
         medium.category = entry.category
-        medium.published = parse(entry['published'])
+        medium.created_at = parse(entry['published'])
         medium.link = entry.link
         medium.title = entry.title
         medium.save()
@@ -127,7 +128,7 @@ def latest_mediums():
         print('title: ' + medium.title)
         '''
 
-
+'''
 def latest_youtubes():
     print("YouTube: "+str(datetime.datetime.now()))
 
@@ -165,11 +166,12 @@ def latest_youtubes():
         youtube = YouTube()
         youtube.youtube_id = entry['id']
         youtube.title = entry['snippet']['title']
-        youtube.published = parse(entry['snippet']['publishedAt'])
+        youtube.created_at = parse(entry['snippet']['publishedAt'])
         youtube.duration = int(parse_duration(entry['contentDetails']['duration']).total_seconds()//60)
         youtube.thumb = entry['snippet']['thumbnails']['default']['url']
         youtube.author = entry['snippet']['channelTitle']
         youtube.save()
+'''
 
 
 def latest_rhizomes():
@@ -181,7 +183,7 @@ def latest_rhizomes():
     Rhizome.objects.all().delete()
     for entry in rhizome_entries:
         rhizome = Rhizome()
-        rhizome.published = parse(entry['published'])
+        rhizome.created_at = parse(entry['published'])
         rhizome.link = entry.link
         rhizome.title = entry.title
         rhizome.save()
@@ -195,5 +197,5 @@ def news_cron_15m():
 def news_cron_6h():
     latest_iconists()
     latest_mediums()
-    latest_youtubes()
+    #latest_youtubes()
     latest_rhizomes()
