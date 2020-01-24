@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Tweet(models.Model):
+    type = models.CharField(max_length=10, default='tweet')
     twitter_id = models.CharField(max_length=100, default='')
     thumb = models.URLField(max_length=500, default='')
     author = models.CharField(max_length=100, default='')
@@ -17,9 +18,10 @@ class Tweet(models.Model):
 
 
 class Reddit(models.Model):
+    type = models.CharField(max_length=10, default='reddit')
     thumbnail = models.CharField(max_length=500, default='')
     author = models.CharField(max_length=100, default='')
-    created = models.FloatField()
+    created_at = models.DateTimeField()
     title = models.CharField(max_length=500, default='')
     url = models.URLField(max_length=500, default='')
     score = models.IntegerField()
@@ -31,9 +33,10 @@ class Reddit(models.Model):
 
 
 class Iconist(models.Model):
+    type = models.CharField(max_length=10, default='iconist')
     thumb = models.CharField(max_length=500, default='')
     author = models.CharField(max_length=100, default='')
-    published = models.DateTimeField()
+    created_at = models.DateTimeField()
     link = models.URLField(max_length=500, default='')
     title = models.CharField(max_length=300, default='')
     queried_at = models.DateTimeField(auto_now=True)
@@ -43,10 +46,11 @@ class Iconist(models.Model):
 
 
 class Medium(models.Model):
+    type = models.CharField(max_length=10, default='medium')
     thumb = models.CharField(max_length=500, default='')
     author = models.CharField(max_length=50, default='')
     category = models.CharField(max_length=50, default='')
-    published = models.DateTimeField()
+    created_at = models.DateTimeField()
     link = models.URLField(max_length=500, default='')
     title = models.CharField(max_length=300, default='')
     queried_at = models.DateTimeField(auto_now=True)
@@ -56,10 +60,11 @@ class Medium(models.Model):
 
 
 class YouTube(models.Model):
+    type = models.CharField(max_length=10, default='youtube')
     youtube_id = models.CharField(max_length=50, default='')
     thumb = models.URLField(max_length=500, default='')
     title = models.CharField(max_length=500, default='')
-    published = models.DateTimeField()
+    created_at = models.DateTimeField()
     duration = models.IntegerField()
     author = models.CharField(max_length=100, default='')
     queried_at = models.DateTimeField(auto_now=True)
@@ -69,10 +74,8 @@ class YouTube(models.Model):
 
 
 class Rhizome(models.Model):
-    #thumb = models.CharField(max_length=500, default='')
-    #author = models.CharField(max_length=50, default='')
-    #category = models.CharField(max_length=50, default='')
-    published = models.DateTimeField()
+    type = models.CharField(max_length=10, default='rhizome')
+    created_at = models.DateTimeField()
     link = models.URLField(max_length=500, default='')
     title = models.CharField(max_length=300, default='')
     queried_at = models.DateTimeField(auto_now=True)

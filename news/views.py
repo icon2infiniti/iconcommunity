@@ -3,7 +3,10 @@ from .models import Tweet, Reddit, Iconist, Medium, YouTube, Rhizome
 import datetime
 from datetime import timedelta
 
-#from news.cron import latest_tweets
+#from news.cron import news_cron_15m, news_cron_6h
+
+from itertools import chain
+from operator import attrgetter
 
 
 def init_mode(request):
@@ -27,7 +30,7 @@ def news(request, template='news/news.html', extra_context=None):
     context = init_mode(request)
 
     today = datetime.datetime.now()
-    long_ago = today + timedelta(days=-45)
+    long_ago = today + timedelta(days=-30)
 
     #news_cron_15m()
     #news_cron_6h()
@@ -38,15 +41,19 @@ def news(request, template='news/news.html', extra_context=None):
     #latest_youtubes()
     #latest_rhizomes()
 
-    twitter_entries = Tweet.objects.all().order_by('-created_at')
+    twitter_entries = Tweet.objects.all()
     reddit_entries = Reddit.objects.all()
-    youtube_entries = YouTube.objects.filter(published__gte=long_ago).order_by('-published')
-    medium_entries = Medium.objects.filter(published__gte=long_ago)
-    iconist_entries = Iconist.objects.filter(published__gte=long_ago)
-    rhizome_entries = Rhizome.objects.filter(published__gte=long_ago)
+    youtube_entries = YouTube.objects.filter(created_at__gte=long_ago)
+    medium_entries = Medium.objects.filter(created_at__gte=long_ago)
+    iconist_entries = Iconist.objects.filter(created_at__gte=long_ago)
+    rhizome_entries = Rhizome.objects.filter(created_at__gte=long_ago)
+
+    all_entries = list(chain(twitter_entries, reddit_entries, medium_entries, iconist_entries, rhizome_entries))
+    all_entries = sorted(all_entries, key=attrgetter('created_at'), reverse=True)
 
     context.update({
         'subsection': 'NEWS',
+        'all_entries': all_entries,
         'twitter_entries': twitter_entries,
         'reddit_entries': reddit_entries,
         'youtube_entries': youtube_entries,
