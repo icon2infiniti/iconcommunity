@@ -1,23 +1,15 @@
 {% load el_pagination_tags %}
-
 <div class="card-body">
   <div class="row">
     {% paginate 3 video_generals using "video_general_page" %}
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-      var local_general_ids = [];
-    </script>
     {% for video_general in video_generals %}
-      <div class="col-md-4 mb-3">
-        <div class="embed-responsive embed-responsive-4by3">
-          <div class="embed-responsive-item" id="{{ video_general.video_link }}"></div>
-          <script>
-            local_general_ids.push("{{ video_general.video_link }}");
-          </script>
-        </div>
-        <p><h4>{{ video_general.video_title }}</h4></p>
-        <p><h5>{{ video_general.video_date }}</h5></p>
+    <div class="col-md-4 mb-3">
+      <div class="embed-responsive embed-responsive-4by3">
+        <iframe class="embed-responsive-item" src="{{ video_general.video_link }}"></iframe>
       </div>
+      <p><h4>{{ video_general.video_title }}</h4></p>
+      <p><h5>{{ video_general.video_date }}</h5></p>
+    </div>
     {% endfor %}
   </div>
   <div class="text-center">
@@ -26,32 +18,3 @@
     </div>
   </div>
 </div>
-
-<script>
-    function onYouTubeIframeAPIReady() {
-        alert("youtube ready");
-        for (var i = 0; i < local_general_ids.length ; i++) {
-            var player = new YT.Player(local_general_ids[i], {
-                videoId: local_general_ids[i],
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-            players.push(player);
-        }
-    }
-
-    function onPlayerStateChange(event) {
-        if (event.data == YT.PlayerState.PLAYING) {
-            stopVideo(event.target.i.id);
-        }
-    }
-
-    function stopVideo(play) {
-        //console.log(players);
-        for (var i = 0; i < players.length; i++) {
-            if (players[i].i.id != play)
-                players[i].stopVideo();
-        }
-    }
-</script>
