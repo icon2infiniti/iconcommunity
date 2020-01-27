@@ -53,20 +53,20 @@
         <div class="card-body">
           <div class="row">
             <div class="col-4">
-              {% if average_sentiment_calc_24h >= 4 %}
-                <div class="info-icon text-center socialsentiment4">
+              {% if average_sentiment_calc_24h >= 80 %}
+                <div class="info-icon text-center socialsentiment80">
                   <i class="fas fa-grin"></i>
                 </div>
-              {% elif average_sentiment_calc_24h >= 3 %}
-                <div class="info-icon text-center socialsentiment3">
+              {% elif average_sentiment_calc_24h >= 60 %}
+                <div class="info-icon text-center socialsentiment60">
                   <i class="fas fa-smile"></i>
                 </div>
-              {% elif average_sentiment_calc_24h >= 2 %}
-                <div class="info-icon text-center socialsentiment2">
+              {% elif average_sentiment_calc_24h >= 40 %}
+                <div class="info-icon text-center socialsentiment40">
                   <i class="fas fa-meh"></i>
                 </div>
-              {% elif average_sentiment_calc_24h >= 1 %}
-                <div class="info-icon text-center socialsentiment1">
+              {% elif average_sentiment_calc_24h >= 20 %}
+                <div class="info-icon text-center socialsentiment20">
                   <i class="fas fa-frown"></i>
                 </div>
               {% else %}
