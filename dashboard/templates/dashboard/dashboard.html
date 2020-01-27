@@ -78,7 +78,7 @@
             <div class="col-8">
               <div class="numbers">
                 <p class="card-category">{% trans 'Social Sentiment (24h)' %} <i class="fas fa-info-circle tip" data-toggle="tooltip" title="Average bullish score in the last 24h. Sentiments are analyzed by crypto specific terms such as 'moon' or 'rekt' from collected social posts. All posts are given scores as very bullish, bullish, neutral, bearish or very bearish."></i></p>
-                <h3 class="card-title">{{ average_sentiment_calc_24h }}% {% if average_sentiment_calc_24h_percent < 0 %}<span class="below"><i class="fas fa-caret-down"></i> {% else %}<span class="above"><i class="fas fa-caret-up"></i> {% endif %}{{ average_sentiment_calc_24h_percent|abs|floatformat:2 }}%</span></h3>
+                <h3 class="card-title">{{ average_sentiment_calc_24h|floatformat:2 }}% {% if average_sentiment_calc_24h_percent < 0 %}<span class="below"><i class="fas fa-caret-down"></i> {% else %}<span class="above"><i class="fas fa-caret-up"></i> {% endif %}{{ average_sentiment_calc_24h_percent|abs|floatformat:2 }}%</span></h3>
               </div>
             </div>
           </div>
