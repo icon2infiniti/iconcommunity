@@ -100,7 +100,7 @@
             <div class="col-8">
               <div class="numbers">
                 <p class="card-category">{% trans 'Social Engagement (24h)' %} <i class="fas fa-info-circle tip" data-toggle="tooltip" title="Sum of social engagement over the last 24 hours. Social engagement includes followers, retweets, likes, reddit karma etc of social posts collected."></i></p>
-                <h3 class="card-title">{{ social_score_calc_24h|floatformat:0|intcomma }} {% if social_score_calc_24h < 0 %}<span class="below"><i class="fas fa-caret-down"></i> {% else %}<span class="above"><i class="fas fa-caret-up"></i> {% endif %}{{ social_score_calc_24h_percent|floatformat:2 }}%</span></h3>
+                <h3 class="card-title">{{ social_score_calc_24h|floatformat:0|intcomma }} {% if social_score_calc_24h_percent < 0 %}<span class="below"><i class="fas fa-caret-down"></i> {% else %}<span class="above"><i class="fas fa-caret-up"></i> {% endif %}{{ social_score_calc_24h_percent|abs|floatformat:2 }}%</span></h3>
               </div>
             </div>
           </div>
@@ -122,7 +122,7 @@
             <div class="col-8">
               <div class="numbers">
                 <p class="card-category">{% trans 'Social Volume (24h)' %} <i class="fas fa-info-circle tip" data-toggle="tooltip" title="Sum of all social posts in the last 24 hours. Social posts include Tweets, Reddit threads, news articles etc."></i></p>
-                <h3 class="card-title">{{ social_volume_calc_24h|floatformat:0|intcomma }} {% if social_score_calc_24h < 0 %}<span class="below"><i class="fas fa-caret-down"></i> {% else %}<span class="above"><i class="fas fa-caret-up"></i> {% endif %}{{ social_volume_calc_24h_percent|floatformat:2 }}%</span></h3>
+                <h3 class="card-title">{{ social_volume_calc_24h|floatformat:0|intcomma }} {% if social_volume_calc_24h_percent < 0 %}<span class="below"><i class="fas fa-caret-down"></i> {% else %}<span class="above"><i class="fas fa-caret-up"></i> {% endif %}{{ social_volume_calc_24h_percent|abs|floatformat:2 }}%</span></h3>
               </div>
             </div>
           </div>
