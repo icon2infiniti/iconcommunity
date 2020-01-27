@@ -207,8 +207,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     # Social Info
     #####################################################################################
     socialinfo = SocialInfo.objects.all().order_by('-create_day').first()
-    average_sentiment_calc_24h = round(socialinfo.average_sentiment_calc_24h / 5 * 100)
-    average_sentiment_calc_24h_percent = socialinfo.average_sentiment_calc_24h_percent - 100
+    average_sentiment_calc_24h = 1#round(socialinfo.average_sentiment_calc_24h / 5 * 100)
+    average_sentiment_calc_24h_percent = -99#socialinfo.average_sentiment_calc_24h_percent - 100
     social_score_calc_24h = socialinfo.social_score_calc_24h
     social_score_calc_24h_percent = socialinfo.social_score_calc_24h_percent - 100
     social_volume_calc_24h = socialinfo.social_volume_calc_24h
