@@ -171,3 +171,69 @@ tspan {
     background-size: 210% 210% !important;
     background-position: top right!important;
 }
+
+.socialsentiment4 {
+    background: #34c900 !important;
+    background-image: linear-gradient(to bottom left, #34c900, #3d7437, #34c900) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.socialsentiment3 {
+    background: #72c968 !important;
+    background-image: linear-gradient(to bottom left, #72c968, #4f8b48, #72c968) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.socialsentiment2 {
+    background: #ffee47 !important;
+    background-image: linear-gradient(to bottom left, #ffee47, #a0973c, #ffee47) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.socialsentiment1 {
+    background: #c96a11 !important;
+    background-image: linear-gradient(to bottom left, #c96a11, #7d420a, #c96a11) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.socialsentiment0 {
+    background: #c91b16 !important;
+    background-image: linear-gradient(to bottom left, #c91b16, #7b110e, #c91b16) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.socialengagement {
+    background: #8965e0 !important;
+    background-image: linear-gradient(to bottom left, #8965e0, #4c387b, #8965e0) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.socialvolume {
+    background: #11cdef !important;
+    background-image: linear-gradient(to bottom left, #11cdef, #076877, #11cdef) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.stake {
+    background: #445475 !important;
+    background-image: linear-gradient(to bottom left, #445475, #333f57, #445475) !important;
+    background-size: 210% 210% !important;
+    background-position: top right!important;
+}
+
+.below {
+    font-size: 16px;
+    color: #FF0000;
+}
+
+.above {
+    font-size: 16px;
+    color: #30B800;
+}
