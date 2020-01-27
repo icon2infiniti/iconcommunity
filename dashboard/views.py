@@ -4,11 +4,11 @@ from django.shortcuts import render
 from . import dashboardrpc
 from iconsdk.exception import JSONRPCException
 
-from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo, TopDapps
+from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo, TopDapps, SocialInfo
 
 import json
 
-#from dashboard.cron import get_top_dapps
+from dashboard.cron import get_social_info
 
 
 def init_mode(request):
@@ -39,7 +39,7 @@ def rrep(delrate):
 
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
-    #get_top_dapps()
+    get_social_info()
     #####################################################################################
     # Top wallets
     #####################################################################################
@@ -203,24 +203,16 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
                 somesing_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 somesing_dauLastDay.append(dapp['dauLastDay'])
 
-    '''
-    print(dapps_create_day_list)
-    print(daolette_txLastDay)
-    print(daolette_volumeLastDayInUSD)
-    print(daolette_dauLastDay)
-
-    print(daodice_txLastDay)
-    print(daodice_volumeLastDayInUSD)
-    print(daodice_dauLastDay)
-
-    print(stayge_txLastDay)
-    print(stayge_volumeLastDayInUSD)
-    print(stayge_dauLastDay)
-
-    print(somesing_txLastDay)
-    print(somesing_volumeLastDayInUSD)
-    print(somesing_dauLastDay)
-    '''
+    #####################################################################################
+    # Social Info
+    #####################################################################################
+    socialinfo = SocialInfo.objects.all().order_by('-create_day').first()
+    average_sentiment_calc_24h = round(socialinfo.average_sentiment_calc_24h / 5 * 100)
+    average_sentiment_calc_24h_percent = socialinfo.average_sentiment_calc_24h_percent - 100
+    social_score_calc_24h = socialinfo.social_score_calc_24h
+    social_score_calc_24h_percent = socialinfo.social_score_calc_24h_percent - 100
+    social_volume_calc_24h = socialinfo.social_volume_calc_24h
+    social_volume_calc_24h_percent = socialinfo.social_volume_calc_24h_percent - 100
 
     context.update({
         'ret20': ret20,
@@ -264,7 +256,15 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'somesing_txLastDay': somesing_txLastDay,
         'somesing_volumeLastDayInUSD': somesing_volumeLastDayInUSD,
         'somesing_dauLastDay': somesing_dauLastDay,
+
+        'average_sentiment_calc_24h': average_sentiment_calc_24h,
+        'average_sentiment_calc_24h_percent': average_sentiment_calc_24h_percent,
+        'social_score_calc_24h': social_score_calc_24h,
+        'social_score_calc_24h_percent': social_score_calc_24h_percent,
+        'social_volume_calc_24h': social_volume_calc_24h,
+        'social_volume_calc_24h_percent': social_volume_calc_24h_percent,
     })
+
     if extra_context is not None:
         context.update(extra_context)
     return render(request, template, context)

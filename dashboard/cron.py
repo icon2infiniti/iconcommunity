@@ -1,4 +1,4 @@
-from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo, TopDapps
+from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, MainInfo, TopDapps, SocialInfo
 import requests
 
 from . import dashboardrpc
@@ -138,6 +138,40 @@ def get_top_dapps():
     )
 
 
+def get_social_info():
+    print("Social Info: " + str(datetime.datetime.now()))
+    url = 'https://api.lunarcrush.com/v2?data=assets&key=fdpl9ar2untawfjfr8bg3&symbol=ICX'
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    rjson = r.json()['data']
+
+    create_day = datetime.datetime.fromtimestamp(rjson[0]['time']).strftime('%Y-%m-%d')
+
+    average_sentiment_calc_24h = rjson[0]['average_sentiment_calc_24h'] #Average sentiment over the last 24 hours
+    average_sentiment_calc_24h_percent = rjson[0]['average_sentiment_calc_24h_percent'] #Precent change in average sentiment 24 hours vs previous 24 hour period
+
+    social_score_calc_24h = rjson[0]['social_score_calc_24h'] #Sum of social engagement over the last 24 hours
+    social_score_calc_24h_percent = rjson[0]['social_score_calc_24h_percent'] #Precent change in social engagement over the last 24 hours vs previous 24 hour period
+
+    social_volume_calc_24h = rjson[0]['social_volume_calc_24h'] #Number of social posts over the last 24 hours
+    social_volume_calc_24h_percent = rjson[0]['social_volume_calc_24h_percent'] #Percent change in number if social posts over the last 24 hours vs previous 24 hour period
+
+    SocialInfo.objects.update_or_create(
+        create_day=create_day,
+        defaults={
+            'average_sentiment_calc_24h': average_sentiment_calc_24h,
+            'average_sentiment_calc_24h_percent': average_sentiment_calc_24h_percent,
+            'social_score_calc_24h': social_score_calc_24h,
+            'social_score_calc_24h_percent': social_score_calc_24h_percent,
+            'social_volume_calc_24h': social_volume_calc_24h,
+            'social_volume_calc_24h_percent': social_volume_calc_24h_percent,
+            'create_day': create_day
+        }
+    )
+
+
 def dashboard_cron_6h():
     get_daily_transactions()
     get_wallet_count()
@@ -148,3 +182,4 @@ def dashboard_cron_6h():
 
 def dashboard_cron_1h():
     get_top_dapps()
+    get_social_info()

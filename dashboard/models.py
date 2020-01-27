@@ -51,3 +51,16 @@ class TopDapps(models.Model):
 
     def __str__(self):
         return str(self.create_day)
+
+
+class SocialInfo(models.Model):
+    average_sentiment_calc_24h = models.FloatField()
+    average_sentiment_calc_24h_percent = models.FloatField()
+    social_score_calc_24h = models.FloatField()
+    social_score_calc_24h_percent = models.FloatField()
+    social_volume_calc_24h = models.FloatField()
+    social_volume_calc_24h_percent = models.FloatField()
+    create_day = models.DateField()
+
+    def __str__(self):
+        return str(self.create_day)
