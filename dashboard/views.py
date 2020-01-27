@@ -8,7 +8,7 @@ from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, Ma
 
 import json
 
-#from dashboard.cron import get_social_info
+from dashboard.cron import get_social_info
 
 
 def init_mode(request):
@@ -39,7 +39,7 @@ def rrep(delrate):
 
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
-    #get_social_info()
+    get_social_info()
     #####################################################################################
     # Top wallets
     #####################################################################################
