@@ -207,7 +207,7 @@
     let params = {};
     params.name = $('#name').val();
     params.email = $('#email').val();
-    params.country = getCountryISO3($('#country').countrySelect("getSelectedCountryData"));
+    params.country = getCountryISO3($('#country').countrySelect("getSelectedCountryData").iso2.toUpperCase());
     params.city = $('#city').val();
     params.website = $('#website').val();
     params.details = $('#details').val();
