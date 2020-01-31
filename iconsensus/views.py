@@ -48,10 +48,16 @@ def overview(request):
     context = init_mode(request)
 
     # ICX USD price
-    r = requests.get('https://api.velic.io/api/v1/public/transaction?base_coin=USDT&match_coin=ICX')
-    rjson = r.json()
-    icx_price = rjson[0]['price']
+    try:
+        r = requests.get('https://api.velic.io/api/v1/public/transaction?base_coin=USDT&match_coin=ICX')
+    except requests.RequestException as e:
+        print("111111111111111111111111111111111")
+        icx_price = 0
+    #else:
+        #rjson = r.json()
+        #icx_price = rjson[0]['price']
 
+    icx_price = 0.247
     # GetPReps
     params = {}
     preps = {}
