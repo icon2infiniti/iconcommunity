@@ -140,7 +140,7 @@ def get_top_dapps():
 
 def get_social_info():
     print("Social Info: " + str(datetime.datetime.now()))
-    url = 'https://api.lunarcrush.com/v2?data=assets&key=fdpl9ar2untawfjfr8bg3&symbol=ICX'
+    url = 'https://api.lunarcrush.com/v2?data=assets&key=07reb53h0wuwu9xn0aaw2ms&symbol=ICX'
     try:
         r = requests.get(url)
     except requests.exceptions.RequestException as e:
