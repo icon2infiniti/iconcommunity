@@ -359,7 +359,6 @@
               </div>
             </div>
           </div>
-
         </div>
         <div class="card-body">
           <div class="chart-area">
@@ -489,7 +488,37 @@
     <div class="col-12">
       <div class="card card-chart">
         <div class="card-header">
-          <h2 class="card-title">{% trans 'Top dApps' %}</h2>
+          <div class="row">
+            <div class="col-sm-6 text-left">
+              <h2 class="card-title" style="margin-bottom: 0px;">{% trans 'Top dApps' %}</h2>
+            </div>
+            <!-- Sort Buttons -->
+            <div class="col-sm-6">
+              <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                <label class="btn btn-sm btn-primary btn-simple" id="td0">
+                  <input type="radio" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">7D</span>
+                  <span class="d-block d-sm-none">
+                    7D
+                  </span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple" id="td1">
+                  <input type="radio" class="d-none d-sm-none" name="options">
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">14D</span>
+                  <span class="d-block d-sm-none">
+                    14D
+                  </span>
+                </label>
+                <label class="btn btn-sm btn-primary btn-simple active" id="td2">
+                  <input type="radio" class="d-none" name="options" checked>
+                  <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">All</span>
+                  <span class="d-block d-sm-none">
+                    All
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="card-body">
           <div class="chart-area"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
