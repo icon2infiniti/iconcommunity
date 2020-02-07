@@ -100,8 +100,8 @@ charts = {
                 }]
             }
         };
-        var chart_labels = chartlabels;
-        var chart_data = chartdata;
+        var chart_labels = chartlabels.slice(-30);
+        var chart_data = chartdata.slice(-30);
         var ctx = document.getElementById("dailyTx").getContext('2d');
         var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
         gradientStroke.addColorStop(1, 'rgba(72,72,176,0.1)');
@@ -126,7 +126,7 @@ charts = {
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 15,
                     pointRadius: 4,
-                    data: chart_data,
+                    data: chart_data.slice(-30),
                 }]
             },
             options: gradientChartOptionsConfigurationWithTooltipICON
@@ -304,7 +304,7 @@ charts = {
                     borderWidth: 2,
                     borderDash: [],
                     borderDashOffset: 0.0,
-                    data: balanceCounts,
+                    data: balanceCounts.slice(-30),
                 },
                     {
                         label: "Total Wallets",
@@ -315,7 +315,7 @@ charts = {
                         borderWidth: 2,
                         borderDash: [],
                         borderDashOffset: 0.0,
-                        data: totalCounts,
+                        data: totalCounts.slice(-30),
                     }]
             },
             options: gradientBarChartConfiguration
@@ -336,9 +336,9 @@ charts = {
         });
         $("#wc2").click(function () {
             var data = walletChartData.config.data;
-            data.datasets[0].data = balanceCounts;
-            data.datasets[1].data = totalCounts;
-            data.labels = selectDates;
+            data.datasets[0].data = balanceCounts.slice(-30);
+            data.datasets[1].data = totalCounts.slice(-30);
+            data.labels = selectDates.slice(-30);
             walletChartData.update();
         });
     },
@@ -422,7 +422,7 @@ charts = {
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 15,
                     pointRadius: 4,
-                    data: realyield,
+                    data: realyield.slice(-30),
                 },
                 /*
                 {
@@ -485,8 +485,8 @@ charts = {
         });
         $("#rr2").click(function () {
             var data = rrChart.config.data;
-            data.datasets[0].data = realyield;
-            data.labels = dates;
+            data.datasets[0].data = realyield.slice(-30);
+            data.labels = dates.slice(-30);
             rrChart.update();
         });
     },
@@ -584,7 +584,7 @@ charts = {
         var ctx = document.getElementById("topdapps").getContext("2d");
         var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
 
-        var myChart = new Chart(ctx, {
+        var dAppChartData = new Chart(ctx, {
             type: 'line',
             responsive: true,
             data: {
@@ -662,7 +662,33 @@ charts = {
             },
             options: gradientChartOptionsConfigurationPurple
         });
-
+        $("#td0").click(function () {
+            var data = dAppChartData.config.data;
+            data.labels = dapps_create_day_list.slice(-7);
+            data.datasets[0].data = daolette_txLastDay.slice(-7);
+            data.datasets[1].data = daodice_txLastDay.slice(-7);
+            data.datasets[2].data = somesing_txLastDay.slice(-7);
+            data.datasets[3].data = stayge_txLastDay.slice(-7);
+            dAppChartData.update();
+        });
+        $("#td1").click(function () {
+            var data = dAppChartData.config.data;
+            data.labels = dapps_create_day_list.slice(-14);
+            data.datasets[0].data = daolette_txLastDay.slice(-14);
+            data.datasets[1].data = daodice_txLastDay.slice(-14);
+            data.datasets[2].data = somesing_txLastDay.slice(-14);
+            data.datasets[3].data = stayge_txLastDay.slice(-14);
+            dAppChartData.update();
+        });
+        $("#td2").click(function () {
+            var data = dAppChartData.config.data;
+            data.labels = dapps_create_day_list.slice(-30);
+            data.datasets[0].data = daolette_txLastDay.slice(-30);
+            data.datasets[1].data = daodice_txLastDay.slice(-30);
+            data.datasets[2].data = somesing_txLastDay.slice(-30);
+            data.datasets[3].data = stayge_txLastDay.slice(-30);
+            dAppChartData.update();
+        });
     },
 };
 

@@ -176,7 +176,8 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     somesing_dauLastDay = []
 
     for topdapp in topdapps:
-        dapps_create_day_list.append(str(topdapp.create_day))
+        cd = str(topdapp.create_day).split("-")[1].lstrip("0") + '/' + str(topdapp.create_day).split("-")[2].lstrip("0")
+        dapps_create_day_list.append(cd)
 
         dapp_json = topdapp.topdapps_json
         dapp_json = json.loads(dapp_json)['data']
