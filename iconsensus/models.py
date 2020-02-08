@@ -57,3 +57,17 @@ class CorePrepteam(models.Model):
     class Meta:
         managed = False
         db_table = 'core_prepteam'
+
+
+class PrepListing(models.Model):
+    logo = models.ImageField(upload_to='teamlogo/', null=True, blank=True, max_length=500)
+    rank = models.IntegerField()
+    address = models.CharField(max_length=100)
+    grade = models.CharField(max_length=10)
+    name = models.CharField(max_length=100)
+    country = models.CharField(max_length=5)
+    delegated = models.CharField(max_length=50)
+    irep = models.CharField(max_length=50)
+    #details = models.URLField()
+
+

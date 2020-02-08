@@ -45,6 +45,7 @@ def prep_reward(i_rep, delegation_rate):
 
 
 def overview(request):
+
     context = init_mode(request)
 
     # ICX USD price
@@ -55,7 +56,6 @@ def overview(request):
     else:
         rjson = r.json()
         icx_price = rjson[0]['price']
-
 
     # GetPReps
     params = {}
@@ -121,10 +121,11 @@ def overview(request):
     prep_main = list(filter(lambda d: d['grade'] == 'Main P-Rep', prep_all))
     prep_sub = list(filter(lambda d: d['grade'] == 'Sub P-Rep', prep_all))
 
+
+    # Governance Info
     maininfo = MainInfo.objects.all()[0].maininfo_json
     maininfo = maininfo.replace("\'", "\"")
     maininfo = json.loads(maininfo)
-
     public_treasury = int(float(maininfo['publicTreasury']))
     total_supply = float(maininfo['icxSupply'])
     total_staked = int(preps['totalStake'], 16) / 10 ** 18
@@ -134,8 +135,19 @@ def overview(request):
     total_staked = int(total_staked)
     total_voted = int(total_voted)
 
+    #prep_all = PrepListing.objects.all().order_by('rank')
+
     context.update({
         'subsection': 'OVERVIEW',
+        'icx_price': icx_price,
+
+        'public_treasury': public_treasury,
+        'total_voted': total_voted,
+        'total_staked': total_staked,
+        'total_supply': total_supply,
+        'total_staked_percent': total_staked_percent,
+        'total_voted_percent': total_voted_percent,
+
         'prep_all': prep_all,
         'main_preps_count': len(prep_main),
         'sub_preps_count': len(prep_sub),
@@ -144,15 +156,9 @@ def overview(request):
         'prep_sub': prep_sub,
         'countries_alpha2': countries_alpha2,
         'countries_name_sorted': countries_name_sorted,
-        'public_treasury': public_treasury,
-        'total_voted': total_voted,
-        'total_staked': total_staked,
-        'total_supply': total_supply,
-        'total_staked_percent': total_staked_percent,
-        'total_voted_percent': total_voted_percent,
+
         'average_irep': average_irep,
         'TOTAL_DELEGATED': TOTAL_DELEGATED,
-        'icx_price': icx_price,
     })
     return render(request, 'iconsensus/overview.html', context)
 
