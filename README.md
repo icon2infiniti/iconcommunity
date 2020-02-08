@@ -12,18 +12,21 @@ We'll initially focus on the ICONSENSUS campaign, starting off with P-Rep electi
 
 ## Installation
 
-virtualenv venv -p python3 #Create virtual environment with python 3.6 or 3.7
+#Create virtual environment with python 3.6 or 3.7
+virtualenv venv -p python3 
+source venv/bin/activate 
 
-source venv/bin/activate #Activate environment
+#Requirements are mainly, postgresql, django2+, ICON SDK and some misc libraries
+pip install -r requirements.txt 
 
-pip install -r requirements.txt #Requirements are mainly, postgresql, django2+, ICON SDK and some misc libraries
+#Migrate models
+python manage.py makemigrations 
+python manage.py migrate 
 
-python manage.py makemigrations #Migrate database
+#Start postgresql
+sudo start postgresql service 
 
-python manage.py migrate #Migrate database
-
-sudo start postgresql service #Start postgresql
-
-python manage.py runserver #Start local server
-
-https://localhost:8000 #Visit starting page
+#Start local server
+python manage.py runserver 
+#Visit
+https://localhost:8000 
