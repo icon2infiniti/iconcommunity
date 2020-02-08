@@ -294,7 +294,7 @@ charts = {
             type: 'bar',
             responsive: true,
             data: {
-                labels: selectDates,
+                labels: selectDates.slice(-30),
                 datasets: [{
                     label: "Has Balance Wallets",
                     fill: true,
@@ -405,7 +405,7 @@ charts = {
         gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
 
         var data = {
-            labels: dates,
+            labels: dates.slice(-30),
             datasets: [
                 {
                     label: "Real Yield",
