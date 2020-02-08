@@ -13,6 +13,7 @@ We'll initially focus on the ICONSENSUS campaign, starting off with P-Rep electi
 ## Installation
 
 #Create virtual environment with python 3.6 or 3.7
+
 virtualenv venv -p python3 
 source venv/bin/activate 
 
