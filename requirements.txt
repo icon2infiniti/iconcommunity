@@ -79,7 +79,7 @@ plyvel==1.1.0
 pprintpp==0.4.0
 praw==6.4.0
 prawcore==1.0.1
-preptools==0.0.1
+#preptools==0.0.1
 prompt-toolkit==1.0.18
 protobuf==3.7.0
 psycopg2==2.8.4
