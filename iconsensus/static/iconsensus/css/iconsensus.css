@@ -206,3 +206,7 @@ input:focus {
 input:focus::placeholder {
   color: transparent;
 }
+
+.spacing {
+    margin-right: 8px;
+}
