@@ -14,7 +14,7 @@ We'll initially focus on the ICONSENSUS campaign, starting off with P-Rep electi
 
 Global packages
 ```
-sudo apt -y install pkg-config python3-pip libsecp256k1-dev && sudo pip3 install preptools
+sudo apt -y install pkg-config python3-pip libsecp256k1-dev 
 ```
 
 Create virtual environment with python 3.6 or 3.7
