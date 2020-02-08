@@ -15,6 +15,11 @@ from dashboard.models import MainInfo
 import json
 
 
+def prep_reports(request):
+    context = init_mode(request)
+    return render(request, 'iconsensus/prepreports.html', context)
+
+
 def init_mode(request):
     if 'nightmode' not in request.session:
         request.session['nightmode'] = True
