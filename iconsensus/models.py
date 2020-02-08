@@ -59,6 +59,7 @@ class CorePrepteam(models.Model):
         db_table = 'core_prepteam'
 
 
+'''
 class PrepListing(models.Model):
     logo = models.ImageField(upload_to='teamlogo/', null=True, blank=True, max_length=500)
     rank = models.IntegerField()
@@ -69,5 +70,5 @@ class PrepListing(models.Model):
     delegated = models.CharField(max_length=50)
     irep = models.CharField(max_length=50)
     #details = models.URLField()
-
+'''
 
