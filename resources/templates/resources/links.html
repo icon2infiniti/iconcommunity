@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+  <link href="{% static 'resources/css/resources.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block title %}Links{% endblock %}
+{% block twittertitle %}Links{% endblock %}
+{% block ogtitle %}Links{% endblock %}
+{% block section %}Links{% endblock %}
+{% block content %}
+
+  <!-- Social Communities -->
+  <h3 class="title mt-5">{% trans 'Communities' %}</h3>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-4 mb-5">
+        <h3 class="mt-5">{% trans 'Telegram' %}</h3>
+        <h4><p><a href="https://t.me/iconcm" target="_blank">icon.community</a></p></h4>
+        <h4><p><a href="https://t.me/hello_iconworld" target="_blank">ICON Project - Official</a></p></h4>
+        <h4><p><a href="https://t.me/icondevs" target="_blank">ICON Dev</a></p></h4>
+        <h4><p><a href="https://t.me/iconannounce" target="_blank">ICON Announcements</a></p></h4>
+        <h4><p><a href="https://t.me/ICON_Vote" target="_blank">P-Rep Transparency Report</a></p></h4>
+        <h4><p><a href="https://t.me/rhizomestream" target="_blank">RHIZOME STREAM</a></p></h4>
+        <h4><p><a href="https://t.me/icontraderslounge" target="_blank">ICON Traders Lounge</a></p></h4>
+        <h4><p><a href="https://t.me/iconkorea" target="_blank">ICON Korea_Official</a></p></h4>
+        <h4><p><a href="https://t.me/Icon_China" target="_blank">ICON CHINA</a></p></h4>
+        <h4><p><a href="https://t.me/ICON_Russia_chat" target="_blank">ICON_Russia_chat</a></p></h4>
+        <h4><p><a href="https://t.me/ICON_Spanish" target="_blank">ICON_Spanish</a></p></h4>
+        <h4><p><a href="https://t.me/IconEurope" target="_blank">ICON Europe</a></p></h4>
+        <h4><p><a href="https://t.me/hx57french" target="_blank">[French] ICON Community Alliance HX57</a></p></h4>
+      </div>
+      <div class="col-sm-4 mb-5">
+        <h3 class="mt-5">{% trans 'Twitter' %}</h3>
+        <h4><p><a href="https://twitter.com/iconcm" target="_blank">{% trans 'icon.community (@iconcm)' %}</a></p></h4>
+        <h4><p><a href="https://twitter.com/helloiconworld" target="_blank">{% trans 'ICON (@helloiconworld) - Official' %}</a></p></h4>
+      </div>
+      <div class="col-sm-4 mb-5">
+        <h3 class="mt-5">{% trans 'Reddit' %}</h3>
+        <h4><p>
+          <a href="https://www.reddit.com/r/helloicon/" target="_blank">{% trans 'ICON (/r/helloicon) - Official' %}</a>
+        </p></h4>
+        <h4><p><a href="https://www.reddit.com/r/icon/" target="_blank">{% trans 'ICON (/r/icon)' %}</a>
+        </p></h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-4 mb-5">
+        <h3 class="mt-5">{% trans 'KakaoTalk' %}</h3>
+        <h4><p><a href="https://open.kakao.com/o/gMAFhdS" target="_blank">[공식] ICON 커뮤니티</a></p></h4>
+      </div>
+      <div class="col-sm-4 mb-5">
+        <h3 class="mt-5">{% trans 'WeChat' %}</h3>
+        <h4><p><a href="#">韩国第一公链ICON粉丝1群</a></p></h4>
+        <h4><p><a href="#">韩国第一公链ICON粉丝2群</a></p></h4>
+        <h4><p><a href="#">ICON的技术小屋</a></p></h4>
+      </div>
+      <div class="col-sm-4 mb-5">
+        <h3 class="mt-5">{% trans 'Facebook' %}</h3>
+        <h4><p><a href="https://www.facebook.com/helloicon" target="_blank">Hello ICON World</a></p></h4>
+      </div>
+
+
+
+
+    </div>
+
+  </div>
+
+
+{% endblock %}
+
+{% block pre_extra_js %}
+  <script>
+      function morning_image() {
+      }
+
+      function night_image() {
+      }
+  </script>
+{% endblock %}

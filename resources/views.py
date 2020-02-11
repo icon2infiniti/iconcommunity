@@ -43,3 +43,11 @@ def collateral(request, template='resources/collateral.html', extra_context=None
     if extra_context is not None:
         context.update(extra_context)
     return render(request, template, context)
+
+
+def links(request, template='resources/links.html'):
+    context = init_mode(request)
+    context.update({
+        'subsection': 'LINKS',
+    })
+    return render(request, template, context)
