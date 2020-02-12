@@ -9,7 +9,27 @@
 {% block twittertitle %}News{% endblock %}
 {% block content %}
 
-  <div class="card-body">
+  <div class="row">
+    <div class="col-12">
+      <div class="breakingNews bn-small" id="icymi">
+        <div class="bn-title"><h2>ICYMI</h2><span></span></div>
+          <ul>
+            {% for entry in icymi_entries %}
+              <li>
+                <a href="{{ entry.link }}">
+                  <span>{{ entry.author }}</span> - {{ entry.title }}
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="card-body">
 
     <!-- All -->
     <div class="row">
@@ -312,7 +332,7 @@
     -->
 
   </div>
-
+  </div>
 {% endblock %}
 
 {% block pre_extra_js %}
@@ -332,6 +352,20 @@
     $('#theiconist').attr("src", "{% static 'news/img/theiconist_w.png' %}");
     $('#rhizome').attr("src", "{% static 'news/img/rhizome_w.png' %}");
   }
+  </script>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'news/js/breakingNews.js' %}"></script>
+  <script>
+    $(document).ready(function () {
+        $("#icymi").breakingNews({
+            effect: "slide-v",
+            autoplay: true,
+            timer: 3000,
+            color: 'darkred'
+        });
+    });
   </script>
 {% endblock %}
 

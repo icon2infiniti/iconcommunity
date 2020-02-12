@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Tweet, Reddit, Iconist, Medium, YouTube, Rhizome
+from .models import Tweet, Reddit, Iconist, Medium, YouTube, Rhizome, ICYMI
 import datetime
 from datetime import timedelta
 
@@ -41,6 +41,7 @@ def news(request, template='news/news.html', extra_context=None):
     #latest_youtubes()
     #latest_rhizomes()
 
+    icymi_entries = ICYMI.objects.all().order_by('-create_day')[:5]
     twitter_entries = Tweet.objects.all()
     reddit_entries = Reddit.objects.all()
     youtube_entries = YouTube.objects.filter(created_at__gte=long_ago)
@@ -53,6 +54,7 @@ def news(request, template='news/news.html', extra_context=None):
 
     context.update({
         'subsection': 'NEWS',
+        'icymi_entries': icymi_entries,
         'all_entries': all_entries,
         'twitter_entries': twitter_entries,
         'reddit_entries': reddit_entries,

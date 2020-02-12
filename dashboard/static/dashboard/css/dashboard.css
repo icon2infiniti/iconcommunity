@@ -1,5 +1,5 @@
 h2.card-title {
-  color: #333;
+    color: #333;
 }
 
 .progress {
@@ -7,9 +7,9 @@ h2.card-title {
     height: .5rem;
     overflow: hidden;
     font-size: .65625rem;
-    background-color: rgba(0,0,0,.3);
+    background-color: rgba(0, 0, 0, .3);
     border-radius: .875rem;
-    box-shadow: 0 0 0 3px rgba(0,0,0,.3);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, .3);
 }
 
 .progress-container.progress-sm .progress .progress-value {
@@ -81,46 +81,149 @@ p {
 /* ICX Price */
 /*overviews*/
 
-.content.half li{width: 50%;}
-.content.half li:not(:first-child){margin-left: -5px;}
+.content.half li {
+    width: 50%;
+}
 
-li{ list-style:none; }
+.content.half li:not(:first-child) {
+    margin-left: -5px;
+}
+
+li {
+    list-style: none;
+}
 
 
-.card-body .icx-group { text-align: center; font-size: 36px; font-weight: 700; color: rgba(255, 255, 255, 0.8)!important; height: 100px; line-height: 35px; border-bottom: 2px solid #1aaaba; }
-.white-content .card-body .icx-group {text-align: center; font-size: 36px; font-weight: 700; color: #262626!important; height: 100px; line-height: 35px; border-bottom: 2px solid #1aaaba;}
-.card-body .icx-group em{font-size: 28px; font-weight: 500; margin-left: 10px;}
-.card-body .icx-group .same{font-size: 30px; vertical-align: middle; margin: 0 10px;}
-.card-body .price{ padding: 11px 0; background: #262626; color: #fff; font-size: 40px; font-weight: 700; text-align: center; margin-top: 30px; }
-.card-body .price em{font-size: 28px; font-weight: 500; margin-left: 17px;}
-.card-body .chart{ margin-top: 10px;}
-.card-body .chart canvas {max-width:1350px;margin:0 auto;}
-.card-body .chart_com{text-align: right;}
-.card-body .content { text-align: center; color: #1aaaba!important; margin: 43px 0 80px;}
-.card-body .content .left{    background: -webkit-linear-gradient(#1aaaba, #1aaaba) right center no-repeat; background-size: 2px 70px;}
-.card-body .content li p{ margin: 1px 0;    font-weight: 400;}
-.card-body .content li p:last-child{font-size: 32px; font-weight: 700;}
-.card-body .content li p:last-child em{font-size: 26px; margin-right: 13px; font-weight: 500;}
-.card-body .part {position:relative;}
+.card-body .icx-group {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8) !important;
+    height: 100px;
+    line-height: 35px;
+    border-bottom: 2px solid #1aaaba;
+}
+
+.white-content .card-body .icx-group {
+    text-align: center;
+    font-size: 36px;
+    font-weight: 700;
+    color: #262626 !important;
+    height: 100px;
+    line-height: 35px;
+    border-bottom: 2px solid #1aaaba;
+}
+
+.card-body .icx-group em {
+    font-size: 28px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.card-body .icx-group .same {
+    font-size: 30px;
+    vertical-align: middle;
+    margin: 0 10px;
+}
+
+.card-body .price {
+    padding: 11px 0;
+    background: #262626;
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.card-body .price em {
+    font-size: 28px;
+    font-weight: 500;
+    margin-left: 17px;
+}
+
+.card-body .chart {
+    margin-top: 10px;
+}
+
+.card-body .chart canvas {
+    max-width: 1350px;
+    margin: 0 auto;
+}
+
+.card-body .chart_com {
+    text-align: right;
+}
+
+.card-body .content {
+    text-align: center;
+    color: #1aaaba !important;
+    margin: 43px 0 80px;
+}
+
+.card-body .content .left {
+    background: -webkit-linear-gradient(#1aaaba, #1aaaba) right center no-repeat;
+    background-size: 2px 70px;
+}
+
+.card-body .content li p {
+    margin: 1px 0;
+    font-weight: 400;
+}
+
+.card-body .content li p:last-child {
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.card-body .content li p:last-child em {
+    font-size: 26px;
+    margin-right: 13px;
+    font-weight: 500;
+}
+
+.card-body .part {
+    position: relative;
+}
+
 /*.overviews.content-wrap .screen1 .content li p:last-child em:nth-child(2){font-weight: 600;}*/
 
-.card-body li{display: inline-block;    vertical-align: top;}
-.card-body .subTitle{font-size: 28px; font-weight: 800;}
+.card-body li {
+    display: inline-block;
+    vertical-align: top;
+}
 
-@media screen and (max-width: 600px){
-    .card-body .subTitle{font-size: 20px; font-weight: 800;}
-    .card-body .content li p:last-child{font-size: 26px; font-weight: 700;}
-    .card-body .content li p:last-child em{font-size: 20px; margin-right: 13px; font-weight: 500;}
+.card-body .subTitle {
+    font-size: 28px;
+    font-weight: 800;
+}
+
+@media screen and (max-width: 600px) {
+    .card-body .subTitle {
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .card-body .content li p:last-child {
+        font-size: 26px;
+        font-weight: 700;
+    }
+
+    .card-body .content li p:last-child em {
+        font-size: 20px;
+        margin-right: 13px;
+        font-weight: 500;
+    }
 }
 
 .rekt {
     font-weight: bold;
-    color: red!important;
+    color: red !important;
 }
 
 .moon {
     font-weight: bold;
-    color: green!important;
+    color: green !important;
 }
 
 .white-content .subtext {
@@ -132,18 +235,19 @@ li{ list-style:none; }
 }
 
 .white-content .tim-icons.icon-single-02.incard {
-    color: #fff!important;
+    color: #fff !important;
 }
 
 .tim-icons.icon-single-02.incard {
-    color: #fff!important;
+    color: #fff !important;
 }
 
 .white-content tspan {
-    fill: #000000!important;
+    fill: #000000 !important;
 }
+
 tspan {
-    fill: #ffffff!important;
+    fill: #ffffff !important;
 }
 
 .spacing {
@@ -152,80 +256,80 @@ tspan {
 }
 
 .dollar {
-    background: #f2d500!important;
+    background: #f2d500 !important;
     background-image: linear-gradient(to bottom left, #f2d500, #f09b3e, #f2d500) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .dollargreen {
     background: #30b800 !important;
     background-image: linear-gradient(to bottom left, #30b800, #3d7437, #30b800) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .clock {
     background: #b8781b !important;
     background-image: linear-gradient(to bottom left, #b8781b, #865818, #b8781b) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .socialsentiment80 {
     background: #34c900 !important;
     background-image: linear-gradient(to bottom left, #34c900, #3d7437, #34c900) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .socialsentiment60 {
     background: #72c968 !important;
     background-image: linear-gradient(to bottom left, #72c968, #4f8b48, #72c968) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .socialsentiment40 {
     background: #ffee47 !important;
     background-image: linear-gradient(to bottom left, #ffee47, #a0973c, #ffee47) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .socialsentiment20 {
     background: #c96a11 !important;
     background-image: linear-gradient(to bottom left, #c96a11, #7d420a, #c96a11) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .socialsentiment0 {
     background: #c91b16 !important;
     background-image: linear-gradient(to bottom left, #c91b16, #7b110e, #c91b16) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .socialengagement {
     background: #8965e0 !important;
     background-image: linear-gradient(to bottom left, #8965e0, #4c387b, #8965e0) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .socialvolume {
     background: #11cdef !important;
     background-image: linear-gradient(to bottom left, #11cdef, #076877, #11cdef) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .stake {
     background: #445475 !important;
     background-image: linear-gradient(to bottom left, #445475, #333f57, #445475) !important;
     background-size: 210% 210% !important;
-    background-position: top right!important;
+    background-position: top right !important;
 }
 
 .below {
@@ -237,3 +341,4 @@ tspan {
     font-size: 16px;
     color: #30B800;
 }
+

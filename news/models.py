@@ -1,6 +1,15 @@
 from django.db import models
 
 
+class ICYMI(models.Model):
+    author = models.CharField(max_length=100, default='')
+    title = models.CharField(max_length=255, default='')
+    link = models.URLField()
+    create_day = models.DateField()
+
+    def __str__(self):
+        return self.author + "- " + self.title
+
 class Tweet(models.Model):
     type = models.CharField(max_length=10, default='tweet')
     twitter_id = models.CharField(max_length=100, default='')
