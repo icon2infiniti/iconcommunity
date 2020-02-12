@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block extra_head %}
+  <link href="{% static 'iconsensus/css/iconsensus.css' %}" rel="stylesheet"/>
+  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />  
+{% endblock %}
+{% block title %}P-Rep Reports{% endblock %}
+{% block twittertitle %}P-Rep Reports{% endblock %}
+{% block ogtitle %}P-Rep Reports{% endblock %}
+{% block section %}P-Rep Reports{% endblock %}
+{% block content %}
+
+
+
+<div class="container2">
+	<div class="row">
+	  <div class="col-md-12">
+	    <div class="card">
+
+	      <!-- HEADER -->
+	      <div class="card-header">
+	      	{% if form.instance.id %}
+	        	<h2 class="card-title">{% trans form.instance.name %}</h2>
+	      	{% else %}
+	        	<h2 class="card-title">{% trans 'Create a new project' %}</h2>
+	        {% endif %}
+			<a href="{% url 'prep_projects' fromAddress %}">Back to all projects</a>	     
+	      </div>
+
+	      <!-- BODY -->
+	      <div class="card-body">
+	      	<form method="post">
+			 {% csrf_token %}
+			<div class="row">
+	            <div class="col-sm-8">
+		            <label>{{ form.name.label }}</label>
+		            <div class="form-group">
+		            	{{ form.name.errors }}
+		            	{{ form.name }}
+		            </div>
+	          	</div>
+	            <div class="col-sm-4">
+		            <label>{{ form.category.label }}</label>
+		            <div class="form-group">
+		            	{{ form.category.errors }}
+		            	{{ form.category }}
+		            </div>
+	          	</div>    
+			</div>
+
+			<div class="row">
+	            <div class="col-sm-12">
+		            <label>{{ form.description.label }}</label>
+		            <div class="form-group">
+		            	{{ form.description.errors }}
+		            	{{ form.description }}
+		            </div>
+	          	</div>   
+			</div>	
+
+			<div class="row">
+	            <div class="col-sm-2">
+		            <label>Start date (yyyy-mm-dd)</label>
+		            <div class="form-group">
+		            	{{ form.start_date.errors }}
+		            	{{ form.start_date }}
+		            </div>
+	          	</div>
+	            <div class="col-sm-2">
+		            <label>End date (yyyy-mm-dd)</label>
+		            <div class="form-group">
+		            	{{ form.end_date.errors }}
+		            	{{ form.end_date }}
+		            </div>
+	          	</div>  
+  	            <div class="col-sm-4">
+		            <label>{{ form.progress.label }}</label>
+		            <div class="form-group">
+		            	{{ form.progress.errors }}
+		            	{{ form.progress }}
+		            </div>
+	          	</div>
+	            <div class="col-sm-4">
+		            <label>{{ form.status.label }}</label>
+		            <div class="form-group">
+		            	{{ form.status.errors }}
+		            	{{ form.status }}
+		            </div>
+	          	</div>
+			</div>
+
+			<div class="row">
+	            <div class="col-sm-12">
+		            <label>{{ form.details.label }}</label>
+		            <div class="form-group">
+		            	{{ form.details.errors }}
+		            	{{ form.details }}
+		            </div>
+	          	</div>   
+			</div>	
+
+			{% if form.status.value > 0 %}
+			<div class="row">
+	            <div class="col-sm-12">
+		            <label>{{ form.updates.label }}</label>
+		            <div class="form-group">
+		            	{{ form.updates.errors }}
+		            	{{ form.updates }}
+		            </div>
+	          	</div>   
+			</div>	
+			{% endif %}			
+
+			{% if form.status.value > 1 %}
+			<div class="row">
+	            <div class="col-sm-12">
+		            <label>{{ form.final_update.label }}</label>
+		            <div class="form-group">
+		            	{{ form.final_update.errors }}
+		            	{{ form.final_update }}
+		            </div>
+	          	</div>   
+			</div>	
+			{% endif %}										
+
+				<button type="submit" class="btn btn-primary">Submit</button>
+			</form>
+
+
+
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div>
+
+{% endblock %}
+
+<!-- extra javascript -->
+{% block extra_js %}
+<script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+{% endblock %}

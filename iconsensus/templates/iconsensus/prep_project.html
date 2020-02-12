@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+  <link href="{% static 'iconsensus/css/iconsensus.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block title %}P-Rep Reports{% endblock %}
+{% block twittertitle %}P-Rep Reports{% endblock %}
+{% block ogtitle %}P-Rep Reports{% endblock %}
+{% block section %}P-Rep Reports{% endblock %}
+{% block content %}
+
+<h2 class="mb-2" >{{ project.name }}</h2>
+<a href="{% url 'prep_projects' project.prep_address %}">Back to all {{ getPRep.name }} projects</a>	 
+
+  <div class="row pt-3">
+
+    <!-- Name -->
+    <div class="col-md-8">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'P-Rep Name' %}</p>
+                <h3 class="card-title">{{ getPRep.name }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Category -->
+    <div class="col-md-4">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Category' %}</p>
+                <h3 class="card-title">{{ project.get_category_display }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+
+    <!-- Description -->
+    <div class="col-md-12">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Description' %}</p>
+                <h3 class="card-title">{{ project.description }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>  
+
+  <div class="row">
+
+    <!-- Start date -->
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Start Date' %}</p>
+                <h3 class="card-title">{{ project.start_date }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- End date -->
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'End Date' %}</p>
+                <h3 class="card-title">{{ project.end_date }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Progress' %}</p>
+                <h3 class="card-title">{{ project.get_progress_display }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+            <!-- End date -->
+    <div class="col-md-3">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Status' %}</p>
+                <h3 class="card-title">{{ project.get_status_display }}</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>  
+
+  <div class="row">
+
+    <!-- Details -->
+    <div class="col-md-12">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Details' %}</p>
+                <h4 class="card-title">{{ project.details }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>    
+
+ {% if project.status > 0 %}
+  <div class="row">
+
+    <!-- Updates -->
+    <div class="col-md-12">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Updates' %}</p>
+                <h4 class="card-title">{{ project.updates }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>   
+  {% endif %}
+
+
+ {% if project.status > 1 %}
+  <div class="row">
+
+    <!-- Final update -->
+    <div class="col-md-12">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="numbers">
+                <p class="card-category">{% trans 'Final Update' %}</p>
+                <h4 class="card-title">{{ project.final_update }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>   
+  {% endif %}  
+
+{% endblock %}
+
+<!-- extra javascript -->
+{% block extra_js %}
+{% endblock %}

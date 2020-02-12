@@ -1,9 +1,14 @@
 from django.shortcuts import render
-from .models import CorePrep
+
+from .models import CorePrep, PrepProject
+from .forms import PrepProjectForm
+from prep.views import get_prep
+
 from . import iconsensusrpc
 from iconsdk.exception import JSONRPCException
 
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.shortcuts import redirect
 
 from collections import OrderedDict
 from operator import itemgetter
@@ -15,9 +20,67 @@ from dashboard.models import MainInfo
 import json
 
 
-def prep_reports(request):
+def prep_projects(request, prep_address):
+    context = init_mode(request)  
+
+    getPRep = get_prep(prep_address)  
+
+
+    context.update({
+        'projects': PrepProject.objects.filter(prep_address=prep_address),
+        'getPRep': getPRep,
+    })
+
+    return render(request, 'iconsensus/prep_projects.html', context)
+
+
+def prep_project_create(request):
     context = init_mode(request)
-    return render(request, 'iconsensus/prepreports.html', context)
+
+    form = PrepProjectForm(request.POST or None)
+
+    if form.is_valid():
+        form.instance.prep_address = context['fromAddress']
+        form.save()
+        return redirect('prep_project_edit', form.instance.id)
+
+    context.update({
+        'form':form,
+        })
+
+    return render(request, 'iconsensus/prep_project_create.html', context)
+
+
+def prep_project_edit(request, id):
+    context = init_mode(request)
+
+    prep_project = PrepProject.objects.get(id=id)
+
+    form = PrepProjectForm(request.POST or None, instance=prep_project)
+
+    if form.is_valid():
+        form.save()
+        return redirect('prep_project_edit', form.instance.id)
+
+    context.update({
+        'form':form,
+        })
+
+    return render(request, 'iconsensus/prep_project_create.html', context)
+
+
+def prep_project(request, id):
+    context = init_mode(request)
+    project = PrepProject.objects.get(id=id)
+    getPRep = get_prep(project.prep_address)  
+
+
+    context.update({
+        'project': project,
+        'getPRep': getPRep,
+    })
+
+    return render(request, 'iconsensus/prep_project.html', context)
 
 
 def init_mode(request):
