@@ -19,7 +19,6 @@ def init_mode(request):
     }
     return context
 
-
 @page_template('resources/video_general_page.html', key='video_general_page')
 @page_template('resources/video_events_page.html', key='video_events_page')
 @page_template('resources/video_interviews_page.html', key='video_interviews_page')
