@@ -10,6 +10,7 @@ class ICYMI(models.Model):
     def __str__(self):
         return self.author + "- " + self.title
 
+
 class Tweet(models.Model):
     type = models.CharField(max_length=10, default='tweet')
     twitter_id = models.CharField(max_length=100, default='')
