@@ -21,11 +21,8 @@ import json
 
 
 def prep_projects(request, prep_address):
-    context = init_mode(request)  
-
-    getPRep = get_prep(prep_address)  
-
-
+    context = init_mode(request)
+    getPRep = get_prep(prep_address)
     context.update({
         'projects': PrepProject.objects.filter(prep_address=prep_address),
         'getPRep': getPRep,
@@ -73,7 +70,6 @@ def prep_project(request, id):
     context = init_mode(request)
     project = PrepProject.objects.get(id=id)
     getPRep = get_prep(project.prep_address)  
-
 
     context.update({
         'project': project,
@@ -165,18 +161,6 @@ def overview(request):
         else:
             countries[prep['country']] += 1
 
-        # get Prep details, but too slow. Do more efficient way
-        # address = {
-        #   "address": prep['address']
-        # }
-        # try:
-        #    prep['detail'] = dashboardrpc.DashboardRPCCalls().json_rpc_call("getPRep", address)
-        # except JSONRPCException as e:
-        #    print(str(e.message))
-
-        #prep_json = prep['detail']['details']
-        # print(prep_json)
-
     countries_alpha2 = {}
     countries_name = {}
     for k, v in countries.items():
@@ -231,7 +215,6 @@ def overview(request):
     return render(request, 'iconsensus/overview.html', context)
 
 
-# Get market data
 def get_map_marker(prep):
     position = prep.server_location_latlong.replace('(', '').replace(')', '').strip().split(',')
     url = '/iconsensus/candidate_detail/'+str(prep.id)+'/'
