@@ -65,11 +65,12 @@ class PrepProject(models.Model):
         (1, 'Development'),
         (2, 'Education'),
         (3, 'Infrastructure'),  
-        (4, 'Community Engagement'),  
-        (5, 'Other'),          
+        (4, 'Community Engagement'),
+        (5, 'Design'),
+        (6, 'Other'),
     ]
 
-    PROGRESS = [ (i, "{}0%".format(i) ) for i in range(0, 11) ]
+    PROGRESS = [(i, "{}0%".format(i)) for i in range(0, 11)]
 
     STATUS = [
         (0, 'Planning'),
@@ -77,10 +78,6 @@ class PrepProject(models.Model):
         (2, 'Complete'),
         (3, 'Abandoned'),         
     ]
-
-    class Meta:
-        # managed = False # Not sure about this?
-        db_table = 'core_prepproject'
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
@@ -90,7 +87,7 @@ class PrepProject(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()    
     description = models.CharField(max_length=256)
-    category = models.IntegerField(default=5, choices=CATEGORIES)
+    category = models.IntegerField(default=6, choices=CATEGORIES)
     progress = models.IntegerField(default=0, choices=PROGRESS)    
     status = models.IntegerField(default=0, choices=STATUS)    
     details = models.TextField()

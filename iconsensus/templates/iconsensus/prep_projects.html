@@ -3,72 +3,74 @@
 {% block extra_head %}
   <link href="{% static 'iconsensus/css/iconsensus.css' %}" rel="stylesheet"/>
 {% endblock %}
-{% block title %}P-Rep Reports{% endblock %}
-{% block twittertitle %}P-Rep Reports{% endblock %}
-{% block ogtitle %}P-Rep Reports{% endblock %}
-{% block section %}P-Rep Reports{% endblock %}
+{% block title %}P-Rep Projects{% endblock %}
+{% block twittertitle %}P-Rep Projects{% endblock %}
+{% block ogtitle %}P-Rep Projects{% endblock %}
+{% block section %}P-Rep Projects{% endblock %}
 {% block content %}
 
-  <div class="container2">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
 
         <!-- HEADER -->
         <div class="card-header">
-          <h2 class="card-title">{{ getPRep.name }} {% trans 'Projects' %}</h2> 
-          {% if getPRep.address == fromAddress %}
-            <a href="{% url 'prep_project_create' %}">Create a new project</a>
-          {% endif %}
+          <h2 class="card-title">{{ getPRep.name }} {% trans 'Projects' %}</h2>
         </div>
 
         <!-- BODY -->
         <div class="card-body">
           {% if projects %}
-          <div class="table-responsive">
-            <table class="table tablesorter " id="prep-table">
-              <caption>{% trans 'Total of' %} {{ projects.count }} P-Rep {% trans 'Projects' %}</caption>
-              <thead class="text-primary">
-              <tr>
-                <th width="30%">{% trans 'Name' %}</th>
-                <th width="10%">{% trans 'Start Date' %}</th>
-                <th width="10%">{% trans 'End Date' %}</th>               
-                <th width="7%">{% trans 'CATEGORY' %}</th>
-                <th width="7%">{% trans 'STATUS' %}</th>
-                <th width="7%">{% trans 'PROGRESS' %}</th>             
-                <th width="7%"></th>
-              </tr>
-              </thead>
-              <tbody class="tborder">
+            <div class="table-responsive">
+              <table class="table tablesorter " id="prep-table">
+                <!--<caption>{% trans 'Total of' %} {{ projects.count }} P-Rep {% trans 'Projects' %}</caption>-->
+                <thead class="text-primary">
+                <tr>
+                  <th width="30%">{% trans 'Project Name' %}</th>
+                  <th width="10%" class="text-center">{% trans 'Start Date' %}</th>
+                  <th width="10%" class="text-center">{% trans 'End Date' %}</th>
+                  <th width="7%" class="text-center">{% trans 'CATEGORY' %}</th>
+                  <th width="7%" class="text-center">{% trans 'STATUS' %}</th>
+                  <th width="7%" class="text-center">{% trans 'PROGRESS' %}</th>
+                  <th width="7%"></th>
+                </tr>
+                </thead>
 
-              {% for project in projects %}
+                <tbody class="tborder">
+                {% for project in projects %}
                 <tr>
                   <td>{{ project.name }}</td>
-                  <td>{{ project.start_date }}</td>
-          <td>{{ project.end_date }}</td>
-                  <td>{{ project.get_progress_display }}</td>           
-                  <td>{{ project.get_status_display }}</td>
-                  <td>{{ project.get_category_display }}</td>               
+                  <td class="text-center">{{ project.start_date }}</td>
+                  <td class="text-center">{{ project.end_date }}</td>
+                  <td class="text-center">{{ project.get_category_display }}</td>
+                  <td class="text-center">{{ project.get_status_display }}</td>
+                  <td class="text-center">{{ project.get_progress_display }}</td>
                   <td>
                     <a href="{% url 'prep_project' project.id %}">View</a>
                     {% if fromAddress == project.prep_address %}
                       |  <a href="{% url 'prep_project_edit' project.id %}">Edit</a>
                     {% endif %}
-
                   </td>
                 </tr>
-              {% endfor %}
+                {% endfor %}
+                <tr>
+                  <td colspan="7" class="text-center">
+                    {% if getPRep.address == fromAddress %}
+                      <a href="{% url 'prep_project_create' %}" class="btn btn-fill btn-primary">Add New Project</a>
+                      <!--<a href="{% url 'prep_project_create' %}">Create a new project</a>-->
+                    {% endif %}
+                  </td>
+                </tr>
+                </tbody>
 
-              </tbody>
-            </table>
-          </div>
+              </table>
+            </div>
           {% else %}
-            <h3 class="card-title">{% trans 'No projects created' %}</h3>            
+            <h3 class="card-title">{% trans 'No projects created' %}</h3>
           {% endif %}
         </div>
       </div>
     </div>
-  </div>
   </div>
 
 {% endblock %}

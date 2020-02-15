@@ -179,7 +179,7 @@
                 <th width="15%">{% trans 'Monthly Reward' %}</th>
                 <th width="8%">{% trans 'i_rep' %}</th>
                 <th width="8%">{% trans 'Delegated' %}</th>
-                <!--<th width="7%">{% trans 'Projects' %}</th>-->
+                <th width="7%">{% trans 'Projects' %}</th>
               </tr>
               </thead>
 
@@ -193,7 +193,7 @@
                   <td width="8%" id="irep">{{ prep.irep }}</td>
                   <!--<td width="10%" id="stake">{ prep.stake|intcomma }</td>-->
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
-                  <!--<td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>-->
+                  <td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -207,7 +207,7 @@
                   <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
                   <td width="8%" id="irep">{{ prep.irep }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
-                  <!--<td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>-->
+                  <td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -221,7 +221,7 @@
                   <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
                   <td width="8%" id="irep">{{ prep.irep }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
-                  <!--<td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>-->
+                  <td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>
                 </tr>
                 {% endfor %}
               </tbody>

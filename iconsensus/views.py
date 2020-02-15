@@ -42,7 +42,7 @@ def prep_project_create(request):
         return redirect('prep_project_edit', form.instance.id)
 
     context.update({
-        'form':form,
+        'form': form,
         })
 
     return render(request, 'iconsensus/prep_project_create.html', context)
@@ -60,7 +60,7 @@ def prep_project_edit(request, id):
         return redirect('prep_project_edit', form.instance.id)
 
     context.update({
-        'form':form,
+        'form': form,
         })
 
     return render(request, 'iconsensus/prep_project_create.html', context)

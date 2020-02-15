@@ -3,7 +3,7 @@
 
 {% block extra_head %}
   <link href="{% static 'iconsensus/css/iconsensus.css' %}" rel="stylesheet"/>
-  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet" />  
+  <link href="{% static 'prep/css/prep.css' %}" rel="stylesheet"/>
 {% endblock %}
 {% block title %}P-Rep Reports{% endblock %}
 {% block twittertitle %}P-Rep Reports{% endblock %}
@@ -11,133 +11,157 @@
 {% block section %}P-Rep Reports{% endblock %}
 {% block content %}
 
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
 
+        <!-- HEADER -->
+        <div class="card-header">
+          {% if form.instance.id %}
+            <h2 class="card-title">{% trans form.instance.name %}</h2>
+          {% else %}
+            <h2 class="card-title">{% trans 'Create a new project' %}</h2>
+          {% endif %}
+        </div>
 
-<div class="container2">
-	<div class="row">
-	  <div class="col-md-12">
-	    <div class="card">
+        <!-- BODY -->
+        <div class="card-body">
+          <form method="post">
+            {% csrf_token %}
 
-	      <!-- HEADER -->
-	      <div class="card-header">
-	      	{% if form.instance.id %}
-	        	<h2 class="card-title">{% trans form.instance.name %}</h2>
-	      	{% else %}
-	        	<h2 class="card-title">{% trans 'Create a new project' %}</h2>
-	        {% endif %}
-			<a href="{% url 'prep_projects' fromAddress %}">Back to all projects</a>	     
-	      </div>
+            <div class="row">
+              <div class="col-sm-8">
+                <label>{% trans 'Project Name' %}<!--{ form.name.label }}--></label>
+                <div class="form-group">
+                  {{ form.name.errors }}
+                  {{ form.name }}
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label>{% trans 'Category' %}<!--{ form.category.label }}--></label>
+                <div class="form-group">
+                  {{ form.category.errors }}
+                  {{ form.category }}
+                </div>
+              </div>
+            </div>
 
-	      <!-- BODY -->
-	      <div class="card-body">
-	      	<form method="post">
-			 {% csrf_token %}
-			<div class="row">
-	            <div class="col-sm-8">
-		            <label>{{ form.name.label }}</label>
-		            <div class="form-group">
-		            	{{ form.name.errors }}
-		            	{{ form.name }}
-		            </div>
-	          	</div>
-	            <div class="col-sm-4">
-		            <label>{{ form.category.label }}</label>
-		            <div class="form-group">
-		            	{{ form.category.errors }}
-		            	{{ form.category }}
-		            </div>
-	          	</div>    
-			</div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label>{% trans 'Short Description' %}<!--{ form.description.label }}--></label>
+                <div class="form-group">
+                  {{ form.description.errors }}
+                  {{ form.description }}
+                </div>
+              </div>
+            </div>
 
-			<div class="row">
-	            <div class="col-sm-12">
-		            <label>{{ form.description.label }}</label>
-		            <div class="form-group">
-		            	{{ form.description.errors }}
-		            	{{ form.description }}
-		            </div>
-	          	</div>   
-			</div>	
+            <div class="row">
 
-			<div class="row">
-	            <div class="col-sm-2">
-		            <label>Start date (yyyy-mm-dd)</label>
-		            <div class="form-group">
-		            	{{ form.start_date.errors }}
-		            	{{ form.start_date }}
-		            </div>
-	          	</div>
-	            <div class="col-sm-2">
-		            <label>End date (yyyy-mm-dd)</label>
-		            <div class="form-group">
-		            	{{ form.end_date.errors }}
-		            	{{ form.end_date }}
-		            </div>
-	          	</div>  
-  	            <div class="col-sm-4">
-		            <label>{{ form.progress.label }}</label>
-		            <div class="form-group">
-		            	{{ form.progress.errors }}
-		            	{{ form.progress }}
-		            </div>
-	          	</div>
-	            <div class="col-sm-4">
-		            <label>{{ form.status.label }}</label>
-		            <div class="form-group">
-		            	{{ form.status.errors }}
-		            	{{ form.status }}
-		            </div>
-	          	</div>
-			</div>
+              <!--
+              <div class="col-sm-3">
+                <label>Start date (yyyy-mm-dd)</label>
+                <div class="form-group">
+                  { form.start_date.errors }}
+                  { form.start_date }}
+                </div>
+              </div>
 
-			<div class="row">
-	            <div class="col-sm-12">
-		            <label>{{ form.details.label }}</label>
-		            <div class="form-group">
-		            	{{ form.details.errors }}
-		            	{{ form.details }}
-		            </div>
-	          	</div>   
-			</div>	
+              <div class="col-sm-3">
+                <label>End date (yyyy-mm-dd)</label>
+                <div class="form-group">
+                  { form.end_date.errors }}
+                  { form.end_date }}
+                </div>
+              </div>
+              -->
 
-			{% if form.status.value > 0 %}
-			<div class="row">
-	            <div class="col-sm-12">
-		            <label>{{ form.updates.label }}</label>
-		            <div class="form-group">
-		            	{{ form.updates.errors }}
-		            	{{ form.updates }}
-		            </div>
-	          	</div>   
-			</div>	
-			{% endif %}			
+              <div class="col-md-3">
+                <label>Start date (yyyy-mm-dd)</label>
+                <div class="form-group">
+                  <input id="start_date" name="start_date" type="text" class="form-control datepicker" value="{{ form.start_date.value|date:"Y-m-d" }}">
+                  {{ form.start_date.errors }}
+                </div>
+              </div>
 
-			{% if form.status.value > 1 %}
-			<div class="row">
-	            <div class="col-sm-12">
-		            <label>{{ form.final_update.label }}</label>
-		            <div class="form-group">
-		            	{{ form.final_update.errors }}
-		            	{{ form.final_update }}
-		            </div>
-	          	</div>   
-			</div>	
-			{% endif %}										
+              <div class="col-md-3">
+                <label>Start date (yyyy-mm-dd)</label>
+                <div class="form-group">
+                  <input id="end_date" name="end_date" type="text" class="form-control datepicker" value="{{ form.end_date.value|date:"Y-m-d" }}">
+                  {{ form.end_date.errors }}
+                </div>
+              </div>
 
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</form>
+              <div class="col-sm-2">
+                <label>{{ form.progress.label }}</label>
+                <div class="form-group">
+                  {{ form.progress.errors }}
+                  {{ form.progress }}
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <label>{{ form.status.label }}</label>
+                <div class="form-group">
+                  {{ form.status.errors }}
+                  {{ form.status }}
+                </div>
+              </div>
+            </div>
 
+            <div class="row">
+              <div class="col-sm-12">
+                <label>{{ form.details.label }}</label>
+                <div class="form-group">
+                  {{ form.details.errors }}
+                  {{ form.details }}
+                </div>
+              </div>
+            </div>
 
+            {% if form.status.value > 0 %}
+              <div class="row">
+                <div class="col-sm-12">
+                  <label>{{ form.updates.label }}</label>
+                  <div class="form-group">
+                    {{ form.updates.errors }}
+                    {{ form.updates }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
 
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	</div>
+            {% if form.status.value > 1 %}
+              <div class="row">
+                <div class="col-sm-12">
+                  <label>{{ form.final_update.label }}</label>
+                  <div class="form-group">
+                    {{ form.final_update.errors }}
+                    {{ form.final_update }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+            <div class="text-center">
+            <a class="btn btn-fill btn-primary" href="{% url 'prep_projects' fromAddress %}">Back to Projects</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
 
 <!-- extra javascript -->
 {% block extra_js %}
-<script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+  <script src="{% static 'js/plugins/bootstrap-selectpicker.js' %}"></script>
+  <script src="{% static 'iconsensus/js/moment.min.js' %}"></script>
+  <script src="{% static 'iconsensus/js/bootstrap-datetimepicker.js' %}"></script>
+  <script>
+    $(document).ready(function() {
+      base.initDateTimePicker();
+    });
+  </script>
 {% endblock %}

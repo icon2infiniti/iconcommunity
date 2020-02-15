@@ -14323,9 +14323,9 @@ code {
     margin-top: 30px; }
 
 .card-tasks {
-  height: 473px; }
+  /*height: 473px;*/ }
   .card-tasks .table-full-width {
-    max-height: 410px;
+    /*max-height: 410px;*/
     position: relative; }
   .card-tasks .card-header .title {
     margin-right: 20px;

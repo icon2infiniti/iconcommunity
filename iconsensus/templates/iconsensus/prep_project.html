@@ -2,6 +2,20 @@
 {% load static i18n %}
 {% block extra_head %}
   <link href="{% static 'iconsensus/css/iconsensus.css' %}" rel="stylesheet"/>
+  <style type="text/css">
+    .white-content .table-responsive table tbody tr:hover {
+        background-color: inherit!important;
+        opacity: 1.0!important;
+    }
+
+    .table-responsive table tbody tr:hover {
+        background-color: inherit!important;
+        opacity: 1.0!important;
+    }
+    .card .card-body {
+        padding: 0px!important;
+    }
+  </style>
 {% endblock %}
 {% block title %}P-Rep Reports{% endblock %}
 {% block twittertitle %}P-Rep Reports{% endblock %}
@@ -9,12 +23,144 @@
 {% block section %}P-Rep Reports{% endblock %}
 {% block content %}
 
-<h2 class="mb-2" >{{ project.name }}</h2>
-<a href="{% url 'prep_projects' project.prep_address %}">Back to all {{ getPRep.name }} projects</a>	 
+
+
+
+<div class="content">
+  <div class="row">
+
+    <!-- PROJECT INFO -->
+    <div class="col-lg-6 col-sm-6 text-center">
+      <div class="card card-tasks text-left">
+        <div class="card-header">
+          <h3 class="title d-inline">{{ project.name }}</h3>
+        </div>
+        <div class="card-body">
+          <div class="table-full-width table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td>
+                    <p class="title">Team</p>
+                    <p>{{ getPRep.name }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p class="title">Category</p>
+                    <p>{{ project.get_category_display }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p class="title">Description</p>
+                    <p>{{ project.description }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p class="title">Dates</p>
+                    <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p class="title">Progress</p>
+                    <p>{{ project.get_progress_display }}</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <p class="title">Status</p>
+                    <p>{{ project.get_status_display }}</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="col-lg-6 col-sm-6">
+      <div class="card card-timeline card-plain">
+        <div class="card-body">
+          <ul class="timeline timeline-simple">
+
+            <li class="timeline-inverted">
+              <div class="timeline-badge detail">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <span class="badge badge-detail">Details</span>
+                </div>
+                <div class="timeline-body">
+                  <p class="timeline-text">{{ project.details }}</p>
+                </div>
+              </div>
+            </li>
+
+
+            {% if project.status > 0 %}
+            <li class="timeline-inverted">
+              <div class="timeline-badge update">
+                <i class="fas fa-sync-alt"></i>
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <span class="badge badge-update">{% trans 'Updates' %}</span>
+                </div>
+                <div class="timeline-body">
+                  <p class="timeline-text">{{ project.updates }}</p>
+                </div>
+              </div>
+            </li>
+            {% endif %}
+
+            {% if project.status > 1 %}
+            <li class="timeline-inverted">
+              <div class="timeline-badge delivery">
+                <i class="fas fa-truck"></i>
+              </div>
+              <div class="timeline-panel">
+                <div class="timeline-heading">
+                  <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                </div>
+                <div class="timeline-body">
+                  <p class="timeline-text">{{ project.final_update }}</p>
+                </div>
+              </div>
+            </li>
+            {% endif %}
+
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-12 text-center">
+      <a href="{% url 'prep_projects' project.prep_address %}" class="btn btn-fill btn-primary">Back to Project</a>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!--
+<div>
+  <h2 class="mb-2">{{ project.name }}</h2>
 
   <div class="row pt-3">
 
-    <!-- Name -->
     <div class="col-md-8">
       <div class="card card-stats">
         <div class="card-body">
@@ -29,9 +175,6 @@
         </div>
       </div>
     </div>
-
-
-    <!-- Category -->
     <div class="col-md-4">
       <div class="card card-stats">
         <div class="card-body">
@@ -52,7 +195,6 @@
 
   <div class="row">
 
-    <!-- Description -->
     <div class="col-md-12">
       <div class="card card-stats">
         <div class="card-body">
@@ -68,11 +210,10 @@
       </div>
     </div>
 
-  </div>  
+  </div>
 
   <div class="row">
 
-    <!-- Start date -->
     <div class="col-md-3">
       <div class="card card-stats">
         <div class="card-body">
@@ -88,7 +229,6 @@
       </div>
     </div>
 
-    <!-- End date -->
     <div class="col-md-3">
       <div class="card card-stats">
         <div class="card-body">
@@ -104,7 +244,6 @@
       </div>
     </div>
 
-    <!-- Progress -->
     <div class="col-md-3">
       <div class="card card-stats">
         <div class="card-body">
@@ -120,7 +259,6 @@
       </div>
     </div>
 
-            <!-- End date -->
     <div class="col-md-3">
       <div class="card card-stats">
         <div class="card-body">
@@ -136,11 +274,10 @@
       </div>
     </div>
 
-  </div>  
+  </div>
 
   <div class="row">
 
-    <!-- Details -->
     <div class="col-md-12">
       <div class="card card-stats">
         <div class="card-body">
@@ -156,52 +293,58 @@
       </div>
     </div>
 
-  </div>    
+  </div>
 
- {% if project.status > 0 %}
-  <div class="row">
+  {% if project.status > 0 %}
+    <div class="row">
 
-    <!-- Updates -->
-    <div class="col-md-12">
-      <div class="card card-stats">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              <div class="numbers">
-                <p class="card-category">{% trans 'Updates' %}</p>
-                <h4 class="card-title">{{ project.updates }}</h4>
+      <div class="col-md-12">
+        <div class="card card-stats">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="numbers">
+                  <p class="card-category">{% trans 'Updates' %}</p>
+                  <h4 class="card-title">{{ project.updates }}</h4>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </div>   
+    </div>
   {% endif %}
 
 
- {% if project.status > 1 %}
-  <div class="row">
+  {% if project.status > 1 %}
+    <div class="row">
 
-    <!-- Final update -->
-    <div class="col-md-12">
-      <div class="card card-stats">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-12">
-              <div class="numbers">
-                <p class="card-category">{% trans 'Final Update' %}</p>
-                <h4 class="card-title">{{ project.final_update }}</h4>
+      <div class="col-md-12">
+        <div class="card card-stats">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="numbers">
+                  <p class="card-category">{% trans 'Final Update' %}</p>
+                  <h4 class="card-title">{{ project.final_update }}</h4>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-  </div>   
-  {% endif %}  
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-12 text-center">
+      <a href="{% url 'prep_projects' project.prep_address %}" class="btn btn-fill btn-primary">Back to Project</a>
+    </div>
+  </div>
+</div>
+-->
 
 {% endblock %}
 

@@ -1,8 +1,8 @@
 from django import forms
 from .models import PrepProject
 
-class PrepProjectForm(forms.ModelForm):
 
+class PrepProjectForm(forms.ModelForm):
 
     class Meta:
         model = PrepProject
