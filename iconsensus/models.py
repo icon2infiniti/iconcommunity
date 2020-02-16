@@ -95,3 +95,5 @@ class PrepProject(models.Model):
     updates = RichTextField(blank=True, null=True)
     final_update = RichTextField(blank=True, null=True)
 
+    def __str__(self):
+        return self.name
