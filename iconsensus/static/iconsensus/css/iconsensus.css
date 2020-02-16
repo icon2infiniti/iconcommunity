@@ -1135,3 +1135,7 @@ input.datetimepicker[data-color=yellow] + .bootstrap-datetimepicker-widget.dropd
 .timeline-text {
     color: rgba(255,255,255,0.8)!important;
 }
+
+.django-ckeditor-widget {
+    display: block !important;
+}
