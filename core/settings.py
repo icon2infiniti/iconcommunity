@@ -30,6 +30,8 @@ INSTALLED_APPS = [
     'mathfilters',
     'feedparser',
     'django_crontab',
+
+    'ckeditor',
 ]
 
 MIDDLEWARE = [
