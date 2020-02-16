@@ -1,4 +1,5 @@
 from django.db import models
+from ckeditor.fields import RichTextField
 
 
 # These are model schemas from pre-registration site
@@ -90,7 +91,7 @@ class PrepProject(models.Model):
     category = models.IntegerField(default=6, choices=CATEGORIES)
     progress = models.IntegerField(default=0, choices=PROGRESS)    
     status = models.IntegerField(default=0, choices=STATUS)    
-    details = models.TextField()
-    updates = models.TextField(blank=True, null=True)
-    final_update = models.TextField(blank=True, null=True)    
+    details = RichTextField()
+    updates = RichTextField(blank=True, null=True)
+    final_update = RichTextField(blank=True, null=True)
 

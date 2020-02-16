@@ -23,9 +23,6 @@
 {% block section %}P-Rep Reports{% endblock %}
 {% block content %}
 
-
-
-
 <div class="content">
   <div class="row">
 
@@ -97,11 +94,10 @@
                   <span class="badge badge-detail">Details</span>
                 </div>
                 <div class="timeline-body">
-                  <p class="timeline-text">{{ project.details }}</p>
+                  <p class="timeline-text">{{ project.details|safe }}</p>
                 </div>
               </div>
             </li>
-
 
             {% if project.status > 0 %}
             <li class="timeline-inverted">
@@ -113,7 +109,7 @@
                   <span class="badge badge-update">{% trans 'Updates' %}</span>
                 </div>
                 <div class="timeline-body">
-                  <p class="timeline-text">{{ project.updates }}</p>
+                  <p class="timeline-text">{{ project.updates|safe }}</p>
                 </div>
               </div>
             </li>
@@ -129,7 +125,7 @@
                   <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
                 </div>
                 <div class="timeline-body">
-                  <p class="timeline-text">{{ project.final_update }}</p>
+                  <p class="timeline-text">{{ project.final_update|safe }}</p>
                 </div>
               </div>
             </li>
@@ -144,7 +140,7 @@
   </div>
   <div class="row">
     <div class="col-12 text-center">
-      <a href="{% url 'prep_projects' project.prep_address %}" class="btn btn-fill btn-primary">Back to Project</a>
+      <a href="{% url 'prep_projects' project.prep_address %}" class="btn btn-fill btn-primary">Back to Projects</a>
     </div>
   </div>
 </div>

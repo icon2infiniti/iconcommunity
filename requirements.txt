@@ -23,8 +23,10 @@ cytoolz==0.10.0
 decorator==4.4.1
 Django==2.1.5
 django-celery-beat==1.1.1
+django-ckeditor==5.9.0
 django-crontab==0.7.1
 django-el-pagination==3.2.4
+django-js-asset==1.2.2
 django-markdownify==0.8.0
 django-mathfilters==0.4.0
 django-timezone-field==4.0
@@ -79,7 +81,7 @@ plyvel==1.1.0
 pprintpp==0.4.0
 praw==6.4.0
 prawcore==1.0.1
-#preptools==0.0.1
+preptools==0.0.1
 prompt-toolkit==1.0.18
 protobuf==3.7.0
 psycopg2==2.8.4
