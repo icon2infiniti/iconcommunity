@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+{% block extra_head %}
+  <link href="{% static 'iconsensus/css/iconsensus.css' %}" rel="stylesheet"/>
+  <link href="{% static 'iconsensus/css/prep_all_projects.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block title %}P-Rep Projects{% endblock %}
+{% block twittertitle %}P-Rep Projects{% endblock %}
+{% block ogtitle %}P-Rep Projects{% endblock %}
+{% block section %}P-Rep Projects{% endblock %}
+{% block content %}
+
+<div>
+
+<!-- Lists container -->
+<section class="lists-container">
+
+	<div class="list">
+		<h3 class="list-title">Marketing</h3>
+		<ul class="list-items">
+      {% for project in marketing %}
+			  <li>{{ project.name }}</li>
+      {% endfor %}
+		</ul>
+	</div>
+	<div class="list">
+		<h3 class="list-title">development</h3>
+		<ul class="list-items">
+      {% for project in development %}
+			  <li>{{ project.name }}</li>
+      {% endfor %}
+		</ul>
+	</div>
+	<div class="list">
+		<h3 class="list-title">education</h3>
+		<ul class="list-items">
+      {% for project in education %}
+			  <li>{{ project.name }}</li>
+      {% endfor %}
+		</ul>
+	</div>
+	<div class="list">
+		<h3 class="list-title">infrastructure</h3>
+		<ul class="list-items">
+      {% for project in infrastructure %}
+			  <li>{{ project.name }}</li>
+      {% endfor %}
+		</ul>
+	</div>
+	<div class="list">
+		<h3 class="list-title">community</h3>
+		<ul class="list-items">
+      {% for project in community %}
+			  <li>{{ project.name }}</li>
+      {% endfor %}
+		</ul>
+	</div>
+	<div class="list">
+		<h3 class="list-title">design</h3>
+		<ul class="list-items">
+      {% for project in design %}
+			  <li>{{ project.name }}</li>
+      {% endfor %}
+		</ul>
+	</div>
+	<div class="list">
+		<h3 class="list-title">other</h3>
+		<ul class="list-items">
+      {% for project in other %}
+			  <li>{{ project.name }}</li>
+      {% endfor %}
+		</ul>
+	</div>
+
+</section>
+<!-- End of lists container -->
+
+</div>
+
+{% endblock %}
+
+<!-- extra javascript -->
+{% block extra_js %}
+{% endblock %}

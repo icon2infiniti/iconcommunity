@@ -79,6 +79,29 @@ def prep_project(request, id):
     return render(request, 'iconsensus/prep_project.html', context)
 
 
+def prep_all_projects(request):
+    context = init_mode(request)
+
+    marketing = PrepProject.objects.filter(category=0).order_by('-updated_date')
+    development = PrepProject.objects.filter(category=1).order_by('-updated_date')
+    education = PrepProject.objects.filter(category=2).order_by('-updated_date')
+    infrastructure = PrepProject.objects.filter(category=3).order_by('-updated_date')
+    community = PrepProject.objects.filter(category=4).order_by('-updated_date')
+    design = PrepProject.objects.filter(category=5).order_by('-updated_date')
+    other = PrepProject.objects.filter(category=6).order_by('-updated_date')
+
+    context.update({
+        'marketing': marketing,
+        'development': development,
+        'education': education,
+        'infrastructure': infrastructure,
+        'community': community,
+        'design': design,
+        'other': other,
+    })
+    return render(request, 'iconsensus/prep_all_projects.html', context)
+
+
 def init_mode(request):
     if 'nightmode' not in request.session:
         request.session['nightmode'] = True

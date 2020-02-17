@@ -1,0 +1,117 @@
+/* Lists */
+
+.lists-container::-webkit-scrollbar {
+    height: 0.8rem;
+}
+
+/* bottom horizontal */
+.white-content .lists-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.1);
+    border-top-width: 0;
+}
+
+.lists-container::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.8);
+    border-top-width: 0;
+}
+
+.lists-container {
+    display: flex;
+    align-items: start;
+    padding: 0 0.8rem 0.8rem;
+    overflow-x: auto;
+    height: calc(100vh - 8.6rem);
+}
+
+.white-content .list {
+    flex: 0 0 27rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    max-height: calc(100vh - 11.8rem);
+    border-radius: 0.3rem;
+    margin-right: 1rem;
+}
+
+.list {
+    flex: 0 0 27rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #27293d;
+    max-height: calc(100vh - 11.8rem);
+    border-radius: 0.3rem;
+    margin-right: 1rem;
+}
+
+.list:last-of-type {
+    margin-right: 0;
+}
+
+.list-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.9);
+    padding: 1rem;
+}
+
+.list-items {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-content: start;
+    padding: 0 0.6rem 0.5rem;
+    overflow-y: auto;
+}
+
+/* vertical */
+.list-items::-webkit-scrollbar {
+    width: 0.7rem;
+}
+
+.white-content .list-items::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.list-items::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 100, 100, 0.8);
+}
+
+.white-content .list-items li {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+    background-color: rgba(194, 194, 194, 0.1);
+    padding: 0.65rem 0.6rem;
+    color: rgba(0,0,0,1);
+    border-bottom: 0.1rem solid rgba(0,0,0,0.1);
+    border-radius: 0.3rem;
+    margin-bottom: 0.6rem;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.list-items li {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.3;
+    background-color: rgba(100, 100, 100, 0.2);
+    padding: 0.65rem 0.6rem;
+    color: rgba(255,255,255,0.8);
+    border-bottom: 0.1rem solid rgba(100, 100, 100, 0.2);
+    border-radius: 0.3rem;
+    margin-bottom: 0.6rem;
+    word-wrap: break-word;
+    cursor: pointer;
+}
+
+.list-items li:last-of-type {
+    margin-bottom: 0;
+}
+
+.white-content .list-items li:hover {
+    background-color: #eee;
+}
+
+.list-items li:hover {
+    background-color: rgba(100, 100, 100, 0.8);
+}
