@@ -173,7 +173,6 @@ def get_social_info():
 
 
 def dashboard_cron_6h():
-    get_daily_transactions()
     get_wallet_count()
     get_reward_rate()
     get_top20_wallets()
@@ -181,5 +180,6 @@ def dashboard_cron_6h():
 
 
 def dashboard_cron_1h():
+    get_daily_transactions()
     get_top_dapps()
     get_social_info()
