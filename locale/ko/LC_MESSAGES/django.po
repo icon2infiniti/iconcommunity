@@ -1,22 +1,11 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-22 01:06+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: icon.community\n"
+"Language: ko\n"
 
 #: core/settings.py:102
 msgid "English"
@@ -30,74 +19,260 @@ msgstr ""
 msgid "Korean"
 msgstr ""
 
-#: dapps/templates/dapps/dapps.html:19
-msgid "ICON's Got Talent Winners"
-msgstr ""
-
-#: dapps/templates/dapps/dapps.html:43
-msgid "Official DApp Partners"
-msgstr ""
-
-#: dapps/templates/dapps/dapps.html:68
-msgid "Discover More DApps"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:54
-msgid "Daily Transactions"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:109
-msgid "Market Cap (USD)"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:129
-msgid "Circulating Supply"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:149
-msgid "Total Supply"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:169
-msgid "Public Treasury"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:189
-msgid "Real Yield"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:244
-msgid "Wallet Count"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:298
-msgid "ICX Holder Chart"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:328
-msgid "Circulation Staked"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:348
-msgid "Total Staked"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:368
-msgid "Total Voted"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:388
-msgid "Unstaking Period"
-msgstr ""
-
-#: dashboard/templates/dashboard/dashboard.html:404
-msgid "Top dApps"
-msgstr ""
+#: iconsensus/templates/iconsensus/overview.html:177
+#: prep/templates/prep/governance.html:163
+msgid "Name"
+msgstr "이름"
 
 #: developers/models.py:12 developers/models.py:28 resources/models.py:12
 #: resources/models.py:24 resources/models.py:35
 msgid "Date"
 msgstr "날짜"
+
+#: iconsensus/templates/iconsensus/about.html:58
+msgid "100 Public Representatives <br>Of the ICON Network"
+msgstr "ICON Network의 100명의 Public Representative들"
+
+#: iconsensus/templates/iconsensus/about.html:61
+msgid "100 Public Representatives (P-Reps) are elected for the ICON Network by delegation of ICONists. Top ranked 22 main P-Reps will participate in block production, verification and making governance decisions. 200,000 ICONists are waiting to vote for eligible P-Rep candidates to boost the ICON ecosystem."
+msgstr "ICON Network에는 100명의 공공 대표자 (Public Representative)가 ICONist들로부터 지분 위임을 통해 선출됩니다. 이 중 상위 22개의 대표자를 Main P-Rep이라고 부르며, 이들은 블록 생성 및 검증, 그리고 거버넌스 참여에 대한 권한을 갖게 됩니다. 수 많은 ICONist들이 훌륭한 P-Rep에게 투표를 하기 위해 기다리고 있습니다."
+
+#: iconsensus/templates/iconsensus/about.html:70
+msgid "Block Production and Verification"
+msgstr "블록 생성 및 검증"
+
+#: iconsensus/templates/iconsensus/about.html:76
+msgid "Governance and monetary policy decision making"
+msgstr "거버넌스 및 통화 정책 의사결정 참여"
+
+#: iconsensus/templates/iconsensus/about.html:82
+msgid "On-chain, Off-chain contributions"
+msgstr "온체인 및 오프체인 기여 활동"
+
+#: iconsensus/templates/iconsensus/about.html:88
+msgid "Network Security"
+msgstr "네트워크 보안"
+
+#: iconsensus/templates/iconsensus/about.html:93
+msgid "Learn more "
+msgstr "더 알아보기"
+
+#: iconsensus/templates/iconsensus/about.html:95
+msgid "Guide for Public Representative"
+msgstr "P-Rep을 위한 가이드"
+
+#: iconsensus/templates/iconsensus/about.html:108
+msgid "Earn Representative <br>Rewards"
+msgstr "대표자 보상을 얻으세요"
+
+#: iconsensus/templates/iconsensus/about.html:109
+msgid "P-Reps will receive rewards for block production and verification, as well as receiving Representative Reward being ranked in the top 100. More contribution, higher the rewards for the P-Reps."
+msgstr "P-Rep은 블록 생성 및 검증 보상과 대표자 보상을 받을 수 있습니다. 더 많이 기여할수록 더 많은 투표를 얻게 되며, 이로 인해 보상은 더욱 늘어납니다."
+
+#: iconsensus/templates/iconsensus/about.html:122
+msgid "Shape the Governance of ICON Network"
+msgstr "ICON Network의 거버넌스에 참여하세요"
+
+#: iconsensus/templates/iconsensus/about.html:123
+msgid "ICON Network is a platform with high potential values with built-in on-chain systems such as  Ecosystem Expansion Project (EEP), DApp Booster Program (DBP) and Interchain Technology to connect heterogeneous blockchains. P-Reps will provide these features and lead the initial network growth while deciding governance of each fundamental components of the ICON Network."
+msgstr "ICON Network에는 온체인 거버넌스 시스템과 기여 제안 시스템 (Contribution Proposal System)이 존재하며, P-Rep들은 이 시스템들의 운영에 참여하여 네트워크의 중요한 의사결정을 담당하게 됩니다."
+
+#: iconsensus/templates/iconsensus/about.html:134
+msgid "Global Audience Through ICON Community"
+msgstr "글로벌 사용자들을 만나세요"
+
+#: iconsensus/templates/iconsensus/about.html:135
+msgid "ICON Community is a world-wide spread community that boasts nearly 200K active members. Register as a P-Rep candidate, promote your profile to the community, and accomplish your ambitions in the blockchain space."
+msgstr "ICON Network는 탈중앙화 네트워크로, ICON Community에는 전세계적으로 다양한 사용자들이 ICONist로 활동하고 있습니다. 글로벌한 커뮤니티에서 인지도를 얻으시고, 여러 기여 활동을 함께 수행하세요."
+
+#: iconsensus/templates/iconsensus/about.html:148
+msgid "Achieve Your Vision Through ICONgress"
+msgstr "ICONgress를 통해 비전을 달성하세요"
+
+#: iconsensus/templates/iconsensus/about.html:149
+msgid "ICONgress is an off-chain governance body of the ICON Network. Key roles from various ICON sectors will discuss about long-term strategy and governance of the ICON Network. Become a prestigious member of ICONgress and drive ICON growth initiatives!"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/about.html:163
+msgid "Frequently Asked Questions"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/about.html:168
+msgid "“ICONSENSUS, the Journey<br> Toward Mass Adoption”"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/about.html:170
+msgid "The ICON Network is now standing at a pivotal moment to evolve to a truly decentralized network and realizing mass adoption. This begins with ICONSENSUS, a journey consisted of a series of election milestones of P-Rep, C-Rep, DBP, and EEP."
+msgstr ""
+
+#: iconsensus/templates/iconsensus/about.html:173
+msgid "Become a genesis Public Representative, and make a new history with us."
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:16
+msgid "Team Information"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:28
+#: iconsensus/templates/iconsensus/candidates.html:60
+msgid "HQ"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:83
+msgid "Self-Intro Video"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:93
+msgid "Proposal"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:101
+msgid "Expected Network Information"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:114
+msgid "Team Members"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:127
+msgid "Team Member"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidate_detail.html:141
+msgid "Back to Listing"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidates.html:54
+msgid "Total of"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidates.html:54 templates/base.html:136
+msgid "Candidates"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/candidates.html:81
+msgid "Detail"
+msgstr ""
+
+#: resources/templates/resources/press.html:7
+msgid "Press"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:178
+msgid "Country"
+msgstr "국가"
+
+#: iconsensus/templates/iconsensus/overview.html:179
+msgid "Monthly Reward"
+msgstr "월간 보상액"
+
+#: iconsensus/templates/iconsensus/overview.html:180
+#: prep/templates/prep/governance.html:164
+msgid "i_rep"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:181
+#: prep/templates/prep/governance.html:166
+msgid "Self-Staked"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:182
+#: prep/templates/prep/governance.html:167
+msgid "Delegated"
+msgstr "위임 받은 양"
+
+#: iconsensus/templates/iconsensus/overview.html:246
+msgid "Main P-Reps"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:265
+msgid "Sub P-Reps"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:284
+msgid "All P-Reps"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:303
+msgid "Pre-Registered"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:324
+msgid "P-Rep Locations"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:325
+msgid "Distribution of P-Rep Nodes"
+msgstr "P-Rep들의 노드 위치 분포를 보여줍니다"
+
+#: dashboard/templates/dashboard/dashboard.html:322
+msgid "ICX Price"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:356
+msgid "Market Cap"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:360
+msgid "Volume"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:380
+msgid "ICX Chart"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:418
+msgid "Dapps Market Cap"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:426
+msgid "Token"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:427
+msgid "Price (ICX)"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:428
+msgid "%% Change (24h)"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:429
+msgid "Volume (24h)"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:430
+msgid "Market Cap (ICX)"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:147
+msgid "P-Rep Rankings"
+msgstr "P-Rep 랭킹"
+
+#: iconsensus/templates/iconsensus/overview.html:153
+msgid "Main"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:158
+msgid "Sub"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:163
+#: prep/templates/prep/proposal.html:27 prep/templates/prep/proposal.html:39
+msgid "All"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:386
+msgid "Day"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:391
+msgid "Week"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:396
+msgid "Month"
+msgstr ""
 
 #: developers/templates/developers/developers.html:19
 msgid "Official Links"
@@ -139,10 +314,6 @@ msgstr ""
 msgid "Tools"
 msgstr ""
 
-#: developers/templates/developers/developers.html:102
-msgid "Explorer"
-msgstr ""
-
 #: developers/templates/developers/developers.html:119
 msgid "App"
 msgstr ""
@@ -179,500 +350,21 @@ msgstr ""
 msgid "Faucet"
 msgstr ""
 
-#: iconsensus/templates/iconsensus/about.html:58
-msgid "100 Public Representatives <br>Of the ICON Network"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:61
-msgid ""
-"100 Public Representatives (P-Reps) are elected for the ICON Network by "
-"delegation of ICONists. Top ranked 22 main P-Reps will participate in block "
-"production, verification and making governance decisions. 200,000 ICONists "
-"are waiting to vote for eligible P-Rep candidates to boost the ICON "
-"ecosystem."
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:70
-msgid "Block Production and Verification"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:76
-msgid "Governance and monetary policy decision making"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:82
-msgid "On-chain, Off-chain contributions"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:88
-msgid "Network Security"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:93
-msgid "Learn more "
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:95
-msgid "Guide for Public Representative"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:108
-msgid "Earn Representative <br>Rewards"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:109
-msgid ""
-"P-Reps will receive rewards for block production and verification, as well "
-"as receiving Representative Reward being ranked in the top 100. More "
-"contribution, higher the rewards for the P-Reps."
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:122
-msgid "Shape the Governance of ICON Network"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:123
-msgid ""
-"ICON Network is a platform with high potential values with built-in on-chain "
-"systems such as  Ecosystem Expansion Project (EEP), DApp Booster Program "
-"(DBP) and Interchain Technology to connect heterogeneous blockchains. P-Reps "
-"will provide these features and lead the initial network growth while "
-"deciding governance of each fundamental components of the ICON Network."
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:134
-msgid "Global Audience Through ICON Community"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:135
-msgid ""
-"ICON Community is a world-wide spread community that boasts nearly 200K "
-"active members. Register as a P-Rep candidate, promote your profile to the "
-"community, and accomplish your ambitions in the blockchain space."
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:148
-msgid "Achieve Your Vision Through ICONgress"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:149
-msgid ""
-"ICONgress is an off-chain governance body of the ICON Network. Key roles "
-"from various ICON sectors will discuss about long-term strategy and "
-"governance of the ICON Network. Become a prestigious member of ICONgress and "
-"drive ICON growth initiatives!"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:163
-msgid "Frequently Asked Questions"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:168
-msgid "“ICONSENSUS, the Journey<br> Toward Mass Adoption”"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:170
-msgid ""
-"The ICON Network is now standing at a pivotal moment to evolve to a truly "
-"decentralized network and realizing mass adoption. This begins with "
-"ICONSENSUS, a journey consisted of a series of election milestones of P-Rep, "
-"C-Rep, DBP, and EEP."
-msgstr ""
-
-#: iconsensus/templates/iconsensus/about.html:173
-msgid "Become a genesis Public Representative, and make a new history with us."
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:16
-msgid "Team Information"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:28
-#: iconsensus/templates/iconsensus/candidates.html:60
-msgid "HQ"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:83
-msgid "Self-Intro Video"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:93
-msgid "Proposal"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:101
-msgid "Expected Network Information"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:114
-msgid "Team Members"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:127
-msgid "Team Member"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidate_detail.html:141
-msgid "Back to Listing"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidates.html:47
-msgid "P-Rep Candidates"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidates.html:54
-msgid "Total of"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidates.html:54 templates/base.html:136
-msgid "Candidates"
-msgstr ""
-
 #: iconsensus/templates/iconsensus/candidates.html:54
 msgid "Submit Your Team Here"
-msgstr ""
+msgstr "여기에 신청서를 제출하세요"
 
 #: iconsensus/templates/iconsensus/candidates.html:58
 msgid "CREATED"
-msgstr ""
+msgstr "생성 일자"
 
 #: iconsensus/templates/iconsensus/candidates.html:59
 msgid "NAME"
-msgstr ""
+msgstr "이름"
 
 #: iconsensus/templates/iconsensus/candidates.html:61
 msgid "SERVER LOCATION"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/candidates.html:81
-msgid "Detail"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:31
-msgid "Total Staked (ICX)"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:50
-msgid "Total Voted (ICX)"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:69
-msgid "Public Treasury (ICX)"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:89
-msgid "P-Rep Reward"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:115
-msgid "Voter Reward"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:147
-msgid "P-Rep Rankings"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:153
-msgid "Main"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:158
-msgid "Sub"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:163
-#: prep/templates/prep/proposal.html:27 prep/templates/prep/proposal.html:39
-msgid "All"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:177
-#: prep/templates/prep/governance.html:163
-msgid "Name"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:178
-msgid "Country"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:179
-msgid "Monthly Reward"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:180
-#: prep/templates/prep/governance.html:164
-msgid "i_rep"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:181
-#: prep/templates/prep/governance.html:166
-msgid "Self-Staked"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:182
-#: prep/templates/prep/governance.html:167
-msgid "Delegated"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:246
-msgid "Main P-Reps"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:265
-msgid "Sub P-Reps"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:284
-msgid "All P-Reps"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:303
-msgid "Pre-Registered"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:324
-msgid "P-Rep Locations"
-msgstr ""
-
-#: iconsensus/templates/iconsensus/overview.html:325
-msgid "Distribution of P-Rep Nodes"
-msgstr ""
-
-#: prep/templates/prep/governance.html:38
-msgid ""
-"You're not currently registered as a P-Rep. In order to set governance "
-"variable i_rep, you must be registered as a P-Rep first."
-msgstr ""
-
-#: prep/templates/prep/governance.html:42
-#: prep/templates/prep/management.html:20
-msgid "P-Rep Registration"
-msgstr ""
-
-#: prep/templates/prep/governance.html:49
-#: prep/templates/prep/management.html:27
-#: prep/templates/prep/management.html:111
-msgid "Name*"
-msgstr ""
-
-#: prep/templates/prep/governance.html:57
-#: prep/templates/prep/management.html:35
-#: prep/templates/prep/management.html:119
-msgid "Email*"
-msgstr ""
-
-#: prep/templates/prep/governance.html:68
-#: prep/templates/prep/management.html:46
-#: prep/templates/prep/management.html:130
-msgid "Country*"
-msgstr ""
-
-#: prep/templates/prep/governance.html:76
-#: prep/templates/prep/management.html:54
-#: prep/templates/prep/management.html:138
-msgid "City*"
-msgstr ""
-
-#: prep/templates/prep/governance.html:87
-#: prep/templates/prep/management.html:65
-#: prep/templates/prep/management.html:149
-msgid "Website*"
-msgstr ""
-
-#: prep/templates/prep/governance.html:95
-#: prep/templates/prep/management.html:73
-#: prep/templates/prep/management.html:157
-msgid "Off-Chain JSON*"
-msgstr ""
-
-#: prep/templates/prep/governance.html:107
-#: prep/templates/prep/management.html:85
-#: prep/templates/prep/management.html:169
-msgid "P2P Endpoint*"
-msgstr ""
-
-#: prep/templates/prep/governance.html:118
-#: prep/templates/prep/management.html:96
-msgid "Register"
-msgstr ""
-
-#: prep/templates/prep/governance.html:134
-#: prep/templates/prep/management.html:181
-msgid "Update"
-msgstr ""
-
-#: prep/templates/prep/governance.html:143
-msgid "i_rep Weighted Average"
-msgstr ""
-
-#: prep/templates/prep/governance.html:155
-msgid "P-Rep Ranking"
-msgstr ""
-
-#: prep/templates/prep/governance.html:165
-msgid "i_rep Updated"
-msgstr ""
-
-#: prep/templates/prep/management.html:16
-msgid ""
-"You're not currently registered as a P-Rep. To register, fill the "
-"information below. Note that on-chain registration costs 2,000 ICX which "
-"will be burned."
-msgstr ""
-
-#: prep/templates/prep/management.html:104
-msgid "P-Rep Information"
-msgstr ""
-
-#: prep/templates/prep/management.html:182
-msgid "Unregister"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:17
-msgid "Proposal Filter"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:24
-msgid "Type"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:28
-msgid "Text Proposal"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:29
-msgid "Revision Update"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:30
-msgid "Malicious SCORE Proposal"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:31
-msgid "P-Rep Disqualification Proposal"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:32
-msgid "Step Price Proposal"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:36
-msgid "Status"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:40
-msgid "Voting"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:41
-msgid "Accepted"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:42
-msgid "Rejected"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:43
-msgid "Canceled"
-msgstr ""
-
-#: prep/templates/prep/proposal.html:52
-msgid "New Proposal"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:430
-msgid "Proposal Detail"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:431
-msgid "Type:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:432
-msgid "Description:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:433
-msgid "Proposer:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:434
-msgid "Tx Hash:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:435
-msgid "Created:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:436
-msgid "Expires:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:437
-msgid "Additional Information:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:459
-msgid "Votes"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:469
-msgid "Total Voters:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:474
-#: prep/templates/prep/proposaldetail.html:503
-msgid "Agreed"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:478
-#: prep/templates/prep/proposaldetail.html:507
-msgid "Disagreed"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:482
-#: prep/templates/prep/proposaldetail.html:511
-msgid "Not Voted"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:498
-msgid "Total Token Votes:"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:626
-msgid "Vote Status"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:629
-msgid "Total Voters"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:633
-msgid "Total Token Votes"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:667
-msgid "Vote History"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:674
-msgid "Voter"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:675
-msgid "Decision"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:676
-msgid "Tx Hash"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:677
-msgid "Timestamp"
-msgstr ""
-
-#: prep/templates/prep/proposaldetail.html:678
-msgid "Voted Token"
-msgstr ""
+msgstr "서버 위치"
 
 #: resources/templates/resources/collateral.html:18
 msgid "Papers"
@@ -758,29 +450,33 @@ msgstr ""
 msgid "ICON Brand Guidelines (Unofficial)"
 msgstr ""
 
-#: resources/templates/resources/press.html:7
-msgid "Press"
-msgstr "프레스"
+#: resources/templates/resources/collateral.html:88
+msgid "Videos"
+msgstr ""
+
+#: resources/templates/resources/collateral.html:90
+msgid "General"
+msgstr ""
+
+#: resources/templates/resources/collateral.html:95
+msgid "Events"
+msgstr ""
+
+#: resources/templates/resources/collateral.html:100
+msgid "Interviews"
+msgstr ""
 
 #: templates/base.html:103
 msgid "Dashboard"
 msgstr ""
 
-#: templates/base.html:113
-msgid "News"
-msgstr ""
-
-#: templates/base.html:123
-msgid "P-Rep"
-msgstr ""
-
-#: templates/base.html:130
-msgid "Overview"
-msgstr ""
-
 #: templates/base.html:142
 msgid "About"
 msgstr ""
+
+#: iconsensus/templates/iconsensus/candidates.html:47
+msgid "P-Rep Candidates"
+msgstr "P-Rep 후보자"
 
 #: templates/base.html:155
 msgid "Resources"
@@ -800,24 +496,361 @@ msgstr ""
 
 #: templates/base.html:211
 msgid "Forum"
-msgstr ""
+msgstr "포럼"
 
 #: templates/base.html:303
 msgid "Login"
-msgstr ""
+msgstr "로그인"
 
 #: templates/base.html:321
 msgid "P-Rep Management"
-msgstr ""
+msgstr "P-Rep 관리"
 
 #: templates/base.html:324
 msgid "Governance Variable"
-msgstr ""
+msgstr "거버넌스 변수"
 
 #: templates/base.html:327
 msgid "Network Proposal"
-msgstr ""
+msgstr "네트워크 제안서"
 
 #: templates/base.html:331
 msgid "Log out"
+msgstr "로그아웃"
+
+#: dapps/templates/dapps/dapps.html:19
+msgid "ICON"
 msgstr ""
+
+#: dapps/templates/dapps/dapps.html:43
+msgid "Official DApp Partners"
+msgstr ""
+
+#: dapps/templates/dapps/dapps.html:68
+msgid "Discover More DApps"
+msgstr ""
+
+#: prep/templates/prep/governance.html:38
+msgid "You're not currently registered as a P-Rep. In order to set governance variable i_rep, you must be registered as a P-Rep first."
+msgstr ""
+
+#: prep/templates/prep/governance.html:42
+#: prep/templates/prep/management.html:20
+msgid "P-Rep Registration"
+msgstr ""
+
+#: prep/templates/prep/governance.html:49
+#: prep/templates/prep/management.html:27
+#: prep/templates/prep/management.html:111
+msgid "Name*"
+msgstr ""
+
+#: prep/templates/prep/governance.html:57
+#: prep/templates/prep/management.html:35
+#: prep/templates/prep/management.html:119
+msgid "Email*"
+msgstr "이메일*"
+
+#: prep/templates/prep/governance.html:68
+#: prep/templates/prep/management.html:46
+#: prep/templates/prep/management.html:130
+msgid "Country*"
+msgstr "국가*"
+
+#: prep/templates/prep/governance.html:76
+#: prep/templates/prep/management.html:54
+#: prep/templates/prep/management.html:138
+msgid "City*"
+msgstr "도시*"
+
+#: prep/templates/prep/governance.html:87
+#: prep/templates/prep/management.html:65
+#: prep/templates/prep/management.html:149
+msgid "Website*"
+msgstr "웹사이트*"
+
+#: prep/templates/prep/governance.html:95
+#: prep/templates/prep/management.html:73
+#: prep/templates/prep/management.html:157
+msgid "Off-Chain JSON*"
+msgstr ""
+
+#: prep/templates/prep/governance.html:107
+#: prep/templates/prep/management.html:85
+#: prep/templates/prep/management.html:169
+msgid "P2P Endpoint*"
+msgstr ""
+
+#: prep/templates/prep/governance.html:118
+#: prep/templates/prep/management.html:96
+msgid "Register"
+msgstr "등록하기"
+
+#: prep/templates/prep/governance.html:134
+#: prep/templates/prep/management.html:181
+msgid "Update"
+msgstr "업데이트하기"
+
+#: prep/templates/prep/governance.html:143
+msgid "i_rep Weighted Average"
+msgstr "i_rep 가중 평균"
+
+#: prep/templates/prep/governance.html:155
+msgid "P-Rep Ranking"
+msgstr "P-Rep 랭킹"
+
+#: prep/templates/prep/governance.html:165
+msgid "i_rep Updated"
+msgstr "i_rep 업데이트"
+
+#: prep/templates/prep/management.html:16
+msgid "You're not currently registered as a P-Rep. To register, fill the information below. Note that on-chain registration costs 2,000 ICX which will be burned."
+msgstr "당신은 P-Rep으로 등록되어 있지 않습니다. 등록하기 위해서 아래의 양식을 채워주십시오. 또한, 온체인에 등록하기 위해서는 2,000 ICX가 필요합니다."
+
+#: prep/templates/prep/management.html:104
+msgid "P-Rep Information"
+msgstr "P-Rep 정보"
+
+#: prep/templates/prep/management.html:182
+msgid "Unregister"
+msgstr "등록 해제"
+
+#: prep/templates/prep/proposal.html:17
+msgid "Proposal Filter"
+msgstr "제안 필터"
+
+#: prep/templates/prep/proposal.html:24
+msgid "Type"
+msgstr "형태"
+
+#: prep/templates/prep/proposal.html:28
+msgid "Text Proposal"
+msgstr ""
+
+#: prep/templates/prep/proposal.html:29
+msgid "Revision Update"
+msgstr ""
+
+#: prep/templates/prep/proposal.html:30
+msgid "Malicious SCORE Proposal"
+msgstr ""
+
+#: prep/templates/prep/proposal.html:31
+msgid "P-Rep Disqualification Proposal"
+msgstr ""
+
+#: prep/templates/prep/proposal.html:32
+msgid "Step Price Proposal"
+msgstr ""
+
+#: prep/templates/prep/proposal.html:36
+msgid "Status"
+msgstr ""
+
+#: prep/templates/prep/proposal.html:40
+msgid "Voting"
+msgstr ""
+
+#: prep/templates/prep/proposal.html:41
+msgid "Accepted"
+msgstr "승인"
+
+#: prep/templates/prep/proposal.html:42
+msgid "Rejected"
+msgstr "거절"
+
+#: prep/templates/prep/proposal.html:43
+msgid "Canceled"
+msgstr "취소"
+
+#: prep/templates/prep/proposal.html:52
+msgid "New Proposal"
+msgstr "새로운 제안서"
+
+#: prep/templates/prep/proposaldetail.html:430
+msgid "Proposal Detail"
+msgstr "제안 내용"
+
+#: prep/templates/prep/proposaldetail.html:431
+msgid "Type:"
+msgstr "형태:"
+
+#: prep/templates/prep/proposaldetail.html:432
+msgid "Description:"
+msgstr "설명:"
+
+#: prep/templates/prep/proposaldetail.html:433
+msgid "Proposer:"
+msgstr "제안자:"
+
+#: prep/templates/prep/proposaldetail.html:434
+msgid "Tx Hash:"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:435
+msgid "Created:"
+msgstr "생성일:"
+
+#: prep/templates/prep/proposaldetail.html:436
+msgid "Expires:"
+msgstr "만료일:"
+
+#: prep/templates/prep/proposaldetail.html:437
+msgid "Additional Information:"
+msgstr "추가 정보"
+
+#: prep/templates/prep/proposaldetail.html:459
+msgid "Votes"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:469
+msgid "Total Voters:"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:474
+#: prep/templates/prep/proposaldetail.html:503
+msgid "Agreed"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:478
+#: prep/templates/prep/proposaldetail.html:507
+msgid "Disagreed"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:482
+#: prep/templates/prep/proposaldetail.html:511
+msgid "Not Voted"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:498
+msgid "Total Token Votes:"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:626
+msgid "Vote Status"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:629
+msgid "Total Voters"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:633
+msgid "Total Token Votes"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:667
+msgid "Vote History"
+msgstr "투표 히스토리"
+
+#: prep/templates/prep/proposaldetail.html:674
+msgid "Voter"
+msgstr "투표자"
+
+#: prep/templates/prep/proposaldetail.html:675
+msgid "Decision"
+msgstr "의사결정"
+
+#: prep/templates/prep/proposaldetail.html:676
+msgid "Tx Hash"
+msgstr ""
+
+#: prep/templates/prep/proposaldetail.html:677
+msgid "Timestamp"
+msgstr "시간"
+
+#: prep/templates/prep/proposaldetail.html:678
+msgid "Voted Token"
+msgstr "투표된 토큰"
+
+#: dapps/templates/dapps/dapps.html:19
+msgid "ICON's Got Talent Winners"
+msgstr "ICON's Got Talent 우승자"
+
+#: dashboard/templates/dashboard/dashboard.html:54
+msgid "Daily Transactions"
+msgstr "일일 트랜잭션 수"
+
+#: dashboard/templates/dashboard/dashboard.html:109
+msgid "Market Cap (USD)"
+msgstr "시가총액 (USD)"
+
+#: dashboard/templates/dashboard/dashboard.html:129
+msgid "Circulating Supply"
+msgstr "유동 물량"
+
+#: dashboard/templates/dashboard/dashboard.html:149
+msgid "Total Supply"
+msgstr "총 공급량"
+
+#: dashboard/templates/dashboard/dashboard.html:169
+msgid "Public Treasury"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:189
+msgid "Real Yield"
+msgstr "실제 이자율"
+
+#: dashboard/templates/dashboard/dashboard.html:244
+msgid "Wallet Count"
+msgstr "지갑의 수"
+
+#: dashboard/templates/dashboard/dashboard.html:328
+msgid "Circulation Staked"
+msgstr "유동 물량 기준 Staked 비율"
+
+#: dashboard/templates/dashboard/dashboard.html:348
+msgid "Total Staked"
+msgstr "총 Staked 비율"
+
+#: dashboard/templates/dashboard/dashboard.html:368
+msgid "Total Voted"
+msgstr "총 투표량"
+
+#: dashboard/templates/dashboard/dashboard.html:388
+msgid "Unstaking Period"
+msgstr "Unstaking 기간"
+
+#: developers/templates/developers/developers.html:102
+msgid "Explorer"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:31
+msgid "Total Staked (ICX)"
+msgstr "총 Staked 양 (ICX)"
+
+#: iconsensus/templates/iconsensus/overview.html:50
+msgid "Total Voted (ICX)"
+msgstr "총 투표 양 (ICX)"
+
+#: iconsensus/templates/iconsensus/overview.html:69
+msgid "Public Treasury (ICX)"
+msgstr ""
+
+#: iconsensus/templates/iconsensus/overview.html:89
+msgid "P-Rep Reward"
+msgstr "P-Rep 보상"
+
+#: iconsensus/templates/iconsensus/overview.html:115
+msgid "Voter Reward"
+msgstr "투표자 보상"
+
+#: templates/base.html:113
+msgid "News"
+msgstr "뉴스"
+
+#: templates/base.html:123
+msgid "P-Rep"
+msgstr ""
+
+#: templates/base.html:130
+msgid "Overview"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:298
+msgid "ICX Holder Chart"
+msgstr ""
+
+#: dashboard/templates/dashboard/dashboard.html:404
+msgid "Top dApps"
+msgstr ""
+

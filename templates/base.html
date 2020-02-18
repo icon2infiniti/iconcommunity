@@ -130,6 +130,12 @@
                   <span class="sidebar-normal section">{% trans 'Overview' %}</span>
                 </a>
               </li>
+              <li {% if subsection == 'PROJECTS' %}class="active"{% endif %}>
+                <a href="/iconsensus/prep_all_projects/">
+                  <span class="sidebar-mini-icon">O</span>
+                  <span class="sidebar-normal section">{% trans 'PROJECTS' %}</span>
+                </a>
+              </li>
               <li {% if subsection == 'CANDIDATES' %}class="active"{% endif %}>
                 <a href="/iconsensus/candidates/">
                   <span class="sidebar-mini-icon">C</span>

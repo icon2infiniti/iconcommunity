@@ -24,6 +24,7 @@ def prep_projects(request, prep_address):
     context = init_mode(request)
     getPRep = get_prep(prep_address)
     context.update({
+        'subsection': 'REPORTS',
         'projects': PrepProject.objects.filter(prep_address=prep_address),
         'getPRep': getPRep,
     })
@@ -42,8 +43,9 @@ def prep_project_create(request):
         return redirect('prep_project_edit', form.instance.id)
 
     context.update({
+        'subsection': 'REPORTS',
         'form': form,
-        })
+    })
 
     return render(request, 'iconsensus/prep_project_create.html', context)
 
@@ -60,8 +62,9 @@ def prep_project_edit(request, id):
         return redirect('prep_project_edit', form.instance.id)
 
     context.update({
+        'subsection': 'REPORTS',
         'form': form,
-        })
+    })
 
     return render(request, 'iconsensus/prep_project_create.html', context)
 
@@ -72,6 +75,7 @@ def prep_project(request, id):
     getPRep = get_prep(project.prep_address)  
 
     context.update({
+        'subsection': 'REPORTS',
         'project': project,
         'getPRep': getPRep,
     })
@@ -83,7 +87,15 @@ def prep_all_projects(request):
     context = init_mode(request)
 
     marketing = PrepProject.objects.filter(category=0).order_by('-updated_date')
+    marketing_list = list(marketing)
+    for proj in marketing_list:
+        proj.team_name = get_prep(proj.prep_address)['name']
+
     development = PrepProject.objects.filter(category=1).order_by('-updated_date')
+    development_list = list(development)
+    for proj in development_list:
+        proj.team_name = get_prep(proj.prep_address)['name']
+
     education = PrepProject.objects.filter(category=2).order_by('-updated_date')
     infrastructure = PrepProject.objects.filter(category=3).order_by('-updated_date')
     community = PrepProject.objects.filter(category=4).order_by('-updated_date')
@@ -91,8 +103,9 @@ def prep_all_projects(request):
     other = PrepProject.objects.filter(category=6).order_by('-updated_date')
 
     context.update({
-        'marketing': marketing,
-        'development': development,
+        'subsection': 'REPORTS',
+        'marketing_list': marketing_list,
+        'development_list': development_list,
         'education': education,
         'infrastructure': infrastructure,
         'community': community,
