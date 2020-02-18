@@ -97,20 +97,39 @@ def prep_all_projects(request):
         proj.team_name = get_prep(proj.prep_address)['name']
 
     education = PrepProject.objects.filter(category=2).order_by('-updated_date')
+    education_list = list(education)
+    for proj in education_list:
+        proj.team_name = get_prep(proj.prep_address)['name']
+
     infrastructure = PrepProject.objects.filter(category=3).order_by('-updated_date')
+    infrastructure_list = list(infrastructure)
+    for proj in infrastructure_list:
+        proj.team_name = get_prep(proj.prep_address)['name']
+
     community = PrepProject.objects.filter(category=4).order_by('-updated_date')
+    community_list = list(community)
+    for proj in community_list:
+        proj.team_name = get_prep(proj.prep_address)['name']
+
     design = PrepProject.objects.filter(category=5).order_by('-updated_date')
+    design_list = list(design)
+    for proj in design_list:
+        proj.team_name = get_prep(proj.prep_address)['name']
+
     other = PrepProject.objects.filter(category=6).order_by('-updated_date')
+    other_list = list(other)
+    for proj in other_list:
+        proj.team_name = get_prep(proj.prep_address)['name']
 
     context.update({
         'subsection': 'REPORTS',
         'marketing_list': marketing_list,
         'development_list': development_list,
-        'education': education,
-        'infrastructure': infrastructure,
-        'community': community,
-        'design': design,
-        'other': other,
+        'education_list': education_list,
+        'infrastructure_list': infrastructure_list,
+        'community_list': community_list,
+        'design_list': design_list,
+        'other_list': other_list,
     })
     return render(request, 'iconsensus/prep_all_projects.html', context)
 
