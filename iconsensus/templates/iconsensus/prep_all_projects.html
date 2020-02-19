@@ -58,45 +58,51 @@
                       <div class="card-body">
                       <div class="table-full-width table-responsive">
                       <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p class="title">Team</p>
-                          <p>{{ project.team_name }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Category</p>
-                          <p>{{ project.get_category_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Description</p>
-                          <p>{{ project.description }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Dates</p>
-                          <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Progress</p>
-                          <p>{{ project.get_progress_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Status</p>
-                          <p>{{ project.get_status_display }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                        <tbody>
+                          <tr>
+                            <td>
+                              <p class="title">Team</p>
+                              <p>{{ project.team_name }}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p class="title">Category</p>
+                              <p>{{ project.get_category_display }}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p class="title">Description</p>
+                              <p>{{ project.description }}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p class="title">Dates</p>
+                              <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p class="title">Progress</p>
+                              <p>{{ project.get_progress_display }}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p class="title">Status</p>
+                              <p>{{ project.get_status_display }}</p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <p class="title">Updated</p>
+                              <p>{{ project.updated_date }}</p>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                     </div>
                     </div>
