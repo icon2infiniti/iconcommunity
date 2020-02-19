@@ -5,13 +5,13 @@
   <link href="{% static 'iconsensus/css/prep_all_projects.css' %}" rel="stylesheet"/>
   <style type="text/css">
     .white-content .table-responsive table tbody tr:hover {
-        background-color: inherit!important;
-        opacity: 1.0!important;
+      background-color: inherit !important;
+      opacity: 1.0 !important;
     }
 
     .table-responsive table tbody tr:hover {
-        background-color: inherit!important;
-        opacity: 1.0!important;
+      background-color: inherit !important;
+      opacity: 1.0 !important;
     }
   </style>
 {% endblock %}
@@ -21,1030 +21,1080 @@
 {% block section %}P-Rep Projects{% endblock %}
 {% block content %}
 
-<div>
+  <div>
 
-<!-- Lists container -->
-<section class="lists-container">
+    <!-- Lists container -->
+    <section class="lists-container">
 
-  {% if marketing_list %}
-	<div class="trello list">
-		<h3 class="trello list-title">Marketing</h3>
-		<ul class="trello list-items">
-      {% for project in marketing_list %}
-        <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}"><li>{{ project.name }}</li></a>
+      {% if marketing_list %}
+        <div class="trello list">
+          <h3 class="trello list-title">Marketing</h3>
+          <ul class="trello list-items">
+            {% for project in marketing_list %}
+              <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
+                <li>{{ project.name }}</li>
+              </a>
 
-        <!-- Modal -->
-        <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
+              <!-- Modal -->
+              <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
 
-              <!-- HEADER -->
-              <div class="modal-header justify-content-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
-                <h6 class="title title-up">&nbsp;</h6>
-              </div>
-
-              <!-- BODY -->
-              <div class="modal-body">
-                <div class="row">
-
-                  <div class="col-lg-6 col-sm-6 text-center">
-                    <div class="card card-tasks text-left">
-                      <div class="card-header">
-                      <h3 class="title d-inline">{{ project.name }}</h3>
+                    <!-- HEADER -->
+                    <div class="modal-header justify-content-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                      <h6 class="title title-up">&nbsp;</h6>
                     </div>
-                      <div class="card-body">
-                      <div class="table-full-width table-responsive">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <p class="title">Team</p>
-                              <p>{{ project.team_name }}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p class="title">Category</p>
-                              <p>{{ project.get_category_display }}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p class="title">Description</p>
-                              <p>{{ project.description }}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p class="title">Dates</p>
-                              <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p class="title">Progress</p>
-                              <p>{{ project.get_progress_display }}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p class="title">Status</p>
-                              <p>{{ project.get_status_display }}</p>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <p class="title">Updated</p>
-                              <p>{{ project.updated_date }}</p>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-6 col-sm-6">
-                    <div class="card card-timeline card-plain">
-                      <div class="card-body">
-                        <ul class="timeline timeline-simple">
+                    <!-- BODY -->
+                    <div class="modal-body">
+                      <div class="row">
 
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge detail">
-                              <i class="fas fa-file-alt"></i>
+                        <div class="col-lg-6 col-sm-6 text-center">
+                          <div class="card card-tasks text-left">
+                            <div class="card-header">
+                              <h3 class="title d-inline">{{ project.name }}</h3>
                             </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-detail">Details</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.details|safe }}</p>
+                            <div class="card-body">
+                              <div class="table-full-width table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Team</p>
+                                      <p>{{ project.team_name }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Category</p>
+                                      <p>{{ project.get_category_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Description</p>
+                                      <p>{{ project.description }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Dates</p>
+                                      <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Progress</p>
+                                      <p>{{ project.get_progress_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Status</p>
+                                      <p>{{ project.get_status_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Updated</p>
+                                      <p>{{ project.updated_date }}</p>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </li>
+                          </div>
+                        </div>
 
-                          {% if project.status > 0 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge update">
-                              <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-update">{% trans 'Updates' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.updates|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="card card-timeline card-plain">
+                            <div class="card-body">
+                              <ul class="timeline timeline-simple">
 
-                          {% if project.status > 1 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge delivery">
-                              <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.final_update|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                                <li class="timeline-inverted">
+                                  <div class="timeline-badge detail">
+                                    <i class="fas fa-file-alt"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <span class="badge badge-detail">Details</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p class="timeline-text">{{ project.details|safe }}</p>
+                                    </div>
+                                  </div>
+                                </li>
 
-                        </ul>
+                                {% if project.status > 0 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge update">
+                                      <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-update">{% trans 'Updates' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.updates|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                                {% if project.status > 1 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge delivery">
+                                      <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.final_update|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                              </ul>
+                            </div>
+                          </div>
+
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-
                 </div>
               </div>
-
-            </div>
-          </div>
+            {% endfor %}
+          </ul>
         </div>
-      {% endfor %}
-		</ul>
-	</div>
-  {% endif %}
+      {% endif %}
 
-  {% if development_list %}
-	<div class="trello list">
-		<h3 class="trello list-title">Development</h3>
-		<ul class="trello list-items">
-      {% for project in development_list %}
-        <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}"><li>{{ project.name }}</li></a>
+      {% if development_list %}
+        <div class="trello list">
+          <h3 class="trello list-title">Development</h3>
+          <ul class="trello list-items">
+            {% for project in development_list %}
+              <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
+                <li>{{ project.name }}</li>
+              </a>
 
-        <!-- Modal -->
-        <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
+              <!-- Modal -->
+              <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
 
-              <!-- HEADER -->
-              <div class="modal-header justify-content-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
-                <h6 class="title title-up">&nbsp;</h6>
-              </div>
-
-              <!-- BODY -->
-              <div class="modal-body">
-                <div class="row">
-
-                  <div class="col-lg-6 col-sm-6 text-center">
-                    <div class="card card-tasks text-left">
-                      <div class="card-header">
-                      <h3 class="title d-inline">{{ project.name }}</h3>
+                    <!-- HEADER -->
+                    <div class="modal-header justify-content-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                      <h6 class="title title-up">&nbsp;</h6>
                     </div>
-                      <div class="card-body">
-                      <div class="table-full-width table-responsive">
-                      <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p class="title">Team</p>
-                          <p>{{ project.team_name }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Category</p>
-                          <p>{{ project.get_category_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Description</p>
-                          <p>{{ project.description }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Dates</p>
-                          <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Progress</p>
-                          <p>{{ project.get_progress_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Status</p>
-                          <p>{{ project.get_status_display }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-6 col-sm-6">
-                    <div class="card card-timeline card-plain">
-                      <div class="card-body">
-                        <ul class="timeline timeline-simple">
+                    <!-- BODY -->
+                    <div class="modal-body">
+                      <div class="row">
 
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge detail">
-                              <i class="fas fa-file-alt"></i>
+                        <div class="col-lg-6 col-sm-6 text-center">
+                          <div class="card card-tasks text-left">
+                            <div class="card-header">
+                              <h3 class="title d-inline">{{ project.name }}</h3>
                             </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-detail">Details</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.details|safe }}</p>
+                            <div class="card-body">
+                              <div class="table-full-width table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Team</p>
+                                      <p>{{ project.team_name }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Category</p>
+                                      <p>{{ project.get_category_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Description</p>
+                                      <p>{{ project.description }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Dates</p>
+                                      <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Progress</p>
+                                      <p>{{ project.get_progress_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Status</p>
+                                      <p>{{ project.get_status_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Updated</p>
+                                      <p>{{ project.updated_date }}</p>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </li>
+                          </div>
+                        </div>
 
-                          {% if project.status > 0 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge update">
-                              <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-update">{% trans 'Updates' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.updates|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="card card-timeline card-plain">
+                            <div class="card-body">
+                              <ul class="timeline timeline-simple">
 
-                          {% if project.status > 1 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge delivery">
-                              <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.final_update|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                                <li class="timeline-inverted">
+                                  <div class="timeline-badge detail">
+                                    <i class="fas fa-file-alt"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <span class="badge badge-detail">Details</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p class="timeline-text">{{ project.details|safe }}</p>
+                                    </div>
+                                  </div>
+                                </li>
 
-                        </ul>
+                                {% if project.status > 0 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge update">
+                                      <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-update">{% trans 'Updates' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.updates|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                                {% if project.status > 1 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge delivery">
+                                      <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.final_update|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                              </ul>
+                            </div>
+                          </div>
+
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-
                 </div>
               </div>
-
-            </div>
-          </div>
+            {% endfor %}
+          </ul>
         </div>
-      {% endfor %}
-		</ul>
-	</div>
-  {% endif %}
+      {% endif %}
 
-  {% if education_list %}
-	<div class="trello list">
-		<h3 class="trello list-title">Education</h3>
-		<ul class="trello list-items">
-      {% for project in education_list %}
-        <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}"><li>{{ project.name }}</li></a>
+      {% if education_list %}
+        <div class="trello list">
+          <h3 class="trello list-title">Education</h3>
+          <ul class="trello list-items">
+            {% for project in education_list %}
+              <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
+                <li>{{ project.name }}</li>
+              </a>
 
-        <!-- Modal -->
-        <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
+              <!-- Modal -->
+              <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
 
-              <!-- HEADER -->
-              <div class="modal-header justify-content-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
-                <h6 class="title title-up">&nbsp;</h6>
-              </div>
-
-              <!-- BODY -->
-              <div class="modal-body">
-                <div class="row">
-
-                  <div class="col-lg-6 col-sm-6 text-center">
-                    <div class="card card-tasks text-left">
-                      <div class="card-header">
-                      <h3 class="title d-inline">{{ project.name }}</h3>
+                    <!-- HEADER -->
+                    <div class="modal-header justify-content-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                      <h6 class="title title-up">&nbsp;</h6>
                     </div>
-                      <div class="card-body">
-                      <div class="table-full-width table-responsive">
-                      <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p class="title">Team</p>
-                          <p>{{ project.team_name }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Category</p>
-                          <p>{{ project.get_category_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Description</p>
-                          <p>{{ project.description }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Dates</p>
-                          <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Progress</p>
-                          <p>{{ project.get_progress_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Status</p>
-                          <p>{{ project.get_status_display }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-6 col-sm-6">
-                    <div class="card card-timeline card-plain">
-                      <div class="card-body">
-                        <ul class="timeline timeline-simple">
+                    <!-- BODY -->
+                    <div class="modal-body">
+                      <div class="row">
 
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge detail">
-                              <i class="fas fa-file-alt"></i>
+                        <div class="col-lg-6 col-sm-6 text-center">
+                          <div class="card card-tasks text-left">
+                            <div class="card-header">
+                              <h3 class="title d-inline">{{ project.name }}</h3>
                             </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-detail">Details</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.details|safe }}</p>
+                            <div class="card-body">
+                              <div class="table-full-width table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Team</p>
+                                      <p>{{ project.team_name }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Category</p>
+                                      <p>{{ project.get_category_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Description</p>
+                                      <p>{{ project.description }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Dates</p>
+                                      <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Progress</p>
+                                      <p>{{ project.get_progress_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Status</p>
+                                      <p>{{ project.get_status_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Updated</p>
+                                      <p>{{ project.updated_date }}</p>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </li>
+                          </div>
+                        </div>
 
-                          {% if project.status > 0 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge update">
-                              <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-update">{% trans 'Updates' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.updates|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="card card-timeline card-plain">
+                            <div class="card-body">
+                              <ul class="timeline timeline-simple">
 
-                          {% if project.status > 1 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge delivery">
-                              <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.final_update|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                                <li class="timeline-inverted">
+                                  <div class="timeline-badge detail">
+                                    <i class="fas fa-file-alt"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <span class="badge badge-detail">Details</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p class="timeline-text">{{ project.details|safe }}</p>
+                                    </div>
+                                  </div>
+                                </li>
 
-                        </ul>
+                                {% if project.status > 0 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge update">
+                                      <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-update">{% trans 'Updates' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.updates|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                                {% if project.status > 1 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge delivery">
+                                      <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.final_update|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                              </ul>
+                            </div>
+                          </div>
+
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-
                 </div>
               </div>
-
-            </div>
-          </div>
+            {% endfor %}
+          </ul>
         </div>
-      {% endfor %}
-		</ul>
-	</div>
-  {% endif %}
+      {% endif %}
 
-  {% if infrastructure_list %}
-	<div class="trello list">
-		<h3 class="trello list-title">Infrastructure</h3>
-		<ul class="trello list-items">
-      {% for project in infrastructure_list %}
-        <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}"><li>{{ project.name }}</li></a>
+      {% if infrastructure_list %}
+        <div class="trello list">
+          <h3 class="trello list-title">Infrastructure</h3>
+          <ul class="trello list-items">
+            {% for project in infrastructure_list %}
+              <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
+                <li>{{ project.name }}</li>
+              </a>
 
-        <!-- Modal -->
-        <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
+              <!-- Modal -->
+              <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
 
-              <!-- HEADER -->
-              <div class="modal-header justify-content-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
-                <h6 class="title title-up">&nbsp;</h6>
-              </div>
-
-              <!-- BODY -->
-              <div class="modal-body">
-                <div class="row">
-
-                  <div class="col-lg-6 col-sm-6 text-center">
-                    <div class="card card-tasks text-left">
-                      <div class="card-header">
-                      <h3 class="title d-inline">{{ project.name }}</h3>
+                    <!-- HEADER -->
+                    <div class="modal-header justify-content-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                      <h6 class="title title-up">&nbsp;</h6>
                     </div>
-                      <div class="card-body">
-                      <div class="table-full-width table-responsive">
-                      <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p class="title">Team</p>
-                          <p>{{ project.team_name }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Category</p>
-                          <p>{{ project.get_category_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Description</p>
-                          <p>{{ project.description }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Dates</p>
-                          <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Progress</p>
-                          <p>{{ project.get_progress_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Status</p>
-                          <p>{{ project.get_status_display }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-6 col-sm-6">
-                    <div class="card card-timeline card-plain">
-                      <div class="card-body">
-                        <ul class="timeline timeline-simple">
+                    <!-- BODY -->
+                    <div class="modal-body">
+                      <div class="row">
 
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge detail">
-                              <i class="fas fa-file-alt"></i>
+                        <div class="col-lg-6 col-sm-6 text-center">
+                          <div class="card card-tasks text-left">
+                            <div class="card-header">
+                              <h3 class="title d-inline">{{ project.name }}</h3>
                             </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-detail">Details</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.details|safe }}</p>
+                            <div class="card-body">
+                              <div class="table-full-width table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Team</p>
+                                      <p>{{ project.team_name }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Category</p>
+                                      <p>{{ project.get_category_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Description</p>
+                                      <p>{{ project.description }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Dates</p>
+                                      <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Progress</p>
+                                      <p>{{ project.get_progress_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Status</p>
+                                      <p>{{ project.get_status_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Updated</p>
+                                      <p>{{ project.updated_date }}</p>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </li>
+                          </div>
+                        </div>
 
-                          {% if project.status > 0 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge update">
-                              <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-update">{% trans 'Updates' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.updates|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="card card-timeline card-plain">
+                            <div class="card-body">
+                              <ul class="timeline timeline-simple">
 
-                          {% if project.status > 1 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge delivery">
-                              <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.final_update|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                                <li class="timeline-inverted">
+                                  <div class="timeline-badge detail">
+                                    <i class="fas fa-file-alt"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <span class="badge badge-detail">Details</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p class="timeline-text">{{ project.details|safe }}</p>
+                                    </div>
+                                  </div>
+                                </li>
 
-                        </ul>
+                                {% if project.status > 0 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge update">
+                                      <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-update">{% trans 'Updates' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.updates|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                                {% if project.status > 1 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge delivery">
+                                      <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.final_update|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                              </ul>
+                            </div>
+                          </div>
+
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-
                 </div>
               </div>
-
-            </div>
-          </div>
+            {% endfor %}
+          </ul>
         </div>
-      {% endfor %}
-		</ul>
-	</div>
-  {% endif %}
+      {% endif %}
 
-  {% if community_list %}
-	<div class="trello list">
-		<h3 class="trello list-title">Community</h3>
-		<ul class="trello list-items">
-      {% for project in community_list %}
-        <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}"><li>{{ project.name }}</li></a>
+      {% if community_list %}
+        <div class="trello list">
+          <h3 class="trello list-title">Community</h3>
+          <ul class="trello list-items">
+            {% for project in community_list %}
+              <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
+                <li>{{ project.name }}</li>
+              </a>
 
-        <!-- Modal -->
-        <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
+              <!-- Modal -->
+              <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
 
-              <!-- HEADER -->
-              <div class="modal-header justify-content-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
-                <h6 class="title title-up">&nbsp;</h6>
-              </div>
-
-              <!-- BODY -->
-              <div class="modal-body">
-                <div class="row">
-
-                  <div class="col-lg-6 col-sm-6 text-center">
-                    <div class="card card-tasks text-left">
-                      <div class="card-header">
-                      <h3 class="title d-inline">{{ project.name }}</h3>
+                    <!-- HEADER -->
+                    <div class="modal-header justify-content-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                      <h6 class="title title-up">&nbsp;</h6>
                     </div>
-                      <div class="card-body">
-                      <div class="table-full-width table-responsive">
-                      <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p class="title">Team</p>
-                          <p>{{ project.team_name }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Category</p>
-                          <p>{{ project.get_category_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Description</p>
-                          <p>{{ project.description }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Dates</p>
-                          <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Progress</p>
-                          <p>{{ project.get_progress_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Status</p>
-                          <p>{{ project.get_status_display }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-6 col-sm-6">
-                    <div class="card card-timeline card-plain">
-                      <div class="card-body">
-                        <ul class="timeline timeline-simple">
+                    <!-- BODY -->
+                    <div class="modal-body">
+                      <div class="row">
 
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge detail">
-                              <i class="fas fa-file-alt"></i>
+                        <div class="col-lg-6 col-sm-6 text-center">
+                          <div class="card card-tasks text-left">
+                            <div class="card-header">
+                              <h3 class="title d-inline">{{ project.name }}</h3>
                             </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-detail">Details</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.details|safe }}</p>
+                            <div class="card-body">
+                              <div class="table-full-width table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Team</p>
+                                      <p>{{ project.team_name }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Category</p>
+                                      <p>{{ project.get_category_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Description</p>
+                                      <p>{{ project.description }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Dates</p>
+                                      <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Progress</p>
+                                      <p>{{ project.get_progress_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Status</p>
+                                      <p>{{ project.get_status_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Updated</p>
+                                      <p>{{ project.updated_date }}</p>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </li>
+                          </div>
+                        </div>
 
-                          {% if project.status > 0 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge update">
-                              <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-update">{% trans 'Updates' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.updates|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="card card-timeline card-plain">
+                            <div class="card-body">
+                              <ul class="timeline timeline-simple">
 
-                          {% if project.status > 1 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge delivery">
-                              <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.final_update|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                                <li class="timeline-inverted">
+                                  <div class="timeline-badge detail">
+                                    <i class="fas fa-file-alt"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <span class="badge badge-detail">Details</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p class="timeline-text">{{ project.details|safe }}</p>
+                                    </div>
+                                  </div>
+                                </li>
 
-                        </ul>
+                                {% if project.status > 0 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge update">
+                                      <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-update">{% trans 'Updates' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.updates|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                                {% if project.status > 1 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge delivery">
+                                      <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.final_update|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                              </ul>
+                            </div>
+                          </div>
+
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-
                 </div>
               </div>
-
-            </div>
-          </div>
+            {% endfor %}
+          </ul>
         </div>
-      {% endfor %}
-		</ul>
-	</div>
-  {% endif %}
+      {% endif %}
 
-  {% if design_list %}
-	<div class="trello list">
-		<h3 class="trello list-title">Design</h3>
-		<ul class="trello list-items">
-      {% for project in design_list %}
-        <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}"><li>{{ project.name }}</li></a>
+      {% if design_list %}
+        <div class="trello list">
+          <h3 class="trello list-title">Design</h3>
+          <ul class="trello list-items">
+            {% for project in design_list %}
+              <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
+                <li>{{ project.name }}</li>
+              </a>
 
-        <!-- Modal -->
-        <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
+              <!-- Modal -->
+              <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
 
-              <!-- HEADER -->
-              <div class="modal-header justify-content-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
-                <h6 class="title title-up">&nbsp;</h6>
-              </div>
-
-              <!-- BODY -->
-              <div class="modal-body">
-                <div class="row">
-
-                  <div class="col-lg-6 col-sm-6 text-center">
-                    <div class="card card-tasks text-left">
-                      <div class="card-header">
-                      <h3 class="title d-inline">{{ project.name }}</h3>
+                    <!-- HEADER -->
+                    <div class="modal-header justify-content-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                      <h6 class="title title-up">&nbsp;</h6>
                     </div>
-                      <div class="card-body">
-                      <div class="table-full-width table-responsive">
-                      <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p class="title">Team</p>
-                          <p>{{ project.team_name }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Category</p>
-                          <p>{{ project.get_category_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Description</p>
-                          <p>{{ project.description }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Dates</p>
-                          <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Progress</p>
-                          <p>{{ project.get_progress_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Status</p>
-                          <p>{{ project.get_status_display }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-6 col-sm-6">
-                    <div class="card card-timeline card-plain">
-                      <div class="card-body">
-                        <ul class="timeline timeline-simple">
+                    <!-- BODY -->
+                    <div class="modal-body">
+                      <div class="row">
 
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge detail">
-                              <i class="fas fa-file-alt"></i>
+                        <div class="col-lg-6 col-sm-6 text-center">
+                          <div class="card card-tasks text-left">
+                            <div class="card-header">
+                              <h3 class="title d-inline">{{ project.name }}</h3>
                             </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-detail">Details</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.details|safe }}</p>
+                            <div class="card-body">
+                              <div class="table-full-width table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Team</p>
+                                      <p>{{ project.team_name }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Category</p>
+                                      <p>{{ project.get_category_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Description</p>
+                                      <p>{{ project.description }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Dates</p>
+                                      <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Progress</p>
+                                      <p>{{ project.get_progress_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Status</p>
+                                      <p>{{ project.get_status_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Updated</p>
+                                      <p>{{ project.updated_date }}</p>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </li>
+                          </div>
+                        </div>
 
-                          {% if project.status > 0 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge update">
-                              <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-update">{% trans 'Updates' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.updates|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="card card-timeline card-plain">
+                            <div class="card-body">
+                              <ul class="timeline timeline-simple">
 
-                          {% if project.status > 1 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge delivery">
-                              <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.final_update|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                                <li class="timeline-inverted">
+                                  <div class="timeline-badge detail">
+                                    <i class="fas fa-file-alt"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <span class="badge badge-detail">Details</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p class="timeline-text">{{ project.details|safe }}</p>
+                                    </div>
+                                  </div>
+                                </li>
 
-                        </ul>
+                                {% if project.status > 0 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge update">
+                                      <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-update">{% trans 'Updates' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.updates|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                                {% if project.status > 1 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge delivery">
+                                      <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.final_update|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                              </ul>
+                            </div>
+                          </div>
+
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-
                 </div>
               </div>
-
-            </div>
-          </div>
+            {% endfor %}
+          </ul>
         </div>
-      {% endfor %}
-		</ul>
-	</div>
-  {% endif %}
+      {% endif %}
 
-  {% if other_list %}
-	<div class="trello list">
-		<h3 class="trello list-title">Other</h3>
-		<ul class="trello list-items">
-      {% for project in other_list %}
-        <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}"><li>{{ project.name }}</li></a>
+      {% if other_list %}
+        <div class="trello list">
+          <h3 class="trello list-title">Other</h3>
+          <ul class="trello list-items">
+            {% for project in other_list %}
+              <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
+                <li>{{ project.name }}</li>
+              </a>
 
-        <!-- Modal -->
-        <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
+              <!-- Modal -->
+              <div class="modal show" id="p{{ project.id }}" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
 
-              <!-- HEADER -->
-              <div class="modal-header justify-content-center">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                  <i class="tim-icons icon-simple-remove"></i>
-                </button>
-                <h6 class="title title-up">&nbsp;</h6>
-              </div>
-
-              <!-- BODY -->
-              <div class="modal-body">
-                <div class="row">
-
-                  <div class="col-lg-6 col-sm-6 text-center">
-                    <div class="card card-tasks text-left">
-                      <div class="card-header">
-                      <h3 class="title d-inline">{{ project.name }}</h3>
+                    <!-- HEADER -->
+                    <div class="modal-header justify-content-center">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="tim-icons icon-simple-remove"></i>
+                      </button>
+                      <h6 class="title title-up">&nbsp;</h6>
                     </div>
-                      <div class="card-body">
-                      <div class="table-full-width table-responsive">
-                      <table class="table">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <p class="title">Team</p>
-                          <p>{{ project.team_name }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Category</p>
-                          <p>{{ project.get_category_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Description</p>
-                          <p>{{ project.description }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Dates</p>
-                          <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Progress</p>
-                          <p>{{ project.get_progress_display }}</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <p class="title">Status</p>
-                          <p>{{ project.get_status_display }}</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
 
-                  <div class="col-lg-6 col-sm-6">
-                    <div class="card card-timeline card-plain">
-                      <div class="card-body">
-                        <ul class="timeline timeline-simple">
+                    <!-- BODY -->
+                    <div class="modal-body">
+                      <div class="row">
 
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge detail">
-                              <i class="fas fa-file-alt"></i>
+                        <div class="col-lg-6 col-sm-6 text-center">
+                          <div class="card card-tasks text-left">
+                            <div class="card-header">
+                              <h3 class="title d-inline">{{ project.name }}</h3>
                             </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-detail">Details</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.details|safe }}</p>
+                            <div class="card-body">
+                              <div class="table-full-width table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Team</p>
+                                      <p>{{ project.team_name }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Category</p>
+                                      <p>{{ project.get_category_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Description</p>
+                                      <p>{{ project.description }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Dates</p>
+                                      <p>{{ project.start_date }} ~ {{ project.end_date }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Progress</p>
+                                      <p>{{ project.get_progress_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Status</p>
+                                      <p>{{ project.get_status_display }}</p>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                    <td>
+                                      <p class="title">Updated</p>
+                                      <p>{{ project.updated_date }}</p>
+                                    </td>
+                                  </tr>
+                                  </tbody>
+                                </table>
                               </div>
                             </div>
-                          </li>
+                          </div>
+                        </div>
 
-                          {% if project.status > 0 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge update">
-                              <i class="fas fa-sync-alt"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-update">{% trans 'Updates' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.updates|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                        <div class="col-lg-6 col-sm-6">
+                          <div class="card card-timeline card-plain">
+                            <div class="card-body">
+                              <ul class="timeline timeline-simple">
 
-                          {% if project.status > 1 %}
-                          <li class="timeline-inverted">
-                            <div class="timeline-badge delivery">
-                              <i class="fas fa-truck"></i>
-                            </div>
-                            <div class="timeline-panel">
-                              <div class="timeline-heading">
-                                <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
-                              </div>
-                              <div class="timeline-body">
-                                <p class="timeline-text">{{ project.final_update|safe }}</p>
-                              </div>
-                            </div>
-                          </li>
-                          {% endif %}
+                                <li class="timeline-inverted">
+                                  <div class="timeline-badge detail">
+                                    <i class="fas fa-file-alt"></i>
+                                  </div>
+                                  <div class="timeline-panel">
+                                    <div class="timeline-heading">
+                                      <span class="badge badge-detail">Details</span>
+                                    </div>
+                                    <div class="timeline-body">
+                                      <p class="timeline-text">{{ project.details|safe }}</p>
+                                    </div>
+                                  </div>
+                                </li>
 
-                        </ul>
+                                {% if project.status > 0 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge update">
+                                      <i class="fas fa-sync-alt"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-update">{% trans 'Updates' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.updates|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                                {% if project.status > 1 %}
+                                  <li class="timeline-inverted">
+                                    <div class="timeline-badge delivery">
+                                      <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="timeline-panel">
+                                      <div class="timeline-heading">
+                                        <span class="badge badge-delivery">{% trans 'Final Update' %}</span>
+                                      </div>
+                                      <div class="timeline-body">
+                                        <p class="timeline-text">{{ project.final_update|safe }}</p>
+                                      </div>
+                                    </div>
+                                  </li>
+                                {% endif %}
+
+                              </ul>
+                            </div>
+                          </div>
+
+                        </div>
+
                       </div>
                     </div>
 
                   </div>
-
                 </div>
               </div>
-
-            </div>
-          </div>
+            {% endfor %}
+          </ul>
         </div>
-      {% endfor %}
-		</ul>
-	</div>
-  {% endif %}
+      {% endif %}
 
 
-</section>
-<!-- End of lists container -->
+    </section>
+    <!-- End of lists container -->
 
-</div>
+  </div>
 
 
 {% endblock %}
