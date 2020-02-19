@@ -176,15 +176,12 @@
     padding: 0 0.6rem!important;
 }
 
+.white-content .card.card-timeline .timeline:before {
+    background-color: rgba(0,0,0,0.4) !important;
+}
+
 .card.card-timeline .timeline:before {
-    top: 0;
-    bottom: 0;
-    position: absolute;
-    content: " ";
-    width: 3px;
-    background-color: rgba(255,255,255,0.8);
-    left: 50%;
-    margin-left: -1.5px
+    background-color: rgba(68, 71, 107, 0.9) !important;
 }
 
 .card.card-timeline .timeline > li > .timeline-panel {
