@@ -26,6 +26,7 @@
 <!-- Lists container -->
 <section class="lists-container">
 
+  {% if marketing_list %}
 	<div class="trello list">
 		<h3 class="trello list-title">Marketing</h3>
 		<ul class="trello list-items">
@@ -167,7 +168,9 @@
       {% endfor %}
 		</ul>
 	</div>
+  {% endif %}
 
+  {% if development_list %}
 	<div class="trello list">
 		<h3 class="trello list-title">Development</h3>
 		<ul class="trello list-items">
@@ -309,7 +312,9 @@
       {% endfor %}
 		</ul>
 	</div>
+  {% endif %}
 
+  {% if education_list %}
 	<div class="trello list">
 		<h3 class="trello list-title">Education</h3>
 		<ul class="trello list-items">
@@ -451,7 +456,9 @@
       {% endfor %}
 		</ul>
 	</div>
+  {% endif %}
 
+  {% if infrastructure_list %}
 	<div class="trello list">
 		<h3 class="trello list-title">Infrastructure</h3>
 		<ul class="trello list-items">
@@ -593,7 +600,9 @@
       {% endfor %}
 		</ul>
 	</div>
+  {% endif %}
 
+  {% if community_list %}
 	<div class="trello list">
 		<h3 class="trello list-title">Community</h3>
 		<ul class="trello list-items">
@@ -735,7 +744,9 @@
       {% endfor %}
 		</ul>
 	</div>
+  {% endif %}
 
+  {% if design_list %}
 	<div class="trello list">
 		<h3 class="trello list-title">Design</h3>
 		<ul class="trello list-items">
@@ -877,7 +888,9 @@
       {% endfor %}
 		</ul>
 	</div>
+  {% endif %}
 
+  {% if other_list %}
 	<div class="trello list">
 		<h3 class="trello list-title">Other</h3>
 		<ul class="trello list-items">
@@ -1019,6 +1032,7 @@
       {% endfor %}
 		</ul>
 	</div>
+  {% endif %}
 
 
 </section>
