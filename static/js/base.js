@@ -333,6 +333,22 @@ var base = {
             })
         },
 
+    showNotification: function(from, align) {
+
+      $.notify({
+          icon: "tim-icons icon-bell-55",
+          message: "<font color='#fff'> Saving Project ...</font>"
+
+      }, {
+          type: "primary",
+          timer: 1000,
+          placement: {
+              from: from,
+              align: align
+          }
+      });
+    },
+
     /*
     startAnimationForLineChart: function(chart) {
       chart.on('draw', function(data) {

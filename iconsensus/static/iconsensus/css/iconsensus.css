@@ -1139,3 +1139,7 @@ input.datetimepicker[data-color=yellow] + .bootstrap-datetimepicker-widget.dropd
 .django-ckeditor-widget {
     display: block !important;
 }
+
+.tim-icons.icon-bell-55 {
+    color: #FFF!important;
+}
