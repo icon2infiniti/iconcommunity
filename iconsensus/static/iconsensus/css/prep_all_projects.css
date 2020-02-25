@@ -83,6 +83,39 @@
     background-color: rgba(100, 100, 100, 0.8);
 }
 
+
+.start {
+    background-color: rgba(108, 117, 125, 0.4) !important;
+}
+
+.start:hover {
+    background-color: rgba(108, 117, 125, 0.8) !important;
+}
+
+.update {
+    background-color: rgba(251, 99, 64, 0.4) !important;
+}
+
+.update:hover {
+    background-color: rgba(251, 99, 64, 0.8) !important;
+}
+
+.complete {
+    background-color: rgba(26, 170, 186, 0.4) !important;
+}
+
+.complete:hover {
+    background-color: rgba(26, 170, 186, 0.8) !important;
+}
+
+.abandoned {
+    background-color: rgba(255, 0, 0, 0.4) !important;
+}
+
+.abandoned:hover {
+    background-color: rgba(255, 0, 0, 0.8) !important;
+}
+
 .white-content .trello.list-items li {
     font-size: 14px;
     font-weight: 400;

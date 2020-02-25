@@ -21,8 +21,6 @@
 {% block section %}P-Rep Projects{% endblock %}
 {% block content %}
 
-  <div>
-
     <!-- Lists container -->
     <section class="lists-container">
 
@@ -32,7 +30,15 @@
           <ul class="trello list-items">
             {% for project in marketing_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
-                <li>{{ project.name }}</li>
+                {% if project.status > 2 %}
+                  <li class="abandoned">{{ project.name }}</li>
+                {% elif project.status > 1 %}
+                  <li class="complete">{{ project.name }}</li>
+                {% elif project.status > 0 %}
+                  <li class="update">{{ project.name }}</li>
+                {% else %}
+                  <li class="start">{{ project.name }}</li>
+                {% endif %}
               </a>
 
               <!-- Modal -->
@@ -184,7 +190,15 @@
           <ul class="trello list-items">
             {% for project in development_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
-                <li>{{ project.name }}</li>
+                {% if project.status > 2 %}
+                  <li class="abandoned">{{ project.name }}</li>
+                {% elif project.status > 1 %}
+                  <li class="complete">{{ project.name }}</li>
+                {% elif project.status > 0 %}
+                  <li class="update">{{ project.name }}</li>
+                {% else %}
+                  <li class="start">{{ project.name }}</li>
+                {% endif %}
               </a>
 
               <!-- Modal -->
@@ -297,7 +311,7 @@
                                   </li>
                                 {% endif %}
 
-                                {% if project.status > 1 and project.final_update|length > 0%}
+                                {% if project.status > 1 and project.final_update|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge delivery">
                                       <i class="fas fa-truck"></i>
@@ -336,7 +350,15 @@
           <ul class="trello list-items">
             {% for project in education_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
-                <li>{{ project.name }}</li>
+                {% if project.status > 2 %}
+                  <li class="abandoned">{{ project.name }}</li>
+                {% elif project.status > 1 %}
+                  <li class="complete">{{ project.name }}</li>
+                {% elif project.status > 0 %}
+                  <li class="update">{{ project.name }}</li>
+                {% else %}
+                  <li class="start">{{ project.name }}</li>
+                {% endif %}
               </a>
 
               <!-- Modal -->
@@ -433,7 +455,7 @@
                                   </div>
                                 </li>
 
-                                {% if project.status > 0 and project.updates|length > 0%}
+                                {% if project.status > 0 and project.updates|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge update">
                                       <i class="fas fa-sync-alt"></i>
@@ -449,7 +471,7 @@
                                   </li>
                                 {% endif %}
 
-                                {% if project.status > 1 and project.final_update|length > 0%}
+                                {% if project.status > 1 and project.final_update|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge delivery">
                                       <i class="fas fa-truck"></i>
@@ -488,7 +510,15 @@
           <ul class="trello list-items">
             {% for project in infrastructure_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
-                <li>{{ project.name }}</li>
+                {% if project.status > 2 %}
+                  <li class="abandoned">{{ project.name }}</li>
+                {% elif project.status > 1 %}
+                  <li class="complete">{{ project.name }}</li>
+                {% elif project.status > 0 %}
+                  <li class="update">{{ project.name }}</li>
+                {% else %}
+                  <li class="start">{{ project.name }}</li>
+                {% endif %}
               </a>
 
               <!-- Modal -->
@@ -585,7 +615,7 @@
                                   </div>
                                 </li>
 
-                                {% if project.status > 0 and project.updates|length > 0%}
+                                {% if project.status > 0 and project.updates|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge update">
                                       <i class="fas fa-sync-alt"></i>
@@ -601,7 +631,7 @@
                                   </li>
                                 {% endif %}
 
-                                {% if project.status > 1 and project.final_update|length > 0%}
+                                {% if project.status > 1 and project.final_update|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge delivery">
                                       <i class="fas fa-truck"></i>
@@ -640,7 +670,15 @@
           <ul class="trello list-items">
             {% for project in community_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
-                <li>{{ project.name }}</li>
+                {% if project.status > 2 %}
+                  <li class="abandoned">{{ project.name }}</li>
+                {% elif project.status > 1 %}
+                  <li class="complete">{{ project.name }}</li>
+                {% elif project.status > 0 %}
+                  <li class="update">{{ project.name }}</li>
+                {% else %}
+                  <li class="start">{{ project.name }}</li>
+                {% endif %}
               </a>
 
               <!-- Modal -->
@@ -737,7 +775,7 @@
                                   </div>
                                 </li>
 
-                                {% if project.status > 0 and project.updates|length > 0%}
+                                {% if project.status > 0 and project.updates|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge update">
                                       <i class="fas fa-sync-alt"></i>
@@ -753,7 +791,7 @@
                                   </li>
                                 {% endif %}
 
-                                {% if project.status > 1 and project.final_update|length > 0%}
+                                {% if project.status > 1 and project.final_update|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge delivery">
                                       <i class="fas fa-truck"></i>
@@ -792,7 +830,15 @@
           <ul class="trello list-items">
             {% for project in design_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
-                <li>{{ project.name }}</li>
+                {% if project.status > 2 %}
+                  <li class="abandoned">{{ project.name }}</li>
+                {% elif project.status > 1 %}
+                  <li class="complete">{{ project.name }}</li>
+                {% elif project.status > 0 %}
+                  <li class="update">{{ project.name }}</li>
+                {% else %}
+                  <li class="start">{{ project.name }}</li>
+                {% endif %}
               </a>
 
               <!-- Modal -->
@@ -889,7 +935,7 @@
                                   </div>
                                 </li>
 
-                                {% if project.status > 0 and project.updates|length > 0%}
+                                {% if project.status > 0 and project.updates|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge update">
                                       <i class="fas fa-sync-alt"></i>
@@ -905,7 +951,7 @@
                                   </li>
                                 {% endif %}
 
-                                {% if project.status > 1 and project.final_update|length > 0%}
+                                {% if project.status > 1 and project.final_update|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge delivery">
                                       <i class="fas fa-truck"></i>
@@ -944,7 +990,15 @@
           <ul class="trello list-items">
             {% for project in other_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
-                <li>{{ project.name }}</li>
+                {% if project.status > 2 %}
+                  <li class="abandoned">{{ project.name }}</li>
+                {% elif project.status > 1 %}
+                  <li class="complete">{{ project.name }}</li>
+                {% elif project.status > 0 %}
+                  <li class="update">{{ project.name }}</li>
+                {% else %}
+                  <li class="start">{{ project.name }}</li>
+                {% endif %}
               </a>
 
               <!-- Modal -->
@@ -1041,7 +1095,7 @@
                                   </div>
                                 </li>
 
-                                {% if project.status > 0 and project.updates|length > 0%}
+                                {% if project.status > 0 and project.updates|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge update">
                                       <i class="fas fa-sync-alt"></i>
@@ -1057,7 +1111,7 @@
                                   </li>
                                 {% endif %}
 
-                                {% if project.status > 1 and project.final_update|length > 0%}
+                                {% if project.status > 1 and project.final_update|length > 0 %}
                                   <li class="timeline-inverted">
                                     <div class="timeline-badge delivery">
                                       <i class="fas fa-truck"></i>
@@ -1090,12 +1144,8 @@
         </div>
       {% endif %}
 
-
     </section>
     <!-- End of lists container -->
-
-  </div>
-
 
 {% endblock %}
 
