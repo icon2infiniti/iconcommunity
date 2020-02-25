@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class ICYMI(models.Model):
     author = models.CharField(max_length=100, default='')
     title = models.CharField(max_length=255, default='')

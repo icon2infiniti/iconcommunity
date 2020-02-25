@@ -41,7 +41,7 @@ def news(request, template='news/news.html', extra_context=None):
     #latest_youtubes()
     #latest_rhizomes()
 
-    icymi_entries = ICYMI.objects.all().order_by('-create_day')[:5]
+    icymi_entries = ICYMI.objects.filter(create_day__gte=long_ago).order_by('-create_day') #ICYMI.objects.all().order_by('-create_day')[:5]
     twitter_entries = Tweet.objects.all()
     reddit_entries = Reddit.objects.all()
     youtube_entries = YouTube.objects.filter(created_at__gte=long_ago)
