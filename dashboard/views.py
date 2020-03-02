@@ -188,47 +188,43 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         dapp_json = json.loads(dapp_json)['data']
         icx_price = topdapp.icx_price
 
+        daobj_txLastDay.append(0)
+        daobj_volumeLastDayInUSD.append(0)
+        daobj_dauLastDay.append(0)
+
         for dapp in dapp_json:
-            if contract_name(dapp['url']) == 'ICONBet - DAOdice':
+
+            contractname = contract_name(dapp['url'])
+
+            if contractname == 'ICONBet - DAOdice':
                 daodice_txLastDay.append(dapp['txLastDay'])
                 daodice_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daodice_dauLastDay.append(dapp['dauLastDay'])
 
-                daobj_txLastDay.append(0)
-                daobj_volumeLastDayInUSD.append(0)
-                daobj_dauLastDay.append(0)
-
-            if contract_name(dapp['url']) == 'ICONBet - DAOlette':
+            if contractname == 'ICONBet - DAOlette':
                 daolette_txLastDay.append(dapp['txLastDay'])
                 daolette_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daolette_dauLastDay.append(dapp['dauLastDay'])
 
-                daobj_txLastDay.append(0)
-                daobj_volumeLastDayInUSD.append(0)
-                daobj_dauLastDay.append(0)
+            if contractname == 'ICONBet - DAOblackjack':
+                daobj_txLastDay.pop()
+                daobj_volumeLastDayInUSD.pop()
+                daobj_dauLastDay.pop()
 
-            if contract_name(dapp['url']) == 'ICONBet - DAOblackjack':
                 daobj_txLastDay.append(dapp['txLastDay'])
                 daobj_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daobj_dauLastDay.append(dapp['dauLastDay'])
 
-            if contract_name(dapp['url']) == 'Stayge':
+            if contractname == 'Stayge':
                 stayge_txLastDay.append(dapp['txLastDay'])
                 stayge_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 stayge_dauLastDay.append(dapp['dauLastDay'])
 
-                daobj_txLastDay.append(0)
-                daobj_volumeLastDayInUSD.append(0)
-                daobj_dauLastDay.append(0)
-
-            if contract_name(dapp['url']) == 'Somesing':
+            if contractname == 'Somesing':
                 somesing_txLastDay.append(dapp['txLastDay'])
                 somesing_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 somesing_dauLastDay.append(dapp['dauLastDay'])
 
-                daobj_txLastDay.append(0)
-                daobj_volumeLastDayInUSD.append(0)
-                daobj_dauLastDay.append(0)
 
     #####################################################################################
     # Social Info
