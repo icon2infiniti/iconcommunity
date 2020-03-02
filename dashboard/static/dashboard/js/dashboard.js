@@ -532,6 +532,7 @@ charts = {
                             return multistringText;
                         }
                         if(currentLabel == 'ICONBet - DAOblackjack') {
+                            alert(daobj_txLastDay[tooltipItems[0].index].toLocaleString());
                             var multistringText = ['Transactions: ' + daobj_txLastDay[tooltipItems[0].index].toLocaleString()];
                             multistringText.push('USD Volume: $' + Math.round(daobj_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString());
                             multistringText.push(('DAU: ' + daobj_dauLastDay[tooltipItems[0].index]).toLocaleString());
