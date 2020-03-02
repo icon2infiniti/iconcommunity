@@ -683,6 +683,7 @@ charts = {
             },
             options: gradientChartOptionsConfigurationPurple
         });
+        /*
         $("#td0").click(function () {
             var data = dAppChartData.config.data;
             data.labels = dapps_create_day_list.slice(-7);
@@ -713,6 +714,7 @@ charts = {
             data.datasets[4].data = stayge_txLastDay.slice(-30);
             dAppChartData.update();
         });
+        */
     },
 };
 
