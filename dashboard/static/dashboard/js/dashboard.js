@@ -520,33 +520,33 @@ charts = {
                         //return d.datasets[t.datasetIndex].label;
                         var currentLabel = data.datasets[tooltipItems[0].datasetIndex].label;
                         if(currentLabel == 'ICONBet - DAOdice'){
-                            var multistringText = ['Transactions: ' + daodice_txLastDay[tooltipItems[0].index].toLocaleString()];
-                            multistringText.push(('USD Volume: $' + Math.round(daodice_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString()));
-                            multistringText.push(('DAU: '+daodice_dauLastDay[tooltipItems[0].index]).toLocaleString());
+                            var multistringText = ['Transactions: ' + daodice_txLastDay.slice(-30)[tooltipItems[0].index].toLocaleString()];
+                            multistringText.push(('USD Volume: $' + Math.round(daodice_volumeLastDayInUSD.slice(-30)[tooltipItems[0].index]).toLocaleString()));
+                            multistringText.push(('DAU: '+daodice_dauLastDay.slice(-30)[tooltipItems[0].index]).toLocaleString());
                             return multistringText;
                         }
                         if(currentLabel == 'ICONBet - DAOlette') {
-                            var multistringText = ['Transactions: ' + daolette_txLastDay[tooltipItems[0].index].toLocaleString()];
-                            multistringText.push('USD Volume: $' + Math.round(daolette_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString());
-                            multistringText.push(('DAU: ' + daolette_dauLastDay[tooltipItems[0].index]).toLocaleString());
+                            var multistringText = ['Transactions: ' + daolette_txLastDay.slice(-30)[tooltipItems[0].index].toLocaleString()];
+                            multistringText.push('USD Volume: $' + Math.round(daolette_volumeLastDayInUSD.slice(-30)[tooltipItems[0].index]).toLocaleString());
+                            multistringText.push(('DAU: ' + daolette_dauLastDay.slice(-30)[tooltipItems[0].index]).toLocaleString());
                             return multistringText;
                         }
                         if(currentLabel == 'ICONBet - DAOblackjack') {
-                            var multistringText = ['Transactions: ' + daobj_txLastDay[tooltipItems[0].index].toLocaleString()];
-                            multistringText.push('USD Volume: $' + Math.round(daobj_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString());
-                            multistringText.push(('DAU: ' + daobj_dauLastDay[tooltipItems[0].index]).toLocaleString());
+                            var multistringText = ['Transactions: ' + daobj_txLastDay.slice(-30)[tooltipItems[0].index].toLocaleString()];
+                            multistringText.push('USD Volume: $' + Math.round(daobj_volumeLastDayInUSD.slice(-30)[tooltipItems[0].index]).toLocaleString());
+                            multistringText.push(('DAU: ' + daobj_dauLastDay.slice(-30)[tooltipItems[0].index]).toLocaleString());
                             return multistringText;
                         }
                         if(currentLabel == 'Stayge') {
-                            var multistringText = ['Transactions: ' + stayge_txLastDay[tooltipItems[0].index].toLocaleString()];
-                            multistringText.push('USD Volume: $' + Math.round(stayge_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString());
-                            multistringText.push(('DAU: ' + stayge_dauLastDay[tooltipItems[0].index]).toLocaleString());
+                            var multistringText = ['Transactions: ' + stayge_txLastDay.slice(-30)[tooltipItems[0].index].toLocaleString()];
+                            multistringText.push('USD Volume: $' + Math.round(stayge_volumeLastDayInUSD.slice(-30)[tooltipItems[0].index]).toLocaleString());
+                            multistringText.push(('DAU: ' + stayge_dauLastDay.slice(-30)[tooltipItems[0].index]).toLocaleString());
                             return multistringText;
                         }
                         if(currentLabel == 'Somesing') {
-                            var multistringText = ['Transactions: ' + somesing_txLastDay[tooltipItems[0].index].toLocaleString()];
-                            multistringText.push('USD Volume: $' + Math.round(somesing_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString());
-                            multistringText.push(('DAU: ' + somesing_dauLastDay[tooltipItems[0].index]).toLocaleString());
+                            var multistringText = ['Transactions: ' + somesing_txLastDay.slice(-30)[tooltipItems[0].index].toLocaleString()];
+                            multistringText.push('USD Volume: $' + Math.round(somesing_volumeLastDayInUSD.slice(-30)[tooltipItems[0].index]).toLocaleString());
+                            multistringText.push(('DAU: ' + somesing_dauLastDay.slice(-30)[tooltipItems[0].index]).toLocaleString());
                             return multistringText;
                         }
                         //return data.datasets[tooltipItems[0].datasetIndex].label;//tooltipItems[0].index;
