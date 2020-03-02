@@ -549,8 +549,6 @@ charts = {
                             multistringText.push(('DAU: ' + somesing_dauLastDay[tooltipItems[0].index]).toLocaleString());
                             return multistringText;
                         }
-
-
                         //return data.datasets[tooltipItems[0].datasetIndex].label;//tooltipItems[0].index;
                     }
                 }
