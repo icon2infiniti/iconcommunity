@@ -492,7 +492,7 @@ charts = {
     },
 
     initTopDappsChart: function (dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, daobj_txLastDay, stayge_txLastDay, somesing_txLastDay, daolette_volumeLastDayInUSD, daodice_volumeLastDayInUSD, daobj_volumeLastDayInUSD, stayge_volumeLastDayInUSD, somesing_volumeLastDayInUSD, daolette_dauLastDay, daodice_dauLastDay, daobj_dauLastDay, stayge_dauLastDay, somesing_dauLastDay) {
-
+        
         gradientChartOptionsConfigurationPurple = {
             maintainAspectRatio: false,
             legend: {

@@ -194,10 +194,18 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
                 daodice_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daodice_dauLastDay.append(dapp['dauLastDay'])
 
+                daobj_txLastDay.append(0)
+                daobj_volumeLastDayInUSD.append(0)
+                daobj_dauLastDay.append(0)
+
             if contract_name(dapp['url']) == 'ICONBet - DAOlette':
                 daolette_txLastDay.append(dapp['txLastDay'])
                 daolette_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daolette_dauLastDay.append(dapp['dauLastDay'])
+
+                daobj_txLastDay.append(0)
+                daobj_volumeLastDayInUSD.append(0)
+                daobj_dauLastDay.append(0)
 
             if contract_name(dapp['url']) == 'ICONBet - DAOblackjack':
                 daobj_txLastDay.append(dapp['txLastDay'])
@@ -209,10 +217,18 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
                 stayge_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 stayge_dauLastDay.append(dapp['dauLastDay'])
 
+                daobj_txLastDay.append(0)
+                daobj_volumeLastDayInUSD.append(0)
+                daobj_dauLastDay.append(0)
+
             if contract_name(dapp['url']) == 'Somesing':
                 somesing_txLastDay.append(dapp['txLastDay'])
                 somesing_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 somesing_dauLastDay.append(dapp['dauLastDay'])
+
+                daobj_txLastDay.append(0)
+                daobj_volumeLastDayInUSD.append(0)
+                daobj_dauLastDay.append(0)
 
     #####################################################################################
     # Social Info
@@ -260,9 +276,9 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'daolette_volumeLastDayInUSD': daolette_volumeLastDayInUSD,
         'daolette_dauLastDay': daolette_dauLastDay,
 
-        'daobj_txLastDay': daolette_txLastDay,
-        'daobj_volumeLastDayInUSD': daolette_volumeLastDayInUSD,
-        'daobj_dauLastDay': daolette_dauLastDay,
+        'daobj_txLastDay': daobj_txLastDay,
+        'daobj_volumeLastDayInUSD': daobj_volumeLastDayInUSD,
+        'daobj_dauLastDay': daobj_dauLastDay,
 
         'stayge_txLastDay': stayge_txLastDay,
         'stayge_volumeLastDayInUSD': stayge_volumeLastDayInUSD,
