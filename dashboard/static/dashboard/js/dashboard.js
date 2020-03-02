@@ -594,7 +594,7 @@ charts = {
             type: 'line',
             responsive: true,
             data: {
-                labels: dapps_create_day_list,
+                labels: dapps_create_day_list.slice(-30),
                 datasets: [
                 {
                     label: "ICONBet - DAOlette",
