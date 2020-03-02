@@ -29,6 +29,9 @@
       var daodice_txLastDay = {{ daodice_txLastDay }};
       var daodice_volumeLastDayInUSD = {{ daodice_volumeLastDayInUSD }};
       var daodice_dauLastDay = {{ daodice_dauLastDay }};
+      var daobj_txLastDay = {{ daobj_txLastDay }};
+      var daobj_volumeLastDayInUSD = {{ daobj_volumeLastDayInUSD }};
+      var daobj_dauLastDay = {{ daobj_dauLastDay }};
       var stayge_txLastDay = {{ stayge_txLastDay }};
       var stayge_volumeLastDayInUSD = {{ stayge_volumeLastDayInUSD }};
       var stayge_dauLastDay = {{ stayge_dauLastDay }};
@@ -565,7 +568,7 @@
 
           charts.initRewardRateChart(annual_inflation_list, annual_reward_list, annual_real_yield_list, reward_rate_dates_list);
 
-          charts.initTopDappsChart(dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, stayge_txLastDay, somesing_txLastDay, daolette_volumeLastDayInUSD, daodice_volumeLastDayInUSD, stayge_volumeLastDayInUSD, somesing_volumeLastDayInUSD, daolette_dauLastDay, daodice_dauLastDay, stayge_dauLastDay, somesing_dauLastDay);
+          charts.initTopDappsChart(dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, daobj_txLastDay, stayge_txLastDay, somesing_txLastDay, daolette_volumeLastDayInUSD, daodice_volumeLastDayInUSD, daobj_volumeLastDayInUSD, stayge_volumeLastDayInUSD, somesing_volumeLastDayInUSD, daolette_dauLastDay, daodice_dauLastDay, daobj_dauLastDay, stayge_dauLastDay, somesing_dauLastDay);
 
           $('[data-toggle="tooltip"]').tooltip();
 

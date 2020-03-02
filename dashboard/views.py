@@ -8,7 +8,7 @@ from .models import DailyTransactions, WalletCount, RewardRate, Top20Wallets, Ma
 
 import json
 
-#from dashboard.cron import get_social_info
+from dashboard.cron import get_top_dapps
 
 
 def init_mode(request):
@@ -39,7 +39,8 @@ def rrep(delrate):
 
 def index(request, template='dashboard/dashboard.html', extra_context=None):
     context = init_mode(request)
-    #get_social_info()
+    #get_top_dapps()
+    #dashboard_cron_1h()
     #####################################################################################
     # Top wallets
     #####################################################################################
@@ -167,6 +168,10 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     daodice_volumeLastDayInUSD = []
     daodice_dauLastDay = []
 
+    daobj_txLastDay = []
+    daobj_volumeLastDayInUSD = []
+    daobj_dauLastDay = []
+
     stayge_txLastDay = []
     stayge_volumeLastDayInUSD = []
     stayge_dauLastDay = []
@@ -193,6 +198,11 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
                 daolette_txLastDay.append(dapp['txLastDay'])
                 daolette_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
                 daolette_dauLastDay.append(dapp['dauLastDay'])
+
+            if contract_name(dapp['url']) == 'ICONBet - DAOblackjack':
+                daobj_txLastDay.append(dapp['txLastDay'])
+                daobj_volumeLastDayInUSD.append(dapp['volumeLastDayInUSD']*icx_price)
+                daobj_dauLastDay.append(dapp['dauLastDay'])
 
             if contract_name(dapp['url']) == 'Stayge':
                 stayge_txLastDay.append(dapp['txLastDay'])
@@ -250,6 +260,10 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         'daolette_volumeLastDayInUSD': daolette_volumeLastDayInUSD,
         'daolette_dauLastDay': daolette_dauLastDay,
 
+        'daobj_txLastDay': daolette_txLastDay,
+        'daobj_volumeLastDayInUSD': daolette_volumeLastDayInUSD,
+        'daobj_dauLastDay': daolette_dauLastDay,
+
         'stayge_txLastDay': stayge_txLastDay,
         'stayge_volumeLastDayInUSD': stayge_volumeLastDayInUSD,
         'stayge_dauLastDay': stayge_dauLastDay,
@@ -275,6 +289,7 @@ def contract_name(address):
     contract_mapping = {
         "cxb0b6f777fba13d62961ad8ce11be7ef6c4b2bcc6": "ICONBet - DAOdice",
         "cx1b97c1abfd001d5cd0b5a3f93f22cccfea77e34e": "ICONBet - DAOlette",
+        "cxd47f7d943ad76a0403210501dab03d4daf1f6864": "ICONBet - DAOblackjack",
         "cx502c47463314f01e84b1b203c315180501eb2481": "Stayge",
         "cx429731644462ebcfd22185df38727273f16f9b87": "Somesing"
     }

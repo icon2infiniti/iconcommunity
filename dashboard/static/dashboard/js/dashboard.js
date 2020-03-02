@@ -491,7 +491,7 @@ charts = {
         });
     },
 
-    initTopDappsChart: function (dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, stayge_txLastDay, somesing_txLastDay, daolette_volumeLastDayInUSD, daodice_volumeLastDayInUSD, stayge_volumeLastDayInUSD, somesing_volumeLastDayInUSD, daolette_dauLastDay, daodice_dauLastDay, stayge_dauLastDay, somesing_dauLastDay) {
+    initTopDappsChart: function (dapps_create_day_list, daolette_txLastDay, daodice_txLastDay, daobj_txLastDay, stayge_txLastDay, somesing_txLastDay, daolette_volumeLastDayInUSD, daodice_volumeLastDayInUSD, daobj_volumeLastDayInUSD, stayge_volumeLastDayInUSD, somesing_volumeLastDayInUSD, daolette_dauLastDay, daodice_dauLastDay, daobj_dauLastDay, stayge_dauLastDay, somesing_dauLastDay) {
 
         gradientChartOptionsConfigurationPurple = {
             maintainAspectRatio: false,
@@ -529,6 +529,12 @@ charts = {
                             var multistringText = ['Transactions: ' + daolette_txLastDay[tooltipItems[0].index].toLocaleString()];
                             multistringText.push('USD Volume: $' + Math.round(daolette_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString());
                             multistringText.push(('DAU: ' + daolette_dauLastDay[tooltipItems[0].index]).toLocaleString());
+                            return multistringText;
+                        }
+                        if(currentLabel == 'ICONBet - DAOblackjack') {
+                            var multistringText = ['Transactions: ' + daobj_txLastDay[tooltipItems[0].index].toLocaleString()];
+                            multistringText.push('USD Volume: $' + Math.round(daobj_volumeLastDayInUSD[tooltipItems[0].index]).toLocaleString());
+                            multistringText.push(('DAU: ' + daobj_dauLastDay[tooltipItems[0].index]).toLocaleString());
                             return multistringText;
                         }
                         if(currentLabel == 'Stayge') {
@@ -605,7 +611,7 @@ charts = {
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 15,
                     pointRadius: 4,
-                    data: daolette_txLastDay,
+                    data: daolette_txLastDay.slice(-30),
                 },
                 {
                     label: "ICONBet - DAOdice",
@@ -622,7 +628,24 @@ charts = {
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 15,
                     pointRadius: 4,
-                    data: daodice_txLastDay,
+                    data: daodice_txLastDay.slice(-30),
+                },
+                {
+                    label: "ICONBet - DAOblackjack",
+                    fill: true,
+                    backgroundColor: gradientStroke,
+                    borderColor: '#00ed28',
+                    borderWidth: 2,
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    pointBackgroundColor: '#00ed28',
+                    pointBorderColor: 'rgba(255,255,255,0)',
+                    pointHoverBackgroundColor: '#00ed28',
+                    pointBorderWidth: 20,
+                    pointHoverRadius: 4,
+                    pointHoverBorderWidth: 15,
+                    pointRadius: 4,
+                    data: daobj_txLastDay.slice(-30),
                 },
                 {
                     label: "Somesing",
@@ -639,7 +662,7 @@ charts = {
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 15,
                     pointRadius: 4,
-                    data: somesing_txLastDay,
+                    data: somesing_txLastDay.slice(-30),
                 },
                 {
                     label: "Stayge",
@@ -656,7 +679,7 @@ charts = {
                     pointHoverRadius: 4,
                     pointHoverBorderWidth: 15,
                     pointRadius: 4,
-                    data: stayge_txLastDay,
+                    data: stayge_txLastDay.slice(-30),
                 },
                 ]
             },
@@ -667,8 +690,9 @@ charts = {
             data.labels = dapps_create_day_list.slice(-7);
             data.datasets[0].data = daolette_txLastDay.slice(-7);
             data.datasets[1].data = daodice_txLastDay.slice(-7);
-            data.datasets[2].data = somesing_txLastDay.slice(-7);
-            data.datasets[3].data = stayge_txLastDay.slice(-7);
+            data.datasets[2].data = daobj_txLastDay.slice(-7);
+            data.datasets[3].data = somesing_txLastDay.slice(-7);
+            data.datasets[4].data = stayge_txLastDay.slice(-7);
             dAppChartData.update();
         });
         $("#td1").click(function () {
@@ -676,8 +700,9 @@ charts = {
             data.labels = dapps_create_day_list.slice(-14);
             data.datasets[0].data = daolette_txLastDay.slice(-14);
             data.datasets[1].data = daodice_txLastDay.slice(-14);
-            data.datasets[2].data = somesing_txLastDay.slice(-14);
-            data.datasets[3].data = stayge_txLastDay.slice(-14);
+            data.datasets[2].data = daobj_txLastDay.slice(-14);
+            data.datasets[3].data = somesing_txLastDay.slice(-14);
+            data.datasets[4].data = stayge_txLastDay.slice(-14);
             dAppChartData.update();
         });
         $("#td2").click(function () {
@@ -685,8 +710,9 @@ charts = {
             data.labels = dapps_create_day_list.slice(-30);
             data.datasets[0].data = daolette_txLastDay.slice(-30);
             data.datasets[1].data = daodice_txLastDay.slice(-30);
-            data.datasets[2].data = somesing_txLastDay.slice(-30);
-            data.datasets[3].data = stayge_txLastDay.slice(-30);
+            data.datasets[2].data = daobj_txLastDay.slice(-30);
+            data.datasets[3].data = somesing_txLastDay.slice(-30);
+            data.datasets[4].data = stayge_txLastDay.slice(-30);
             dAppChartData.update();
         });
     },
