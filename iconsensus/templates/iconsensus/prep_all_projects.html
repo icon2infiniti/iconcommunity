@@ -26,8 +26,26 @@
 
       {% if marketing_list %}
         <div class="trello list">
-          <h3 class="trello list-title">Marketing</h3>
-          <ul class="trello list-items">
+
+          <div class="card card-tasks">
+            <div class="card-header">
+              <h3 class="trello list-title d-inline">Marketing</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                  <i class="tim-icons icon-settings-gear-63"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" onclick='projfilter("marketing", "all")'>All</a>
+                  <a class="dropdown-item" onclick='projfilter("marketing", "start")'>Planning</a>
+                  <a class="dropdown-item" onclick='projfilter("marketing", "update")'>Executing</a>
+                  <a class="dropdown-item" onclick='projfilter("marketing", "complete")'>Complete</a>
+                  <a class="dropdown-item" onclick='projfilter("marketing", "abandoned")'>Abandoned</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="trello list-items marketing">
             {% for project in marketing_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
@@ -186,8 +204,26 @@
 
       {% if development_list %}
         <div class="trello list">
-          <h3 class="trello list-title">Development</h3>
-          <ul class="trello list-items">
+
+          <div class="card card-tasks">
+            <div class="card-header">
+              <h3 class="trello list-title d-inline">Development</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                  <i class="tim-icons icon-settings-gear-63"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" onclick='projfilter("development", "all")'>All</a>
+                  <a class="dropdown-item" onclick='projfilter("development", "start")'>Planning</a>
+                  <a class="dropdown-item" onclick='projfilter("development", "update")'>Executing</a>
+                  <a class="dropdown-item" onclick='projfilter("development", "complete")'>Complete</a>
+                  <a class="dropdown-item" onclick='projfilter("development", "abandoned")'>Abandoned</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="trello list-items development">
             {% for project in development_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
@@ -346,8 +382,26 @@
 
       {% if education_list %}
         <div class="trello list">
-          <h3 class="trello list-title">Education</h3>
-          <ul class="trello list-items">
+
+          <div class="card card-tasks">
+            <div class="card-header">
+              <h3 class="trello list-title d-inline">Education</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                  <i class="tim-icons icon-settings-gear-63"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" onclick='projfilter("education", "all")'>All</a>
+                  <a class="dropdown-item" onclick='projfilter("education", "start")'>Planning</a>
+                  <a class="dropdown-item" onclick='projfilter("education", "update")'>Executing</a>
+                  <a class="dropdown-item" onclick='projfilter("education", "complete")'>Complete</a>
+                  <a class="dropdown-item" onclick='projfilter("education", "abandoned")'>Abandoned</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="trello list-items education">
             {% for project in education_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
@@ -506,8 +560,26 @@
 
       {% if infrastructure_list %}
         <div class="trello list">
-          <h3 class="trello list-title">Infrastructure</h3>
-          <ul class="trello list-items">
+
+          <div class="card card-tasks">
+            <div class="card-header">
+              <h3 class="trello list-title d-inline">Infrastructure</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                  <i class="tim-icons icon-settings-gear-63"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" onclick='projfilter("infrastructure", "all")'>All</a>
+                  <a class="dropdown-item" onclick='projfilter("infrastructure", "start")'>Planning</a>
+                  <a class="dropdown-item" onclick='projfilter("infrastructure", "update")'>Executing</a>
+                  <a class="dropdown-item" onclick='projfilter("infrastructure", "complete")'>Complete</a>
+                  <a class="dropdown-item" onclick='projfilter("infrastructure", "abandoned")'>Abandoned</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="trello list-items infrastructure">
             {% for project in infrastructure_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
@@ -666,8 +738,26 @@
 
       {% if community_list %}
         <div class="trello list">
-          <h3 class="trello list-title">Community</h3>
-          <ul class="trello list-items">
+
+          <div class="card card-tasks">
+            <div class="card-header">
+              <h3 class="trello list-title d-inline">Community</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                  <i class="tim-icons icon-settings-gear-63"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" onclick='projfilter("community", "all")'>All</a>
+                  <a class="dropdown-item" onclick='projfilter("community", "start")'>Planning</a>
+                  <a class="dropdown-item" onclick='projfilter("community", "update")'>Executing</a>
+                  <a class="dropdown-item" onclick='projfilter("community", "complete")'>Complete</a>
+                  <a class="dropdown-item" onclick='projfilter("community", "abandoned")'>Abandoned</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="trello list-items community">
             {% for project in community_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
@@ -826,8 +916,26 @@
 
       {% if design_list %}
         <div class="trello list">
-          <h3 class="trello list-title">Design</h3>
-          <ul class="trello list-items">
+
+          <div class="card card-tasks">
+            <div class="card-header">
+              <h3 class="trello list-title d-inline">Design</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                  <i class="tim-icons icon-settings-gear-63"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" onclick='projfilter("design", "all")'>All</a>
+                  <a class="dropdown-item" onclick='projfilter("design", "start")'>Planning</a>
+                  <a class="dropdown-item" onclick='projfilter("design", "update")'>Executing</a>
+                  <a class="dropdown-item" onclick='projfilter("design", "complete")'>Complete</a>
+                  <a class="dropdown-item" onclick='projfilter("design", "abandoned")'>Abandoned</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="trello list-items design">
             {% for project in design_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
@@ -986,8 +1094,26 @@
 
       {% if other_list %}
         <div class="trello list">
-          <h3 class="trello list-title">Other</h3>
-          <ul class="trello list-items">
+
+          <div class="card card-tasks">
+            <div class="card-header">
+              <h3 class="trello list-title d-inline">Other</h3>
+              <div class="dropdown">
+                <button type="button" class="btn btn-link dropdown-toggle btn-icon" data-toggle="dropdown">
+                  <i class="tim-icons icon-settings-gear-63"></i>
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item" onclick='projfilter("other", "all")'>All</a>
+                  <a class="dropdown-item" onclick='projfilter("other", "start")'>Planning</a>
+                  <a class="dropdown-item" onclick='projfilter("other", "update")'>Executing</a>
+                  <a class="dropdown-item" onclick='projfilter("other", "complete")'>Complete</a>
+                  <a class="dropdown-item" onclick='projfilter("other", "abandoned")'>Abandoned</a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ul class="trello list-items other">
             {% for project in other_list %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
@@ -1151,4 +1277,39 @@
 
 <!-- extra javascript -->
 {% block extra_js %}
+  <script>
+      function projfilter(category, type){
+          var select_start = "."+category+" .start";
+          var select_update = "."+category+" .update";
+          var select_complete = "."+category+" .complete";
+          var select_abandoned = "."+category+" .abandoned";
+          if(type == 'all') {
+              $(select_start).show();
+              $(select_update).show();
+              $(select_complete).show();
+              $(select_abandoned).show();
+          }
+          else if(type == 'start') {
+              $(select_start).show();
+              $(select_update).hide();
+              $(select_complete).hide();
+              $(select_abandoned).hide();
+          }else if(type == 'update'){
+              $(select_start).hide();
+              $(select_update).show();
+              $(select_complete).hide();
+              $(select_abandoned).hide();
+          }else if(type == 'complete'){
+              $(select_start).hide();
+              $(select_update).hide();
+              $(select_complete).show();
+              $(select_abandoned).hide();
+          }else if(type == 'abandoned'){
+              $(select_start).hide();
+              $(select_update).hide();
+              $(select_complete).hide();
+              $(select_abandoned).show();
+          }
+      }
+  </script>
 {% endblock %}
