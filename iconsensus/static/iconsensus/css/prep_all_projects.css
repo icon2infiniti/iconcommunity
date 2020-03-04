@@ -139,7 +139,7 @@
     color: rgba(255,255,255,0.8);
     border-bottom: 0.1rem solid rgba(100, 100, 100, 0.2);
     border-radius: 0.3rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.6rem!important;
     word-wrap: break-word;
     cursor: pointer;
 }
@@ -156,9 +156,9 @@
     background-color: rgba(100, 100, 100, 0.8);
 }
 
-.trello.list-items a {
+/*.trello.list-items a {
     margin-bottom: 0.6rem!important;
-}
+}*/
 
 /* modal */
 .modal-dialog {
