@@ -1,6 +1,13 @@
 from django.urls import path
-
 from . import views
+
+from .api import (
+	PrepProjectsAPI,
+	PrepProjectAPI,
+	PrepProjectFiltersApi,
+    PrepApi,
+    PrepFiltersApi,
+)
 
 urlpatterns = [
     path('overview/', views.overview, name='overview'),
@@ -12,4 +19,13 @@ urlpatterns = [
     path('prep_projects/<str:prep_address>', views.prep_projects, name='prep_projects'),
     path('prep_all_projects/', views.prep_all_projects, name='prep_all_projects'),
     path('candidate_detail/<int:pk>/', views.candidate_detail, name='candidate_detail'),
+]
+
+# API ENDPOINTS
+urlpatterns += [
+    path('api/prep-projects/', PrepProjectsAPI.as_view(), name="api_prep_projects"),
+    path('api/prep-projects/<int:pk>/', PrepProjectAPI.as_view(), name="api_prep_project"),
+    path('api/prep-projects/filters/', PrepProjectFiltersApi.as_view({ 'get': 'get', }), name="api_prep_project_filters"),
+    path('api/prep/filters/', PrepFiltersApi.as_view({ 'get': 'get', }), name="api_prep_filters"),    
+    path('api/prep/<str:prep_address>/categories/', PrepApi.as_view({ 'get': 'get', }), name="api_preps"),    
 ]
