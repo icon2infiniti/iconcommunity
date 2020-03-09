@@ -14,7 +14,6 @@ from .serializers import (
 	PrepProjectSerializer,	
 )
 
-
 class PrepProjectsAPI(ListAPIView):
 	""" prep projects api
 	"""
@@ -69,7 +68,6 @@ class PrepApi(ViewSet):
 	"""
 	
 	def get(self, *args, **kwargs):
-		print(kwargs)
 		data = {}
 		prep_address = kwargs.get('prep_address', None)		
 		if prep_address:
