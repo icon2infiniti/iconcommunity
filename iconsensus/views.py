@@ -86,40 +86,77 @@ def prep_project(request, id):
 def prep_all_projects(request):
     context = init_mode(request)
 
-    marketing = PrepProject.objects.filter(category=0).order_by('-updated_date')
+    params = {}
+    try:
+        preps = iconsensusrpc.IconsensusRPCCalls().json_rpc_call("getPReps", params)['preps']
+    except JSONRPCException as e:
+        print(str(e.message))
+
+    prep_names = []
+    for prep in preps:
+        address = prep['address']
+        name = prep['name']
+        pair = {}
+        pair[address] = name
+        prep_names.append(pair)
+
+    prepprojects = PrepProject.objects.all().order_by(('-updated_date'))
+    marketing = prepprojects.filter(category=0)
     marketing_list = list(marketing)
     for proj in marketing_list:
-        proj.team_name = get_prep(proj.prep_address)['name']
+        for name in prep_names:
+            rname = name.get(proj.prep_address)
+            if(rname):
+                proj.team_name = rname
 
-    development = PrepProject.objects.filter(category=1).order_by('-updated_date')
+    development = prepprojects.filter(category=1)
     development_list = list(development)
     for proj in development_list:
-        proj.team_name = get_prep(proj.prep_address)['name']
+        for name in prep_names:
+            rname = name.get(proj.prep_address)
+            if (rname):
+                proj.team_name = rname
 
-    education = PrepProject.objects.filter(category=2).order_by('-updated_date')
+    education = prepprojects.filter(category=2)
     education_list = list(education)
     for proj in education_list:
-        proj.team_name = get_prep(proj.prep_address)['name']
+        for name in prep_names:
+            rname = name.get(proj.prep_address)
+            if (rname):
+                proj.team_name = rname
 
-    infrastructure = PrepProject.objects.filter(category=3).order_by('-updated_date')
+    infrastructure = prepprojects.filter(category=3)
     infrastructure_list = list(infrastructure)
     for proj in infrastructure_list:
-        proj.team_name = get_prep(proj.prep_address)['name']
+        for name in prep_names:
+            rname = name.get(proj.prep_address)
+            if (rname):
+                proj.team_name = rname
 
-    community = PrepProject.objects.filter(category=4).order_by('-updated_date')
+    community = prepprojects.filter(category=4)
     community_list = list(community)
     for proj in community_list:
-        proj.team_name = get_prep(proj.prep_address)['name']
+        for name in prep_names:
+            rname = name.get(proj.prep_address)
+            if (rname):
+                proj.team_name = rname
 
-    design = PrepProject.objects.filter(category=5).order_by('-updated_date')
+    design = prepprojects.filter(category=5)
     design_list = list(design)
     for proj in design_list:
-        proj.team_name = get_prep(proj.prep_address)['name']
+        for name in prep_names:
+            rname = name.get(proj.prep_address)
+            if (rname):
+                proj.team_name = rname
 
-    other = PrepProject.objects.filter(category=6).order_by('-updated_date')
+    other = prepprojects.filter(category=6)
     other_list = list(other)
     for proj in other_list:
-        proj.team_name = get_prep(proj.prep_address)['name']
+        for name in prep_names:
+            rname = name.get(proj.prep_address)
+            if (rname):
+                proj.team_name = rname
+
 
     context.update({
         'subsection': 'REPORTS',
