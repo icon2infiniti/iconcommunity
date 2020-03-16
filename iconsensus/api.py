@@ -14,6 +14,7 @@ from .serializers import (
 	PrepProjectSerializer,	
 )
 
+
 class PrepProjectsAPI(ListAPIView):
 	""" prep projects api
 	"""
@@ -31,6 +32,11 @@ class PrepProjectsAPI(ListAPIView):
 		status = self.request.query_params.get('status', None)
 		if status is not None:
 			queryset = queryset.filter(status=status)
+
+		prep_address = self.request.query_params.get('prep', None)
+		if prep_address is not None:
+			queryset = queryset.filter(prep_address=prep_address)
+
 
 		recent_activity = self.request.query_params.get('recent_activity', None)
 		if recent_activity is '1':
@@ -71,6 +77,7 @@ class PrepApi(ViewSet):
 		data = {}
 		prep_address = kwargs.get('prep_address', None)		
 		if prep_address:
+			data['project_count'] = PrepProject.objects.filter(prep_address=prep_address).count()
 			prep_project_categories = { category_name: PrepProject.objects.filter(prep_address=prep_address).filter(category=category_id).count() for category_id, category_name in PrepProject.CATEGORIES }
 			prep_project_categories = {k: v for k, v in sorted(prep_project_categories.items(), key=lambda item: item[1], reverse=True)}
 			main_category = list(prep_project_categories.keys())[0]
