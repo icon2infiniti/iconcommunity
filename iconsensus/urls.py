@@ -12,4 +12,5 @@ urlpatterns = [
     path('prep_projects/<str:prep_address>', views.prep_projects, name='prep_projects'),
     path('prep_all_projects/', views.prep_all_projects, name='prep_all_projects'),
     path('candidate_detail/<int:pk>/', views.candidate_detail, name='candidate_detail'),
+    path('internalonly/', views.internalonly, name='internalonly'),
 ]

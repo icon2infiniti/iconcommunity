@@ -1,0 +1,17 @@
+<table border="1">
+  <thead class="text-primary">
+  <tr>
+    <th>Created Date</th>
+    <th>Count</th>
+  </tr>
+  </thead>
+  <tbody class="tborder">
+  {% for cd in cds %}
+    <tr>
+      <td align="center">{{ cd.cd }}</td>
+      <td align="center">{{ cd.count }}</td>
+    </tr>
+  {% endfor %}
+
+  </tbody>
+</table>

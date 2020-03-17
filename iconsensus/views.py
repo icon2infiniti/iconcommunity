@@ -19,6 +19,31 @@ from dashboard.models import MainInfo
 
 import json
 
+from django.db.models import Count
+from django.db.models.functions import TruncDate
+
+def internalonly(request):
+
+    cds = PrepProject.objects.all().order_by('-created_date') \
+        .annotate(cd=TruncDate('created_date')) \
+        .order_by('cd') \
+        .values('cd') \
+        .annotate(**{'count': Count('created_date')})
+
+    #print(cds)
+
+    '''
+    created_dates = []
+    
+    for cd in PrepProject.objects.all().order_by('-created_date'):
+        created_dates.append(cd.created_date.strftime('%b %d, %Y'))
+    '''
+
+    context = {
+        'cds': cds,
+    }
+    return render(request, 'iconsensus/internalonly.html', context)
+
 
 def prep_projects(request, prep_address):
     context = init_mode(request)
