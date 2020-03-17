@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
     'ckeditor',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 20
 }
+
+
+CORS_ORIGIN_REGEX_WHITELIST = [
+    r"^https://\w+\.iconpreps\.com$",
+]

@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from datetime import datetime, timedelta
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
-from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.filters import OrderingFilter
 
@@ -58,7 +58,7 @@ class PrepProjectAPI(RetrieveAPIView):
 	queryset = PrepProject.objects.all()
 	serializer_class = PrepProjectSerializer
 
-class PrepProjectFiltersApi(ViewSet):
+class PrepProjectFiltersApi(APIView):
 	""" filters api
 	"""
 	
@@ -69,7 +69,7 @@ class PrepProjectFiltersApi(ViewSet):
 
 		return Response(filters_data, status=200)		
 
-class PrepApi(ViewSet):
+class PrepApi(APIView):
 	""" filters api
 	"""
 	
@@ -92,7 +92,7 @@ class PrepApi(ViewSet):
 
 
 
-class PrepFiltersApi(ViewSet):
+class PrepFiltersApi(APIView):
 	""" filters api
 	"""
 	

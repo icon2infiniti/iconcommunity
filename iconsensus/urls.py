@@ -25,7 +25,7 @@ urlpatterns = [
 urlpatterns += [
     path('api/prep-projects/', PrepProjectsAPI.as_view(), name="api_prep_projects"),
     path('api/prep-projects/<int:pk>/', PrepProjectAPI.as_view(), name="api_prep_project"),
-    path('api/prep-projects/filters/', PrepProjectFiltersApi.as_view({ 'get': 'get', }), name="api_prep_project_filters"),
-    path('api/prep/filters/', PrepFiltersApi.as_view({ 'get': 'get', }), name="api_prep_filters"),    
-    path('api/prep/<str:prep_address>/', PrepApi.as_view({ 'get': 'get', }), name="api_preps"),
+    path('api/prep-projects/filters/', PrepProjectFiltersApi.as_view(), name="api_prep_project_filters"),
+    path('api/prep/filters/', PrepFiltersApi.as_view(), name="api_prep_filters"),
+    path('api/prep/<str:prep_address>/', PrepApi.as_view(), name="api_preps"),
 ]
