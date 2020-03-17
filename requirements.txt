@@ -25,11 +25,13 @@ Django==2.1.5
 django-celery-beat==1.1.1
 django-ckeditor==5.9.0
 django-crontab==0.7.1
+django-cors-headers==3.2.1
 django-el-pagination==3.2.4
 django-js-asset==1.2.2
 django-markdownify==0.8.0
 django-mathfilters==0.4.0
 django-timezone-field==4.0
+djangorestframework==3.11.0
 earlgrey==0.0.4
 eth-hash==0.2.0
 eth-keyfile==0.5.1
