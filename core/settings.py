@@ -149,5 +149,6 @@ REST_FRAMEWORK = {
 
 
 CORS_ORIGIN_WHITELIST = [
-   "https://iconpreps.com",
+    "https://iconpreps.com",
+    "https://icon-preps.netlify.com"
 ]
