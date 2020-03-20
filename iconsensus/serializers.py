@@ -10,7 +10,7 @@ class PrepProjectsSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = PrepProject
-		fields = ('id','name', 'prep_address', 'created_date', 'updated_date', 'start_date', 'end_date', 'description', 'category', 'progress', 'status')
+		fields = ('id','slug', 'name', 'prep_address', 'created_date', 'updated_date', 'start_date', 'end_date', 'description', 'category', 'progress', 'status')
 
 class PrepProjectSerializer(serializers.ModelSerializer):
     class Meta:

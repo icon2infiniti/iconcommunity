@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
 
 
 # These are model schemas from pre-registration site
@@ -66,7 +67,7 @@ class PrepProject(models.Model):
         (1, 'Development'),
         (2, 'Education'),
         (3, 'Infrastructure'),  
-        (4, 'Community Engagement'),
+        (4, 'Community'),
         (5, 'Design'),
         (6, 'Other'),
     ]
@@ -75,9 +76,8 @@ class PrepProject(models.Model):
 
     STATUS = [
         (0, 'Planning'),
-        (1, 'Executing'),
-        (2, 'Complete'),
-        (3, 'Abandoned'),         
+        (1, 'In Progress'),
+        (2, 'Complete'),       
     ]
 
     created_date = models.DateTimeField(auto_now_add=True)
@@ -94,6 +94,13 @@ class PrepProject(models.Model):
     details = RichTextField()
     updates = RichTextField(blank=True, null=True)
     final_update = RichTextField(blank=True, null=True)
+    slug = models.SlugField(default='', editable=False, max_length=71)
+
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        value = "{} {}".format(self.name, self.prep_address[-6:])
+        self.slug = slugify(value, allow_unicode=True)
+        super().save(*args, **kwargs)
