@@ -66,7 +66,7 @@ class PrepProject(models.Model):
         (1, 'Development'),
         (2, 'Education'),
         (3, 'Infrastructure'),  
-        (4, 'Community Engagement'),
+        (4, 'Community'),
         (5, 'Design'),
         (6, 'Other'),
     ]
@@ -75,9 +75,8 @@ class PrepProject(models.Model):
 
     STATUS = [
         (0, 'Planning'),
-        (1, 'Executing'),
-        (2, 'Complete'),
-        (3, 'Abandoned'),         
+        (1, 'In Progress'),
+        (2, 'Complete'),       
     ]
 
     created_date = models.DateTimeField(auto_now_add=True)
