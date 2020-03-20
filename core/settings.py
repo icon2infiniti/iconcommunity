@@ -148,6 +148,6 @@ REST_FRAMEWORK = {
 }
 
 
-CORS_ORIGIN_REGEX_WHITELIST = [
-    r"^https://\w+\.iconpreps\.com$",
+CORS_ORIGIN_WHITELIST = [
+   "https://iconpreps.com",
 ]
