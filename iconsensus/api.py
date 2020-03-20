@@ -66,7 +66,12 @@ class PrepProjectFiltersApi(APIView):
 		filters_data = {}
 		filters_data['categories'] =  [{ 'name': category_name, 'id':category_id, 'count':PrepProject.objects.filter(category=category_id).count() }  for category_id, category_name in PrepProject.CATEGORIES ]
 		filters_data['status'] =  [{ 'name': status_name, 'id':status_id, 'count':PrepProject.objects.filter(status=status_id).count() }  for status_id,status_name in PrepProject.STATUS ]
+		recent_activity = []
+		recent_activity.append({'name':'Updated in last 7 days', 'count': PrepProject.objects.filter(updated_date__gte=datetime.now()-timedelta(days=7)).count()})
+		recent_activity.append({'name':'Created in last 7 days', 'count': PrepProject.objects.filter(created_date__gte=datetime.now()-timedelta(days=7)).count()})
+		filters_data['recent_activity'] = recent_activity
 
+		
 		return Response(filters_data, status=200)		
 
 class PrepApi(APIView):
@@ -77,16 +82,10 @@ class PrepApi(APIView):
 		data = {}
 		prep_address = kwargs.get('prep_address', None)		
 		if prep_address:
-			data['project_count'] = PrepProject.objects.filter(prep_address=prep_address).count()
-			prep_project_categories = { category_name: PrepProject.objects.filter(prep_address=prep_address).filter(category=category_id).count() for category_id, category_name in PrepProject.CATEGORIES }
-			prep_project_categories = {k: v for k, v in sorted(prep_project_categories.items(), key=lambda item: item[1], reverse=True)}
-			main_category = list(prep_project_categories.keys())[0]
-			if prep_project_categories[main_category] > 0:
-				data['main_category'] = main_category
-
-			sub_category = list(prep_project_categories.keys())[1]
-			if prep_project_categories[sub_category] > 0:
-				data['sub_category'] = sub_category
+			prep_query = PrepProject.objects.filter(prep_address=prep_address)
+			data['project_count'] = prep_query.count()
+			prep_project_categories =  { category_name: prep_query.filter(category=category_id).count() for category_id, category_name in PrepProject.CATEGORIES }
+			data['categories'] = [k for k, v in sorted(prep_project_categories.items(), key=lambda item: item[1], reverse=True) if v > 0]
 
 		return Response(data, status=200)		
 
