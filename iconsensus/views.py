@@ -111,6 +111,10 @@ def prep_project(request, id):
 def prep_all_projects(request):
     context = init_mode(request)
 
+    from iconsensus.models import PrepProject
+    for x in PrepProject.objects.all():
+        x.save()
+
     params = {}
     try:
         preps = iconsensusrpc.IconsensusRPCCalls().json_rpc_call("getPReps", params)['preps']
