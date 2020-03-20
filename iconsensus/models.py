@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from django.utils.text import slugify
 
 
 # These are model schemas from pre-registration site
@@ -93,6 +94,13 @@ class PrepProject(models.Model):
     details = RichTextField()
     updates = RichTextField(blank=True, null=True)
     final_update = RichTextField(blank=True, null=True)
+    slug = models.SlugField(default='', editable=False, max_length=70)
+
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        value = "{} {}".format(self.name, self.prep_address[-6:])
+        self.slug = slugify(value, allow_unicode=True)
+        super().save(*args, **kwargs)
