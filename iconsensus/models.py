@@ -94,7 +94,7 @@ class PrepProject(models.Model):
     details = RichTextField()
     updates = RichTextField(blank=True, null=True)
     final_update = RichTextField(blank=True, null=True)
-    slug = models.SlugField(default='', editable=False, max_length=70)
+    slug = models.SlugField(default='', editable=False, max_length=71)
 
 
     def __str__(self):
