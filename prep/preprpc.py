@@ -35,3 +35,7 @@ class PrepRPCCalls:
 
         block = icon_service.get_block(block_height)
         return block
+
+    def get_latest_block(self):
+        icon_service = IconService(HTTPProvider(PrepRPCCalls.USE_NET))
+        return icon_service.get_block("latest")['height']

@@ -74,6 +74,10 @@ def get_block(blockHeight):
         "cx0000000000000000000000000000000000000001").get_block(int(blockHeight, 16))
     return block
 
+def get_latest_block():
+    bh = preprpc.PrepRPCCalls("cx0000000000000000000000000000000000000001").get_latest_block();    
+    return bh;
+
 
 """
     params = {
@@ -178,11 +182,23 @@ def proposaldetail(request, proposal_id):
         if startBlock != None:
             context['start'] = startBlock['time_stamp']/1000
 
-        endBlock = get_block(aProposal['endBlockHeight'])
+        endBlock = get_block(aProposal['endBlockHeight'])        
         if endBlock != None:
             context['end'] = endBlock['time_stamp']/1000
         else:
             context['end'] = aProposal['endBlockHeight']
+
+        latest_blockh = get_latest_block()        
+        end_blockh = endBlock['height']
+        
+
+        if latest_blockh > end_blockh:
+            context['expired'] = True
+        else:
+            context['expired'] = False
+        
+        #context['expired'] = endBlock['height']
+        #context['latest_block'] = latest_block;
 
         aPRep = get_prep(aProposal['proposer'])
         if aPRep != None:

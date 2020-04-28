@@ -10,7 +10,8 @@
 {% block extra_js %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.4.0/dist/chartjs-plugin-datalabels.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-stacked100@0.7.1/src/index.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.0.1/progressbar.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
@@ -21,7 +22,7 @@
   const TO_CONTRACT = "cx0000000000000000000000000000000000000001";
 
   const IconService = window['icon-sdk-js'];
-  const provider = new IconService.HttpProvider({{USE_NET_NAME}});
+  const provider = new IconService.HttpProvider({{ USE_NET_NAME }});
   const icon_service = new IconService(provider);
   const IconBuilder = IconService.IconBuilder;
   const IconConverter = IconService.IconConverter;
@@ -45,7 +46,7 @@
       .nid(IconConverter.toBigNumber("1"))
       .version(IconConverter.toBigNumber("3"))
       .stepLimit(IconConverter.toBigNumber("10000000"))
-      .timestamp((new Date()).getTime()*1000)
+      .timestamp((new Date()).getTime() * 1000)
       .method(method_name)
       .params(params)
       .build();
@@ -101,323 +102,323 @@
   }
 
   $(document).ready(function () {
-    $("#status").append(getProposalStatus(parseInt({{aProposal.status}})));
-    $("#type").append(getProposalType(parseInt({{aProposal.contents.type}})));
-    var StartDate = new Date({{start}});
-    $("#start").append(StartDate);
+    $("#status").append(getProposalStatus(parseInt({{ aProposal.status }})));
+  $("#type").append(getProposalType(parseInt({{ aProposal.contents.type }})));
+  var StartDate = new Date({{ start }});
+  $("#start").append(StartDate);
 
-    var EndDate = new Date({{end}});
-    if (StartDate > EndDate) {
-      $("#end").append("Block Height " + {{end}});
+  var EndDate = new Date({{ end }});
+  if (StartDate > EndDate) {
+    $("#end").append("Block Height " + {{ end }});
     } else {
-      $("#end").append(EndDate);
+    $("#end").append(EndDate);
+  }
+
+  var md = window.markdownit();
+  md.set({ html: true, breaks: true });
+
+  let aJson = $("#contentsValue")[0].innerHTML;
+  //let value_json = JSON.parse(aJson.replace(/'/gi, "\""));
+  let Escape = $('<div />').html(aJson).text();
+  let FixQuote = Escape.split('\"').join('\\\"');
+  let Single2Double = FixQuote.split("'").join("\"");
+  let value_json = JSON.parse(Single2Double);
+
+  let replace_str = "";
+  for (var key in value_json) {
+    if (value_json.hasOwnProperty(key)) {
+      replace_str += key + " : " + value_json[key] + "\n";
     }
+  }
 
-    var md = window.markdownit();
-    md.set({html: true, breaks: true});
+  replace_str = md.render(replace_str);
 
-    let aJson = $("#contentsValue")[0].innerHTML;
-    //let value_json = JSON.parse(aJson.replace(/'/gi, "\""));
-    let Escape = $('<div />').html(aJson).text();
-    let FixQuote = Escape.split('\"').join('\\\"');
-    let Single2Double = FixQuote.split("'").join("\"");
-    let value_json = JSON.parse(Single2Double);
+  $("#contentsValue")[0].innerHTML = replace_str;
 
-    let replace_str = "";
-    for (var key in value_json) {
-      if (value_json.hasOwnProperty(key)) {
-        replace_str += key + " : " + value_json[key] + "\n";
-      }
+  desc_str = $("#proposaldesc")[0].innerHTML;
+  desc_str = desc_str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+  $("#proposaldesc")[0].innerHTML = md.render(desc_str);
+
+  proposal_vote_json_str = "{{aProposal.vote}}";
+  proposal_vote_json_str = proposal_vote_json_str.replace(/&#39;/gi, "\"");
+  Voter = JSON.parse(proposal_vote_json_str);
+
+  Voter = {
+    agree: Voter.agree.list.length,
+    disagree: Voter.disagree.list.length,
+    noVote: Voter.noVote.list.length,
+    total: Voter.agree.list.length + Voter.disagree.list.length + Voter.noVote.list.length
+  };
+  Token = {
+    agree: parseInt("{{aProposal.vote.agree.amount}}") / (10 ** 18),
+    disagree: parseInt("{{aProposal.vote.disagree.amount}}") / (10 ** 18),
+    noVote: parseInt("{{aProposal.vote.noVote.amount}}") / (10 ** 18),
+    total: (parseInt("{{aProposal.vote.agree.amount}}") + parseInt("{{aProposal.vote.disagree.amount}}") +
+      parseInt("{{aProposal.vote.noVote.amount}}")) / (10 ** 18)
+  };
+
+  //    console.log(Voter);
+  //    console.log(Token);
+
+  const formatter = (value, ctx) => {
+    let total = 0;
+    for (let i = 0; i < ctx.chart.data.datasets.length; i++) {
+      total += ctx.chart.data.datasets[i].data[ctx.dataIndex];
     }
+    return `${((value / total) * 100).toFixed(0)}%`;
+  };
 
-    replace_str = md.render(replace_str);
+  const options = {
+    maintainAspectRatio: false,
+    spanGaps: false,
+    responsive: true,
+    legend: {
+      display: false
+    },
+    tooltips: {
+      mode: "label",
+      callbacks: {
+        label: function (tooltipItem, data) {
+          const type = data.datasets[tooltipItem.datasetIndex].label;
+          const value =
+            data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+          let total = 0;
+          for (let i = 0; i < data.datasets.length; i++) {
+            total += data.datasets[i].data[tooltipItem.index];
+          }
 
-    $("#contentsValue")[0].innerHTML = replace_str;
-
-    desc_str = $("#proposaldesc")[0].innerHTML;
-    desc_str = desc_str.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
-
-    $("#proposaldesc")[0].innerHTML = md.render(desc_str);
-
-    proposal_vote_json_str = "{{aProposal.vote}}";
-    proposal_vote_json_str = proposal_vote_json_str.replace(/&#39;/gi, "\"");
-    Voter = JSON.parse(proposal_vote_json_str);
-
-    Voter = {
-      agree: Voter.agree.list.length,
-      disagree: Voter.disagree.list.length,
-      noVote: Voter.noVote.list.length,
-      total: Voter.agree.list.length + Voter.disagree.list.length + Voter.noVote.list.length
-    };
-    Token = {
-      agree: parseInt("{{aProposal.vote.agree.amount}}")/(10**18),
-      disagree: parseInt("{{aProposal.vote.disagree.amount}}")/(10**18),
-      noVote: parseInt("{{aProposal.vote.noVote.amount}}")/(10**18),
-      total: (parseInt("{{aProposal.vote.agree.amount}}") + parseInt("{{aProposal.vote.disagree.amount}}") +
-        parseInt("{{aProposal.vote.noVote.amount}}"))/(10**18)
-    };
-
-//    console.log(Voter);
-//    console.log(Token);
-
-    const formatter = (value, ctx) => {
-      let total = 0;
-      for (let i = 0; i < ctx.chart.data.datasets.length; i++) {
-        total += ctx.chart.data.datasets[i].data[ctx.dataIndex];
-      }
-      return `${((value / total) * 100).toFixed(0)}%`;
-    };
-
-    const options = {
-      maintainAspectRatio: false,
-      spanGaps: false,
-      responsive: true,
-      legend: {
-        display: false
-      },
-      tooltips: {
-        mode: "label",
-        callbacks: {
-          label: function (tooltipItem, data) {
-            const type = data.datasets[tooltipItem.datasetIndex].label;
-            const value =
-              data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-            let total = 0;
-            for (let i = 0; i < data.datasets.length; i++) {
-              total += data.datasets[i].data[tooltipItem.index];
-            }
-
-            if (tooltipItem.datasetIndex === data.datasets.length-1) {
-              return [
-                type + " : " + numeral(value).format('0,00'), "Overall : " + numeral(total).format('0,00')
-              ];
-            } else {
-              return (
-                type + " : " + numeral(value).format('0,00')
-              );
-            }
+          if (tooltipItem.datasetIndex === data.datasets.length - 1) {
+            return [
+              type + " : " + numeral(value).format('0,00'), "Overall : " + numeral(total).format('0,00')
+            ];
+          } else {
+            return (
+              type + " : " + numeral(value).format('0,00')
+            );
           }
         }
-      },
-      plugins: {
-        stacked100: {enable:true, replaceTooltipLabel:false}
-      },
-      scales: {
-        xAxes: [{
-            stacked: true,
-            gridLines: {
-              display: false
-            },
-            display: false,
-            ticks: {
-              fontColor: "#4ca0ba"
-            }
-          },
-          {
-            type: 'category',
-            offset: true,
-            position: 'top',
-            ticks: {
-              fontColor: "#4ca0ba"
-            },
-            gridLines: {
-              display: false
-            }
-          }
-        ],
-        yAxes: [{
-          stacked: true,
-          gridLines: {
-            display: false
-          },
-          display: false,
-          ticks: {
-            fontColor: "#fff"
-          }
-        }]
       }
-    };
-
-    function makeChart(parentDOM, title, vote) {
-      let aChart = document.createElement("canvas");
-      aChart.setAttribute('id', "mychart_"+title);
-      aChart.setAttribute('width', "100px");
-      aChart.setAttribute('height', "200px");
-
-      parentDOM.appendChild(aChart);
-
-      let voteData = [{
-        label: "Agree",
-        backgroundColor: "#1aaaba",
-        data: [vote.agree],
-        // Change options only for labels of THIS DATASET
-        datalabels: {
-          color: "white",
-          formatter: formatter
+    },
+    plugins: {
+      stacked100: { enable: true, replaceTooltipLabel: false }
+    },
+    scales: {
+      xAxes: [{
+        stacked: true,
+        gridLines: {
+          display: false
+        },
+        display: false,
+        ticks: {
+          fontColor: "#4ca0ba"
         }
       },
       {
-        label: "Disagree",
-        backgroundColor: "#ff0000",
-        data: [vote.disagree],
-        // Change options only for labels of THIS DATASET
-        datalabels: {
-          color: "white",
-          formatter: formatter
+        type: 'category',
+        offset: true,
+        position: 'top',
+        ticks: {
+          fontColor: "#4ca0ba"
+        },
+        gridLines: {
+          display: false
         }
-      },
-      {
-        label: "Not Voted",
-        backgroundColor: "#cccccc",
-        data: [vote.noVote],
-        // Change options only for labels of THIS DATASET
-        datalabels: {
-          color: "white",
-          formatter: formatter
+      }
+      ],
+      yAxes: [{
+        stacked: true,
+        gridLines: {
+          display: false
+        },
+        display: false,
+        ticks: {
+          fontColor: "#fff"
         }
-      }];
-
-      let ctx = document.getElementById("mychart_" + title).getContext("2d");
-
-      new Chart(ctx, {
-        type: "bar",
-        data: {
-          labels: [title],
-          datasets: voteData
-        },
-        options: options
-      });
+      }]
     }
+  };
 
-    makeChart($('#Voter')[0], "Voter", Voter);  
-    makeChart($('#Token')[0], "Token", Token);  
+  function makeChart(parentDOM, title, vote) {
+    let aChart = document.createElement("canvas");
+    aChart.setAttribute('id', "mychart_" + title);
+    aChart.setAttribute('width', "100px");
+    aChart.setAttribute('height', "200px");
 
-    var voterbar = new ProgressBar.Line(VoterProgress, {
-      strokeWidth: 4,
-      easing: 'easeInOut',
-      duration: 1400,
-      color: '#1aaaba',
-      trailColor: '#eee',
-      trailWidth: 1,
-      svgStyle: {width: '100%', height: '100%'},
-      text: {
-        style: {
-          // Text color.
-          // Default: same as stroke color (options.color)
-          color: '#999',
-          position: 'absolute',
-          right: '0',
-          top: '30px',
-          padding: 0,
-          margin: 0,
-          transform: null
-        },
-        autoStyleContainer: false
+    parentDOM.appendChild(aChart);
+
+    let voteData = [{
+      label: "Agree",
+      backgroundColor: "#1aaaba",
+      data: [vote.agree],
+      // Change options only for labels of THIS DATASET
+      datalabels: {
+        color: "white",
+        formatter: formatter
+      }
+    },
+    {
+      label: "Disagree",
+      backgroundColor: "#ff0000",
+      data: [vote.disagree],
+      // Change options only for labels of THIS DATASET
+      datalabels: {
+        color: "white",
+        formatter: formatter
+      }
+    },
+    {
+      label: "Not Voted",
+      backgroundColor: "#cccccc",
+      data: [vote.noVote],
+      // Change options only for labels of THIS DATASET
+      datalabels: {
+        color: "white",
+        formatter: formatter
+      }
+    }];
+
+    let ctx = document.getElementById("mychart_" + title).getContext("2d");
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: [title],
+        datasets: voteData
       },
-      from: {color: '#FFEA82'},
-      to: {color: '#ED6A5A'},
-      step: (state, bar) => {
-        bar.setText(Math.round(bar.value() * 100) + ' %');
-      }
+      options: options
     });
-    voterbar.animate((Voter.agree + Voter.disagree) / Voter.total);
+  }
 
-    var tokenbar = new ProgressBar.Line(TokenProgress, {
-      strokeWidth: 4,
-      easing: 'easeInOut',
-      duration: 1400,
-      color: '#1aaaba',
-      trailColor: '#eee',
-      trailWidth: 1,
-      svgStyle: {width: '100%', height: '100%'},
-      text: {
-        style: {
-          // Text color.
-          // Default: same as stroke color (options.color)
-          color: '#999',
-          position: 'absolute',
-          right: '0',
-          top: '30px',
-          padding: 0,
-          margin: 0,
-          transform: null
-        },
-        autoStyleContainer: false
+  makeChart($('#Voter')[0], "Voter", Voter);
+  makeChart($('#Token')[0], "Token", Token);
+
+  var voterbar = new ProgressBar.Line(VoterProgress, {
+    strokeWidth: 4,
+    easing: 'easeInOut',
+    duration: 1400,
+    color: '#1aaaba',
+    trailColor: '#eee',
+    trailWidth: 1,
+    svgStyle: { width: '100%', height: '100%' },
+    text: {
+      style: {
+        // Text color.
+        // Default: same as stroke color (options.color)
+        color: '#999',
+        position: 'absolute',
+        right: '0',
+        top: '30px',
+        padding: 0,
+        margin: 0,
+        transform: null
       },
-      from: {color: '#FFEA82'},
-      to: {color: '#ED6A5A'},
-      step: (state, bar) => {
-        bar.setText(Math.round(bar.value() * 100) + ' %');
-      }
-    });
-    tokenbar.animate((Token.agree+Token.disagree)/Token.total);
-
-    $("#VoterAgreeRate").append(((Voter.agree / Voter.total)*100).toFixed(0)  + "%");
-    $("#VoterDisagreeRate").append(((Voter.disagree / Voter.total)*100).toFixed(0) + "%");
-    $("#VoterNoVoteRate").append(((Voter.noVote / Voter.total)*100).toFixed(0) + "%");
-    $("#TotalVoter").append((((Voter.agree + Voter.disagree) / Voter.total)*100).toFixed(0)  + "% (" + (Voter
-      .agree + Voter.disagree) + " votes)");
-    $("#TotalVoter2").append("(" + (Voter.agree + Voter.disagree) + ")");
-    $("#VoterAgreeRate2").append(((Voter.agree / Voter.total)*100).toFixed(0) + "%");
-    $("#VoterDisagreeRate2").append(((Voter.disagree / Voter.total)*100).toFixed(0) + "%");
-    $("#VoterNoVoteRate2").append(((Voter.noVote / Voter.total)*100).toFixed(0) + "%");
-    $("#VoterAgree").append(Voter.agree);
-    $("#VoterDisagree").append(Voter.disagree);
-    $("#VoterNoVote").append(Voter.noVote);
-
-    $("#TokenAgreeRate").append(((Token.agree / Token.total)*100).toFixed(0) + "%");
-    $("#TokenDisagreeRate").append(((Token.disagree / Token.total)*100).toFixed(0) + "%");
-    $("#TokenNoVoteRate").append(((Token.noVote / Token.total)*100).toFixed(0) + "%");
-    $("#TotalToken").append(numeral(Token.agree + Token.disagree).format('0,00') + " ICX");
-    $("#TotalToken2").append("(" + numeral(Token.agree + Token.disagree).format('0,00') + " ICX)");
-    $("#TokenAgreeRate2").append(((Token.agree / Token.total)*100).toFixed(0) + "%");
-    $("#TokenDisagreeRate2").append(((Token.disagree / Token.total)*100).toFixed(0) + "%");
-    $("#TokenNoVoteRate2").append(((Token.noVote / Token.total)*100).toFixed(0) + "%");
-    $("#TokenAgree").append(numeral(Token.agree).format('0,00') + " ICX");
-    $("#TokenDisagree").append(numeral(Token.disagree).format('0,00') + " ICX");
-    $("#TokenNoVote").append(numeral(Token.noVote).format('0,00') + " ICX");
-
-    $('#voteAgree').click(function () {
-      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
-        'id': '{{aProposal.id}}',
-        'vote': '0x1'
-      });
-    });
-    $('#voteDisagree').click(function () {
-      json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
-        'id': '{{aProposal.id}}',
-        'vote': '0x0'
-      });
-    });
-    $('#cancelProposal').click(function () {
-      json_rpc_transaction_call("{{ fromAddress }}", "cancelProposal", {
-        'id': '{{aProposal.id}}'
-      });
-    });
-
-    $('.votedToken').each(function(index, item){
-      if(item.innerHTML !== "") {
-        item.innerHTML = numeral(parseInt(item.innerHTML)/10**18).format('0,00');
-      } else {
-        item.innerHTML = 0;
-      }
-    });
-
-    $('.timestamp').each(function(index, item){
-      aDate = new Date(parseInt(item.innerHTML)/1000);
-      item.innerHTML = aDate;
-    });
-
-    let votedFlag = true;
-    for (aVoter in Voter.noVote.address) {
-      if (aVoter === "{{ fromAddress }}") {
-        votedFlag = false;
-      }
+      autoStyleContainer: false
+    },
+    from: { color: '#FFEA82' },
+    to: { color: '#ED6A5A' },
+    step: (state, bar) => {
+      bar.setText(Math.round(bar.value() * 100) + ' %');
     }
+  });
+  voterbar.animate((Voter.agree + Voter.disagree) / Voter.total);
 
-    if (votedFlag) {
-      //$('#vote').attr('style','visibility:hidden');
+  var tokenbar = new ProgressBar.Line(TokenProgress, {
+    strokeWidth: 4,
+    easing: 'easeInOut',
+    duration: 1400,
+    color: '#1aaaba',
+    trailColor: '#eee',
+    trailWidth: 1,
+    svgStyle: { width: '100%', height: '100%' },
+    text: {
+      style: {
+        // Text color.
+        // Default: same as stroke color (options.color)
+        color: '#999',
+        position: 'absolute',
+        right: '0',
+        top: '30px',
+        padding: 0,
+        margin: 0,
+        transform: null
+      },
+      autoStyleContainer: false
+    },
+    from: { color: '#FFEA82' },
+    to: { color: '#ED6A5A' },
+    step: (state, bar) => {
+      bar.setText(Math.round(bar.value() * 100) + ' %');
     }
+  });
+  tokenbar.animate((Token.agree + Token.disagree) / Token.total);
+
+  $("#VoterAgreeRate").append(((Voter.agree / Voter.total) * 100).toFixed(0) + "%");
+  $("#VoterDisagreeRate").append(((Voter.disagree / Voter.total) * 100).toFixed(0) + "%");
+  $("#VoterNoVoteRate").append(((Voter.noVote / Voter.total) * 100).toFixed(0) + "%");
+  $("#TotalVoter").append((((Voter.agree + Voter.disagree) / Voter.total) * 100).toFixed(0) + "% (" + (Voter
+    .agree + Voter.disagree) + " votes)");
+  $("#TotalVoter2").append("(" + (Voter.agree + Voter.disagree) + ")");
+  $("#VoterAgreeRate2").append(((Voter.agree / Voter.total) * 100).toFixed(0) + "%");
+  $("#VoterDisagreeRate2").append(((Voter.disagree / Voter.total) * 100).toFixed(0) + "%");
+  $("#VoterNoVoteRate2").append(((Voter.noVote / Voter.total) * 100).toFixed(0) + "%");
+  $("#VoterAgree").append(Voter.agree);
+  $("#VoterDisagree").append(Voter.disagree);
+  $("#VoterNoVote").append(Voter.noVote);
+
+  $("#TokenAgreeRate").append(((Token.agree / Token.total) * 100).toFixed(0) + "%");
+  $("#TokenDisagreeRate").append(((Token.disagree / Token.total) * 100).toFixed(0) + "%");
+  $("#TokenNoVoteRate").append(((Token.noVote / Token.total) * 100).toFixed(0) + "%");
+  $("#TotalToken").append(numeral(Token.agree + Token.disagree).format('0,00') + " ICX");
+  $("#TotalToken2").append("(" + numeral(Token.agree + Token.disagree).format('0,00') + " ICX)");
+  $("#TokenAgreeRate2").append(((Token.agree / Token.total) * 100).toFixed(0) + "%");
+  $("#TokenDisagreeRate2").append(((Token.disagree / Token.total) * 100).toFixed(0) + "%");
+  $("#TokenNoVoteRate2").append(((Token.noVote / Token.total) * 100).toFixed(0) + "%");
+  $("#TokenAgree").append(numeral(Token.agree).format('0,00') + " ICX");
+  $("#TokenDisagree").append(numeral(Token.disagree).format('0,00') + " ICX");
+  $("#TokenNoVote").append(numeral(Token.noVote).format('0,00') + " ICX");
+
+  $('#voteAgree').click(function () {
+    json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
+      'id': '{{aProposal.id}}',
+      'vote': '0x1'
+    });
+  });
+  $('#voteDisagree').click(function () {
+    json_rpc_transaction_call("{{ fromAddress }}", "voteProposal", {
+      'id': '{{aProposal.id}}',
+      'vote': '0x0'
+    });
+  });
+  $('#cancelProposal').click(function () {
+    json_rpc_transaction_call("{{ fromAddress }}", "cancelProposal", {
+      'id': '{{aProposal.id}}'
+    });
+  });
+
+  $('.votedToken').each(function (index, item) {
+    if (item.innerHTML !== "") {
+      item.innerHTML = numeral(parseInt(item.innerHTML) / 10 ** 18).format('0,00');
+    } else {
+      item.innerHTML = 0;
+    }
+  });
+
+  $('.timestamp').each(function (index, item) {
+    aDate = new Date(parseInt(item.innerHTML) / 1000);
+    item.innerHTML = aDate;
+  });
+
+  let votedFlag = true;
+  for (aVoter in Voter.noVote.address) {
+    if (aVoter === "{{ fromAddress }}") {
+      votedFlag = false;
+    }
+  }
+
+  if (votedFlag) {
+    //$('#vote').attr('style','visibility:hidden');
+  }
   });
 </script>
 
@@ -431,21 +432,38 @@
   <h5 id="type"><b>{% trans 'Type:' %} </b></h5>
   <h5><b>{% trans 'Description:' %}</b> <span id="proposaldesc">{{ aProposal.contents.description }}</span></h5>
   <h5><b>{% trans 'Proposer:' %}</b> <a href="{{aPRep.website}}">{{aPRep.name}}</a></h5>
-  <h5><b>{% trans 'Tx Hash:' %}</b> <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}" target="_blank">{{aProposal.id}}</a></h5>
+  <h5><b>{% trans 'Tx Hash:' %}</b> <a href="https://tracker.icon.foundation/transaction/{{aProposal.id}}"
+      target="_blank">{{aProposal.id}}</a></h5>
   <h5 id="start"><b>{% trans 'Created:' %}</b> </h5>
   <h5 id="end"><b>{% trans 'Expires:' %}</b> </h5>
   <h5><b>{% trans 'Additional Information:' %} </b><span id="contentsValue">{{aProposal.contents.value}}</span></h5>
 </div>
 <hr />
 
+<!--
+status	int	status of proposal
+0x0: voting
+0x1: approved
+0x2: disapproved
+0x3: canceled
+-->
+
+
+
 <!-- Voting buttons -->
-{% if getPRep and fromAddress in aProposal.vote.noVote.list and aProposal.status == '0x0' %}
+
+<!--  if getPRep and fromAddress in aProposal.vote.noVote.list and aProposal.status == '0x0' -->
+{% if not expired %}
+{% if getPRep and fromAddress in aProposal.vote.noVote.list and aProposal.status == '0x0' or aProposal.status == '0x1' or aProposal.status == '0x2' %}
 <div id="vote">
   <a href="#" id="voteAgree" class="btn btn-primary">Agree</a>
   <a href="#" id="voteDisagree" class="btn btn-danger">Disagree</a>
 </div>
 <hr />
 {% endif %}
+{% endif %}
+
+
 {% if aProposal.proposer == fromAddress and aProposal.status == '0x0' %}
 <div id="cancel">
   <a href="#" id="cancelProposal" class="btn btn-dark">Cancel Proposal</a>
@@ -675,11 +693,11 @@
                 <th width="10%">{% trans 'Decision' %}</th>
                 <th width="25%" class="text-center">{% trans 'Tx Hash' %}</th>
                 <th width="30%">{% trans 'Timestamp' %}</th>
-                <th width="25%"class="text-center">{% trans 'Voted Token' %}</th>
+                <th width="25%" class="text-center">{% trans 'Voted Token' %}</th>
               </tr>
             </thead>
             <tbody id="voterList">
-            {% for aVoter in aProposal.vote.agree.list %}
+              {% for aVoter in aProposal.vote.agree.list %}
               <tr>
                 <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
                 <td>Agree</td>
@@ -687,8 +705,8 @@
                 <td class="timestamp">{{aVoter.timestamp}}</td>
                 <td class="votedToken text-center">{{aVoter.amount}}</td>
               </tr>
-            {% endfor %}
-            {% for aVoter in aProposal.vote.disagree.list %}
+              {% endfor %}
+              {% for aVoter in aProposal.vote.disagree.list %}
               <tr>
                 <td><a href="https://tracker.icon.foundation/address/{{aVoter.address}}">{{aVoter.name}}</a></td>
                 <td>Disagree</td>
@@ -696,7 +714,7 @@
                 <td class="timestamp">{{aVoter.timestamp}}</td>
                 <td class="votedToken text-center"></td>
               </tr>
-            {% endfor %}
+              {% endfor %}
             </tbody>
           </table>
         </div>
