@@ -47,6 +47,7 @@
 
           <ul class="trello list-items marketing">
             {% for project in marketing_list %}
+              {% if project.display == True %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
                   <li class="abandoned">{{ project.name }}</li>
@@ -197,7 +198,8 @@
                   </div>
                 </div>
               </div>
-            {% endfor %}
+              {% endif %}
+              {%  endfor %}
           </ul>
         </div>
       {% endif %}
@@ -225,6 +227,7 @@
 
           <ul class="trello list-items development">
             {% for project in development_list %}
+              {% if project.display == True %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
                   <li class="abandoned">{{ project.name }}</li>
@@ -375,6 +378,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -403,6 +407,7 @@
 
           <ul class="trello list-items education">
             {% for project in education_list %}
+              {% if project.display == True %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
                   <li class="abandoned">{{ project.name }}</li>
@@ -553,6 +558,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -581,6 +587,7 @@
 
           <ul class="trello list-items infrastructure">
             {% for project in infrastructure_list %}
+              {% if project.display == True %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
                   <li class="abandoned">{{ project.name }}</li>
@@ -731,6 +738,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -759,6 +767,7 @@
 
           <ul class="trello list-items community">
             {% for project in community_list %}
+              {% if project.display == True %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
                   <li class="abandoned">{{ project.name }}</li>
@@ -909,6 +918,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -937,6 +947,7 @@
 
           <ul class="trello list-items design">
             {% for project in design_list %}
+              {% if project.display == True %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
                   <li class="abandoned">{{ project.name }}</li>
@@ -1087,6 +1098,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>
@@ -1115,6 +1127,7 @@
 
           <ul class="trello list-items other">
             {% for project in other_list %}
+              {% if project.display == True %}
               <a href="{% url 'prep_project' project.id %}" data-toggle="modal" data-target="#p{{ project.id }}">
                 {% if project.status > 2 %}
                   <li class="abandoned">{{ project.name }}</li>
@@ -1265,6 +1278,7 @@
                   </div>
                 </div>
               </div>
+              {% endif %}
             {% endfor %}
           </ul>
         </div>

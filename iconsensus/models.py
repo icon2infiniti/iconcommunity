@@ -96,6 +96,7 @@ class PrepProject(models.Model):
     final_update = RichTextField(blank=True, null=True)
     slug = models.SlugField(default='', editable=False, max_length=71)
 
+    display = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
