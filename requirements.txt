@@ -48,7 +48,7 @@ google-auth-oauthlib==0.4.1
 grpcio==1.20.1
 grpcio-tools==1.20.1
 gunicorn==19.9.0
-httplib2==0.15.0
+httplib2==0.18.0
 httptools==0.0.13
 iconcommons==1.1.2
 iconrpcserver==1.4.4
