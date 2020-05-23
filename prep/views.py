@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from . import preprpc
 from iconsdk.exception import JSONRPCException
-
+import requests
 
 def init_mode(request):
     if 'nightmode' not in request.session:
@@ -78,22 +78,6 @@ def get_latest_block():
     bh = preprpc.PrepRPCCalls("cx0000000000000000000000000000000000000001").get_latest_block();    
     return bh;
 
-
-"""
-    params = {
-        'value': blockHeight
-    }
-    response = None
-    try:
-        response = preprpc.PrepRPCCalls(
-            "cx0000000000000000000000000000000000000000").json_rpc_call("getBlock", params)
-    except JSONRPCException as e:
-        print(str(e.message))
-    finally:
-        return response
-"""
-
-
 def get_transaction(txHash):
     params = {
         'tx_hash': txHash
@@ -127,6 +111,29 @@ def management(request, template='prep/management.html'):
     return render(request, template, context)
 
 
+def calc_rrep(delrate):
+    r_min = 0.02
+    r_max = 0.12
+    r_point = 0.7
+    rrep_result = ((r_max - r_min) / (r_point ** 2)) * ((delrate / 100) - r_point) ** 2 + r_min
+    rrep3rate = rrep_result * 3
+    return rrep3rate
+
+
+def get_total_supply():
+    url = 'https://tracker.icon.foundation/v3/main/mainInfo'
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    return r.json()['tmainInfo']['icxSupply']
+
+
+def calc_prep_commission_rate(irep, total_voted, rrep):
+    pcr = (1 / total_voted * 100 * 12 * irep / 2) / (rrep + 1 / total_voted * 100 * 12 * irep / 2)
+    return pcr*100
+
+
 def governance(request, template='prep/governance.html'):
     context = init_mode(request)
     PReps = get_preps()
@@ -139,6 +146,26 @@ def governance(request, template='prep/governance.html'):
             'getPRep': getPRep
         })
     context["USE_NET_NAME"] = preprpc.PrepRPCCalls.USE_NET_NAME
+
+    params = {}
+    try:
+        preps = preprpc.PrepRPCCalls().json_rpc_call("getPReps", params)
+    except JSONRPCException as e:
+        print(str(e.message))
+
+    total_voted = int(preps['totalDelegated'], 16)/10**18
+    total_supply = float(get_total_supply())
+
+    delrate = total_voted/total_supply*100
+    rrep = calc_rrep(delrate)
+
+    for prep in PReps['preps']:
+        irep = int(prep["irep"], 16)/10**18
+        pcr = round(calc_prep_commission_rate(irep, total_voted, rrep), 2)
+        prep["pcr"] = str(pcr)+"%"
+
+    context["total_voted"] = total_voted
+    context["rrep"] = rrep
 
     return render(request, template, context)
 

@@ -177,7 +177,7 @@
                 <th width="25%">{% trans 'Name' %}</th>
                 <th width="8%">{% trans 'Country' %}</th>
                 <th width="15%">{% trans 'Monthly Reward' %}</th>
-                <th width="8%">{% trans 'i_rep' %}</th>
+                <th width="12%">{% trans 'Commission Rate' %}</th>
                 <th width="8%">{% trans 'Delegated' %}</th>
                 <th width="7%">{% trans 'Projects' %}</th>
               </tr>
@@ -190,7 +190,7 @@
                   <td width="25%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
                   <td width="8%">{{ prep.country }}</td>
                   <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
-                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="12%" id="pcr">{{ prep.pcr }}</td>
                   <!--<td width="10%" id="stake">{ prep.stake|intcomma }</td>-->
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
                   <td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>
@@ -205,7 +205,7 @@
                   <td width="25%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
                   <td width="8%">{{ prep.country }}</td>
                   <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
-                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="12%" id="pcr">{{ prep.pcr }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
                   <td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>
                 </tr>
@@ -219,7 +219,7 @@
                   <td width="25%"><a href="https://tracker.icon.foundation/address/{{ prep.address }}" target="_blank">{{ prep.name }}</a></td>
                   <td width="8%">{{ prep.country }}</td>
                   <td width="15%" id="reward">{{ prep.reward|intcomma }} ICX<br><span class="subtext">{{ prep.reward_usd|intcomma }} USD</span></td>
-                  <td width="8%" id="irep">{{ prep.irep }}</td>
+                  <td width="12%" id="pcr">{{ prep.pcr }}</td>
                   <td width="8%" id="delegated">{{ prep.delegate_percent|floatformat:2 }}% <br><span class="subtext"> {{ prep.delegated|intcomma }}</span></td>
                   <td width="7%"><a href="{% url 'prep_projects' prep.address %}">View</a></td>
                 </tr>

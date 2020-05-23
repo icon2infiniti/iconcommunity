@@ -22,6 +22,7 @@ import json
 from django.db.models import Count
 from django.db.models.functions import TruncDate
 
+
 def internalonly(request):
 
     cds = PrepProject.objects.all().order_by('-created_date') \
@@ -225,6 +226,32 @@ def prep_reward(i_rep, delegation_rate):
     return i_rep * 0.5 * 100 * (delegation_rate/100)
 
 
+def calc_rrep(delrate):
+    r_min = 0.02
+    r_max = 0.12
+    r_point = 0.7
+    rrep_result = ((r_max - r_min) / (r_point ** 2)) * ((delrate / 100) - r_point) ** 2 + r_min
+    rrep3rate = rrep_result * 3
+    return rrep3rate
+
+
+def calc_prep_commission_rate(irep, total_voted, rrep):
+    if total_voted == 0:
+        return 0
+    else:
+        pcr = (1 / total_voted * 100 * 12 * irep / 2) / (rrep + 1 / total_voted * 100 * 12 * irep / 2)
+        return pcr*100
+
+
+def get_total_supply():
+    url = 'https://tracker.icon.foundation/v3/main/mainInfo'
+    try:
+        r = requests.get(url)
+    except requests.exceptions.RequestException as e:
+        print(e)
+    return r.json()['tmainInfo']['icxSupply']
+
+
 def overview(request):
 
     context = init_mode(request)
@@ -257,6 +284,8 @@ def overview(request):
 
     average_irep = TOTAL_IREP/22
 
+    total_supply = float(get_total_supply())
+
     countries = {}
     for prep in preps['preps']:
         prep_grade = int(prep['grade'], 16)
@@ -272,6 +301,11 @@ def overview(request):
         prep['reward_usd'] = int(int(prep['reward'])*float(icx_price))
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
+
+        delrate = delegated / total_supply * 100
+        rrep = calc_rrep(delrate)
+        pcr = round(calc_prep_commission_rate(irep, delegated, rrep), 2)
+        prep["pcr"] = str(pcr)+"%"
 
         if not prep['country'] in countries:
             countries[prep['country']] = 1
