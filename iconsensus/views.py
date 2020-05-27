@@ -236,6 +236,9 @@ def calc_rrep(delrate):
 
 
 def calc_prep_commission_rate(irep, total_voted, rrep):
+    print(irep)
+    print(total_voted)
+    print(rrep)
     if total_voted == 0:
         return 0
     else:
@@ -273,6 +276,7 @@ def overview(request):
     except JSONRPCException as e:
         print(str(e.message))
 
+    print(preps)
     # Query and rebuild custom ranking list
     TOTAL_DELEGATED = int(preps['totalDelegated'], 16)/10**18
     PREP_GRADE = {0: 'Main P-Rep', 1: 'Sub P-Rep', 2: 'P-Rep'}
@@ -302,9 +306,9 @@ def overview(request):
         prep['validatedBlocks'] = int(prep['validatedBlocks'], 16)
         prep['totalBlocks'] = int(prep['totalBlocks'], 16)
 
-        delrate = delegated / total_supply * 100
-        rrep = calc_rrep(delrate)
-        pcr = round(calc_prep_commission_rate(irep, delegated, rrep), 2)
+        network_delrate = TOTAL_DELEGATED / total_supply * 100
+        rrep = calc_rrep(network_delrate)
+        pcr = round(calc_prep_commission_rate(irep, TOTAL_DELEGATED, rrep), 2)
         prep["pcr"] = str(pcr)+"%"
 
         if not prep['country'] in countries:
