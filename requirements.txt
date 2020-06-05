@@ -21,7 +21,7 @@ coincurve==12.0.0
 coverage==4.5.4
 cytoolz==0.10.0
 decorator==4.4.1
-Django==2.1.5
+Django==2.2.13
 django-celery-beat==1.1.1
 django-ckeditor==5.9.0
 django-crontab==0.7.1
