@@ -127,7 +127,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         total_supply_list.append(entry.total_supply)
         annual_reward = rrep(entry.total_delegation/entry.total_supply*100)
         annual_reward_list.append(annual_reward)
-        real_yield = annual_reward - 8.75
+        real_yield = annual_reward - 6.1
         annual_real_yield_list.append(round(real_yield, 2))
         reward_rate_dates_list.append(str(entry.create_day).split("-")[1].lstrip("0")+"/"+str(entry.create_day).split("-")[2].lstrip("0"))
 
