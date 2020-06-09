@@ -117,8 +117,16 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
     #####################################################################################
     # Reward Rate
     #####################################################################################
-    rewardrate = RewardRate.objects.all().order_by('create_day')
 
+
+    annualinflation = RewardRate.objects.all().order_by('-create_day')[1:3]
+    annual_inflation_rate_list = []
+    for entry in annualinflation:
+        annual_inflation_rate_list.append(entry.total_supply)
+
+    annual_inflation_rate = ((annual_inflation_rate_list[0] - annual_inflation_rate_list[1]) * 365 )/annual_inflation_rate_list[0]*100
+
+    rewardrate = RewardRate.objects.all().order_by('create_day')
     total_supply_list = []
     annual_reward_list = []
     annual_real_yield_list = []
@@ -127,7 +135,7 @@ def index(request, template='dashboard/dashboard.html', extra_context=None):
         total_supply_list.append(entry.total_supply)
         annual_reward = rrep(entry.total_delegation/entry.total_supply*100)
         annual_reward_list.append(annual_reward)
-        real_yield = annual_reward - 6.1
+        real_yield = annual_reward - annual_inflation_rate
         annual_real_yield_list.append(round(real_yield, 2))
         reward_rate_dates_list.append(str(entry.create_day).split("-")[1].lstrip("0")+"/"+str(entry.create_day).split("-")[2].lstrip("0"))
 
