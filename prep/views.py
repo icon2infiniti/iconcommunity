@@ -216,7 +216,7 @@ def proposaldetail(request, proposal_id):
             context['end'] = aProposal['endBlockHeight']
 
         latest_blockh = get_latest_block()
-        if endBlock['height'] != None:
+        if endBlock != None:
             end_blockh = endBlock['height']
         else:
             end_blockh = aProposal['endBlockHeight']
