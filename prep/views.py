@@ -215,8 +215,11 @@ def proposaldetail(request, proposal_id):
         else:
             context['end'] = aProposal['endBlockHeight']
 
-        latest_blockh = get_latest_block()        
-        end_blockh = endBlock['height']
+        latest_blockh = get_latest_block()
+        if endBlock['height'] != None:
+            end_blockh = endBlock['height']
+        else:
+            end_blockh = aProposal['endBlockHeight']
         
 
         if latest_blockh > end_blockh:
