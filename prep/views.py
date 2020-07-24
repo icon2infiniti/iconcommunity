@@ -219,7 +219,7 @@ def proposaldetail(request, proposal_id):
         if endBlock != None:
             end_blockh = endBlock['height']
         else:
-            end_blockh = int(aProposal['endBlockHeight'], 16)
+            end_blockh = int(aProposal['endBlockHeight'], 0)
         
 
         if latest_blockh > end_blockh:
