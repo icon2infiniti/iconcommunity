@@ -187,7 +187,7 @@ select.selectpicker {
   margin: 0;
   border-radius: 0;
   display: block;
-  max-height: 285px !important;
+  max-height: 535px !important;
   overflow-y: hidden;
   -ms-overflow-style: auto;
   -webkit-box-shadow: none;

@@ -89,6 +89,14 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-6">
+          <label>{% trans 'Node Address*' %}</label>
+          <div class="form-group">
+            <input id="nodeaddress" type="text" class="form-control" name="nodeaddress">
+            <div class="messages">
+            </div>
+          </div>
+        </div>
       </div>
       </form>
     </div>
@@ -163,7 +171,7 @@
           </div>
         </div>
 
-        <!-- p2p, key -->
+        <!-- p2p, node address -->
         <div class="row">
           <div class="col-sm-6">
             <label>{% trans 'P2P Endpoint*' %}</label>
@@ -173,6 +181,15 @@
               </div>
             </div>
           </div>
+          <div class="col-sm-6">
+            <label>{% trans 'Node Address' %}</label>
+            <div class="form-group">
+              <input id="nodeaddress*" type="text" class="form-control" value="{{ getPRep.nodeaddress }}" name="nodeaddress">
+              <div class="messages">
+              </div>
+            </div>
+          </div>
+
         </div>
 
       </form>
@@ -212,6 +229,7 @@
     params.website = $('#website').val();
     params.details = $('#details').val();
     params.p2pEndpoint = $('#p2pEndpoint').val();
+    params.nodeaddress = $('#nodeaddress').val();
 //    console.log(params);
     let response = register_PRep_transaction_call("{{ fromAddress }}", "registerPRep", params);
 //    console.log(response);
@@ -226,6 +244,7 @@
     params.website = $('#website').val();
     params.details = $('#details').val();
     params.p2pEndpoint = $('#p2pEndpoint').val();
+    params.nodeaddress = $('#nodeaddress').val();
 //    console.log(params);
     let response = json_rpc_transaction_call("{{ fromAddress }}", "setPRep", params);
 //    console.log(response);
@@ -346,6 +365,9 @@
         url: true
       },
       p2pEndpoint: {
+        presence: true,
+      },
+      nodeaddress: {
         presence: true,
       },
       details: {

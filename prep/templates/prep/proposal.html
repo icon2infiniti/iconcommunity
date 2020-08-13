@@ -22,7 +22,7 @@
             <div class="row">
               <div class="col-lg-5 col-md-6 col-sm-3">
                 <label class="mx-1">{% trans 'Type' %}</label>
-                <select id="type" class="selectpicker" data-size="7" data-style="btn btn-primary"
+                <select id="type" class="selectpicker" data-size="10" data-style="btn btn-primary"
                   onchange="filterchange();">
                   <option value="*" selected>{% trans 'All' %}</option>
                   <option value="0">{% trans 'Text Proposal' %}</option>
@@ -30,6 +30,7 @@
                   <option value="2">{% trans 'Malicious SCORE Proposal' %}</option>
                   <option value="3">{% trans 'P-Rep Disqualification Proposal' %}</option>
                   <option value="4">{% trans 'Step Price Proposal' %}</option>
+                  <option value="5">{% trans 'I-Rep Proposal' %}</option>
                 </select>
               </div>
               <div class="col-lg-5 col-md-6 col-sm-3">
@@ -133,6 +134,8 @@
         return "P-Rep Disqualification";
       case 4:
         return "Step Price";
+      case 5:
+        return "I-Rep";
       default:
         return "No Type";
     }

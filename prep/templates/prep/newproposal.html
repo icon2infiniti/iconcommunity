@@ -28,6 +28,7 @@
       <option value="2">Malicious SCORE Proposal</option>
       <option value="3">P-Rep Disqualification Proposal</option>
       <option value="4">Step Price Proposal</option>
+      <option value="5">I-Rep Proposal</option>
     </select>
   </div>
   <div class="row">
@@ -107,9 +108,18 @@
         <!-- Step Price -->
         <div id="Proposal4" class="row" style="display:none">
           <div class="col-sm-12">
-            <label>value(step price in loop)</label>
+            <label>value (step price in loop)</label>
             <div class="form-group">
-              <input id="step_price_in_loop" type="number" step="1" min="0" class="form-control">
+              <input id="step_price_in_loop" type="number" class="form-control">
+            </div>
+          </div>
+        </div>
+        <!-- I-Rep  -->
+        <div id="Proposal5" class="row" style="display:none">
+          <div class="col-sm-12">
+            <label>value (I-Rep in loop)</label>
+            <div class="form-group">
+              <input id="i-rep_in_loop" type="number" class="form-control">
             </div>
           </div>
         </div>
@@ -178,6 +188,8 @@
         return "P-Rep Disqualification";
       case 4:
         return "Step Price";
+      case 5:
+        return "I-Rep";
       default:
         return "No Type";
     }
@@ -190,6 +202,7 @@
     $('#Proposal2').attr('style', 'display:none');
     $('#Proposal3').attr('style', 'display:none');
     $('#Proposal4').attr('style', 'display:none');
+    $('#Proposal5').attr('style', 'display:none');
 
     $('#Proposal' + ProposalType).attr('style', 'visibility:block');
   }
@@ -239,6 +252,8 @@
           alert("icon-service_version is empty");
           return;
         }
+        console.log("code: "+value['code']);
+        console.log("version: "+value['name']);
       break;
       case "2":
         value['address'] = $("#address_of_score").val();
@@ -274,6 +289,13 @@
           return;
         }
       break;
+      case "5":
+        value['value'] = $("#i-rep_in_loop").val();
+        if(value['value'] === "") {
+          alert("i-rep_in_loop is empty");
+          return;
+        }
+      break;
       default:
         console.log("out of type")
       break;
@@ -303,6 +325,7 @@
     });
 
     const parsed = JSON.parse(scoreData);
+    console.log(parsed);
     window.dispatchEvent(new CustomEvent('ICONEX_RELAY_REQUEST', {
       detail: {
         type: 'REQUEST_JSON-RPC',
@@ -311,7 +334,7 @@
     }));
 
     // redirect
-    window.location.href='../proposal';
+    //window.location.href='../proposal';
   }
 </script>
 {% endblock %}
