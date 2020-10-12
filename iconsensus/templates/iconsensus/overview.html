@@ -396,7 +396,7 @@
 
     function iconist_icx_reward(stake){
         const r_min = 0.02, r_max = 0.12, r_point = 0.7;
-        var reward = ((r_max-r_min)/(r_point**2)) * ((total_staked_percent/100)-r_point)**2 + r_min;
+        var reward = ((r_max-r_min)/(r_point**2)) * ((total_voted_percent/100)-r_point)**2 + r_min;
         return Math.round(reward * stake * 3 / 12).toLocaleString();
     }
 
